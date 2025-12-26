@@ -1,0 +1,10 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Brush tip with slight opacity variation for organic feel -->
+  <circle cx="16" cy="16" r="6" fill="rgba(255,255,255,0.95)" />
+  <circle cx="16" cy="16" r="4" fill="rgba(255,255,255,1)" />
+  <!-- Subtle bristle texture -->
+  <path d="M16 10 L16 8 M13 11 L12 9.5 M19 11 L20 9.5 M12 13 L10.5 12 M20 13 L21.5 12" 
+        stroke="rgba(255,255,255,0.4)" 
+        stroke-width="0.8" 
+        stroke-linecap="round"/>
+</svg>

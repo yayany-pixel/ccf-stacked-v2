@@ -1,0 +1,61 @@
+import Link from "next/link";
+import CityToggle from "@/components/CityToggle";
+import PillNav from "@/components/PillNav";
+import ButtonPill from "@/components/ui/ButtonPill";
+import type { City } from "@/lib/config";
+import { buildHomeBookLink } from "@/lib/links";
+import { EVENTBRITE_EVENTS_HREF } from "@/lib/constants";
+
+export default function Header({ city }: { city: City }) {
+  // Simplified navigation with only requested items
+  const navItems = [
+    { id: city.param, label: "Home", href: `/${city.param}` },
+    { id: "events", label: "Workshops", href: "/events" },
+    { id: "private-events", label: "Private Party Quote" },
+    { id: "date-night", label: "Date Night Pottery" },
+    { id: "mosaics", label: "Mosaics and Glass" },
+    { id: "bonsai", label: "Bonsai" },
+    { id: "paper-pigment", label: "Pigments and Paper" }
+  ];
+
+  return (
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div className="mx-auto max-w-7xl px-4 py-3">
+        <div className="shimmer-drift rounded-2xl border border-white/10 bg-white/5 shadow-glass backdrop-blur-xl">
+          <div className="flex items-center justify-between gap-3 px-4 py-3">
+            <Link href={`/${city.param}`} className="flex items-center gap-3">
+              <div className="grid h-10 w-10 place-items-center rounded-2xl border border-white/15 bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-cyan-500/20 shadow-lg shadow-purple-500/20">
+                <span className="bg-gradient-to-br from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-sm font-semibold text-transparent">CCF</span>
+              </div>
+              <div className="hidden sm:block">
+                <div className="text-sm font-semibold leading-none">Color Cocktail Factory</div>
+                <div className="mt-1 text-xs text-white/60">Creativity is shareable.</div>
+              </div>
+            </Link>
+
+            <div className="hidden lg:block">
+              <PillNav items={navItems} />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <CityToggle city={city} />
+              <Link
+                href={EVENTBRITE_EVENTS_HREF}
+                className="hidden rounded-full border border-purple-400/40 bg-gradient-to-r from-purple-500/20 to-pink-500/20 px-4 py-2 text-xs font-semibold shadow-lg shadow-purple-500/20 transition-all hover:border-purple-400/60 hover:shadow-purple-500/30 sm:inline-flex"
+              >
+                Exclusive Events
+              </Link>
+              <ButtonPill href={buildHomeBookLink(city)} variant="primary" className="hidden sm:inline-flex">
+                Book a class
+              </ButtonPill>
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 px-4 py-2 lg:hidden">
+            <PillNav items={navItems} />
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}

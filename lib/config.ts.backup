@@ -1,0 +1,781 @@
+export type CityParam = "chicago" | "eugene";
+
+export type City = {
+  param: CityParam;
+  label: string;
+  rezclickBase: string;
+  address: string;
+  locationName: string;
+};
+
+export type ScheduleRow = {
+  time: string;
+  note?: string;
+  href?: string; // optional override (e.g. gift cards, waitlist)
+};
+
+export type ValueCard = {
+  label: string;
+  title: string;
+  body: string;
+};
+
+export type FAQ = {
+  q: string;
+  a: string;
+};
+
+export type SectionConfig = {
+  id: string;
+  anchorId: string;
+  navLabel: string;
+  slug: string;
+
+  videoSrc: string;
+  overlayClass: string;
+
+  scheduleLabel: string;
+  scheduleTitle: string;
+  schedulePill?: string;
+  scheduleRows: ScheduleRow[];
+
+  badge: string;
+  heroTitle: string;
+  heroDescription: string;
+  primaryCta: { label: string; kind: "booking" | "detail" | "custom"; href?: string };
+  secondaryCta: { label: string; kind: "booking" | "detail" | "custom"; href?: string };
+  tags: string[];
+  valueCards: ValueCard[];
+
+  booking?: {
+    term?: string;       // percent-encoded term keyword for RezClick
+    customUrl?: string;  // override (gift cards, waitlist, etc.)
+  };
+
+  faqs: FAQ[];
+  relatedSlugs?: string[];
+};
+
+/**
+ * Update this if you want form submissions to open a different inbox.
+ * With no backend, we use a mailto: link as a lightweight “submit”.
+ */
+export const PRIVATE_EVENT_EMAIL = "support@colorcocktailfactory.com";
+
+export const giftCardUrl =
+  "https://app.acuityscheduling.com/catalog.php?owner=35932879&category=Gift+Cards";
+
+const placeholderVideo = "/videos/placeholder.mp4";
+
+const waitlistMailto = (subject: string) =>
+  `mailto:${PRIVATE_EVENT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+    "Hi CCF! Please add me to the waitlist.\n\nName:\nEmail:\nPhone:\nCity:\nNotes:\n"
+  )}`;
+
+/**
+ * Section order:
+ * - Gift Cards, Private Events (special categories)
+ * - Pottery: Date Night, Beginner Wheel, Handbuilding
+ * - Glass/Mosaic: Mosaics, Turkish Lamps, Glass Fusion, Glass Blowing
+ * - Nature: Bonsai, Terrarium
+ * - Crafts: Candle, Wine Glass Painting
+ * - Painting: Paper & Pigment, Painting
+ * - Family: Parent & Me
+ */
+export const sections: SectionConfig[] = [
+  // 1) Gift Cards — 50% Off
+  {
+    id: "gift",
+    anchorId: "gift-cards",
+    navLabel: "Gift Cards",
+    slug: "gift-cards",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-rose-900/60 via-amber-900/35 to-indigo-900/55",
+
+    scheduleLabel: "POPULAR PICKS",
+    scheduleTitle: "50% Off Gift Cards",
+    schedulePill: "GIFTABLE",
+    scheduleRows: [
+      { time: "$50 · Popular pick", note: "Perfect for a first class", href: giftCardUrl },
+      { time: "$100 · Date night energy", note: "Two people, one great plan", href: giftCardUrl },
+      { time: "$200 · Full experience", note: "Premium workshop + extras", href: giftCardUrl }
+    ],
+
+    badge: "GIFT · GLOW · GO",
+    heroTitle: "50% Off Gift Cards",
+    heroDescription:
+      "Holiday mode: activated. Gift cards work for pottery, mosaics, Turkish lamps, glass fusion, bonsai, terrariums, candle making, watercolor, painting nights — the whole creative universe.",
+    primaryCta: { label: "Buy gift cards", kind: "custom", href: giftCardUrl },
+    secondaryCta: { label: "Share link", kind: "custom", href: giftCardUrl },
+    tags: ["Instant delivery", "Works for any class", "Perfect for couples", "Limited-time deal"],
+    valueCards: [
+      { label: "STYLE", title: "The easiest win", body: "Looks thoughtful. Requires zero guessing." },
+      { label: "RESULT", title: "They choose the vibe", body: "Pottery, mosaics, lamps, glass, bonsai, painting…" },
+      { label: "VIBE", title: "Holiday glow", body: "Creative plans beat last-minute stuff." }
+    ],
+    booking: { customUrl: giftCardUrl },
+    faqs: [
+      { q: "Do gift cards work for any class?", a: "Yes — use them toward any public class or workshop booking." },
+      { q: "Do they expire?", a: "Generally no. If you ever need help applying one, we’ll fix it fast." },
+      { q: "Can I send it to someone?", a: "Yep. Buy it, then share the link or forward the confirmation." },
+      { q: "Can it cover two people?", a: "Absolutely — especially great for Date Night classes." },
+      { q: "What if I buy the wrong amount?", a: "No stress. We can help you combine or apply balances." }
+    ],
+    relatedSlugs: ["private-parties", "beginner-wheel", "mosaic"]
+  },
+
+  // 2) Private Parties & Corporate (Hero card becomes a request form)
+  {
+    id: "private",
+    anchorId: "private-events",
+    navLabel: "Private Events",
+    slug: "private-parties",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-emerald-900/55 via-slate-900/30 to-amber-900/45",
+
+    scheduleLabel: "POPULAR TIME WINDOWS",
+    scheduleTitle: "Private Parties & Corporate",
+    schedulePill: "GROUPS",
+    scheduleRows: [
+      { time: "Sat · 2:30–5:00 PM", note: "Best overall slot" },
+      { time: "Fri · 5:30–7:30 PM", note: "After-work win" },
+      { time: "Sun · 1:00–4:30 PM", note: "Easy daytime" }
+    ],
+
+    badge: "PRIVATE · TEAM · CELEBRATE",
+    heroTitle: "Request a Private Event",
+    heroDescription:
+      "Tell us what you’re planning and we’ll reply with options. No backend needed — the form opens a ready-to-send email with your details.",
+    primaryCta: { label: "Open request form", kind: "detail" },
+    secondaryCta: { label: "See group options", kind: "detail" },
+    tags: ["Team-building", "Birthdays", "Bachelorettes", "Custom formats", "Easy planning"],
+    valueCards: [
+      { label: "SPACE", title: "Room to celebrate", body: "We’ll match you with the best room + vibe." },
+      { label: "FORMAT", title: "Pick your craft", body: "Pottery, mosaics, candles, painting, more." },
+      { label: "EASE", title: "Simple booking", body: "Fast confirmations and clear expectations." }
+    ],
+    booking: { term: "private%20events" },
+    faqs: [
+      { q: "How far ahead should we book?", a: "Earlier is better for weekends, but we can often fit you in." },
+      { q: "Can we bring food/drinks?", a: "Often yes (depending on format). Ask in the inquiry and we’ll confirm." },
+      { q: "What group sizes work best?", a: "Small squads to full teams — we’ll recommend the right setup." },
+      { q: "Can we choose the workshop theme?", a: "Yes. We’ll tailor the project and pacing to your crew." },
+      { q: "Do you do corporate invoices?", a: "Yes — we can provide invoices/receipts for company reimbursements." }
+    ],
+    relatedSlugs: ["gift-cards", "beginner-wheel", "candle-making"]
+  },
+
+  // 3) Date Night on the Wheel
+  {
+    id: "date-night",
+    anchorId: "date-night",
+    navLabel: "Date Night",
+    slug: "date-night-wheel",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-fuchsia-900/55 via-indigo-900/35 to-rose-900/45",
+
+    scheduleLabel: "THIS WEEK",
+    scheduleTitle: "Date Night on the Wheel",
+    schedulePill: "COUPLES",
+    scheduleRows: [
+      { time: "Fri · 5:30–7:30 PM", note: "Best for after-work" },
+      { time: "Sat · 7:30–9:30 PM", note: "Peak date-night energy" },
+      { time: "Sun · 5:30–7:30 PM", note: "Chill + romantic" }
+    ],
+
+    badge: "CLAY · SPIN · SPARK",
+    heroTitle: "Date Night on the Wheel",
+    heroDescription:
+      "Two people, one wheel, and a hilariously fun learning curve. Guided step-by-step. Leave with real memories (and maybe a lopsided masterpiece).",
+    primaryCta: { label: "Book Date Night", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Beginner-friendly", "Romantic", "Giftable", "Great photos", "Guided"],
+    valueCards: [
+      { label: "STYLE", title: "Playful + premium", body: "Glassy vibes, warm lighting, real craft." },
+      { label: "RESULT", title: "Take-home options", body: "Same-day pickup decorative, or fired & glazed from $5/item." },
+      { label: "VIBE", title: "Instant chemistry", body: "Clay is teamwork training." }
+    ],
+    booking: { term: "date%20night" },
+    faqs: [
+      { q: "Do we need experience?", a: "Nope. We teach from zero and keep it fun." },
+      { q: "Do we keep what we make?", a: "Same day pickup decorative only; fired & glazed finishing starts at $5/item." },
+      { q: "What should we wear?", a: "Something comfy you don’t mind getting a little clay on." },
+      { q: "Is this good for a first date?", a: "Yes — the clay does the icebreaking for you." },
+      { q: "Can we book with friends?", a: "Yes — couples’ groups are a favorite." }
+    ],
+    relatedSlugs: ["gift-cards", "beginner-wheel", "mosaic"]
+  },
+
+  // NEW) Beginner Wheel Throwing (solo)
+  {
+    id: "beginner-wheel",
+    anchorId: "beginner-wheel",
+    navLabel: "Beginner Wheel",
+    slug: "beginner-wheel",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-sky-900/55 via-slate-900/25 to-emerald-900/45",
+
+    scheduleLabel: "POPULAR",
+    scheduleTitle: "Wheel Throwing for Beginners",
+    schedulePill: "BEGINNERS",
+    scheduleRows: [
+      { time: "Sat · 2:30 PM", note: "Strongest slot" },
+      { time: "Wed · 5:30 PM", note: "Midweek favorite" },
+      { time: "Fri · 7:30 PM", note: "Weekend energy" }
+    ],
+
+    badge: "WHEEL · CENTER · CREATE",
+    heroTitle: "Wheel Throwing for Beginners",
+    heroDescription:
+      "Your first spin on the wheel. Learn centering, pulling, and shaping with hands-on coaching. You’ll leave with new skills and a serious clay grin.",
+    primaryCta: { label: "Book Beginner Wheel", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Beginner-friendly", "Hands-on", "Skill-building", "Great gift"],
+    valueCards: [
+      { label: "STYLE", title: "Real technique", body: "Centering + pulls, simplified." },
+      { label: "RESULT", title: "First forms", body: "Create your first bowl/cylinder attempts." },
+      { label: "VIBE", title: "Supportive", body: "Friendly coaching, zero judgment." }
+    ],
+    booking: { term: "pottery" },
+    faqs: [
+      { q: "Do I need experience?", a: "No. This is designed for first-timers." },
+      { q: "Do I keep my piece?", a: "Same day decorative, or fired & glazed from $5/item." },
+      { q: "What will I learn?", a: "Clay prep, centering, pulling, basic shaping." },
+      { q: "Is it messy?", a: "Yes — the fun kind. Wear comfy clothes." },
+      { q: "Can I book with friends?", a: "Absolutely." }
+    ],
+    relatedSlugs: ["date-night-wheel", "handbuilding", "gift-cards"]
+  },
+
+  // NEW) Handbuilding Pottery
+  {
+    id: "handbuilding",
+    anchorId: "handbuilding",
+    navLabel: "Handbuilding",
+    slug: "handbuilding",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-amber-900/45 via-indigo-900/20 to-emerald-900/35",
+
+    scheduleLabel: "FEATURED",
+    scheduleTitle: "Handbuilding Pottery",
+    schedulePill: "COZY",
+    scheduleRows: [
+      { time: "Sun · 1:00 PM", note: "Easy daytime" },
+      { time: "Thu · 5:30 PM", note: "After-work calm" },
+      { time: "Sat · 12:00 PM", note: "Classic slot" }
+    ],
+
+    badge: "SLAB · PINCH · SCULPT",
+    heroTitle: "Handbuilding Pottery",
+    heroDescription:
+      "No wheel needed. Build cups, bowls, planters, and sculptural pieces using slab + pinch techniques. Great for groups and beginners.",
+    primaryCta: { label: "Book Handbuilding", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Beginner-friendly", "Relaxing", "Group-friendly", "Take-home"],
+    valueCards: [
+      { label: "STYLE", title: "Tactile", body: "Hands-first pottery, very satisfying." },
+      { label: "RESULT", title: "Functional pieces", body: "Cups, bowls, planters, more." },
+      { label: "VIBE", title: "Low pressure", body: "Perfect for chatting + creating." }
+    ],
+    booking: { term: "handbuilding" },
+    faqs: [
+      { q: "Do I need experience?", a: "No — we teach step-by-step." },
+      { q: "What can I make?", a: "Bowls, planters, vases, and rotating themed projects." },
+      { q: "Do you fire pieces?", a: "Optional firing + glazing from $5/item." },
+      { q: "Is it kid-friendly?", a: "Some sessions are; see Parent & Me for the best fit." },
+      { q: "Is it good for groups?", a: "Yes — extremely." }
+    ],
+    relatedSlugs: ["beginner-wheel", "parent-and-me", "gift-cards"]
+  },
+
+  // 4) Mosaic Class
+  {
+    id: "mosaic",
+    anchorId: "mosaics",
+    navLabel: "Mosaics",
+    slug: "mosaic",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-cyan-900/55 via-slate-900/30 to-violet-900/45",
+
+    scheduleLabel: "POPULAR TIME WINDOWS",
+    scheduleTitle: "Beginner Mosaic Class",
+    schedulePill: "SOCIAL",
+    scheduleRows: [
+      { time: "Wed · 6:00–8:00 PM", note: "Midweek reset" },
+      { time: "Sat · 3:30–5:30 PM", note: "Best for groups" },
+      { time: "Sun · 12:30–2:30 PM", note: "Easy daytime" }
+    ],
+
+    badge: "CRUSH · CREATE · GLOW",
+    heroTitle: "Beginner Mosaic Class",
+    heroDescription:
+      "Turn colorful pieces into a finished artwork you’ll actually want to display. High satisfaction, low stress — and wildly giftable.",
+    primaryCta: { label: "Book Mosaic", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Beginner-friendly", "Relaxing", "Group-friendly", "Take-home art"],
+    valueCards: [
+      { label: "STYLE", title: "Bold color", body: "Piece-by-piece composition that pops." },
+      { label: "RESULT", title: "Finished artwork", body: "Leave with something you can show off." },
+      { label: "VIBE", title: "Social flow", body: "Easy to chat while you build." }
+    ],
+    booking: { term: "mosaic" },
+    faqs: [
+      { q: "Is it messy?", a: "A little — but in a satisfying way. Aprons help." },
+      { q: "Do I need design skills?", a: "No. We’ll guide composition and patterns." },
+      { q: "Can kids join?", a: "Some sessions are kid-friendly; check the listing." },
+      { q: "How long does it take?", a: "Usually 1.5–2 hours depending on the project." },
+      { q: "Can groups sit together?", a: "Yes — mosaics are perfect for groups." }
+    ],
+    relatedSlugs: ["turkish-lamp", "gift-cards", "private-parties"]
+  },
+
+  // 5) Turkish Lamp Mosaic
+  {
+    id: "turkish",
+    anchorId: "turkish-lamps",
+    navLabel: "Turkish Lamps",
+    slug: "turkish-lamp",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-amber-900/55 via-indigo-900/25 to-emerald-900/45",
+
+    scheduleLabel: "FEATURED",
+    scheduleTitle: "Turkish Lamp Mosaic",
+    schedulePill: "GIFTABLE",
+    scheduleRows: [
+      { time: "Fri · 6:30–8:30 PM", note: "Best night glow" },
+      { time: "Sat · 2:00–4:00 PM", note: "Prime weekend" },
+      { time: "Sun · 2:00–4:00 PM", note: "Easy daytime" }
+    ],
+
+    badge: "LAMP · MOSAIC · MAGIC",
+    heroTitle: "Turkish Lamp Mosaic",
+    heroDescription:
+      "Build a lamp that looks like it belongs in a movie scene. Bright glass pieces, warm light, and the most satisfying final reveal.",
+    primaryCta: { label: "Book Turkish Lamp", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Iconic", "Premium", "Best gift", "Group-friendly", "Wow factor"],
+    valueCards: [
+      { label: "STYLE", title: "Cinematic glow", body: "Warm light + jewel colors." },
+      { label: "RESULT", title: "A real lamp", body: "Functional take-home piece." },
+      { label: "VIBE", title: "Instant wow", body: "Everyone gasps at the reveal." }
+    ],
+    booking: { term: "turkish%20lamp" },
+    faqs: [
+      { q: "Do we finish the lamp in one session?", a: "Yes — most guests complete it in class." },
+      { q: "Is it fragile?", a: "Treat it like a lamp — glass pieces are durable when set." },
+      { q: "Is this good for dates?", a: "Extremely. It’s romantic and visually stunning." },
+      { q: "Can I customize colors?", a: "Yes — choose your palette as you build." },
+      { q: "Is it beginner friendly?", a: "Totally — we guide every step." }
+    ],
+    relatedSlugs: ["mosaic", "gift-cards", "private-parties"]
+  },
+
+  // 6) Glass Fusion
+  {
+    id: "glass-fusion",
+    anchorId: "glass-fusion",
+    navLabel: "Glass Fusion",
+    slug: "glass-fusion",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-sky-900/55 via-violet-900/25 to-emerald-900/45",
+
+    scheduleLabel: "POPULAR",
+    scheduleTitle: "Glass Fusion",
+    schedulePill: "PREMIUM",
+    scheduleRows: [
+      { time: "Wed · 6:15–8:15 PM", note: "Creative midweek" },
+      { time: "Fri · 6:15–8:15 PM", note: "Friday treat" },
+      { time: "Sat · 6:15–8:15 PM", note: "Best for friends" }
+    ],
+
+    badge: "GLASS · HEAT · ART",
+    heroTitle: "Glass Fusion",
+    heroDescription:
+      "Layer, compose, and create a piece that gets kiln-fired into glossy, luminous glass art. Super premium feel — no glass experience required.",
+    primaryCta: { label: "Book Glass Fusion", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Premium", "Beginner-friendly", "Luminous", "Take-home art"],
+    valueCards: [
+      { label: "STYLE", title: "Modern shine", body: "Glossy glass with depth." },
+      { label: "RESULT", title: "Kiln-fused piece", body: "We fire it for a pro finish." },
+      { label: "VIBE", title: "High-end craft", body: "Feels like a boutique studio." }
+    ],
+    booking: { term: "glass%20fusion" },
+    faqs: [
+      { q: "Do we fire it in class?", a: "Usually firing happens after; pickup timing varies." },
+      { q: "Is it safe?", a: "Yes — we handle kiln workflow and safety rules." },
+      { q: "What can I make?", a: "Small plates, art panels, ornaments, and more." },
+      { q: "Can groups book?", a: "Yes — it’s great for celebrations." },
+      { q: "Do I need drawing skills?", a: "No — composition is guided." }
+    ],
+    relatedSlugs: ["glass-blowing", "gift-cards", "private-parties"]
+  },
+
+  // NEW) Glass Blowing — Coming Soon
+  {
+    id: "glass-blowing",
+    anchorId: "glass-blowing",
+    navLabel: "Glass Blowing",
+    slug: "glass-blowing",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-indigo-900/55 via-slate-900/25 to-amber-900/35",
+
+    scheduleLabel: "COMING SOON",
+    scheduleTitle: "Glass Blowing",
+    schedulePill: "WAITLIST",
+    scheduleRows: [
+      { time: "Launching soon", note: "Sign up for updates", href: waitlistMailto("Glass Blowing Waitlist") },
+      { time: "First dates TBD", note: "We’ll email when live", href: waitlistMailto("Glass Blowing Waitlist") },
+      { time: "VIP early access", note: "Limited seats", href: waitlistMailto("Glass Blowing Waitlist") }
+    ],
+
+    badge: "HEAT · FORM · WOW",
+    heroTitle: "Glass Blowing (Coming Soon)",
+    heroDescription:
+      "We’re building this. Want early access? Join the waitlist and we’ll notify you as soon as the first sessions drop.",
+    primaryCta: { label: "Join waitlist", kind: "custom", href: waitlistMailto("Glass Blowing Waitlist") },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Coming soon", "Premium", "Limited seats", "Early access"],
+    valueCards: [
+      { label: "STYLE", title: "Molten magic", body: "Fire, color, and form in motion." },
+      { label: "RESULT", title: "Real glass pieces", body: "Take-home forms once cooled/finished." },
+      { label: "VIBE", title: "Bucket-list", body: "A true ‘I did that’ workshop." }
+    ],
+    booking: { customUrl: waitlistMailto("Glass Blowing Waitlist") },
+    faqs: [
+      { q: "When does it launch?", a: "Soon. Join the waitlist and you’ll get first notice." },
+      { q: "Is it beginner-friendly?", a: "Yes — intro sessions will be built for beginners." },
+      { q: "Will it be premium priced?", a: "Likely yes — materials + equipment are costly." },
+      { q: "Can groups book it privately?", a: "Yes — once live, private events will be available." },
+      { q: "How do I get updates?", a: "Use the waitlist button; it opens a ready email to send." }
+    ],
+    relatedSlugs: ["glass-fusion", "gift-cards", "private-parties"]
+  },
+
+  // 7) Bonsai
+  {
+    id: "bonsai",
+    anchorId: "bonsai",
+    navLabel: "Bonsai",
+    slug: "bonsai",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-emerald-900/55 via-slate-900/25 to-lime-900/35",
+
+    scheduleLabel: "WEEKLY",
+    scheduleTitle: "Bonsai Class",
+    schedulePill: "NATURE",
+    scheduleRows: [
+      { time: "Sat · 5:00–7:00 PM", note: "Best weekend slot" },
+      { time: "Sun · 5:00–7:00 PM", note: "Relaxed pace" },
+      { time: "Wed · 6:00–8:00 PM", note: "Midweek zen" }
+    ],
+
+    badge: "ROOT · SHAPE · ZEN",
+    heroTitle: "Bonsai Class",
+    heroDescription:
+      "Learn styling, pruning, wiring basics, and how to care for a living sculpture. Calm energy, high skill payoff.",
+    primaryCta: { label: "Book Bonsai", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Nature", "Mindful", "Hands-on", "Long-term hobby"],
+    valueCards: [
+      { label: "STYLE", title: "Living art", body: "A sculpture that grows." },
+      { label: "RESULT", title: "Real technique", body: "Pruning + wiring fundamentals." },
+      { label: "VIBE", title: "Peaceful focus", body: "A reset for your brain." }
+    ],
+    booking: { term: "bonsai" },
+    faqs: [
+      { q: "Do I take a tree home?", a: "Many sessions include a tree; check the listing." },
+      { q: "Is this beginner-friendly?", a: "Yes — we start with basics and safety." },
+      { q: "Will my bonsai survive?", a: "With care, yes — we teach maintenance." },
+      { q: "What tools do I need?", a: "We provide tools in class." },
+      { q: "Is this a good gift?", a: "Yes — it’s meaningful and lasting." }
+    ],
+    relatedSlugs: ["terrarium", "gift-cards", "private-parties"]
+  },
+
+  // 8) Terrarium
+  {
+    id: "terrarium",
+    anchorId: "terrarium",
+    navLabel: "Terrarium",
+    slug: "terrarium",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-lime-900/40 via-emerald-900/20 to-sky-900/45",
+
+    scheduleLabel: "POPULAR",
+    scheduleTitle: "Terrarium Class",
+    schedulePill: "NATURE",
+    scheduleRows: [
+      { time: "Sat · 1:00 PM", note: "Weekly" },
+      { time: "Sun · 1:00 PM", note: "Weekly" },
+      { time: "Weekday · 12:30 PM", note: "Monthly rotating" }
+    ],
+
+    badge: "GREEN · GLASS · MINI WORLD",
+    heroTitle: "Terrarium Class",
+    heroDescription:
+      "Build a tiny ecosystem in glass. Layer, plant, decorate — and walk out with a living centerpiece.",
+    primaryCta: { label: "Book Terrarium", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Beginner-friendly", "Nature", "Giftable", "Home décor"],
+    valueCards: [
+      { label: "STYLE", title: "Mini landscape", body: "Design a little world." },
+      { label: "RESULT", title: "Living centerpiece", body: "Take it home same day." },
+      { label: "VIBE", title: "Low-stress", body: "Soothing and social." }
+    ],
+    booking: { term: "terrarium" },
+    faqs: [
+      { q: "Do I need a green thumb?", a: "No — we choose hardy plants and teach basics." },
+      { q: "How long does it last?", a: "With simple care, a long time." },
+      { q: "Is it messy?", a: "A little soil, but very manageable." },
+      { q: "Can kids join?", a: "Many sessions are kid-friendly; check the listing." },
+      { q: "Is it good for dates?", a: "Yes — it’s cute and collaborative." }
+    ],
+    relatedSlugs: ["bonsai", "gift-cards", "private-parties"]
+  },
+
+  // 9) Candle Making
+  {
+    id: "candle",
+    anchorId: "candle",
+    navLabel: "Candle",
+    slug: "candle-making",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-amber-900/50 via-rose-900/25 to-slate-900/40",
+
+    scheduleLabel: "WEEKLY",
+    scheduleTitle: "Organic Candle Making",
+    schedulePill: "COZY",
+    scheduleRows: [
+      { time: "Sat · 6:00 PM", note: "Weekly favorite" },
+      { time: "Fri · 6:00 PM", note: "After-work cozy" },
+      { time: "Sun · 4:30 PM", note: "Easy evening" }
+    ],
+
+    badge: "WAX · SCENT · GLOW",
+    heroTitle: "Organic Candle Making",
+    heroDescription:
+      "Blend scents, pour wax, and leave with a candle that smells like 'I have my life together' (even if you don't).",
+    primaryCta: { label: "Book Candle Making", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Kid-friendly", "Beginner-friendly", "Weekend", "Memories"],
+    valueCards: [
+      { label: "STYLE", title: "Simple + cute", body: "Projects that kids can actually finish." },
+      { label: "RESULT", title: "Shared keepsakes", body: "Take-home memories (and pieces)." },
+      { label: "VIBE", title: "Wholesome", body: "A screen-free win for everyone." }
+    ],
+    booking: { term: "kids" },
+    faqs: [
+      { q: "What ages work best?", a: "It depends on the project; listings usually include age guidance." },
+      { q: "Do adults participate?", a: "Yes — it’s collaborative by design." },
+      { q: "Is it messy?", a: "A little, but manageable. Aprons recommended." },
+      { q: "Do we keep the pieces?", a: "Same day decorative, or fired & glazed from $5/item." },
+      { q: "Can we book for birthdays?", a: "Yes — see Private Events for group options." }
+    ],
+    relatedSlugs: ["handbuilding", "gift-cards", "private-parties"]
+  },
+
+  // 9) Candle Making
+  {
+    id: "candle",
+    anchorId: "candle",
+    navLabel: "Candle",
+    slug: "candle-making",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-amber-900/50 via-rose-900/25 to-slate-900/40",
+
+    scheduleLabel: "WEEKLY",
+    scheduleTitle: "Organic Candle Making",
+    schedulePill: "COZY",
+    scheduleRows: [
+      { time: "Sat · 6:00 PM", note: "Weekly favorite" },
+      { time: "Fri · 6:00 PM", note: "After-work cozy" },
+      { time: "Sun · 4:30 PM", note: "Easy evening" }
+    ],
+
+    badge: "WAX · SCENT · GLOW",
+    heroTitle: "Organic Candle Making",
+    heroDescription:
+      "Blend scents, pour wax, and leave with a candle that smells like ‘I have my life together’ (even if you don’t).",
+    primaryCta: { label: "Book Candle Making", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Cozy", "Giftable", "Beginner-friendly", "Take-home"],
+    valueCards: [
+      { label: "STYLE", title: "Scent design", body: "Build your own blend." },
+      { label: "RESULT", title: "Take-home candle", body: "Leave with a real product." },
+      { label: "VIBE", title: "Warm + social", body: "Perfect winter class." }
+    ],
+    booking: { term: "candle" },
+    faqs: [
+      { q: "Do I take it home same day?", a: "Yes — after a short set time." },
+      { q: "Are scents strong?", a: "You control the strength." },
+      { q: "Is it beginner friendly?", a: "Totally — we guide each step." },
+      { q: "Can couples join?", a: "Yes — it’s a great date." },
+      { q: "Is this good for groups?", a: "Very — easy, fun, and everyone leaves happy." }
+    ],
+    relatedSlugs: ["wine-glass-painting", "gift-cards", "private-parties"]
+  },
+
+  // 10) Wine Glass Painting
+  {
+    id: "wine-glass",
+    anchorId: "wine-glass",
+    navLabel: "Wine Glass Painting",
+    slug: "wine-glass-painting",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-rose-900/50 via-indigo-900/25 to-emerald-900/35",
+
+    scheduleLabel: "POPULAR",
+    scheduleTitle: "Wine Glass Painting",
+    schedulePill: "SOCIAL",
+    scheduleRows: [
+      { time: "Fri · 7:00 PM", note: "Friday fun" },
+      { time: "Sat · 7:00 PM", note: "Best for groups" },
+      { time: "Sun · 4:00 PM", note: "Easy Sunday" }
+    ],
+
+    badge: "GLASS · PAINT · CHEERS",
+    heroTitle: "Wine Glass Painting",
+    heroDescription: "Paint a set that’s uniquely yours. Stencils optional. Vibes mandatory.",
+    primaryCta: { label: "Book Wine Glass", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Beginner-friendly", "Group-friendly", "Take-home", "Fun"],
+    valueCards: [
+      { label: "STYLE", title: "Personalized", body: "Patterns or freehand." },
+      { label: "RESULT", title: "Painted glass", body: "A set you’ll use." },
+      { label: "VIBE", title: "Cheers energy", body: "Social and light." }
+    ],
+    booking: { term: "wine%20glass" },
+    faqs: [
+      { q: "Do we seal the paint?", a: "We provide cure/bake instructions depending on paint." },
+      { q: "Can I do a theme?", a: "Yes — holiday themes are popular." },
+      { q: "Is it okay if I can’t draw?", a: "Yes — stencils and simple patterns work." },
+      { q: "Can groups do matching sets?", a: "Absolutely — perfect for parties." },
+      { q: "How long does it take?", a: "Usually 1.5–2 hours." }
+    ],
+    relatedSlugs: ["candle-making", "gift-cards", "private-parties"]
+  },
+
+  // Paper & Pigment
+  {
+    id: "paper-pigment",
+    anchorId: "paper-pigment",
+    navLabel: "Paper & Pigment",
+    slug: "paper-pigment",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-sky-900/45 via-indigo-900/25 to-amber-900/35",
+
+    scheduleLabel: "FEATURED",
+    scheduleTitle: "Paper & Pigment (Watercolor)",
+    schedulePill: "ART",
+    scheduleRows: [
+      { time: "Make your own watercolor + paint", note: "Premium signature" },
+      { time: "Weekly watercolor session", note: "All skills" },
+      { time: "Online watercolor classes", note: "Learn anywhere" }
+    ],
+
+    badge: "WATER · COLOR · FLOW",
+    heroTitle: "Paper & Pigment",
+    heroDescription:
+      "Watercolor that feels premium and modern: from making your own paint to weekly sessions and online classes.",
+    primaryCta: { label: "Book Watercolor", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Beginner-friendly", "Premium", "Mindful", "Online options"],
+    valueCards: [
+      { label: "STYLE", title: "Luminous", body: "Soft blends and blooms." },
+      { label: "RESULT", title: "Real technique", body: "Brush control + layers." },
+      { label: "VIBE", title: "Peaceful", body: "A gentle creative reset." }
+    ],
+    booking: { term: "watercolor" },
+    faqs: [
+      { q: "Do you provide supplies?", a: "Yes — we provide what you need in class." },
+      { q: "What’s ‘make your own watercolor’?", a: "You create paint, then use it immediately." },
+      { q: "Is watercolor hard?", a: "We make it approachable with simple exercises." },
+      { q: "Do you offer online?", a: "Yes — check listings for online sessions." },
+      { q: "Is this good for groups?", a: "Yes — calm and social." }
+    ],
+    relatedSlugs: ["painting", "gift-cards", "private-parties"]
+  },
+
+  // Painting
+  {
+    id: "painting",
+    anchorId: "painting",
+    navLabel: "Painting",
+    slug: "painting",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-indigo-900/55 via-slate-900/30 to-rose-900/40",
+
+    scheduleLabel: "THIS MONTH",
+    scheduleTitle: "Painting Department",
+    schedulePill: "SOCIAL",
+    scheduleRows: [
+      { time: "Acrylic painting nights", note: "Beginner-friendly" },
+      { time: "Themed painting sessions", note: "Holiday specials" },
+      { time: "Sip & paint classics", note: "Easy wins" }
+    ],
+
+    badge: "PAINT · SIP · SPARKLE",
+    heroTitle: "Painting Department",
+    heroDescription:
+      "Acrylic painting nights, themed sessions, and easy-to-love projects. Come for the vibes, leave with a painting you’re proud of.",
+    primaryCta: { label: "Book Painting", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Beginner-friendly", "Group-friendly", "Great for dates", "Take-home art"],
+    valueCards: [
+      { label: "STYLE", title: "Bold + fun", body: "Color-forward, not intimidating." },
+      { label: "RESULT", title: "Finished painting", body: "Leave with a full piece." },
+      { label: "VIBE", title: "Party-safe", body: "Perfect for birthdays and friends." }
+    ],
+    booking: { term: "painting" },
+    faqs: [
+      { q: "Do I need experience?", a: "No — we teach step-by-step." },
+      { q: "Can I choose colors?", a: "Yes — we encourage personalization." },
+      { q: "Do you do themed nights?", a: "Yes — holiday + seasonal themes happen often." },
+      { q: "Is this good for groups?", a: "Yes — easy and social." },
+      { q: "Do you offer private painting parties?", a: "Yes — see Private Events." }
+    ],
+    relatedSlugs: ["paper-pigment", "gift-cards", "private-parties"]
+  },
+
+  // Parent & Me
+  {
+    id: "parent-and-me",
+    anchorId: "parent-and-me",
+    navLabel: "Parent & Me",
+    slug: "parent-and-me",
+    videoSrc: placeholderVideo,
+    overlayClass: "bg-gradient-to-br from-rose-900/40 via-sky-900/20 to-emerald-900/30",
+
+    scheduleLabel: "FAMILY",
+    scheduleTitle: "Parent & Me Classes",
+    schedulePill: "KID-FRIENDLY",
+    scheduleRows: [
+      { time: "Sat · 10:30 AM", note: "Best family slot" },
+      { time: "Sun · 12:00 PM", note: "Easy weekend" },
+      { time: "Holiday pop-ups", note: "Special themes" }
+    ],
+
+    badge: "FAMILY · CLAY · SMILES",
+    heroTitle: "Parent & Me Classes",
+    heroDescription:
+      "A kid-friendly creative session where parents and kids make together. Easy projects, guided steps, and maximum proud smiles.",
+    primaryCta: { label: "Book Parent & Me", kind: "booking" },
+    secondaryCta: { label: "Details + FAQs", kind: "detail" },
+    tags: ["Kid-friendly", "Beginner-friendly", "Weekend", "Memories"],
+    valueCards: [
+      { label: "STYLE", title: "Simple + cute", body: "Projects that kids can actually finish." },
+      { label: "RESULT", title: "Shared keepsakes", body: "Take-home memories (and pieces)." },
+      { label: "VIBE", title: "Wholesome", body: "A screen-free win for everyone." }
+    ],
+    booking: { term: "kids" },
+    faqs: [
+      { q: "What ages work best?", a: "It depends on the project; listings usually include age guidance." },
+      { q: "Do adults participate?", a: "Yes — it's collaborative by design." },
+      { q: "Is it messy?", a: "A little, but manageable. Aprons recommended." },
+      { q: "Do we keep the pieces?", a: "Same day decorative, or fired & glazed from $5/item." },
+      { q: "Can we book for birthdays?", a: "Yes — see Private Events for group options." }
+    ],
+    relatedSlugs: ["handbuilding", "gift-cards", "private-parties"]
+  }
+];
