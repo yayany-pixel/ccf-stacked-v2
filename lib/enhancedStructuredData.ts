@@ -24,7 +24,7 @@ export function generateOrganizationSchema() {
     ],
     "contactPoint": {
       "@type": "ContactPoint",
-      "telephone": "+1-XXX-XXX-XXXX", // Add real phone
+      "telephone": "+1-312-881-9929",
       "contactType": "customer service",
       "email": "info@colorcocktailfactory.com",
       "availableLanguage": "English"
@@ -45,7 +45,7 @@ export function generateLocalBusinessSchema(city: City) {
     postalCode: "60609",
     latitude: 41.8307,
     longitude: -87.6567,
-    telephone: "+1-312-XXX-XXXX", // Update
+    telephone: "+1-312-881-9929",
   };
   
   const eugeneData = {
@@ -84,7 +84,14 @@ export function generateLocalBusinessSchema(city: City) {
     "telephone": locationData.telephone,
     "email": "info@colorcocktailfactory.com",
     "priceRange": "$$",
-    "openingHoursSpecification": [
+    "openingHoursSpecification": isChicago ? [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Wednesday",
+        "opens": "17:30",
+        "closes": "21:00"
+      }
+    ] : [
       {
         "@type": "OpeningHoursSpecification",
         "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
