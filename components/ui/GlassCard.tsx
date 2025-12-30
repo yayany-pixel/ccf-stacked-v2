@@ -3,11 +3,13 @@ import { cn } from "@/lib/utils";
 export default function GlassCard({
   className,
   children,
-  interactive = false
+  interactive = false,
+  style
 }: {
   className?: string;
   children: React.ReactNode;
   interactive?: boolean;
+  style?: React.CSSProperties;
 }) {
   return (
     <div
@@ -16,6 +18,7 @@ export default function GlassCard({
         interactive && "glass-card-interactive",
         className
       )}
+      style={style}
     >
       {children}
     </div>
