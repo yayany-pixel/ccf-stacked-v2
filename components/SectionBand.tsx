@@ -17,7 +17,6 @@ export default function SectionBand({
           muted
           loop
           playsInline
-          loading="lazy"
           preload="none"
         />
         <div className={`absolute inset-0 ${section.overlayClass}`} />
