@@ -5,7 +5,6 @@ import TagPill from "@/components/ui/TagPill";
 import ButtonPill from "@/components/ui/ButtonPill";
 import MiniValueCard from "@/components/ui/MiniValueCard";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
-import HomeTimesDrawer from "@/components/HomeTimesDrawer";
 import Reveal from "@/components/motion/Reveal";
 import type { City, SectionConfig } from "@/lib/config";
 import { buildBookingLink } from "@/lib/links";
@@ -100,14 +99,6 @@ export default function StackedSection({
                         <MiniValueCard key={c.label} {...c} />
                       ))}
                     </div>
-
-                    {/* Collapsible Times Drawer */}
-                    {section.bookingLinks && (
-                      <HomeTimesDrawer
-                        bookingLinks={section.bookingLinks}
-                        upcomingTimes={section.upcomingTimes}
-                      />
-                    )}
 
                     <div className="mt-7 border-t border-white/10 pt-5 text-xs text-white/60">
                       <span className="text-white/70">Want details?</span>{" "}

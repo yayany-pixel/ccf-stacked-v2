@@ -27,8 +27,15 @@ export default function ButtonPill({
     ghost: "border border-white/10 bg-transparent text-white/75 hover:bg-white/10"
   };
 
+  // Check if external link (starts with http)
+  const isExternal = href.startsWith('http');
+
   return (
-    <Link href={href} className={cn(base, styles[variant], full ? "w-full" : "", className)}>
+    <Link 
+      href={href} 
+      className={cn(base, styles[variant], full ? "w-full" : "", className)}
+      {...(isExternal && { target: "_blank", rel: "noopener noreferrer" })}
+    >
       {children}
     </Link>
   );
