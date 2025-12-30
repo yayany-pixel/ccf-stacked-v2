@@ -9,6 +9,7 @@ import { sections, type SectionConfig } from "@/lib/config";
 import { getCityByParam, buildBookingLink } from "@/lib/links";
 import { buildActivityMetadata } from "@/lib/seo";
 import { activityJsonLd, faqJsonLd, breadcrumbJsonLd } from "@/lib/structuredData";
+import { generateFAQSchema, generateCourseSchema, generateBreadcrumbSchema } from "@/lib/enhancedStructuredData";
 
 function getSection(slug: string): SectionConfig | undefined {
   return sections.find((s) => s.slug === slug);
@@ -54,8 +55,33 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
     .filter((s) => section.relatedSlugs?.includes(s.slug))
     .slice(0, 3);
 
+  // Generate structured data
+  const faqSchema = generateFAQSchema(section);
+  const courseSchema = generateCourseSchema(city, section);
+  const breadcrumbs = generateBreadcrumbSchema([
+    { name: "Home", url: "https://colorcocktailfactory.com" },
+    { name: city.label, url: `https://colorcocktailfactory.com/${city.param}` },
+    { name: section.heroTitle, url: `https://colorcocktailfactory.com/${city.param}/${section.slug}` }
+  ]);
+
   return (
     <main className="min-h-screen">
+      {/* JSON-LD Structured Data */}
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+      />
+      
       <div className="h-20" />
       <SectionBand section={section}>
         <div className="mx-auto grid max-w-6xl gap-6 px-6 py-10 md:grid-cols-12">

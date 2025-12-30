@@ -4,7 +4,6 @@ import PillNav from "@/components/PillNav";
 import ButtonPill from "@/components/ui/ButtonPill";
 import type { City } from "@/lib/config";
 import { buildHomeBookLink } from "@/lib/links";
-import { EVENTBRITE_EVENTS_HREF } from "@/lib/constants";
 
 export default function Header({ city }: { city: City }) {
   // Simplified navigation with only requested items
@@ -39,12 +38,6 @@ export default function Header({ city }: { city: City }) {
 
             <div className="flex items-center gap-2">
               <CityToggle city={city} />
-              <Link
-                href={EVENTBRITE_EVENTS_HREF}
-                className="hidden rounded-full border border-purple-400/40 bg-gradient-to-r from-purple-500/20 to-pink-500/20 px-4 py-2 text-xs font-semibold shadow-lg shadow-purple-500/20 transition-all hover:border-purple-400/60 hover:shadow-purple-500/30 sm:inline-flex"
-              >
-                Exclusive Events
-              </Link>
               <ButtonPill href={buildHomeBookLink(city)} variant="primary" className="hidden sm:inline-flex">
                 Book a class
               </ButtonPill>

@@ -6,12 +6,42 @@ import ScrollHint from "@/components/motion/ScrollHint";
 import HeroVideoBackground from "@/components/HeroVideoBackground";
 import { sections } from "@/lib/config";
 import { getCityByParam, buildHomeBookLink } from "@/lib/links";
+import { generateLocalBusinessSchema, generateOrganizationSchema, generateBreadcrumbSchema } from "@/lib/enhancedStructuredData";
+import type { Metadata } from "next";
+import { buildCityMetadata } from "@/lib/seo";
+
+export async function generateMetadata({ params }: { params: { city: string } }): Promise<Metadata> {
+  const city = getCityByParam(params.city);
+  return buildCityMetadata(city);
+}
 
 export default function CityHome({ params }: { params: { city: string } }) {
   const city = getCityByParam(params.city);
+  
+  // Generate structured data for this city
+  const localBusinessSchema = generateLocalBusinessSchema(city);
+  const organizationSchema = generateOrganizationSchema();
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "https://colorcocktailfactory.com" },
+    { name: city.label, url: `https://colorcocktailfactory.com/${city.param}` }
+  ]);
 
   return (
     <main className="min-h-screen">
+      {/* JSON-LD Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      
       {/* Hero Section */}
       <section className="gradient-breathing relative flex min-h-[90vh] items-center overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40">
         {/* Video Background + Overlays */}
@@ -43,7 +73,8 @@ export default function CityHome({ params }: { params: { city: string } }) {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
                 </span>
                 Now Open in {city.label}
-              </div>
+              </div>birthdays, or discovering your creative side in {city.label}. 
+                Beginner-friendly. Same-day bookings available
             </Reveal>
 
             <Reveal delay={100} variant="fade-up">
@@ -154,37 +185,69 @@ export default function CityHome({ params }: { params: { city: string } }) {
       <footer className="border-t border-white/10 bg-black/20 px-6 pb-16 pt-10 text-white/70">
         <div className="mx-auto max-w-5xl">
           <div className="rounded-2xl border border-white/10 bg-white/5 p-8 shadow-soft">
-            <h2 className="text-lg font-semibold text-white/90">Premium Creative Workshops in {city.label}</h2>
+            <h2 className="text-lg font-semibold text-white/90">
+              {city.label} Creative Workshops & Pottery Classes | Color Cocktail Factory
+            </h2>
             <p className="mt-3 text-sm leading-relaxed text-white/75">
-              Color Cocktail Factory offers hands-on pottery classes, Turkish lamp making, glass fusion, mosaics, 
-              and more creative workshops in {city.label}. Perfect for date nights, team building, private events, 
-              and unique gifts. All skill levels welcome.
+              Color Cocktail Factory is {city.label}&apos;s premier creative workshop studio offering hands-on pottery classes, 
+              wheel throwing, Turkish lamp making, glass fusion, mosaics, and more. Located in {city.param === 'chicago' ? 'Pilsen, Chicago' : 'downtown Eugene, Oregon'}, 
+              our expert-led workshops are perfect for date nights, team building, private events, birthdays, bachelorette parties, 
+              and unique experience gifts. All skill levels welcome - from complete beginners to experienced artists. 
+              Book online for same-day availability.
             </p>
             
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <div className="text-left">
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-white/80">Popular Classes</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-white/80">Popular {city.label} Classes</h3>
                 <ul className="mt-2 space-y-1 text-xs text-white/65">
-                  <li>Pottery Wheel Throwing</li>
+                  <li>Pottery Wheel Throwing {city.label}</li>
                   <li>Turkish Lamp Mosaics</li>
-                  <li>Glass Fusion</li>
+                  <li>Glass Fusion Workshop</li>
                   <li>Handbuilding Pottery</li>
+                  <li>Date Night Pottery Class</li>
+                  <li>Beginner Ceramics</li>
                 </ul>
               </div>
               
               <div className="text-left">
                 <h3 className="text-xs font-semibold uppercase tracking-wide text-white/80">Perfect For</h3>
                 <ul className="mt-2 space-y-1 text-xs text-white/65">
-                  <li>Date Nights & Couples</li>
-                  <li>Team Building Events</li>
+                  <li>Date Nights & Couples Activities</li>
+                  <li>Team Building Events {city.label}</li>
                   <li>Birthday Parties</li>
-                  <li>Gift Experiences</li>
+                  <li>Bachelorette Parties</li>
+                  <li>Corporate Events</li>
+                  <li>Experience Gift Cards</li>
                 </ul>
               </div>
               
               <div className="text-left">
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-white/80">Connect</h3>
+                <h3 className="text-xs font-semibold uppercase tracking-wide text-white/80">Quick Links</h3>
                 <ul className="mt-2 space-y-1 text-xs">
+                  <li>
+                    <a 
+                      className="text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
+                      href={buildHomeBookLink(city)}
+                    >
+                      Book a Class
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      className="text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
+                      href="/gift-cards"
+                    >
+                      Gift Cards (50% Off)
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      className="text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
+                      href={`/${city.param}/private-parties`}
+                    >
+                      Private Events & Parties
+                    </a>
+                  </li>
                   <li>
                     <a 
                       className="text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
@@ -195,29 +258,14 @@ export default function CityHome({ params }: { params: { city: string } }) {
                       Instagram
                     </a>
                   </li>
-                  <li>
-                    <a 
-                      className="text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
-                      href="/gift-cards"
-                    >
-                      Gift Cards
-                    </a>
-                  </li>
-                  <li>
-                    <a 
-                      className="text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
-                      href={`/${city.param}/private-parties`}
-                    >
-                      Private Events
-                    </a>
-                  </li>
                 </ul>
               </div>
             </div>
             
             <div className="mt-6 border-t border-white/10 pt-4">
               <p className="text-xs text-white/55">
-                © {new Date().getFullYear()} Color Cocktail Factory. {city.label} creative workshops. 
+                © {new Date().getFullYear()} Color Cocktail Factory. {city.label} creative workshops, pottery classes, and art studio. 
+                Serving {city.param === 'chicago' ? 'Pilsen, West Loop, South Loop, and greater Chicago area' : 'downtown Eugene, Whiteaker, and greater Eugene area'}. 
                 All rights reserved.
               </p>
             </div>

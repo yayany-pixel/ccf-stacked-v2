@@ -3,32 +3,65 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Color Cocktail Factory — Premium Creative Workshops | Pottery, Glass Art & More",
+    default: "Color Cocktail Factory — Premium Creative Workshops in Chicago & Eugene | Pottery, Glass Art & More",
     template: "%s | Color Cocktail Factory"
   },
   description:
-    "Book unique, hands-on creative workshops in Chicago and Eugene. Expert-led pottery classes, Turkish lamp making, glass fusion, mosaics, bonsai, candle making, watercolor painting & more. Perfect for date nights, team building, and gifts. Same-day availability.",
+    "Book unique, hands-on creative workshops in Chicago (Pilsen) and Eugene, Oregon. Expert-led pottery classes, wheel throwing, Turkish lamp making, glass fusion, mosaics, bonsai, candle making & more. Perfect for date nights, team building, birthdays, and bachelorette parties. Same-day availability. Beginner-friendly.",
   keywords: [
+    // Chicago-specific SEO
     "pottery classes Chicago",
+    "pottery classes Pilsen Chicago",
+    "art classes Chicago",
+    "date night ideas Chicago",
+    "things to do in Chicago",
+    "pottery wheel Chicago",
+    "creative workshops Chicago",
+    "team building Chicago",
+    "bachelorette party Chicago",
+    "art studio Chicago",
+    "pottery studio Pilsen",
+    "glass art classes Chicago",
+    "mosaic workshop Chicago",
+    // Eugene-specific SEO
+    "pottery classes Eugene Oregon",
+    "art classes Eugene OR",
     "pottery classes Eugene",
+    "things to do in Eugene",
+    "date night Eugene",
+    "creative workshops Eugene",
+    "pottery wheel Eugene",
+    "art studio Eugene",
+    "downtown Eugene art classes",
+    "Eugene pottery studio",
+    // Activity-specific
     "pottery wheel workshop",
+    "beginner pottery class",
+    "wheel throwing class",
+    "handbuilding pottery",
     "date night pottery",
+    "couples pottery class",
     "Turkish lamp making",
     "glass fusion classes",
     "mosaic workshop",
-    "creative workshops near me",
-    "art classes Chicago",
-    "art classes Eugene",
-    "team building activities",
-    "bachelorette party ideas",
-    "candle making class",
-    "watercolor painting class",
-    "gift cards for experiences",
-    "handbuilding pottery",
     "bonsai class",
     "terrarium workshop",
+    "candle making class",
+    "watercolor painting class",
+    // Intent-based keywords
+    "creative workshops near me",
+    "pottery classes near me",
+    "art classes near me",
+    "team building activities",
+    "corporate team building",
     "private event venue",
-    "corporate team building"
+    "bachelorette party ideas",
+    "birthday party activities",
+    "gift cards for experiences",
+    "experience gifts",
+    "art and craft classes",
+    "same day pottery class",
+    "walk-in pottery class"
   ],
   metadataBase: new URL("https://colorcocktailfactory.com"),
   openGraph: {
@@ -74,6 +107,8 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const orgSchema = generateOrganizationSchema();
+  
   return (
     <html lang="en">
       <head>
@@ -81,6 +116,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#1a1a2e" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+        />
       </head>
       <body>{children}</body>
     </html>
