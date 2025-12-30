@@ -7,22 +7,24 @@ import { PRIVATE_EVENT_EMAIL } from "@/lib/config";
 type FormState = {
   name: string;
   email: string;
-  city: string;
+  state: string;
   date: string;
   groupSize: string;
   occasion: string;
   preferredProject: string;
+  budget: string;
   details: string;
 };
 
 const initial: FormState = {
   name: "",
   email: "",
-  city: "Chicago – Phoenix",
+  state: "IL",
   date: "",
   groupSize: "",
   occasion: "",
   preferredProject: "Choose or leave blank",
+  budget: "$75",
   details: ""
 };
 
@@ -31,9 +33,10 @@ function mailtoFromForm(city: City, s: FormState) {
   const body = [
     `NAME: ${s.name}`,
     `EMAIL: ${s.email}`,
-    `CITY: ${s.city}`,
+    `STATE: ${s.state}`,
     `DATE: ${s.date}`,
     `GROUP SIZE: ${s.groupSize}`,
+    `BUDGET PER PERSON: ${s.budget}`,
     `OCCASION: ${s.occasion}`,
     `PREFERRED PROJECT: ${s.preferredProject}`,
     "",
@@ -55,7 +58,7 @@ export default function PrivateEventFormCard({
 }) {
   const [s, setS] = React.useState<FormState>(() => ({
     ...initial,
-    city: `${city.label} – Phoenix`
+    state: city.param === "chicago" ? "IL" : "OR"
   }));
 
   const href = mailtoFromForm(city, s);
@@ -94,14 +97,14 @@ export default function PrivateEventFormCard({
         </label>
 
         <label className="grid gap-1">
-          <span className="text-xs font-semibold uppercase tracking-wide text-white/65">City</span>
+          <span className="text-xs font-semibold uppercase tracking-wide text-white/65">State</span>
           <select
-            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20"
-            value={s.city}
-            onChange={(e) => setS((p) => ({ ...p, city: e.target.value }))}
+            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20 [&>option]:bg-slate-800 [&>option]:text-white"
+            value={s.state}
+            onChange={(e) => setS((p) => ({ ...p, state: e.target.value }))}
           >
-            <option>Chicago – Phoenix</option>
-            <option>Eugene – Phoenix</option>
+            <option value="IL">IL (Illinois)</option>
+            <option value="OR">OR (Oregon)</option>
           </select>
         </label>
 
@@ -138,21 +141,40 @@ export default function PrivateEventFormCard({
           />
         </label>
 
+        <label className="grid gap-1">
+          <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Budget Per Person</span>
+          <select
+            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20 [&>option]:bg-slate-800 [&>option]:text-white"
+            value={s.budget}
+            onChange={(e) => setS((p) => ({ ...p, budget: e.target.value }))}
+          >
+            <option value="$50">$50</option>
+            <option value="$60">$60</option>
+            <option value="$70">$70</option>
+            <option value="$75">$75</option>
+            <option value="$80">$80</option>
+            <option value="$90">$90</option>
+            <option value="$100">$100</option>
+            <option value="$110">$110</option>
+            <option value="$120">$120</option>
+          </select>
+        </label>
+
         <label className="grid gap-1 md:col-span-2">
           <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Preferred Project</span>
           <select
-            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20"
+            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20 [&>option]:bg-slate-800 [&>option]:text-white"
             value={s.preferredProject}
             onChange={(e) => setS((p) => ({ ...p, preferredProject: e.target.value }))}
           >
-            <option>Choose or leave blank</option>
-            <option>Wheel throwing / Date Night</option>
-            <option>Handbuilt pottery (Cups, bowls, Vases, etc)</option>
-            <option>Mosaics / Turkish lamp</option>
-            <option>Glass fusion</option>
-            <option>Terrariums</option>
-            <option>Bonsai</option>
-            <option>Other / Not sure yet</option>
+            <option value="Choose or leave blank">Choose or leave blank</option>
+            <option value="Wheel throwing / Date Night">Wheel throwing / Date Night</option>
+            <option value="Handbuilt pottery (Cups, bowls, Vases, etc)">Handbuilt pottery (Cups, bowls, Vases, etc)</option>
+            <option value="Mosaics / Turkish lamp">Mosaics / Turkish lamp</option>
+            <option value="Glass fusion">Glass fusion</option>
+            <option value="Terrariums">Terrariums</option>
+            <option value="Bonsai">Bonsai</option>
+            <option value="Other / Not sure yet">Other / Not sure yet</option>
           </select>
         </label>
 
