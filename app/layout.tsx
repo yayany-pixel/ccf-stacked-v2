@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { generateOrganizationSchema } from "@/lib/enhancedStructuredData";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata: Metadata = {
   title: {
@@ -121,6 +122,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
+        <GoogleAnalytics />
       </head>
       <body>{children}</body>
     </html>
