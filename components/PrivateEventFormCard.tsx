@@ -7,7 +7,7 @@ import { PRIVATE_EVENT_EMAIL } from "@/lib/config";
 type FormState = {
   name: string;
   email: string;
-  state: string;
+  city: string;
   date: string;
   groupSize: string;
   occasion: string;
@@ -16,11 +16,18 @@ type FormState = {
   details: string;
 };
 
+// Helper: Get date string in YYYY-MM-DD format
+function getDateString(daysFromNow: number): string {
+  const date = new Date();
+  date.setDate(date.getDate() + daysFromNow);
+  return date.toISOString().split('T')[0];
+}
+
 const initial: FormState = {
   name: "",
   email: "",
-  state: "IL",
-  date: "",
+  city: "Chicago",
+  date: getDateString(7), // Default to 7 days from today
   groupSize: "",
   occasion: "",
   preferredProject: "Choose or leave blank",
@@ -33,7 +40,7 @@ function mailtoFromForm(city: City, s: FormState) {
   const body = [
     `NAME: ${s.name}`,
     `EMAIL: ${s.email}`,
-    `STATE: ${s.state}`,
+    `CITY: ${s.city}`,
     `DATE: ${s.date}`,
     `GROUP SIZE: ${s.groupSize}`,
     `BUDGET PER PERSON: ${s.budget}`,
@@ -56,9 +63,12 @@ export default function PrivateEventFormCard({
   city: City;
   timeWindows: string[];
 }) {
+  const minDate = getDateString(7); // Minimum selectable date is 7 days from today
+  
   const [s, setS] = React.useState<FormState>(() => ({
     ...initial,
-    state: city.param === "chicago" ? "IL" : "OR"
+    city: city.label, // Use city.label (Chicago or Eugene)
+    date: getDateString(7) // Default to 7 days from today
   }));
 
   const href = mailtoFromForm(city, s);
@@ -97,25 +107,25 @@ export default function PrivateEventFormCard({
         </label>
 
         <label className="grid gap-1">
-          <span className="text-xs font-semibold uppercase tracking-wide text-white/65">State</span>
+          <span className="text-xs font-semibold uppercase tracking-wide text-white/65">City</span>
           <select
             className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20 [&>option]:bg-slate-800 [&>option]:text-white"
-            value={s.state}
-            onChange={(e) => setS((p) => ({ ...p, state: e.target.value }))}
+            value={s.city}
+            onChange={(e) => setS((p) => ({ ...p, city: e.target.value }))}
           >
-            <option value="IL">IL (Illinois)</option>
-            <option value="OR">OR (Oregon)</option>
+            <option value="Chicago">Chicago</option>
+            <option value="Eugene">Eugene</option>
           </select>
         </label>
 
         <label className="grid gap-1">
           <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Date</span>
           <input
-            type="text"
-            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20"
+            type="date"
+            className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-70 [&::-webkit-calendar-picker-indicator]:hover:opacity-100"
             value={s.date}
+            min={minDate}
             onChange={(e) => setS((p) => ({ ...p, date: e.target.value }))}
-            placeholder="Estimated: mm-dd-yyyy"
           />
         </label>
 
