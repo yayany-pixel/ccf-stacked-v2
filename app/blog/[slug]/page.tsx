@@ -365,5 +365,186 @@ export default function BlogPostPage({ params }: Props) {
     );
   }
 
+  // Eugene Date Night Ideas content
+  if (params.slug === "eugene-date-night-ideas") {
+    return (
+      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-green-900/40 to-slate-900">
+        <div className="sparkle-noise absolute inset-0 opacity-20" />
+        
+        <div className="relative mx-auto max-w-4xl px-6 py-20">
+          <Reveal variant="fade-up">
+            <Link href="/blog" className="inline-flex items-center gap-2 text-sm text-green-300 hover:text-green-200">
+              ← Back to Blog
+            </Link>
+          </Reveal>
+
+          <Reveal delay={100} variant="fade-up">
+            <div className="mt-6">
+              <div className="mb-4 flex flex-wrap items-center gap-3 text-sm text-white/60">
+                <span className="rounded-full bg-green-500/20 px-3 py-1 text-green-200">{post.category}</span>
+                <span>{new Date(post.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</span>
+                <span>•</span>
+                <span>{post.readTime}</span>
+              </div>
+              
+              <h1 className="font-serif text-4xl font-bold leading-tight sm:text-5xl">
+                {post.title}
+              </h1>
+              
+              <p className="mt-4 text-xl text-white/75">
+                {post.description}
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={200} variant="fade-up">
+            <div className="mt-12 space-y-8 text-white/85">
+              <GlassCard>
+                <div className="p-8">
+                  <p className="leading-relaxed">
+                    Eugene, Oregon is known for its creative spirit, natural beauty, and artistic community. Skip the typical dinner date and explore these unique, hands-on experiences that'll make your date night truly memorable!
+                  </p>
+                </div>
+              </GlassCard>
+
+              <GlassCard>
+                <div className="p-8">
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-purple-500/20 font-serif text-2xl font-bold text-purple-300">1</span>
+                    <div>
+                      <h2 className="text-xl font-bold">Pottery Wheel Date Night</h2>
+                      <p className="mt-2 leading-relaxed text-white/75">
+                        Get romantic at the pottery wheel! Our <Link href="/eugene/date-night-wheel" className="text-purple-300 underline">Date Night Pottery class</Link> in downtown Eugene is the perfect blend of creativity and connection. Make bowls, cups, or vases together and take home your handmade creations. BYOB welcome!
+                      </p>
+                      <p className="mt-2 text-sm text-purple-300">📍 Downtown Eugene • $75/couple</p>
+                    </div>
+                  </div>
+                </div>
+              </GlassCard>
+
+              <GlassCard>
+                <div className="p-8">
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cyan-500/20 font-serif text-2xl font-bold text-cyan-300">2</span>
+                    <div>
+                      <h2 className="text-xl font-bold">Turkish Lamp Making</h2>
+                      <p className="mt-2 leading-relaxed text-white/75">
+                        Create a mesmerizing mosaic lamp that'll light up your space for years to come. Our <Link href="/eugene/turkish-lamp" className="text-cyan-300 underline">Turkish Lamp workshop</Link> teaches traditional techniques in a modern, relaxed setting. A truly unique gift you crafted together!
+                      </p>
+                      <p className="mt-2 text-sm text-cyan-300">📍 Downtown Eugene • $120/couple</p>
+                    </div>
+                  </div>
+                </div>
+              </GlassCard>
+
+              <GlassCard>
+                <div className="p-8">
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-pink-500/20 font-serif text-2xl font-bold text-pink-300">3</span>
+                    <div>
+                      <h2 className="text-xl font-bold">Glass Fusion Art</h2>
+                      <p className="mt-2 leading-relaxed text-white/75">
+                        Design stunning fused glass art pieces - from coasters to jewelry dishes to suncatchers. Our <Link href="/eugene/glass-fusion" className="text-pink-300 underline">Glass Fusion class</Link> is beginner-friendly and absolutely mesmerizing to create!
+                      </p>
+                      <p className="mt-2 text-sm text-pink-300">📍 Downtown Eugene • $85/couple</p>
+                    </div>
+                  </div>
+                </div>
+              </GlassCard>
+
+              <GlassCard>
+                <div className="p-8">
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-green-500/20 font-serif text-2xl font-bold text-green-300">4</span>
+                    <div>
+                      <h2 className="text-xl font-bold">Bonsai Workshop</h2>
+                      <p className="mt-2 leading-relaxed text-white/75">
+                        Perfect for nature-loving Eugene couples! Learn the ancient art of bonsai in our <Link href="/eugene/bonsai" className="text-green-300 underline">Bonsai class</Link>. You'll each create a living miniature tree that grows alongside your relationship - how poetic is that?
+                      </p>
+                      <p className="mt-2 text-sm text-green-300">📍 Downtown Eugene • $90/couple</p>
+                    </div>
+                  </div>
+                </div>
+              </GlassCard>
+
+              <GlassCard>
+                <div className="p-8">
+                  <div className="flex items-start gap-4">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-500/20 font-serif text-2xl font-bold text-orange-300">5</span>
+                    <div>
+                      <h2 className="text-xl font-bold">Mosaic Art Making</h2>
+                      <p className="mt-2 leading-relaxed text-white/75">
+                        Piece together a colorful masterpiece! Our <Link href="/eugene/mosaics" className="text-orange-300 underline">Mosaic class</Link> teaches you to create intricate patterns and designs. Perfect for artistic couples who love working with color.
+                      </p>
+                      <p className="mt-2 text-sm text-orange-300">📍 Downtown Eugene • $80/couple</p>
+                    </div>
+                  </div>
+                </div>
+              </GlassCard>
+
+              <GlassCard>
+                <div className="p-8">
+                  <div className="space-y-6 text-white/75">
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">6. Handbuilding Pottery</h3>
+                      <p className="mt-1">Skip the wheel and create sculptural ceramic art using ancient hand techniques. Great for couples who want to explore their artistic side!</p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">7. Terrarium Workshop</h3>
+                      <p className="mt-1">Build your own miniature Pacific Northwest ecosystem! Perfect for Eugene's nature-loving vibe. Your terrarium becomes a living reminder of your creative date.</p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">8. Candle Making</h3>
+                      <p className="mt-1">Craft custom scented candles together. Choose from Oregon-inspired fragrances like cedar, pine, and lavender for a truly local touch.</p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">9. Wine Glass Painting</h3>
+                      <p className="mt-1">Paint personalized wine glasses, then toast with local Oregon wine. BYOB encouraged - support local Willamette Valley wineries!</p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">10. Private Workshop Experience</h3>
+                      <p className="mt-1">Want the whole studio to yourselves? Book a <Link href="/eugene/private-parties" className="text-purple-300 underline">private creative session</Link> for an intimate, customized date night.</p>
+                    </div>
+                  </div>
+                </div>
+              </GlassCard>
+
+              <GlassCard className="bg-gradient-to-br from-green-500/20 to-purple-500/20">
+                <div className="p-8 text-center">
+                  <h2 className="font-serif text-2xl font-bold">Why Eugene Couples Love Creative Dates</h2>
+                  <div className="mx-auto mt-4 max-w-2xl space-y-3 text-left leading-relaxed text-white/85">
+                    <p>🌲 <strong>Fits Eugene's Vibe:</strong> Hands-on, creative, and eco-conscious - totally Eugene!</p>
+                    <p>💬 <strong>Easy Conversation:</strong> Creating together makes talking feel natural and fun</p>
+                    <p>🎨 <strong>Support Local Arts:</strong> Your date night supports Eugene's thriving creative community</p>
+                    <p>🏡 <strong>Take Home Art:</strong> Every piece tells the story of your date night</p>
+                    <p>🍷 <strong>BYOB Welcome:</strong> Bring local Oregon wine or craft beer!</p>
+                    <p>☔ <strong>Rain-Proof Fun:</strong> Perfect indoor activity for those rainy Eugene days</p>
+                  </div>
+                </div>
+              </GlassCard>
+
+              <GlassCard className="bg-gradient-to-br from-purple-500/20 to-green-500/20">
+                <div className="p-8 text-center">
+                  <h2 className="font-serif text-2xl font-bold">Book Your Eugene Date Night</h2>
+                  <p className="mx-auto mt-4 max-w-2xl leading-relaxed text-white/85">
+                    All classes welcome beginners - zero experience required! We provide everything you need. Located in downtown Eugene, easy access from Whiteaker, University District, and beyond.
+                  </p>
+                  <div className="mt-6 flex flex-wrap justify-center gap-3">
+                    <ButtonPill href="/eugene/date-night-wheel" variant="primary">
+                      Book Date Night Pottery
+                    </ButtonPill>
+                    <ButtonPill href="/eugene" variant="secondary">
+                      See All Eugene Classes
+                    </ButtonPill>
+                  </div>
+                </div>
+              </GlassCard>
+            </div>
+          </Reveal>
+        </div>
+      </main>
+    );
+  }
+
   return <div>Blog post not found</div>;
 }

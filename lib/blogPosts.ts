@@ -50,6 +50,27 @@ export const blogPosts: BlogPost[] = [
       "pilsen date night",
       "creative date ideas chicago"
     ]
+  },
+  {
+    slug: "eugene-date-night-ideas",
+    title: "10 Romantic Date Night Ideas in Eugene, Oregon (Creative & Unique)",
+    description: "Explore the best creative date experiences in Eugene - from pottery workshops to glass art. Perfect for couples seeking unique, hands-on activities!",
+    date: "2025-01-08",
+    author: "Color Cocktail Factory",
+    category: "Date Night Ideas",
+    readTime: "6 min read",
+    image: "/images/blog/date-night-eugene.jpg",
+    keywords: [
+      "date night eugene oregon",
+      "unique date ideas eugene",
+      "couples activities eugene",
+      "romantic things to do eugene",
+      "pottery date night eugene",
+      "eugene oregon date night",
+      "downtown eugene date ideas",
+      "creative date ideas eugene",
+      "whiteaker date night"
+    ]
   }
 ];
 
