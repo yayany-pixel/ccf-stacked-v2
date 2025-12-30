@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { trackRezClickBooking } from "@/lib/metaPixel";
 
 type Variant = "primary" | "secondary" | "ghost";
 
@@ -10,13 +11,18 @@ export default function ButtonPill({
   children,
   variant = "secondary",
   className,
-  full
+  full,
+  trackingData
 }: {
   href: string;
   children: React.ReactNode;
   variant?: Variant;
   className?: string;
   full?: boolean;
+  trackingData?: {
+    activityName: string;
+    city: string;
+  };
 }) {
   const base =
     "btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20";
@@ -29,11 +35,22 @@ export default function ButtonPill({
 
   // Check if external link (starts with http)
   const isExternal = href.startsWith('http');
+  
+  // Check if this is a RezClick booking link
+  const isRezClickBooking = href.includes('rezclick.com') && trackingData;
+
+  // Handle click for tracking
+  const handleClick = () => {
+    if (isRezClickBooking && trackingData) {
+      trackRezClickBooking(href, trackingData.activityName, trackingData.city);
+    }
+  };
 
   return (
     <Link 
       href={href} 
       className={cn(base, styles[variant], full ? "w-full" : "", className)}
+      onClick={handleClick}
       {...(isExternal && { target: "_blank", rel: "noopener noreferrer" })}
     >
       {children}

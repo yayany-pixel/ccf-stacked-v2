@@ -75,12 +75,20 @@ export default function StackedSection({
                       <ButtonPill
                         href={resolveHref(city, section, section.primaryCta.kind, section.primaryCta.href)}
                         variant="primary"
+                        trackingData={{
+                          activityName: section.heroTitle,
+                          city: city.label
+                        }}
                       >
                         {section.primaryCta.label}
                       </ButtonPill>
                       <ButtonPill
                         href={resolveHref(city, section, section.secondaryCta.kind, section.secondaryCta.href)}
                         variant="secondary"
+                        trackingData={{
+                          activityName: section.heroTitle,
+                          city: city.label
+                        }}
                       >
                         {section.secondaryCta.label}
                       </ButtonPill>
