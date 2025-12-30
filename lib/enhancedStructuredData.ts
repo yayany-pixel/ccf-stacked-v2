@@ -26,7 +26,7 @@ export function generateOrganizationSchema() {
       "@type": "ContactPoint",
       "telephone": "+1-312-881-9929",
       "contactType": "customer service",
-      "email": "info@colorcocktailfactory.com",
+      "email": "support@colorcocktailfactory.com",
       "availableLanguage": "English"
     }
   };
@@ -82,14 +82,26 @@ export function generateLocalBusinessSchema(city: City) {
     },
     "url": `https://colorcocktailfactory.com/${city.param}`,
     "telephone": locationData.telephone,
-    "email": "info@colorcocktailfactory.com",
+    "email": "support@colorcocktailfactory.com",
     "priceRange": "$$",
     "openingHoursSpecification": isChicago ? [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Wednesday",
+        "dayOfWeek": ["Wednesday", "Thursday", "Friday"],
         "opens": "17:30",
         "closes": "21:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "12:00",
+        "closes": "21:30"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Sunday",
+        "opens": "14:30",
+        "closes": "18:30"
       }
     ] : [
       {

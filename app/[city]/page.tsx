@@ -4,6 +4,8 @@ import ButtonPill from "@/components/ui/ButtonPill";
 import Reveal from "@/components/motion/Reveal";
 import ScrollHint from "@/components/motion/ScrollHint";
 import HeroVideoBackground from "@/components/HeroVideoBackground";
+import Testimonials from "@/components/Testimonials";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import { sections } from "@/lib/config";
 import { getCityByParam, buildHomeBookLink } from "@/lib/links";
 import { generateLocalBusinessSchema, generateOrganizationSchema, generateBreadcrumbSchema } from "@/lib/enhancedStructuredData";
@@ -181,9 +183,17 @@ export default function CityHome({ params }: { params: { city: string } }) {
         <StackedSection key={section.id} city={city} section={section} />
       ))}
 
+      {/* Testimonials */}
+      <Testimonials />
+
       {/* Footer */}
       <footer className="border-t border-white/10 bg-black/20 px-6 pb-16 pt-10 text-white/70">
         <div className="mx-auto max-w-5xl">
+          {/* Newsletter Signup */}
+          <div className="mb-12">
+            <NewsletterSignup />
+          </div>
+
           <div className="rounded-2xl border border-white/10 bg-white/5 p-8 shadow-soft">
             <h2 className="text-lg font-semibold text-white/90">
               {city.label} Creative Workshops & Pottery Classes | Color Cocktail Factory

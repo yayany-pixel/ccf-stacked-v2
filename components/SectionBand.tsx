@@ -17,7 +17,8 @@ export default function SectionBand({
           muted
           loop
           playsInline
-          preload="metadata"
+          loading="lazy"
+          preload="none"
         />
         <div className={`absolute inset-0 ${section.overlayClass}`} />
         <div className="ccf-grain absolute inset-0" />

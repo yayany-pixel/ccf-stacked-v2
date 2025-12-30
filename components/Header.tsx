@@ -1,6 +1,7 @@
 import Link from "next/link";
 import CityToggle from "@/components/CityToggle";
 import PillNav from "@/components/PillNav";
+import MobileMenu from "@/components/MobileMenu";
 import ButtonPill from "@/components/ui/ButtonPill";
 import type { City } from "@/lib/config";
 import { buildHomeBookLink } from "@/lib/links";
@@ -41,10 +42,11 @@ export default function Header({ city }: { city: City }) {
               <ButtonPill href={buildHomeBookLink(city)} variant="primary" className="hidden sm:inline-flex">
                 Book a class
               </ButtonPill>
+              <MobileMenu items={navItems} />
             </div>
           </div>
 
-          <div className="border-t border-white/10 px-4 py-2 lg:hidden">
+          <div className="border-t border-white/10 px-4 py-2 md:hidden">
             <PillNav items={navItems} />
           </div>
         </div>
