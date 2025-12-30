@@ -1,0 +1,62 @@
+export type BlogPost = {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  author: string;
+  category: string;
+  readTime: string;
+  image: string;
+  keywords: string[];
+};
+
+export const blogPosts: BlogPost[] = [
+  {
+    slug: "pottery-101-beginners-guide",
+    title: "Pottery 101: A Beginner's Guide to Getting Started with Ceramics",
+    description: "Everything you need to know to start your pottery journey - from choosing clay to mastering the wheel. Perfect for complete beginners!",
+    date: "2025-01-15",
+    author: "Color Cocktail Factory",
+    category: "Pottery Basics",
+    readTime: "8 min read",
+    image: "/images/blog/pottery-101.jpg",
+    keywords: [
+      "pottery for beginners",
+      "how to start pottery",
+      "pottery wheel basics",
+      "pottery classes chicago",
+      "pottery classes eugene",
+      "ceramic pottery tutorial",
+      "beginner pottery tips",
+      "pottery throwing techniques"
+    ]
+  },
+  {
+    slug: "chicago-date-night-ideas",
+    title: "10 Unique Date Night Ideas in Chicago (Beyond Dinner & Movies)",
+    description: "Discover the best creative date night experiences in Chicago, from pottery classes to glass fusion workshops. Make memories that last!",
+    date: "2025-01-10",
+    author: "Color Cocktail Factory",
+    category: "Date Night Ideas",
+    readTime: "6 min read",
+    image: "/images/blog/date-night-chicago.jpg",
+    keywords: [
+      "date night chicago",
+      "unique date ideas chicago",
+      "couples activities chicago",
+      "romantic things to do chicago",
+      "pottery date night",
+      "chicago date night workshops",
+      "pilsen date night",
+      "creative date ideas chicago"
+    ]
+  }
+];
+
+export function getBlogPostBySlug(slug: string): BlogPost | undefined {
+  return blogPosts.find(post => post.slug === slug);
+}
+
+export function getAllBlogPosts(): BlogPost[] {
+  return blogPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
