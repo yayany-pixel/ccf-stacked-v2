@@ -142,15 +142,6 @@ export default function StackedSection({
               )}
             </Reveal>
           </div>
-
-          {/* Value Props */}
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {section.valueCards.map((card, idx) => (
-              <Reveal key={card.title} variant="scale" delay={idx * 80}>
-                <MiniValueCard {...card} />
-              </Reveal>
-            ))}
-          </div>
         </div>
       </div>
     </SectionBand>
