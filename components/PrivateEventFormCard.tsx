@@ -31,7 +31,7 @@ const initial: FormState = {
   groupSize: "",
   occasion: "",
   preferredProject: "Choose or leave blank",
-  budget: "$75",
+  budget: "$65",
   details: ""
 };
 
@@ -158,15 +158,11 @@ export default function PrivateEventFormCard({
             value={s.budget}
             onChange={(e) => setS((p) => ({ ...p, budget: e.target.value }))}
           >
-            <option value="$50">$50</option>
-            <option value="$60">$60</option>
-            <option value="$70">$70</option>
+            <option value="$45">$45</option>
+            <option value="$55">$55</option>
+            <option value="$65">$65</option>
             <option value="$75">$75</option>
-            <option value="$80">$80</option>
-            <option value="$90">$90</option>
-            <option value="$100">$100</option>
-            <option value="$110">$110</option>
-            <option value="$120">$120</option>
+            <option value="$85">$85</option>
           </select>
         </label>
 
