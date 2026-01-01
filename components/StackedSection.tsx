@@ -108,18 +108,18 @@ export default function StackedSection({
                       ))}
                     </div>
 
-                    <div className="mt-7 border-t border-white/10 pt-5 text-xs text-white/60">
+                    <div className="mt-7 border-t border-white/10 pt-5 text-sm text-white/60">
                       <span className="text-white/70">Want details?</span>{" "}
                       <Link
                         href={`/activities/${section.slug}`}
-                        className="font-semibold underline decoration-white/30 underline-offset-4 hover:text-white"
+                        className="inline-block py-2 font-semibold underline decoration-white/30 underline-offset-4 hover:text-white"
                       >
                         Learn more about {section.heroTitle}
                       </Link>{" "}
                       or{" "}
                       <Link
                         href={`/${city.param}/${section.slug}`}
-                        className="underline decoration-white/25 underline-offset-4 hover:text-white"
+                        className="inline-block py-2 underline decoration-white/25 underline-offset-4 hover:text-white"
                       >
                         view {city.label}-specific schedule
                       </Link>
@@ -129,7 +129,7 @@ export default function StackedSection({
                           {" · "}
                           <Link
                             href={EVENTBRITE_EVENTS_HREF}
-                            className="font-semibold text-purple-300 underline decoration-purple-400/30 underline-offset-4 hover:text-purple-200"
+                            className="inline-block py-2 font-semibold text-purple-300 underline decoration-purple-400/30 underline-offset-4 hover:text-purple-200"
                           >
                             Exclusive Eventbrite Events →
                           </Link>

@@ -222,10 +222,10 @@ export default function CityHome({ params }: { params: { city: string } }) {
               
               <div className="text-left">
                 <h3 className="text-xs font-semibold uppercase tracking-wide text-white/80">Quick Links</h3>
-                <ul className="mt-2 space-y-1 text-xs">
+                <ul className="mt-2 space-y-2 text-sm">
                   <li>
                     <a 
-                      className="text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
+                      className="inline-block py-2 text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
                       href={buildHomeBookLink(city)}
                     >
                       Book a Class
@@ -233,7 +233,7 @@ export default function CityHome({ params }: { params: { city: string } }) {
                   </li>
                   <li>
                     <a 
-                      className="text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
+                      className="inline-block py-2 text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
                       href="/gift-cards"
                     >
                       Gift Cards (50% Off)
@@ -241,7 +241,7 @@ export default function CityHome({ params }: { params: { city: string } }) {
                   </li>
                   <li>
                     <a 
-                      className="text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
+                      className="inline-block py-2 text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
                       href={`/${city.param}/private-parties`}
                     >
                       Private Events & Parties
@@ -249,7 +249,7 @@ export default function CityHome({ params }: { params: { city: string } }) {
                   </li>
                   <li>
                     <a 
-                      className="text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
+                      className="inline-block py-2 text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
                       href="https://www.instagram.com/colorcocktailfactory" 
                       target="_blank" 
                       rel="noopener noreferrer"
