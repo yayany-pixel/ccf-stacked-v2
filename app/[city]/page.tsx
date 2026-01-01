@@ -74,16 +74,16 @@ export default function CityHome({ params }: { params: { city: string } }) {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
                 </span>
-                Now Open in {city.label}
+                Since 2009
               </div>birthdays, or discovering your creative side in {city.label}. 
                 Beginner-friendly. Same-day bookings available
             </Reveal>
 
             <Reveal delay={100} variant="fade-up">
               <h1 className="mt-6 font-serif text-5xl font-bold leading-tight tracking-tight sm:text-7xl">
-                Where Creativity
+                Where Love
                 <br />
-                Comes to Life
+                Takes Shape
               </h1>
             </Reveal>
 

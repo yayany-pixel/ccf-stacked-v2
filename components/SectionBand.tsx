@@ -10,15 +10,6 @@ export default function SectionBand({
   return (
     <section className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 parallax-float">
-        <video
-          className="h-full w-full opacity-25"
-          src={section.videoSrc}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="none"
-        />
         <div className={`absolute inset-0 ${section.overlayClass}`} />
         <div className="ccf-grain absolute inset-0" />
         <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/25 to-transparent" />
