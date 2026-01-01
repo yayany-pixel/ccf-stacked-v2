@@ -4,7 +4,8 @@ import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
 import Reveal from "@/components/motion/Reveal";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
-import { cities } from "@/lib/config";
+import { cities } from "@/lib/links";
+import type { City } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "Private Events & Parties | Color Cocktail Factory",
