@@ -35,6 +35,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   ];
 
+  // Private events - high priority (conversion page)
+  const privateEvents: MetadataRoute.Sitemap = [
+    {
+      url: `${base}/private-events`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.95
+    }
+  ];
+
   // Events page - high priority (frequently updated)
   const eventsPage: MetadataRoute.Sitemap = [
     {
@@ -78,6 +88,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...homepage, 
     ...cityHomes, 
     ...giftCards,
+    ...privateEvents,
     ...eventsPage, // Add events page to sitemap
     ...activitiesIndex,
     ...activityPages,
