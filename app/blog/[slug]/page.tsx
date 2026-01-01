@@ -4,11 +4,18 @@ import Link from "next/link";
 import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
 import Reveal from "@/components/motion/Reveal";
-import { getBlogPostBySlug } from "@/lib/blogPosts";
+import { getBlogPostBySlug, getAllBlogPosts } from "@/lib/blogPosts";
 
 type Props = {
   params: { slug: string };
 };
+
+export async function generateStaticParams() {
+  const posts = getAllBlogPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = getBlogPostBySlug(params.slug);
