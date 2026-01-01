@@ -68,22 +68,11 @@ export default function CityHome({ params }: { params: { city: string } }) {
         
         <div className="relative z-20 mx-auto w-full max-w-7xl px-6 py-20">
           <div className="mx-auto max-w-4xl text-center">
-            <Reveal variant="scale">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-xl pulse-glow">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-                </span>
-                Since 2009
-              </div>birthdays, or discovering your creative side in {city.label}. 
-                Beginner-friendly. Same-day bookings available
-            </Reveal>
-
             <Reveal delay={100} variant="fade-up">
-              <h1 className="mt-6 font-serif text-5xl font-bold leading-tight tracking-tight sm:text-7xl">
+              <h1 className="font-serif text-5xl font-light leading-relaxed tracking-wide sm:text-7xl sm:leading-relaxed" style={{ letterSpacing: '0.05em' }}>
                 Where Love
                 <br />
-                Takes Shape
+                <span className="italic font-normal">Takes Shape</span>
               </h1>
             </Reveal>
 
