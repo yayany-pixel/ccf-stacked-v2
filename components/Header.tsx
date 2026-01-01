@@ -10,7 +10,6 @@ export default function Header({ city }: { city: City }) {
   // Simplified navigation with only requested items
   const navItems = [
     { id: city.param, label: "Home", href: `/${city.param}` },
-    { id: "events", label: "Workshops", href: "/events" },
     { id: "blog", label: "Blog", href: "/blog" },
     { id: "private-events", label: "Private Party Quote" },
     { id: "date-night", label: "Date Night Pottery" },
