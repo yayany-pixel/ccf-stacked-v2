@@ -31,7 +31,7 @@ const initial: FormState = {
   groupSize: "",
   occasion: "",
   preferredProject: "Choose or leave blank",
-  budget: "$65",
+  budget: "$55",
   details: ""
 };
 
