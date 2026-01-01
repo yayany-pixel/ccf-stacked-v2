@@ -71,6 +71,30 @@ export const blogPosts: BlogPost[] = [
       "creative date ideas eugene",
       "whiteaker date night"
     ]
+  },
+  {
+    slug: "pilsen-student-guide",
+    title: "Student Guide to Chicago's Pilsen Neighborhood: What to Do Before & After Class",
+    description: "Discover the best coffee shops, murals, restaurants, and nightlife in Pilsen. Your complete guide to exploring Chicago's most vibrant artistic neighborhood.",
+    date: "2025-01-02",
+    author: "Color Cocktail Factory",
+    category: "Neighborhood Guides",
+    readTime: "12 min read",
+    image: "/images/blog/pilsen-guide.jpg",
+    keywords: [
+      "pilsen chicago guide",
+      "things to do in pilsen",
+      "pilsen coffee shops",
+      "pilsen murals",
+      "pilsen restaurants",
+      "pilsen neighborhood chicago",
+      "18th street chicago",
+      "pilsen student guide",
+      "chicago art district",
+      "pilsen nightlife",
+      "national museum of mexican art",
+      "pilsen street art"
+    ]
   }
 ];
 
