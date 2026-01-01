@@ -156,7 +156,7 @@ export default function ActivitiesIndexPage() {
                       </div>
 
                       <div className="mt-4 text-sm font-semibold category-accent group-hover:brightness-125">
-                        View details →
+                        View {activity.heroTitle} details →
                       </div>
                     </GlassCard>
                   </Link>

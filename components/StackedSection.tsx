@@ -114,9 +114,9 @@ export default function StackedSection({
                         href={`/activities/${section.slug}`}
                         className="font-semibold underline decoration-white/30 underline-offset-4 hover:text-white"
                       >
-                        Learn more
+                        Learn more about {section.heroTitle}
                       </Link>{" "}
-                      about this activity or{" "}
+                      or{" "}
                       <Link
                         href={`/${city.param}/${section.slug}`}
                         className="underline decoration-white/25 underline-offset-4 hover:text-white"
