@@ -3,6 +3,8 @@ import "./globals.css";
 import { generateOrganizationSchema } from "@/lib/enhancedStructuredData";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import MetaPixel from "@/components/MetaPixel";
+import Footer from "@/components/Footer";
+import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 
 export const metadata: Metadata = {
   title: {
@@ -127,7 +129,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <GoogleAnalytics />
         <MetaPixel />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Footer />
+        <PrivatePartyCTA variant="sticky" />
+      </body>
     </html>
   );
 }

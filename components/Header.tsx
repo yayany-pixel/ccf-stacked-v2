@@ -3,6 +3,7 @@ import CityToggle from "@/components/CityToggle";
 import PillNav from "@/components/PillNav";
 import MobileMenu from "@/components/MobileMenu";
 import ButtonPill from "@/components/ui/ButtonPill";
+import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 import type { City } from "@/lib/config";
 import { buildHomeBookLink } from "@/lib/links";
 
@@ -38,6 +39,7 @@ export default function Header({ city }: { city: City }) {
             </div>
 
             <div className="flex items-center gap-2">
+              <PrivatePartyCTA variant="header" className="hidden md:inline-flex" />
               <CityToggle city={city} />
               <ButtonPill href={buildHomeBookLink(city)} variant="primary" className="hidden sm:inline-flex">
                 Book a class
