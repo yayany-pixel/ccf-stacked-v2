@@ -36,8 +36,21 @@ export const metadata: Metadata = {
 export default function TeamBuildingPage() {
   // Filter relevant workshops for team building
   const teamWorkshops = sections.filter(s => 
-    ["beginner-wheel", "date-night-wheel", "handbuilding", "turkish-lamp", "mosaics", "glass-fusion", "bonsai", "terrarium", "candle-making"].includes(s.slug)
+    ["beginner-wheel", "date-night-wheel", "handbuilding", "turkish", "mosaic", "glass-fusion", "bonsai", "terrarium", "candle"].includes(s.id)
   );
+
+  // Simple emoji mapping
+  const emojiMap: Record<string, string> = {
+    'beginner-wheel': '🏺',
+    'date-night-wheel': '💕',
+    'handbuilding': '🎨',
+    'turkish': '✨',
+    'mosaic': '🎨',
+    'glass-fusion': '🌈',
+    'bonsai': '🌿',
+    'terrarium': '🌱',
+    'candle': '🕯️'
+  };
 
   // FAQ Schema
   const faqSchema = {
@@ -164,10 +177,10 @@ export default function TeamBuildingPage() {
               <Reveal key={workshop.slug} delay={idx * 50}>
                 <GlassCard interactive className="h-full">
                   <div className="p-6">
-                    <div className="mb-3 text-4xl">{workshop.emoji}</div>
+                    <div className="mb-3 text-4xl">{emojiMap[workshop.id] || '🎨'}</div>
                     <h3 className="text-xl font-bold">{workshop.navLabel}</h3>
                     <p className="mt-2 text-sm leading-relaxed text-white/70">
-                      {workshop.tagline}
+                      {workshop.heroDescription}
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <Link 

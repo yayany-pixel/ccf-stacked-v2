@@ -300,6 +300,72 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* Group Events Section */}
+        <section className="bg-gradient-to-br from-pink-900/20 to-purple-900/20 py-20">
+          <div className="mx-auto max-w-7xl px-6">
+            <Reveal variant="fade-up">
+              <div className="text-center mb-12">
+                <h2 className="font-serif text-4xl font-bold">Perfect for Groups & Celebrations</h2>
+                <p className="mt-4 text-lg text-white/80 max-w-3xl mx-auto">
+                  Looking to celebrate with friends, colleagues, or your team? We specialize in unforgettable group experiences!
+                </p>
+              </div>
+            </Reveal>
+
+            <div className="grid gap-8 md:grid-cols-3">
+              <Reveal variant="fade-up" delay={100}>
+                <GlassCard className="h-full p-8 text-center hover:border-purple-400/50 transition-all">
+                  <div className="text-5xl mb-4">🤝</div>
+                  <h3 className="text-2xl font-bold mb-3">Team Building</h3>
+                  <p className="text-white/75 mb-6 leading-relaxed">
+                    Strengthen your team through creative collaboration. Perfect for corporate groups, small businesses, and remote teams looking to connect IRL.
+                  </p>
+                  <ButtonPill href="/team-building" variant="secondary" full>
+                    Learn More →
+                  </ButtonPill>
+                </GlassCard>
+              </Reveal>
+
+              <Reveal variant="fade-up" delay={200}>
+                <GlassCard className="h-full p-8 text-center hover:border-pink-400/50 transition-all">
+                  <div className="text-5xl mb-4">🎂</div>
+                  <h3 className="text-2xl font-bold mb-3">Birthday Parties</h3>
+                  <p className="text-white/75 mb-6 leading-relaxed">
+                    Make birthdays unforgettable! Hands-on workshops for kids, teens, and adults. BYOB friendly with take-home art for everyone.
+                  </p>
+                  <ButtonPill href="/birthday-parties" variant="secondary" full>
+                    Plan Your Party →
+                  </ButtonPill>
+                </GlassCard>
+              </Reveal>
+
+              <Reveal variant="fade-up" delay={300}>
+                <GlassCard className="h-full p-8 text-center hover:border-purple-400/50 transition-all">
+                  <div className="text-5xl mb-4">💍</div>
+                  <h3 className="text-2xl font-bold mb-3">Bachelorette Parties</h3>
+                  <p className="text-white/75 mb-6 leading-relaxed">
+                    Skip the typical bar crawl! Create something meaningful together. Instagram-worthy, BYOB, and way more memorable.
+                  </p>
+                  <ButtonPill href="/bachelorette-parties" variant="secondary" full>
+                    Book Bachelorette →
+                  </ButtonPill>
+                </GlassCard>
+              </Reveal>
+            </div>
+
+            <Reveal variant="fade-up" delay={400}>
+              <div className="text-center mt-12">
+                <Link 
+                  href="/private-events"
+                  className="inline-block bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:shadow-xl transition-all transform hover:scale-105"
+                >
+                  Request a Private Event Quote
+                </Link>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
         {/* Why We're Different */}
         <section className="border-y border-white/10 bg-gradient-to-br from-purple-900/20 to-pink-900/20 py-20">
           <div className="mx-auto max-w-4xl px-6">

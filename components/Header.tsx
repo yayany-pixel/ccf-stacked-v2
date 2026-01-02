@@ -12,6 +12,16 @@ export default function Header({ city }: { city: City }) {
   const navItems = [
     { id: city.param, label: "Home", href: `/${city.param}` },
     { id: "blog", label: "Blog", href: "/blog" },
+    { 
+      id: "groups", 
+      label: "Groups", 
+      dropdown: [
+        { label: "Team Building", href: "/team-building" },
+        { label: "Birthday Parties", href: "/birthday-parties" },
+        { label: "Bachelorette Parties", href: "/bachelorette-parties" },
+        { label: "All Private Events", href: "/private-events" }
+      ]
+    },
     { id: "private-events", label: "Private Party Quote" },
     { id: "date-night", label: "Date Night Pottery" },
     { id: "mosaics", label: "Mosaics and Glass" },
