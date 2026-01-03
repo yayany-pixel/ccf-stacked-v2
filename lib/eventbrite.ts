@@ -41,15 +41,13 @@ export async function getCCFEvents(): Promise<EventbriteEvent[]> {
   const orgId = process.env.EVENTBRITE_ORG_ID;
 
   if (!token) {
-    throw new Error(
-      "EVENTBRITE_TOKEN is not set. Please add it to your .env.local file."
-    );
+    console.warn("[Eventbrite] EVENTBRITE_TOKEN not configured - returning empty events array");
+    return [];
   }
 
   if (!orgId) {
-    throw new Error(
-      "EVENTBRITE_ORG_ID is not set. Please check your .env.local file."
-    );
+    console.warn("[Eventbrite] EVENTBRITE_ORG_ID not configured - returning empty events array");
+    return [];
   }
 
   // Build API URL

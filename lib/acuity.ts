@@ -81,7 +81,8 @@ export async function getAcuitySeries(): Promise<AcuitySeries[]> {
   const apiKey = process.env.ACUITY_API_KEY;
 
   if (!userId || !apiKey) {
-    throw new Error("[Acuity] Missing required credentials. Set ACUITY_USER_ID and ACUITY_API_KEY in .env.local");
+    console.warn("[Acuity] Credentials not configured - returning empty series array");
+    return [];
   }
 
   try {

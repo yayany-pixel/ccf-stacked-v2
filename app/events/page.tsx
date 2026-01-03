@@ -7,6 +7,10 @@ import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
 import EventsGrid from "@/components/EventsGrid";
 
+// Force dynamic rendering - don't pre-render at build time
+export const dynamic = 'force-dynamic';
+export const revalidate = 60; // Revalidate every 60 seconds
+
 export const metadata: Metadata = {
   title: "Upcoming Workshops & Events | Color Cocktail Factory",
   description: "Browse upcoming creative workshops in Chicago and Eugene. Pottery, glass fusion, mosaics, bonsai, painting, and more. Book your spot today!",

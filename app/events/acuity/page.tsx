@@ -6,6 +6,10 @@ import TagPill from "@/components/ui/TagPill";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
 
+// Force dynamic rendering - don't pre-render at build time
+export const dynamic = 'force-dynamic';
+export const revalidate = 60; // Revalidate every 60 seconds
+
 export const metadata: Metadata = {
   title: "Acuity Schedule | Color Cocktail Factory",
   description: "Book creative workshops directly through our Acuity reservation system. Pottery, glass fusion, mosaics, and more.",
