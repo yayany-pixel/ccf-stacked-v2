@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { sections } from "@/lib/config";
 import { getAllActivitySlugs } from "@/lib/activities";
+import { blogPosts } from "@/lib/blogPosts";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://colorcocktailfactory.com";
@@ -84,14 +85,62 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
+  // Blog pages - medium-high priority for SEO
+  const blogIndex: MetadataRoute.Sitemap = [
+    {
+      url: `${base}/blog`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8
+    }
+  ];
+
+  const blogPostPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${base}/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7
+  }));
+
+  // Audience/customer-type landing pages - high priority (conversion pages)
+  const audiencePages: MetadataRoute.Sitemap = [
+    {
+      url: `${base}/team-building`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9
+    },
+    {
+      url: `${base}/birthday-parties`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9
+    },
+    {
+      url: `${base}/bachelorette-parties`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9
+    },
+    {
+      url: `${base}/corporate`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.85
+    }
+  ];
+
   return [
     ...homepage, 
     ...cityHomes, 
     ...giftCards,
     ...privateEvents,
-    ...eventsPage, // Add events page to sitemap
+    ...eventsPage,
     ...activitiesIndex,
     ...activityPages,
-    ...cityActivityPages
+    ...cityActivityPages,
+    ...blogIndex,
+    ...blogPostPages,
+    ...audiencePages
   ];
 }

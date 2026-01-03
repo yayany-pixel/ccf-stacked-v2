@@ -130,6 +130,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MetaPixel />
       </head>
       <body>
+        {/* Skip to main content link for keyboard navigation */}
+        <a 
+          href="#main-content" 
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[9999] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-black focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+        >
+          Skip to main content
+        </a>
         {children}
         <Footer />
         <PrivatePartyCTA variant="sticky" />

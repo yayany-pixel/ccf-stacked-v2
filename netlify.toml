@@ -8,3 +8,22 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Security headers for all pages
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Prevent clickjacking attacks
+    X-Frame-Options = "DENY"
+    # Prevent MIME type sniffing
+    X-Content-Type-Options = "nosniff"
+    # Enable XSS protection (legacy browsers)
+    X-XSS-Protection = "1; mode=block"
+    # Referrer policy - balance privacy and analytics
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Permissions policy - restrict powerful features
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    # HSTS - enforce HTTPS (1 year)
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    # Content Security Policy - moderate to allow Google Analytics and Meta Pixel
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://www.facebook.com https://*.acuityscheduling.com; frame-src https://app.acuityscheduling.com;"

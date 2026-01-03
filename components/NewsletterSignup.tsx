@@ -5,29 +5,37 @@ import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
 
 export default function NewsletterSignup() {
-  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    if (!email || !email.includes("@")) {
-      setStatus("error");
-      return;
-    }
+    setIsSubmitting(true);
+    setStatus("idle");
+    setErrorMessage("");
 
-    // Since there's no backend, we'll use a mailto link similar to the private events form
-    // In production, this would integrate with Mailchimp, ConvertKit, or similar
-    const subject = "Newsletter Signup Request";
-    const body = `Please add this email to the newsletter:\n\nEmail: ${email}\nDate: ${new Date().toLocaleDateString()}\nSource: Website Footer`;
-    
-    window.location.href = `mailto:support@colorcocktailfactory.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    
-    setStatus("success");
-    setEmail("");
-    
-    // Reset success message after 3 seconds
-    setTimeout(() => setStatus("idle"), 3000);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString()
+      });
+
+      if (response.ok) {
+        // Redirect to thank you page
+        window.location.href = "/thanks/newsletter";
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage("Something went wrong. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -42,33 +50,46 @@ export default function NewsletterSignup() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-6">
+          <form 
+            name="newsletter" 
+            method="POST" 
+            data-netlify="true" 
+            data-netlify-honeypot="bot-field"
+            action="/thanks/newsletter"
+            onSubmit={handleSubmit} 
+            className="mt-6"
+          >
+            <input type="hidden" name="form-name" value="newsletter" />
+            <input type="hidden" name="bot-field" style={{ display: 'none' }} aria-hidden="true" />
+            
             <div className="flex flex-col gap-3 sm:flex-row">
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
                 placeholder="Enter your email"
                 className="flex-1 rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm backdrop-blur-xl transition-all placeholder:text-white/40 focus:border-purple-400/50 focus:bg-white/15 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
                 required
+                disabled={isSubmitting}
+                aria-label="Email address for newsletter"
+                aria-invalid={status === "error"}
+                aria-describedby={status === "error" ? "newsletter-error" : undefined}
               />
               <button
                 type="submit"
-                className="rounded-xl border border-purple-400/40 bg-gradient-to-r from-purple-500/30 to-pink-500/30 px-6 py-2.5 text-sm font-semibold shadow-lg shadow-purple-500/20 transition-all hover:border-purple-400/60 hover:shadow-purple-500/30"
+                disabled={isSubmitting}
+                className="rounded-xl border border-purple-400/40 bg-gradient-to-r from-purple-500/30 to-pink-500/30 px-6 py-2.5 text-sm font-semibold shadow-lg shadow-purple-500/20 transition-all hover:border-purple-400/60 hover:shadow-purple-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Subscribe
+                {isSubmitting ? "Subscribing..." : "Subscribe"}
               </button>
             </div>
-
-            {status === "success" && (
-              <div className="mt-3 rounded-lg border border-green-400/30 bg-green-500/10 px-4 py-2 text-center text-sm text-green-300">
-                ✓ Thanks! Check your email client to send the signup request.
-              </div>
-            )}
             
             {status === "error" && (
-              <div className="mt-3 rounded-lg border border-red-400/30 bg-red-500/10 px-4 py-2 text-center text-sm text-red-300">
-                Please enter a valid email address.
+              <div 
+                id="newsletter-error"
+                role="alert"
+                className="mt-3 rounded-lg border border-red-400/30 bg-red-500/10 px-4 py-2 text-center text-sm text-red-300"
+              >
+                {errorMessage || "Please enter a valid email address."}
               </div>
             )}
 

@@ -4,6 +4,7 @@ import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
 import Reveal from "@/components/motion/Reveal";
 import { sections } from "@/lib/config";
+import { audiencePageBreadcrumbs } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Team Building Workshops | Corporate Events in Chicago & Eugene",
@@ -100,11 +101,17 @@ export default function TeamBuildingPage() {
     ]
   };
 
+  const breadcrumbSchema = audiencePageBreadcrumbs("Team Building", "team-building");
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900/40 to-slate-900">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       
       <div className="sparkle-noise absolute inset-0 opacity-20" />

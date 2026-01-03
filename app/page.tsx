@@ -153,7 +153,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(multiLocationSchema) }}
       />
 
-      <main className="min-h-screen">
+      <main id="main-content" className="min-h-screen">
         {/* Hero Section */}
         <section className="gradient-breathing relative overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40">
           <div className="sparkle-noise absolute inset-0 bg-[url('/noise.png')] opacity-20" />

@@ -39,7 +39,7 @@ export function generateLocalBusinessSchema(city: City) {
   const isChicago = city.param === "chicago";
   
   const chicagoData = {
-    streetAddress: "1000 W 35th St", // Update with real address
+    streetAddress: "1000 W 35th St",
     addressLocality: "Chicago",
     addressRegion: "IL",
     postalCode: "60609",
@@ -48,14 +48,15 @@ export function generateLocalBusinessSchema(city: City) {
     telephone: "+1-312-881-9929",
   };
   
+  // Eugene data omitted where not verified - only include known accurate information
   const eugeneData = {
-    streetAddress: "123 Main St", // Update with real address
     addressLocality: "Eugene",
     addressRegion: "OR",
-    postalCode: "97401",
-    latitude: 44.0521,
-    longitude: -123.0868,
-    telephone: "+1-541-XXX-XXXX", // Update
+    streetAddress: undefined,
+    postalCode: undefined,
+    latitude: undefined,
+    longitude: undefined,
+    telephone: undefined,
   };
   
   const locationData = isChicago ? chicagoData : eugeneData;
@@ -69,54 +70,46 @@ export function generateLocalBusinessSchema(city: City) {
     "description": `Creative workshops and pottery classes in ${city.label}. Expert-led pottery, glass fusion, mosaics, and more. Perfect for date nights and team building.`,
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": locationData.streetAddress,
+      ...(locationData.streetAddress && { "streetAddress": locationData.streetAddress }),
       "addressLocality": locationData.addressLocality,
       "addressRegion": locationData.addressRegion,
-      "postalCode": locationData.postalCode,
+      ...(locationData.postalCode && { "postalCode": locationData.postalCode }),
       "addressCountry": "US"
     },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": locationData.latitude,
-      "longitude": locationData.longitude
-    },
+    ...(locationData.latitude && locationData.longitude && {
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": locationData.latitude,
+        "longitude": locationData.longitude
+      }
+    }),
     "url": `https://colorcocktailfactory.com/${city.param}`,
-    "telephone": locationData.telephone,
+    ...(locationData.telephone && { "telephone": locationData.telephone }),
     "email": "support@colorcocktailfactory.com",
     "priceRange": "$$",
-    "openingHoursSpecification": isChicago ? [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Wednesday", "Thursday", "Friday"],
-        "opens": "17:30",
-        "closes": "21:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Saturday",
-        "opens": "12:00",
-        "closes": "21:30"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": "Sunday",
-        "opens": "14:30",
-        "closes": "18:30"
-      }
-    ] : [
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "10:00",
-        "closes": "21:00"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Saturday", "Sunday"],
-        "opens": "09:00",
-        "closes": "22:00"
-      }
-    ],
+    // Only include opening hours for Chicago (verified data)
+    ...(isChicago && {
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Wednesday", "Thursday", "Friday"],
+          "opens": "17:30",
+          "closes": "21:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "12:00",
+          "closes": "21:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Sunday",
+          "opens": "14:30",
+          "closes": "18:30"
+        }
+      ]
+    }),
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
