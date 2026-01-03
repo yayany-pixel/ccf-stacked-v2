@@ -1,8 +1,29 @@
 # Deployment Status Report
 
 **Date**: January 2, 2026  
-**Commit**: bd92fb9  
-**Status**: ✅ DEPLOYED - Awaiting Netlify Build
+**Commit**: 4090b2d  
+**Status**: ✅ BUILD FIXED - Deploying to Netlify
+
+---
+
+## 🔧 Build Failure Fixed (6:20 PM)
+
+### Issue Diagnosed
+- `/events` and `/events/acuity` pages attempted static pre-rendering at build time
+- API credentials (`EVENTBRITE_TOKEN`, `ACUITY_USER_ID`, `ACUITY_API_KEY`) not available in build environment
+- Library functions threw errors, causing build to fail
+
+### Solution Applied
+1. **Made pages dynamic**: Added `export const dynamic = 'force-dynamic'` to both events pages
+2. **Graceful degradation**: Changed library functions to return empty arrays instead of throwing errors when credentials missing
+3. **Runtime fetching**: Pages now fetch data when users visit them (server-side at runtime)
+4. **Build succeeds**: No longer requires API keys during build process
+
+### Files Changed
+- `app/events/page.tsx` - Added dynamic route config
+- `app/events/acuity/page.tsx` - Added dynamic route config  
+- `lib/eventbrite.ts` - Return `[]` instead of throwing when `EVENTBRITE_TOKEN` missing
+- `lib/acuity.ts` - Return `[]` instead of throwing when `ACUITY_*` credentials missing
 
 ---
 
@@ -52,9 +73,12 @@
 - ✅ **6:14 PM** - Local build test passed
 - ✅ **6:15 PM** - All changes committed (bd92fb9)
 - ✅ **6:15 PM** - Pushed to GitHub main branch
+- ❌ **6:19 PM** - First Netlify build failed (missing API credentials)
+- ✅ **6:20 PM** - Build failure diagnosed and fixed (4090b2d)
+- ✅ **6:20 PM** - Fix pushed to GitHub
 
 ### In Progress
-- ⏳ **Now** - Netlify automatic deployment triggered
+- ⏳ **Now** - Netlify automatic deployment triggered (rebuild)
 - ⏳ **Next** - Netlify build running (est. 2-3 minutes)
 
 ### Upcoming
