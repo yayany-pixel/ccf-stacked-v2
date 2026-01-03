@@ -22,6 +22,7 @@ export default function Header({ city }: { city: City }) {
         { label: "All Private Events", href: "/private-events" }
       ]
     },
+    { id: "teach", label: "Teach", href: "/teach" },
     { id: "private-events", label: "Private Party Quote" },
     { id: "date-night", label: "Date Night Pottery" },
     { id: "mosaics", label: "Mosaics and Glass" },
