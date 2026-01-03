@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Netlify Forms Detection</title>
+</head>
+<body>
+  <!-- 
+    This page exists solely for Netlify to detect forms during the build process.
+    It is never shown to users. Do not delete.
+    Required for @netlify/plugin-nextjs@5 compatibility.
+    See: https://ntl.fyi/next-runtime-forms-migration
+  -->
+  
+  <!-- Newsletter Form -->
+  <form name="newsletter" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="newsletter" />
+    <input type="hidden" name="bot-field" />
+    <input type="email" name="email" />
+  </form>
+
+  <!-- Private Party Form -->
+  <form name="private-party" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="private-party" />
+    <input type="hidden" name="bot-field" />
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <select name="city">
+      <option value="Chicago">Chicago</option>
+      <option value="Eugene">Eugene</option>
+    </select>
+    <input type="date" name="date" />
+    <input type="text" name="groupSize" />
+    <input type="text" name="occasion" />
+    <select name="budget">
+      <option value="$45">$45</option>
+      <option value="$55">$55</option>
+      <option value="$65">$65</option>
+      <option value="$75">$75</option>
+      <option value="$85">$85</option>
+    </select>
+    <select name="preferredProject">
+      <option value="Choose or leave blank">Choose or leave blank</option>
+      <option value="Wheel throwing / Date Night">Wheel throwing / Date Night</option>
+      <option value="Handbuilt pottery (Cups, bowls, Vases, etc)">Handbuilt pottery (Cups, bowls, Vases, etc)</option>
+      <option value="Mosaics / Turkish lamp">Mosaics / Turkish lamp</option>
+      <option value="Glass fusion">Glass fusion</option>
+      <option value="Terrariums">Terrariums</option>
+      <option value="Bonsai">Bonsai</option>
+      <option value="Other / Not sure yet">Other / Not sure yet</option>
+    </select>
+    <textarea name="details"></textarea>
+  </form>
+</body>
+</html>
