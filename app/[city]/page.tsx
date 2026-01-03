@@ -92,7 +92,7 @@ export default function CityHome({ params }: { params: { city: string } }) {
                   Explore All Workshops
                 </ButtonPill>
                 <ButtonPill href="/gift-cards" variant="ghost">
-                  🎁 Gift Cards (50% Off)
+                  🎁 Gift Cards
                 </ButtonPill>
               </div>
             </Reveal>
@@ -236,7 +236,7 @@ export default function CityHome({ params }: { params: { city: string } }) {
                       className="inline-block py-2 text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
                       href="/gift-cards"
                     >
-                      Gift Cards (50% Off)
+                      Gift Cards
                     </a>
                   </li>
                   <li>

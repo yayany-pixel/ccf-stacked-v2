@@ -810,7 +810,7 @@ export const sections: SectionConfig[] = [
     ],
 
     scheduleLabel: "POPULAR PICKS",
-    scheduleTitle: "50% Off Gift Cards",
+    scheduleTitle: "Gift Cards",
     schedulePill: "GIFTABLE",
     scheduleRows: [
       { time: "$50 · Popular pick", note: "Perfect for a first class", href: giftCardUrl },
@@ -819,12 +819,12 @@ export const sections: SectionConfig[] = [
     ],
 
     badge: "GIFT · GLOW · GO",
-    heroTitle: "50% Off Gift Cards",
+    heroTitle: "Gift Cards",
     heroDescription:
       "Holiday mode: activated. Gift cards work for pottery, mosaics, Turkish lamps, glass fusion, bonsai, terrariums, candle making, watercolor, painting nights — the whole creative universe.",
     primaryCta: { label: "Buy gift cards", kind: "custom", href: giftCardUrl },
     secondaryCta: { label: "Share link", kind: "custom", href: giftCardUrl },
-    tags: ["Instant delivery", "Works for any class", "Perfect for couples", "Limited-time deal"],
+    tags: ["Instant delivery", "Works for any class", "Perfect for couples", "Great for any occasion"],
     valueCards: [
       { label: "STYLE", title: "The easiest win", body: "Looks thoughtful. Requires zero guessing." },
       { label: "RESULT", title: "They choose the vibe", body: "Pottery, mosaics, lamps, glass, bonsai, painting'¦" },

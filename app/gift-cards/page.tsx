@@ -5,8 +5,8 @@ import ButtonPill from "@/components/ui/ButtonPill";
 import { giftCardUrl } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: "Gift Cards — 50% Off",
-  description: "Give the gift of creativity. Limited-time 50% off gift cards for Color Cocktail Factory."
+  title: "Gift Cards",
+  description: "Give the gift of creativity. Gift cards for Color Cocktail Factory pottery, glass, and art workshops."
 };
 
 export default function GiftCardsPage() {
@@ -16,9 +16,9 @@ export default function GiftCardsPage() {
       <div className="mx-auto max-w-4xl">
         <GlassCard className="p-8">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold tracking-wide text-white/80">
-            GIFT CARDS · LIMITED TIME
+            GIFT CARDS
           </div>
-          <h1 className="mt-4 font-serif text-5xl leading-tight">50% Off Gift Cards</h1>
+          <h1 className="mt-4 font-serif text-5xl leading-tight">Gift Cards</h1>
           <p className="mt-4 max-w-2xl text-white/80">
             Let them choose the workshop. You get the credit for being thoughtful.
           </p>

@@ -106,7 +106,7 @@ export default function MobileMenu({ items }: { items: NavItem[] }) {
                   onClick={closeMenu}
                   className="block rounded-xl border border-pink-400/40 bg-gradient-to-r from-pink-500/30 to-purple-500/30 px-6 py-3 text-center font-semibold shadow-lg shadow-pink-500/20 transition-all hover:border-pink-400/60 hover:shadow-pink-500/30"
                 >
-                  🎁 Gift Cards (50% Off)
+                  🎁 Gift Cards
                 </Link>
               </div>
             </div>
