@@ -7,6 +7,7 @@ import HeroVideoBackground from "@/components/HeroVideoBackground";
 import Testimonials from "@/components/Testimonials";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { sections } from "@/lib/config";
+import { eugeneSections } from "@/lib/eugene-config";
 import { getCityByParam, buildHomeBookLink } from "@/lib/links";
 import { generateLocalBusinessSchema, generateOrganizationSchema, generateBreadcrumbSchema } from "@/lib/enhancedStructuredData";
 import type { Metadata } from "next";
@@ -19,6 +20,9 @@ export async function generateMetadata({ params }: { params: { city: string } })
 
 export default function CityHome({ params }: { params: { city: string } }) {
   const city = getCityByParam(params.city);
+  
+  // Use Eugene-specific sections for Eugene, regular sections for other cities
+  const citySections = city.param === 'eugene' ? eugeneSections : sections;
   
   // Generate structured data for this city
   const localBusinessSchema = generateLocalBusinessSchema(city);
@@ -168,7 +172,7 @@ export default function CityHome({ params }: { params: { city: string } }) {
       </section>
 
       {/* Sections */}
-      {sections.map((section) => (
+      {citySections.map((section) => (
         <StackedSection key={section.id} city={city} section={section} />
       ))}
 

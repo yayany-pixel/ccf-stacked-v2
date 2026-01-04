@@ -56,11 +56,6 @@ export default function StackedSection({
                   <div className="p-7">
                     <div className="flex flex-wrap items-center gap-2">
                       <TagPill>{section.badge}</TagPill>
-                      {section.tags.slice(0, 5).map((t) => (
-                        <TagPill key={t} subtle>
-                          {t}
-                        </TagPill>
-                      ))}
                     </div>
 
                     <h2 className="mt-4 font-serif text-4xl leading-tight md:text-5xl">
@@ -94,13 +89,36 @@ export default function StackedSection({
                       </ButtonPill>
                     </div>
 
-                    <div className="mt-6 flex flex-wrap gap-2">
-                      {section.tags.map((t) => (
-                        <TagPill key={t} subtle>
-                          {t}
-                        </TagPill>
-                      ))}
-                    </div>
+                    {/* Sub-classes chips (for grouped sections) */}
+                    {section.subClasses && section.subClasses.length > 0 && (
+                      <div className="mt-6">
+                        <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-white/60">
+                          Available Classes:
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {section.subClasses.map((subClass) => (
+                            <Link
+                              key={subClass.slug}
+                              href={`/${city.param}/${subClass.slug}`}
+                              className="rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-xs transition-all hover:border-purple-400/40 hover:bg-white/10 hover:scale-105"
+                            >
+                              {subClass.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Tags - only show if no subClasses to avoid duplication */}
+                    {(!section.subClasses || section.subClasses.length === 0) && (
+                      <div className="mt-6 flex flex-wrap gap-2">
+                        {section.tags.map((t) => (
+                          <TagPill key={t} subtle>
+                            {t}
+                          </TagPill>
+                        ))}
+                      </div>
+                    )}
 
                     <div className="mt-7 grid gap-3 md:grid-cols-3">
                       {section.valueCards.map((c) => (

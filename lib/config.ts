@@ -66,6 +66,12 @@ export type SectionConfig = {
 
   faqs: FAQ[];
   relatedSlugs?: string[];
+  
+  // Optional: sub-classes for grouped sections (Eugene-specific)
+  subClasses?: Array<{
+    label: string;
+    slug: string;
+  }>;
 };
 
 /**
