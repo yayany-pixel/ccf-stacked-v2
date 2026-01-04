@@ -22,8 +22,8 @@ export default function TeachHowItWorks({ detailed = false }: TeachHowItWorksPro
     {
       number: "3",
       title: "Equipment & Supply Setup",
-      description: "Get your wheels ready (lease from us or use your own) and receive your first clay and glaze shipments.",
-      details: detailed ? "If you need wheels, we'll ship them to you ($300 deposit, $45/month lease-to-own). You'll receive clay and glaze shipments to get started. We'll review our teaching standards, class structure, and customer service expectations. You handle all setup on your end." : null
+      description: "Get your wheels ready (purchase from us or use your own) and receive your first clay and glaze shipments.",
+      details: detailed ? "If you need wheels, you can purchase portable standing wheels from us for $750 each with free shipping. You'll receive clay and glaze shipments to get started. Submit your space walkthrough video and 2-minute wheel throw demo to support@colorcocktailfactory.com. We'll review our teaching standards, class structure, and customer service expectations." : null
     },
     {
       number: "4",

@@ -67,8 +67,8 @@ export default function TeachPayPreview() {
                 <div className="flex items-start gap-3">
                   <span className="text-pink-400">✓</span>
                   <div>
-                    <div className="font-semibold">Wheel Lease Option</div>
-                    <div className="text-sm text-white/60">$300 deposit, $45/mo lease-to-own</div>
+                    <div className="font-semibold">Wheel Purchase Option</div>
+                    <div className="text-sm text-white/60">$750/wheel, free shipping</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">

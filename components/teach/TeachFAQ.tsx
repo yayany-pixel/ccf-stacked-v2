@@ -33,11 +33,15 @@ export default function TeachFAQ() {
         },
         {
           q: "What if I don't have a pottery wheel?",
-          a: "CCF offers a wheel lease-to-own program. You pay a $300 deposit and $45/month. We ship the wheel to you, and after it's fully paid off, the wheel becomes yours. Alternatively, you can use your own wheels."
+          a: "You can purchase portable standing wheels from us for $750 each with free shipping. Otherwise, you must have your own wheel(s) before starting. For date night classes (typically 2-6 guests), we recommend having at least 2-3 wheels available."
         },
         {
-          q: "How many wheels do I need?",
-          a: "For date night classes (typically 2-6 guests), we recommend having at least 2-3 wheels available. This allows couples or small groups to work simultaneously."
+          q: "Do I need to own a kiln?",
+          a: "Yes, you must own a kiln for bisque and glaze firing. This is a requirement since you'll be handling all firing for student work and charging finishing fees."
+        },
+        {
+          q: "What are the video submission requirements?",
+          a: "After applying, you'll need to email two videos to support@colorcocktailfactory.com: (1) a walkthrough video of your teaching space showing your setup, safety, cleanliness, and ambiance, and (2) a 2-minute demonstration of you throwing on the wheel. These help us ensure quality standards before approval."
         },
         {
           q: "What does 'space readiness check' mean?",
@@ -50,7 +54,7 @@ export default function TeachFAQ() {
       questions: [
         {
           q: "What does CCF provide?",
-          a: "CCF handles all marketing and customer bookings. We send you reservations for date night classes in your area. We also ship you clay and glaze supplies, provide curriculum guidance, and offer the optional wheel lease-to-own program. You focus on teaching."
+          a: "CCF handles all marketing and customer bookings. We send you reservations for date night classes in your area. We also ship you clay and glaze supplies, provide curriculum guidance, and offer portable wheels for purchase ($750/wheel, free shipping). You focus on teaching."
         },
         {
           q: "What do I (the partner) provide?",

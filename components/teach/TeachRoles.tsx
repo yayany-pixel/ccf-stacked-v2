@@ -14,9 +14,10 @@ export default function TeachRoles({ preview = false }: TeachRolesProps) {
       requirements: [
         "2+ years pottery wheel experience", 
         "Teaching or strong facilitation experience", 
-        "Access to kiln for bisque + glaze firing",
+        "Must own a kiln for bisque + glaze firing",
         "Professional teaching space (home studio or dedicated area)",
-        "Must have wheel OR lease from CCF ($300 deposit, $45/mo)"
+        "Own wheel(s) OR purchase from CCF ($750/wheel, free shipping)",
+        "Submit space walkthrough video & 2-min wheel throw demo"
       ],
       demand: "High"
     }

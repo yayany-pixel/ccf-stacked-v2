@@ -34,7 +34,7 @@ export default function PayPage() {
     "Customer bookings through marketing",
     "Clay shipments delivered to you",
     "Glaze shipments delivered to you",
-    "Wheel lease-to-own option ($300 deposit, $45/month)",
+    "Portable wheel available for purchase ($750, free shipping)",
     "Curriculum guidance and program standards",
     "Booking management platform"
   ];
@@ -115,30 +115,26 @@ export default function PayPage() {
         </div>
       </section>
 
-      {/* Wheel Lease-to-Own Details */}
+      {/* Equipment Purchase Option */}
       <section className="mx-auto max-w-4xl px-4 py-12">
         <Reveal>
           <GlassCard className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-8">
-            <h2 className="mb-4 text-2xl font-bold">Wheel Lease-to-Own Program</h2>
+            <h2 className="mb-4 text-2xl font-bold">Portable Wheel Purchase</h2>
             <p className="mb-4 text-white/80">
-              Don't have wheels yet? We make it easy to get started.
+              Need wheels to get started? Purchase portable standing wheels directly from us.
             </p>
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2">
               <div>
-                <div className="mb-1 text-2xl font-bold text-pink-400">$300</div>
-                <div className="text-sm text-white/60">Initial deposit</div>
+                <div className="mb-1 text-2xl font-bold text-pink-400">$750</div>
+                <div className="text-sm text-white/60">Per wheel</div>
               </div>
               <div>
-                <div className="mb-1 text-2xl font-bold text-purple-400">$45/mo</div>
-                <div className="text-sm text-white/60">Monthly payment</div>
-              </div>
-              <div>
-                <div className="mb-1 text-2xl font-bold text-cyan-400">Yours</div>
-                <div className="text-sm text-white/60">After fully paid off</div>
+                <div className="mb-1 text-2xl font-bold text-purple-400">Free</div>
+                <div className="text-sm text-white/60">Shipping included</div>
               </div>
             </div>
             <p className="mt-6 text-sm text-white/60">
-              We ship the wheel(s) to you, and once the lease is paid off, the equipment becomes yours to keep.
+              High-quality portable standing wheels shipped directly to your location. One-time purchase, yours to keep.
             </p>
           </GlassCard>
         </Reveal>

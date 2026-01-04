@@ -141,7 +141,7 @@ export default function TeachApplicationForm() {
         <div className="grid gap-6 md:grid-cols-2">
           <div>
             <label htmlFor="kiln" className="mb-2 block text-sm font-medium">
-              Do you have kiln access? <span className="text-pink-400">*</span>
+              Do you own a kiln? <span className="text-pink-400">*</span>
             </label>
             <select
               id="kiln"
@@ -150,11 +150,11 @@ export default function TeachApplicationForm() {
               className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
             >
               <option value="">Select one</option>
-              <option value="yes-own">Yes - I own a kiln</option>
-              <option value="yes-shared">Yes - Shared/Community kiln</option>
-              <option value="planning">Planning to purchase</option>
-              <option value="no">No - Need guidance</option>
+              <option value="yes">Yes - I own a kiln</option>
+              <option value="planning">Planning to purchase one</option>
+              <option value="no">No - Not yet</option>
             </select>
+            <p className="mt-1 text-xs text-white/50">Kiln ownership is required to partner with us</p>
           </div>
           <div>
             <label htmlFor="wheels" className="mb-2 block text-sm font-medium">
@@ -168,11 +168,23 @@ export default function TeachApplicationForm() {
             >
               <option value="">Select one</option>
               <option value="yes">Yes - I have wheels</option>
-              <option value="lease">Interested in lease-to-own ($300 deposit, $45/mo)</option>
-              <option value="planning">Planning to purchase</option>
-              <option value="no">No - Need options</option>
+              <option value="purchase">Interested in purchasing from CCF ($750, free shipping)</option>
+              <option value="planning">Planning to purchase elsewhere</option>
+              <option value="no">No - Not yet</option>
             </select>
           </div>
+        </div>
+
+        {/* Video Submission Info */}
+        <div className="rounded-lg border border-purple-400/30 bg-purple-500/5 p-4">
+          <h3 className="mb-2 text-sm font-semibold text-purple-300">📹 Video Submission Required</h3>
+          <p className="mb-3 text-sm text-white/70">
+            After submitting this form, please email two videos to <strong className="text-purple-300">support@colorcocktailfactory.com</strong>:
+          </p>
+          <ul className="space-y-1 text-sm text-white/60">
+            <li>• Walkthrough video of your teaching space</li>
+            <li>• 2-minute demonstration of you throwing on the wheel</li>
+          </ul>
         </div>
 
         {/* Pottery Experience */}

@@ -13,7 +13,7 @@ import TeachCTA from "@/components/teach/TeachCTA";
 
 export const metadata: Metadata = {
   title: "Teach with CCF — Wheel Throwing Partnership",
-  description: "Become a wheel throwing instructor partner with Color Cocktail Factory. Teach pottery date nights from your own space across USA & Canada. Kiln required. Wheel lease-to-own available.",
+  description: "Become a wheel throwing instructor partner with Color Cocktail Factory. Teach pottery date nights from your own space across USA & Canada. Kiln required. Portable wheels available for purchase.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/teach"
   }
