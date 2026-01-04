@@ -2,8 +2,9 @@ import type { MetadataRoute } from "next";
 import { sections } from "@/lib/config";
 import { getAllActivitySlugs } from "@/lib/activities";
 import { blogPosts } from "@/lib/blogPosts";
+import { getAllEvents } from "@/lib/eventsAPI";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://colorcocktailfactory.com";
   const cities = ["chicago", "eugene"] as const;
   const now = new Date();
@@ -55,6 +56,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.95
     }
   ];
+
+  // Individual event detail pages - fetched dynamically
+  let eventDetailPages: MetadataRoute.Sitemap = [];
+  try {
+    const allEvents = await getAllEvents(60);
+    eventDetailPages = allEvents.map((event) => ({
+      url: `${base}/events/${event.slug}`,
+      lastModified: new Date(event.lastUpdated),
+      changeFrequency: "weekly" as const,
+      priority: 0.85
+    }));
+  } catch (error) {
+    console.error("Error fetching events for sitemap:", error);
+  }
 
   // Activities index - high priority
   const activitiesIndex: MetadataRoute.Sitemap = [
@@ -136,6 +151,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...giftCards,
     ...privateEvents,
     ...eventsPage,
+    ...eventDetailPages,
     ...activitiesIndex,
     ...activityPages,
     ...cityActivityPages,

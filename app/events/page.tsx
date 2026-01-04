@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getCCFEvents } from "@/lib/eventbrite";
-import { eventsListSchemaJsonLd } from "@/lib/eventSchema";
+import { getAllEvents } from "@/lib/eventsAPI";
 import { ACUITY_EVENTS_HREF } from "@/lib/constants";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
-import EventsGrid from "@/components/EventsGrid";
+import ButtonPill from "@/components/ui/ButtonPill";
 
 // Force dynamic rendering - don't pre-render at build time
 export const dynamic = 'force-dynamic';
@@ -53,8 +52,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * Server component that displays upcoming Eventbrite events
- * Structured by city → category → grouped series
+ * Server component that displays upcoming events from both Eventbrite and Acuity
+ * With proper JSON-LD structured data for SEO
  * Automatically revalidates every 60 seconds
  */
 export default async function EventsPage() {
@@ -62,58 +61,88 @@ export default async function EventsPage() {
   let error: string | null = null;
 
   try {
-    events = await getCCFEvents();
+    events = await getAllEvents(60);
   } catch (e) {
     error = e instanceof Error ? e.message : "Unable to load events";
     console.error("Error fetching events:", e);
   }
 
+  // Generate JSON-LD for event list
+  const eventSchemas = events && events.length > 0 ? events.map(event => ({
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": event.title,
+    "description": event.description,
+    "startDate": event.startDate,
+    "endDate": event.endDate,
+    "eventStatus": "https://schema.org/EventScheduled",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "location": {
+      "@type": "Place",
+      "name": event.venueName,
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": event.streetAddress,
+        "addressLocality": event.addressLocality,
+        "addressRegion": event.addressRegion,
+        "postalCode": event.postalCode,
+        "addressCountry": event.addressCountry
+      }
+    },
+    "image": event.imageUrl || "https://colorcocktailfactory.com/images/ccf-logo.png",
+    "organizer": {
+      "@type": "Organization",
+      "name": "Color Cocktail Factory",
+      "url": "https://colorcocktailfactory.com"
+    },
+    "offers": event.price !== null ? {
+      "@type": "Offer",
+      "url": event.bookingUrl,
+      "price": event.price,
+      "priceCurrency": event.currency,
+      "availability": "https://schema.org/InStock",
+      "validFrom": new Date().toISOString()
+    } : undefined
+  })) : [];
+
+  // Format date for display
+  function formatEventDate(isoDate: string): string {
+    const date = new Date(isoDate);
+    return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZoneName: 'short'
+    });
+  }
+
   return (
-    <main className="min-h-screen">
-      {/* Event Schema for Google */}
-      {!error && events && events.length > 0 && (
+    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
+      {/* JSON-LD Structured Data */}
+      {!error && events && events.length > 0 && eventSchemas.map((schema, index) => (
         <script
+          key={index}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(eventsListSchemaJsonLd(events))
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
-      )}
+      ))}
 
-      {/* Hero Section */}
-      <div className="gradient-breathing relative overflow-hidden bg-gradient-to-br from-purple-900/40 via-slate-900/60 to-pink-900/40">
-        <div className="sparkle-noise absolute inset-0" />
-        <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-28">
-          <div className="mx-auto max-w-3xl text-center">
-            <Reveal variant="fade-up">
-              <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-6xl">
-                Upcoming Workshops
-              </h1>
-            </Reveal>
-            <Reveal delay={100} variant="fade-up">
-              <p className="mt-6 text-lg leading-8 text-white/80">
-                Hands-on creative experiences in Chicago and Eugene. Select your city to explore workshops.
-              </p>
-            </Reveal>
-            <Reveal delay={200} variant="fade-up">
-              <div className="mt-8">
-                <Link
-                  href={ACUITY_EVENTS_HREF}
-                  className="inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 px-6 py-2.5 text-sm font-semibold shadow-lg shadow-cyan-500/20 transition-all hover:border-cyan-400/60 hover:shadow-cyan-500/30"
-                >
-                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  View Acuity Schedule →
-                </Link>
-              </div>
-            </Reveal>
+      {/* Header */}
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <Reveal variant="fade-up">
+          <div className="mb-12 text-center">
+            <h1 className="mb-4 bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text font-serif text-4xl font-bold text-transparent sm:text-5xl">
+              Upcoming Events
+            </h1>
+            <p className="mx-auto max-w-2xl text-lg text-white/70">
+              Discover our upcoming pottery, glass, painting, and creative workshops in Chicago and Eugene. 
+              All skill levels welcome!
+            </p>
           </div>
-        </div>
-      </div>
+        </Reveal>
 
-      {/* Main Content */}
-      <div className="mx-auto max-w-7xl px-6 py-12">
         {/* Error State */}
         {error && (
           <Reveal variant="scale">
@@ -135,24 +164,121 @@ export default async function EventsPage() {
 
         {/* Empty State */}
         {!error && events && events.length === 0 && (
-          <Reveal variant="scale">
-            <GlassCard className="mx-auto max-w-2xl p-8 text-center">
-              <div className="text-xl font-semibold">No Upcoming Events</div>
-              <p className="mt-3 text-white/70">
-                We're currently planning our next workshops. Check back soon or explore our regular offerings.
+          <Reveal variant="fade-up" delay={100}>
+            <GlassCard className="p-12 text-center">
+              <p className="text-white/70">
+                No upcoming events scheduled at this time. Check back soon or{" "}
+                <Link href="/chicago" className="text-purple-400 underline hover:text-purple-300">
+                  browse our regular classes
+                </Link>
+                .
               </p>
-              <Link
-                href="/"
-                className="mt-6 inline-block rounded-full border border-white/15 bg-white/5 px-6 py-2 text-sm font-semibold transition hover:bg-white/10"
-              >
-                ← Back to Home
-              </Link>
             </GlassCard>
           </Reveal>
         )}
 
-        {/* Structured Events Grid */}
-        {!error && events && events.length > 0 && <EventsGrid events={events} />}
+        {/* Events Grid */}
+        {!error && events && events.length > 0 && (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {events.map((event, index) => (
+              <Reveal key={event.id} variant="fade-up" delay={index * 50}>
+                <GlassCard className="flex h-full flex-col">
+                  <div className="p-6">
+                    {/* Event Image */}
+                    {event.imageUrl && (
+                      <div className="mb-4 overflow-hidden rounded-lg">
+                        <img 
+                          src={event.imageUrl} 
+                          alt={event.title}
+                          className="h-48 w-full object-cover"
+                        />
+                      </div>
+                    )}
+
+                    {/* Category Badge */}
+                    <div className="mb-2 flex items-center gap-2">
+                      <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-semibold text-purple-300">
+                        {event.category}
+                      </span>
+                      <span className="rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-300">
+                        {event.city}
+                      </span>
+                    </div>
+
+                    {/* Event Title */}
+                    <h2 className="mb-2 text-xl font-bold text-white">
+                      {event.title}
+                    </h2>
+
+                    {/* Event Details */}
+                    <div className="mb-4 space-y-2 text-sm text-white/70">
+                      <div className="flex items-start gap-2">
+                        <span className="text-purple-400">📅</span>
+                        <span>{formatEventDate(event.startDate)}</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="text-cyan-400">📍</span>
+                        <span>{event.venueName}</span>
+                      </div>
+                      {event.price !== null && (
+                        <div className="flex items-start gap-2">
+                          <span className="text-pink-400">💰</span>
+                          <span>
+                            {event.price === 0 ? 'Free' : `$${event.price.toFixed(2)}`}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Description */}
+                    <p className="mb-4 line-clamp-3 text-sm text-white/60">
+                      {event.description}
+                    </p>
+
+                    {/* Actions */}
+                    <div className="mt-auto flex gap-2">
+                      <ButtonPill 
+                        href={event.bookingUrl}
+                        variant="primary"
+                        className="flex-1"
+                      >
+                        Book Now
+                      </ButtonPill>
+                      <ButtonPill 
+                        href={`/events/${event.slug}`}
+                        variant="ghost"
+                      >
+                        Details
+                      </ButtonPill>
+                    </div>
+
+                    {/* Source Badge */}
+                    <div className="mt-3 text-xs text-white/40">
+                      via {event.source === 'eventbrite' ? 'Eventbrite' : 'Acuity'}
+                    </div>
+                  </div>
+                </GlassCard>
+              </Reveal>
+            ))}
+          </div>
+        )}
+
+        {/* Call to Action */}
+        <Reveal variant="fade-up" delay={200}>
+          <div className="mt-12 text-center">
+            <p className="mb-4 text-white/60">
+              Looking for ongoing classes?
+            </p>
+            <div className="flex justify-center gap-4">
+              <ButtonPill href="/chicago" variant="secondary">
+                Chicago Classes
+              </ButtonPill>
+              <ButtonPill href="/eugene" variant="secondary">
+                Eugene Classes
+              </ButtonPill>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </main>
   );
