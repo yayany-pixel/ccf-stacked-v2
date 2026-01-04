@@ -106,7 +106,7 @@ export default async function EventsPage() {
     } : undefined
   })) : [];
 
-  // Format date for display
+  // Format date for display in Central Time
   function formatEventDate(isoDate: string): string {
     const date = new Date(isoDate);
     return date.toLocaleDateString('en-US', {
@@ -115,6 +115,7 @@ export default async function EventsPage() {
       day: 'numeric',
       hour: 'numeric',
       minute: '2-digit',
+      timeZone: 'America/Chicago',
       timeZoneName: 'short'
     });
   }

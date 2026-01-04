@@ -71,7 +71,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
     return groups;
   }, [filteredEvents]);
 
-  // Format date for display
+  // Format date for display in Central Time
   function formatEventDate(isoDate: string): string {
     const date = new Date(isoDate);
     return date.toLocaleDateString('en-US', {
@@ -80,6 +80,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
       day: 'numeric',
       hour: 'numeric',
       minute: '2-digit',
+      timeZone: 'America/Chicago',
       timeZoneName: 'short'
     });
   }
@@ -88,7 +89,8 @@ export default function EventsGrid({ events }: EventsGridProps) {
     const date = new Date(isoDate);
     return date.toLocaleTimeString('en-US', {
       hour: 'numeric',
-      minute: '2-digit'
+      minute: '2-digit',
+      timeZone: 'America/Chicago'
     });
   }
 
@@ -97,7 +99,8 @@ export default function EventsGrid({ events }: EventsGridProps) {
     return date.toLocaleDateString('en-US', {
       weekday: 'short',
       month: 'short',
-      day: 'numeric'
+      day: 'numeric',
+      timeZone: 'America/Chicago'
     });
   }
 
