@@ -10,7 +10,7 @@ export default function TeachCTA() {
             Ready to Join Our Team?
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-lg text-white/70">
-            We're actively hiring instructors in Chicago and Eugene. Apply today and start your creative teaching journey.
+            We're actively hiring instructors in USA and Canada. Apply today and start your creative teaching journey.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
             <ButtonPill href="/teach/apply" variant="primary" className="text-base px-8 py-3">

@@ -122,7 +122,7 @@ export default function TeachLayout({
             <div>
               <h3 className="mb-3 text-sm font-semibold">Teach with CCF</h3>
               <p className="text-sm text-white/60">
-                Join our team of passionate instructors and inspire creativity in Chicago and Eugene.
+                Join our team of passionate instructors and inspire creativity in USA and Canada.
               </p>
             </div>
             <div>
