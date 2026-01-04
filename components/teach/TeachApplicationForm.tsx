@@ -5,34 +5,49 @@ import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
 
 export default function TeachApplicationForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // In production, this would send to your backend/CRM
-    setSubmitted(true);
-  };
+    setIsSubmitting(true);
+    setError("");
 
-  if (submitted) {
-    return (
-      <GlassCard className="p-12 text-center">
-        <div className="mb-4 text-6xl">🎉</div>
-        <h2 className="mb-4 text-2xl font-bold">Application Submitted!</h2>
-        <p className="mb-6 text-white/70">
-          Thank you for your interest in partnering with Color Cocktail Factory. 
-          We review applications weekly and will be in touch within 5-7 business days to discuss next steps.
-        </p>
-        <p className="text-sm text-white/50">
-          In the meantime, explore our <a href="/teach/faq" className="text-purple-400 hover:text-purple-300">Partnership FAQ</a> 
-          {" "}or check out our <a href="/chicago" className="text-purple-400 hover:text-purple-300">workshops</a> to see the date night experience!
-        </p>
-      </GlassCard>
-    );
-  }
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString()
+      });
+
+      if (response.ok) {
+        // Redirect to thank you page
+        window.location.href = "/thanks/instructor-application";
+      } else {
+        throw new Error("Form submission failed");
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again or email us at support@colorcocktailfactory.com");
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <GlassCard className="p-8">
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form 
+        name="instructor-application" 
+        method="POST" 
+        data-netlify="true" 
+        data-netlify-honeypot="bot-field"
+        action="/thanks/instructor-application"
+        onSubmit={handleSubmit} 
+        className="space-y-6"
+      >
+        <input type="hidden" name="form-name" value="instructor-application" />
+        <input type="hidden" name="bot-field" style={{ display: 'none' }} aria-hidden="true" />
         {/* Personal Info */}
         <div className="grid gap-6 md:grid-cols-2">
           <div>
@@ -44,7 +59,8 @@ export default function TeachApplicationForm() {
               id="firstName"
               name="firstName"
               required
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+              disabled={isSubmitting}
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
           <div>
@@ -56,7 +72,8 @@ export default function TeachApplicationForm() {
               id="lastName"
               name="lastName"
               required
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+              disabled={isSubmitting}
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -71,7 +88,8 @@ export default function TeachApplicationForm() {
               id="email"
               name="email"
               required
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+              disabled={isSubmitting}
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
           <div>
@@ -83,7 +101,8 @@ export default function TeachApplicationForm() {
               id="phone"
               name="phone"
               required
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+              disabled={isSubmitting}
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -99,8 +118,9 @@ export default function TeachApplicationForm() {
               id="city"
               name="city"
               required
+              disabled={isSubmitting}
               placeholder="e.g., Portland"
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
           <div>
@@ -112,8 +132,9 @@ export default function TeachApplicationForm() {
               id="state"
               name="state"
               required
+              disabled={isSubmitting}
               placeholder="e.g., Oregon"
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
         </div>
@@ -127,7 +148,8 @@ export default function TeachApplicationForm() {
             id="space"
             name="space"
             required
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+            disabled={isSubmitting}
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed [&>option]:bg-slate-800 [&>option]:text-white"
           >
             <option value="">Select one</option>
             <option value="yes-home">Yes - Home Studio</option>
@@ -147,7 +169,8 @@ export default function TeachApplicationForm() {
               id="kiln"
               name="kiln"
               required
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+              disabled={isSubmitting}
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed [&>option]:bg-slate-800 [&>option]:text-white"
             >
               <option value="">Select one</option>
               <option value="yes">Yes - I own a kiln</option>
@@ -164,7 +187,8 @@ export default function TeachApplicationForm() {
               id="wheels"
               name="wheels"
               required
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+              disabled={isSubmitting}
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed [&>option]:bg-slate-800 [&>option]:text-white"
             >
               <option value="">Select one</option>
               <option value="yes">Yes - I have wheels</option>
@@ -197,8 +221,9 @@ export default function TeachApplicationForm() {
             name="pottery-experience"
             rows={4}
             required
+            disabled={isSubmitting}
             placeholder="We require 2+ years of pottery experience. Tell us about your wheel throwing background, training, and what you love to make. How long have you been throwing?"
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -212,8 +237,9 @@ export default function TeachApplicationForm() {
             name="teaching"
             rows={4}
             required
+            disabled={isSubmitting}
             placeholder="Teaching experience is required. Tell us about pottery classes, workshops, or other teaching/facilitation you've done. How do you engage beginners and create a fun learning environment?"
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -227,8 +253,9 @@ export default function TeachApplicationForm() {
             name="availability"
             rows={3}
             required
+            disabled={isSubmitting}
             placeholder="Which days/times work best? E.g., 'Tuesday and Thursday evenings' or 'Weekends anytime'"
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -242,8 +269,9 @@ export default function TeachApplicationForm() {
             name="why"
             rows={4}
             required
+            disabled={isSubmitting}
             placeholder="What excites you about teaching wheel throwing date nights from your space? Why does this partnership model appeal to you?"
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
           />
         </div>
 
@@ -256,8 +284,9 @@ export default function TeachApplicationForm() {
             type="url"
             id="portfolio"
             name="portfolio"
+            disabled={isSubmitting}
             placeholder="https://yourwebsite.com or link to Instagram/portfolio"
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20 disabled:opacity-50 disabled:cursor-not-allowed"
           />
           <p className="mt-2 text-xs text-white/50">
             Optional but helpful. Share examples of your work or a resume if available.
@@ -266,11 +295,17 @@ export default function TeachApplicationForm() {
 
         {/* Submit */}
         <div className="border-t border-white/10 pt-6">
+          {error && (
+            <div role="alert" className="mb-4 rounded-lg border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+              {error}
+            </div>
+          )}
           <button
             type="submit"
-            className="w-full rounded-full bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-purple-500/30 transition hover:shadow-purple-500/50"
+            disabled={isSubmitting}
+            className="w-full rounded-full bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-purple-500/30 transition hover:shadow-purple-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Submit Application
+            {isSubmitting ? "Submitting Application..." : "Submit Application"}
           </button>
           <p className="mt-4 text-center text-xs text-white/50">
             By submitting, you agree to be contacted about instructor opportunities at CCF.
