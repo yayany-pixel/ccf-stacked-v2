@@ -10,15 +10,14 @@ export default function TeachHero() {
       <div className="relative mx-auto max-w-5xl px-4 text-center">
         <Reveal>
           <h1 className="mb-6 bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-5xl font-bold text-transparent md:text-7xl">
-            Teach Creativity.<br />Earn Great Pay.<br />Build Community.
+            Teach Pottery.<br />Earn Great Pay.<br />Work from Your Space.
           </h1>
         </Reveal>
         
         <Reveal delay={0.1}>
           <p className="mx-auto mb-8 max-w-2xl text-lg text-white/70 md:text-xl">
-            Join Color Cocktail Factory's instructor team and lead hands-on creative workshops 
-            in pottery, glass fusion, mosaics, and more. No teaching experience required — 
-            just passion and willingness to learn.
+            Partner with Color Cocktail Factory to teach wheel-throwing date night workshops from your own studio. 
+            We bring the customers, you bring the instruction. Some teaching experience required.
           </p>
         </Reveal>
 
@@ -36,16 +35,16 @@ export default function TeachHero() {
         <Reveal delay={0.3}>
           <div className="mt-16 grid gap-6 text-center md:grid-cols-3">
             <div>
-              <div className="mb-2 text-3xl font-bold text-pink-400">$25-50/hr</div>
-              <div className="text-sm text-white/60">Competitive Pay</div>
+              <div className="mb-2 text-3xl font-bold text-pink-400">Your Space</div>
+              <div className="text-sm text-white/60">Teach from Home</div>
             </div>
             <div>
-              <div className="mb-2 text-3xl font-bold text-purple-400">Flexible</div>
-              <div className="text-sm text-white/60">Choose Your Schedule</div>
+              <div className="mb-2 text-3xl font-bold text-purple-400">Wheel Throwing</div>
+              <div className="text-sm text-white/60">Date Night Focus</div>
             </div>
             <div>
-              <div className="mb-2 text-3xl font-bold text-cyan-400">2 Cities</div>
-              <div className="text-sm text-white/60">Chicago & Eugene</div>
+              <div className="mb-2 text-3xl font-bold text-cyan-400">USA & Canada</div>
+              <div className="text-sm text-white/60">Anywhere in North America</div>
             </div>
           </div>
         </Reveal>

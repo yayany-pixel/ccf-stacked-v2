@@ -5,16 +5,16 @@ import Reveal from "@/components/motion/Reveal";
 export default function TeachFAQPreview() {
   const faqs = [
     {
-      question: "Do I need teaching experience?",
-      answer: "No! Many of our best instructors had never taught before. We provide comprehensive training."
+      question: "Do I need my own kiln?",
+      answer: "Yes, kiln access is required. You need to handle both bisque and glaze firing for your students' pieces."
     },
     {
-      question: "How flexible is the schedule?",
-      answer: "Very. You choose your availability and we match you with shifts. Most instructors work 1-3 shifts per week."
+      question: "What if I don't have a pottery wheel?",
+      answer: "No problem! CCF offers a wheel lease-to-own program: $300 deposit, $45/month. After it's paid off, the wheel is yours."
     },
     {
-      question: "What if I only know one medium?",
-      answer: "Perfect! You can start with one and learn more over time. We offer paid cross-training in all mediums."
+      question: "Where can I teach from?",
+      answer: "Anywhere in the USA or Canada! You teach from your own space (home studio, garage, dedicated room) as long as it's clean, safe, and professional."
     }
   ];
 

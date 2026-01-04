@@ -5,19 +5,19 @@ import Reveal from "@/components/motion/Reveal";
 export default function TeachPayPreview() {
   const highlights = [
     {
-      amount: "$25-35/hr",
-      role: "Lead Instructor",
-      note: "Most common starting rate"
+      amount: "Per Class",
+      role: "Class Revenue",
+      note: "You set your pricing"
     },
     {
-      amount: "$30-40/hr",
-      role: "Multi-Medium",
-      note: "Teach 2+ mediums"
+      amount: "+ Finishing Fees",
+      role: "Additional Income",
+      note: "$5 bisque + $10 glaze per piece"
     },
     {
-      amount: "$35-50/hr",
-      role: "Master Instructor",
-      note: "Train others + curriculum"
+      amount: "Supplies Included",
+      role: "Clay & Glazes",
+      note: "CCF ships to you"
     }
   ];
 
@@ -25,7 +25,7 @@ export default function TeachPayPreview() {
     <section className="mx-auto max-w-5xl px-4 py-16">
       <Reveal>
         <h2 className="mb-12 text-center text-3xl font-bold md:text-4xl">
-          Competitive Pay & Benefits
+          What CCF Provides
         </h2>
       </Reveal>
 
@@ -45,34 +45,72 @@ export default function TeachPayPreview() {
 
       <Reveal delay={0.4}>
         <GlassCard className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-8">
-          <h3 className="mb-4 text-center text-xl font-bold">Plus Benefits</h3>
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="flex items-start gap-3">
-              <span className="text-pink-400">✓</span>
-              <div>
-                <div className="font-semibold">Free Studio Access</div>
-                <div className="text-sm text-white/60">Off-hours for personal projects</div>
+          <h3 className="mb-4 text-center text-xl font-bold">What We Provide vs What You Provide</h3>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div>
+              <h4 className="mb-3 font-semibold text-purple-300">CCF Provides:</h4>
+              <div className="space-y-2">
+                <div className="flex items-start gap-3">
+                  <span className="text-pink-400">✓</span>
+                  <div>
+                    <div className="font-semibold">Customer Bookings</div>
+                    <div className="text-sm text-white/60">Marketing + reservations</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-pink-400">✓</span>
+                  <div>
+                    <div className="font-semibold">Clay & Glaze Shipments</div>
+                    <div className="text-sm text-white/60">Supplies delivered to you</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-pink-400">✓</span>
+                  <div>
+                    <div className="font-semibold">Wheel Lease Option</div>
+                    <div className="text-sm text-white/60">$300 deposit, $45/mo lease-to-own</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-pink-400">✓</span>
+                  <div>
+                    <div className="font-semibold">Program Standards</div>
+                    <div className="text-sm text-white/60">Curriculum guidance</div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="flex items-start gap-3">
-              <span className="text-pink-400">✓</span>
-              <div>
-                <div className="font-semibold">Materials Discount</div>
-                <div className="text-sm text-white/60">30% off clay, glazes, supplies</div>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-pink-400">✓</span>
-              <div>
-                <div className="font-semibold">Paid Training</div>
-                <div className="text-sm text-white/60">All certifications compensated</div>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-pink-400">✓</span>
-              <div>
-                <div className="font-semibold">Flexible Schedule</div>
-                <div className="text-sm text-white/60">Choose shifts that fit your life</div>
+            <div>
+              <h4 className="mb-3 font-semibold text-cyan-300">You Provide:</h4>
+              <div className="space-y-2">
+                <div className="flex items-start gap-3">
+                  <span className="text-cyan-400">✓</span>
+                  <div>
+                    <div className="font-semibold">Teaching & Instruction</div>
+                    <div className="text-sm text-white/60">Lead the 2-hour classes</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-cyan-400">✓</span>
+                  <div>
+                    <div className="font-semibold">Kiln Access & Firing</div>
+                    <div className="text-sm text-white/60">Bisque + glaze firing workflow</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-cyan-400">✓</span>
+                  <div>
+                    <div className="font-semibold">Teaching Space</div>
+                    <div className="text-sm text-white/60">Clean, safe, guest-ready area</div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-cyan-400">✓</span>
+                  <div>
+                    <div className="font-semibold">Customer Support</div>
+                    <div className="text-sm text-white/60">Pickup/shipping, questions</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

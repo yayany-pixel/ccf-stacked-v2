@@ -4,25 +4,26 @@ import ButtonPill from "@/components/ui/ButtonPill";
 
 export const metadata: Metadata = {
   title: {
-    default: "Teach with CCF — Become an Instructor | Color Cocktail Factory",
+    default: "Teach with CCF — Wheel Throwing Partnership | Color Cocktail Factory",
     template: "%s | Teach with CCF"
   },
   description:
-    "Join Color Cocktail Factory as a creative instructor. Lead pottery, glass fusion, mosaic, and art workshops in Chicago or Eugene. Flexible schedules, competitive pay, and a supportive creative community.",
+    "Partner with Color Cocktail Factory to teach wheel throwing date nights from your own space. Nationwide USA & Canada. Kiln required. Wheel lease-to-own available. Earn from classes and finishing fees.",
   keywords: [
-    "art instructor jobs",
-    "pottery instructor chicago",
-    "pottery instructor eugene",
-    "creative workshop instructor",
-    "teaching pottery classes",
-    "art teacher jobs",
-    "part time instructor jobs",
-    "creative jobs chicago",
-    "creative jobs eugene"
+    "pottery instructor partner",
+    "wheel throwing instructor",
+    "pottery teaching partnership",
+    "pottery instructor USA",
+    "pottery instructor Canada",
+    "teach pottery from home",
+    "pottery business opportunity",
+    "kiln required pottery job",
+    "wheel throwing teaching",
+    "pottery partnership program"
   ],
   openGraph: {
-    title: "Teach with Color Cocktail Factory",
-    description: "Join our team of creative instructors. Lead workshops, share your passion, and inspire creativity.",
+    title: "Teach Wheel Throwing with Color Cocktail Factory",
+    description: "Partner with CCF to teach pottery date nights from your own space nationwide. Kiln required, wheel lease available.",
     type: "website"
   }
 };
@@ -35,7 +36,7 @@ export default function TeachLayout({
   const navLinks = [
     { label: "How It Works", href: "/teach/how-it-works" },
     { label: "Roles", href: "/teach/roles" },
-    { label: "Pay & Growth", href: "/teach/pay" },
+    { label: "Partnership", href: "/teach/pay" },
     { label: "Standards", href: "/teach/standards" },
     { label: "Locations", href: "/teach/locations" },
     { label: "FAQ", href: "/teach/faq" }

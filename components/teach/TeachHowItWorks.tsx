@@ -10,26 +10,26 @@ export default function TeachHowItWorks({ detailed = false }: TeachHowItWorksPro
     {
       number: "1",
       title: "Apply Online",
-      description: "Tell us about your creative background and teaching interests. We review applications weekly.",
-      details: detailed ? "Include your resume, portfolio (if applicable), and a brief note about why you want to teach at CCF. We're looking for passion over perfection — many of our best instructors had zero teaching experience when they started." : null
+      description: "Tell us about your pottery teaching experience and your space. We review applications weekly.",
+      details: detailed ? "Include your teaching background, pottery experience, and photos/video of your teaching space. We're looking for instructors with proven teaching ability and a professional workspace suitable for hosting date night classes." : null
     },
     {
       number: "2",
-      title: "Interview & Studio Tour",
-      description: "Meet our team, see the studio, and experience a sample workshop from the student perspective.",
-      details: detailed ? "This is a casual conversation (30-45 min) followed by a hands-on demo class. We want to see your enthusiasm and how you interact with creative materials. Expect questions like 'What's your favorite medium?' and 'Tell us about a time you taught someone something new.'" : null
+      title: "Space Readiness Check",
+      description: "We review your space setup and do a virtual walkthrough to confirm it's safe, clean, and guest-ready.",
+      details: detailed ? "This is a 20-30 minute video call where we walk through your teaching space together. We check safety (ventilation, wheel setup, clear pathways), cleanliness, and overall ambiance. We'll also discuss your kiln access and firing workflow to ensure you can handle the full bisque + glaze process." : null
     },
     {
       number: "3",
-      title: "Training & Certification",
-      description: "Shadow experienced instructors, learn our teaching methods, and get certified in your first medium.",
-      details: detailed ? "Training takes 2-4 weeks depending on the medium. You'll shadow 3-5 classes, assist experienced instructors, and eventually co-teach before leading solo. We cover class prep, student safety, troubleshooting common issues, and our teaching philosophy. All training is paid." : null
+      title: "Equipment & Supply Setup",
+      description: "Get your wheels ready (lease from us or use your own) and receive your first clay and glaze shipments.",
+      details: detailed ? "If you need wheels, we'll ship them to you ($300 deposit, $45/month lease-to-own). You'll receive clay and glaze shipments to get started. We'll review our teaching standards, class structure, and customer service expectations. You handle all setup on your end." : null
     },
     {
       number: "4",
       title: "Start Teaching!",
-      description: "Begin with assisted classes, then lead your own workshops. Build your student following and grow from there.",
-      details: detailed ? "Your first few classes will have a mentor instructor present for support. Once you're comfortable, you'll teach independently. We start new instructors with 1-2 shifts per week and increase as demand grows and you gain additional certifications." : null
+      description: "We send you bookings, you teach the classes. You handle instruction, firing, and customer pickup/delivery.",
+      details: detailed ? "CCF handles all marketing and bookings. When customers book a date night class in your area, you receive the booking notification. You teach the 2-hour wheel-throwing session, then handle bisque firing, glazing guidance, glaze firing, and final piece pickup or shipping. Finishing fees ($5 bisque, $10 glaze) go to you." : null
     }
   ];
 

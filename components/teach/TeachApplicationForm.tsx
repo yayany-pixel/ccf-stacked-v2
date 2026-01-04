@@ -19,12 +19,12 @@ export default function TeachApplicationForm() {
         <div className="mb-4 text-6xl">🎉</div>
         <h2 className="mb-4 text-2xl font-bold">Application Submitted!</h2>
         <p className="mb-6 text-white/70">
-          Thank you for your interest in teaching at Color Cocktail Factory. 
-          We review applications weekly and will be in touch within 5-7 business days.
+          Thank you for your interest in partnering with Color Cocktail Factory. 
+          We review applications weekly and will be in touch within 5-7 business days to discuss next steps.
         </p>
         <p className="text-sm text-white/50">
-          In the meantime, explore our <a href="/teach/faq" className="text-purple-400 hover:text-purple-300">FAQ</a> 
-          {" "}or check out our <a href="/chicago" className="text-purple-400 hover:text-purple-300">workshops</a> to see what we teach!
+          In the meantime, explore our <a href="/teach/faq" className="text-purple-400 hover:text-purple-300">Partnership FAQ</a> 
+          {" "}or check out our <a href="/chicago" className="text-purple-400 hover:text-purple-300">workshops</a> to see the date night experience!
         </p>
       </GlassCard>
     );
@@ -88,62 +88,104 @@ export default function TeachApplicationForm() {
           </div>
         </div>
 
-        {/* Location Preference */}
-        <div>
-          <label htmlFor="location" className="mb-2 block text-sm font-medium">
-            Preferred Location <span className="text-pink-400">*</span>
-          </label>
-          <select
-            id="location"
-            name="location"
-            required
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
-          >
-            <option value="">Select a location</option>
-            <option value="chicago">Chicago (Pilsen)</option>
-            <option value="eugene">Eugene (Downtown)</option>
-            <option value="both">Either/Both</option>
-          </select>
-        </div>
-
-        {/* Medium Interests */}
-        <div>
-          <label className="mb-3 block text-sm font-medium">
-            Which mediums interest you? <span className="text-pink-400">*</span>
-          </label>
-          <div className="space-y-2">
-            {[
-              "Pottery (Wheel Throwing)",
-              "Pottery (Hand-Building)",
-              "Glass Fusion",
-              "Mosaics",
-              "Mixed Media (Terrariums, Candles, etc.)",
-              "Assistant Role (Open to learning all)"
-            ].map((medium) => (
-              <label key={medium} className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  name="mediums"
-                  value={medium}
-                  className="h-4 w-4 rounded border-white/10 bg-white/5 text-purple-500 focus:ring-2 focus:ring-purple-400/20"
-                />
-                <span className="text-sm text-white/80">{medium}</span>
-              </label>
-            ))}
+        {/* Location */}
+        <div className="grid gap-6 md:grid-cols-2">
+          <div>
+            <label htmlFor="city" className="mb-2 block text-sm font-medium">
+              City <span className="text-pink-400">*</span>
+            </label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              required
+              placeholder="e.g., Portland"
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+            />
+          </div>
+          <div>
+            <label htmlFor="state" className="mb-2 block text-sm font-medium">
+              State/Province <span className="text-pink-400">*</span>
+            </label>
+            <input
+              type="text"
+              id="state"
+              name="state"
+              required
+              placeholder="e.g., Oregon"
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+            />
           </div>
         </div>
 
-        {/* Experience */}
+        {/* Space & Equipment */}
         <div>
-          <label htmlFor="experience" className="mb-2 block text-sm font-medium">
-            Describe your creative experience <span className="text-pink-400">*</span>
+          <label htmlFor="space" className="mb-2 block text-sm font-medium">
+            Do you have a suitable teaching space? <span className="text-pink-400">*</span>
+          </label>
+          <select
+            id="space"
+            name="space"
+            required
+            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+          >
+            <option value="">Select one</option>
+            <option value="yes-home">Yes - Home Studio</option>
+            <option value="yes-commercial">Yes - Commercial Studio</option>
+            <option value="yes-shared">Yes - Shared Space</option>
+            <option value="maybe">Maybe - Need guidance</option>
+            <option value="no">No - Looking for space</option>
+          </select>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <div>
+            <label htmlFor="kiln" className="mb-2 block text-sm font-medium">
+              Do you have kiln access? <span className="text-pink-400">*</span>
+            </label>
+            <select
+              id="kiln"
+              name="kiln"
+              required
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+            >
+              <option value="">Select one</option>
+              <option value="yes-own">Yes - I own a kiln</option>
+              <option value="yes-shared">Yes - Shared/Community kiln</option>
+              <option value="planning">Planning to purchase</option>
+              <option value="no">No - Need guidance</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="wheels" className="mb-2 block text-sm font-medium">
+              Do you have pottery wheels? <span className="text-pink-400">*</span>
+            </label>
+            <select
+              id="wheels"
+              name="wheels"
+              required
+              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+            >
+              <option value="">Select one</option>
+              <option value="yes">Yes - I have wheels</option>
+              <option value="lease">Interested in lease-to-own ($300 deposit, $45/mo)</option>
+              <option value="planning">Planning to purchase</option>
+              <option value="no">No - Need options</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Pottery Experience */}
+        <div>
+          <label htmlFor="pottery-experience" className="mb-2 block text-sm font-medium">
+            Pottery & Wheel Throwing Experience <span className="text-pink-400">*</span>
           </label>
           <textarea
-            id="experience"
-            name="experience"
+            id="pottery-experience"
+            name="pottery-experience"
             rows={4}
             required
-            placeholder="Tell us about your background in pottery, glass, crafts, or other creative mediums. How long have you been practicing? Any formal training?"
+            placeholder="We require 2+ years of pottery experience. Tell us about your wheel throwing background, training, and what you love to make. How long have you been throwing?"
             className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
           />
         </div>
@@ -151,13 +193,14 @@ export default function TeachApplicationForm() {
         {/* Teaching Experience */}
         <div>
           <label htmlFor="teaching" className="mb-2 block text-sm font-medium">
-            Teaching experience (if any)
+            Teaching or Facilitation Experience <span className="text-pink-400">*</span>
           </label>
           <textarea
             id="teaching"
             name="teaching"
-            rows={3}
-            placeholder="Have you taught classes, workshops, or one-on-one lessons? If not, that's okay! Tell us about times you've helped others learn something new."
+            rows={4}
+            required
+            placeholder="Teaching experience is required. Tell us about pottery classes, workshops, or other teaching/facilitation you've done. How do you engage beginners and create a fun learning environment?"
             className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
           />
         </div>
@@ -177,17 +220,17 @@ export default function TeachApplicationForm() {
           />
         </div>
 
-        {/* Why CCF */}
+        {/* Why Partner */}
         <div>
           <label htmlFor="why" className="mb-2 block text-sm font-medium">
-            Why do you want to teach at CCF? <span className="text-pink-400">*</span>
+            Why partner with CCF? <span className="text-pink-400">*</span>
           </label>
           <textarea
             id="why"
             name="why"
             rows={4}
             required
-            placeholder="What excites you about teaching creative workshops? Why Color Cocktail Factory?"
+            placeholder="What excites you about teaching wheel throwing date nights from your space? Why does this partnership model appeal to you?"
             className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-white/40 transition focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
           />
         </div>

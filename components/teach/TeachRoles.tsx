@@ -9,44 +9,20 @@ interface TeachRolesProps {
 export default function TeachRoles({ preview = false }: TeachRolesProps) {
   const roles = [
     {
-      title: "Pottery Wheel Instructor",
-      mediums: ["Wheel Throwing", "Hand-Building"],
-      requirements: ["1+ years pottery experience", "Comfortable centering clay", "Patient with beginners"],
+      title: "Wheel Throwing Instructor Partner",
+      mediums: ["Wheel Throwing", "Date Night Classes"],
+      requirements: [
+        "2+ years pottery wheel experience", 
+        "Teaching or strong facilitation experience", 
+        "Access to kiln for bisque + glaze firing",
+        "Professional teaching space (home studio or dedicated area)",
+        "Must have wheel OR lease from CCF ($300 deposit, $45/mo)"
+      ],
       demand: "High"
-    },
-    {
-      title: "Glass Fusion Instructor",
-      mediums: ["Glass Fusion", "Mosaic"],
-      requirements: ["Glass cutting experience", "Understanding of kiln firing", "Eye for color/design"],
-      demand: "Medium"
-    },
-    {
-      title: "Mixed Media Instructor",
-      mediums: ["Mosaics", "Terrariums", "Candle Making"],
-      requirements: ["Crafting background", "Adaptable teaching style", "Project management skills"],
-      demand: "Medium"
-    },
-    {
-      title: "Multi-Medium Specialist",
-      mediums: ["Pottery + Glass + Mosaics"],
-      requirements: ["2+ years teaching", "Certified in 3+ mediums", "Curriculum development"],
-      demand: "High"
-    },
-    {
-      title: "Assistant Instructor",
-      mediums: ["All (learning role)"],
-      requirements: ["Creative enthusiasm", "No experience required", "Willing to learn"],
-      demand: "Always Hiring"
-    },
-    {
-      title: "Private Event Lead",
-      mediums: ["Any medium"],
-      requirements: ["Experience with large groups", "Flexible weekends", "High energy personality"],
-      demand: "Medium"
     }
   ];
 
-  const displayRoles = preview ? roles.slice(0, 3) : roles;
+  const displayRoles = preview ? roles.slice(0, 1) : roles;
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-16">

@@ -35,10 +35,11 @@ export default function StandardsPage() {
     {
       category: "Preparation",
       items: [
-        "Arrive 30 minutes early to set up workspace",
-        "Pre-cut clay, organize tools, and prepare demo materials",
-        "Review class roster and any student notes/requests",
-        "Test equipment (pottery wheels, kiln temp, etc.)"
+        "Set up workspace 30 minutes before class",
+        "Pre-wedge and portion clay for each student",
+        "Organize tools and ensure wheels are working properly",
+        "Create a welcoming, date-night atmosphere",
+        "Review booking details and any student requests"
       ]
     },
     {
@@ -48,16 +49,17 @@ export default function StandardsPage() {
         "Clear verbal instructions + hands-on demo",
         "Circulate constantly — no student left behind",
         "Adapt pacing based on group progress",
-        "Document student work (photos for marketing, with permission)"
+        "Document student work (photos for your records, with permission)"
       ]
     },
     {
       category: "After Class",
       items: [
-        "Clean and reset workspace for next class",
-        "Log any equipment issues or supply needs",
-        "Follow up on student pieces (glazing, firing, pickup coordination)",
-        "Share standout student work with team (celebrate wins!)"
+        "Clean and reset workspace",
+        "Schedule bisque firing for student pieces",
+        "Follow up with glazing instructions and pickup timeline",
+        "Coordinate pickup/shipping arrangements",
+        "Report any issues or supply needs to CCF"
       ]
     }
   ];
