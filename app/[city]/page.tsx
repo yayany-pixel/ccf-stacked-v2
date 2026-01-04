@@ -8,6 +8,7 @@ import Testimonials from "@/components/Testimonials";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import { sections } from "@/lib/config";
 import { eugeneSections } from "@/lib/eugene-config";
+import { chicagoSections } from "@/lib/chicago-config";
 import { getCityByParam, buildHomeBookLink } from "@/lib/links";
 import { generateLocalBusinessSchema, generateOrganizationSchema, generateBreadcrumbSchema } from "@/lib/enhancedStructuredData";
 import type { Metadata } from "next";
@@ -21,8 +22,10 @@ export async function generateMetadata({ params }: { params: { city: string } })
 export default function CityHome({ params }: { params: { city: string } }) {
   const city = getCityByParam(params.city);
   
-  // Use Eugene-specific sections for Eugene, regular sections for other cities
-  const citySections = city.param === 'eugene' ? eugeneSections : sections;
+  // Use city-specific sections for Eugene and Chicago, fallback to regular sections
+  const citySections = city.param === 'eugene' ? eugeneSections : 
+                       city.param === 'chicago' ? chicagoSections : 
+                       sections;
   
   // Generate structured data for this city
   const localBusinessSchema = generateLocalBusinessSchema(city);
