@@ -5,6 +5,7 @@ import { ACUITY_EVENTS_HREF } from "@/lib/constants";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
 import ButtonPill from "@/components/ui/ButtonPill";
+import EventsGrid from "@/components/EventsGrid";
 
 // Force dynamic rendering - don't pre-render at build time
 export const dynamic = 'force-dynamic';
@@ -177,90 +178,9 @@ export default async function EventsPage() {
           </Reveal>
         )}
 
-        {/* Events Grid */}
+        {/* Events Grid with Filters */}
         {!error && events && events.length > 0 && (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {events.map((event, index) => (
-              <Reveal key={event.id} variant="fade-up" delay={index * 50}>
-                <GlassCard className="flex h-full flex-col">
-                  <div className="p-6">
-                    {/* Event Image */}
-                    {event.imageUrl && (
-                      <div className="mb-4 overflow-hidden rounded-lg">
-                        <img 
-                          src={event.imageUrl} 
-                          alt={event.title}
-                          className="h-48 w-full object-cover"
-                        />
-                      </div>
-                    )}
-
-                    {/* Category Badge */}
-                    <div className="mb-2 flex items-center gap-2">
-                      <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-semibold text-purple-300">
-                        {event.category}
-                      </span>
-                      <span className="rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-300">
-                        {event.city}
-                      </span>
-                    </div>
-
-                    {/* Event Title */}
-                    <h2 className="mb-2 text-xl font-bold text-white">
-                      {event.title}
-                    </h2>
-
-                    {/* Event Details */}
-                    <div className="mb-4 space-y-2 text-sm text-white/70">
-                      <div className="flex items-start gap-2">
-                        <span className="text-purple-400">📅</span>
-                        <span>{formatEventDate(event.startDate)}</span>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <span className="text-cyan-400">📍</span>
-                        <span>{event.venueName}</span>
-                      </div>
-                      {event.price !== null && (
-                        <div className="flex items-start gap-2">
-                          <span className="text-pink-400">💰</span>
-                          <span>
-                            {event.price === 0 ? 'Free' : `$${event.price.toFixed(2)}`}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Description */}
-                    <p className="mb-4 line-clamp-3 text-sm text-white/60">
-                      {event.description}
-                    </p>
-
-                    {/* Actions */}
-                    <div className="mt-auto flex gap-2">
-                      <ButtonPill 
-                        href={event.bookingUrl}
-                        variant="primary"
-                        className="flex-1"
-                      >
-                        Book Now
-                      </ButtonPill>
-                      <ButtonPill 
-                        href={`/events/${event.slug}`}
-                        variant="ghost"
-                      >
-                        Details
-                      </ButtonPill>
-                    </div>
-
-                    {/* Source Badge */}
-                    <div className="mt-3 text-xs text-white/40">
-                      via {event.source === 'eventbrite' ? 'Eventbrite' : 'Acuity'}
-                    </div>
-                  </div>
-                </GlassCard>
-              </Reveal>
-            ))}
-          </div>
+          <EventsGrid events={events} />
         )}
 
         {/* Call to Action */}

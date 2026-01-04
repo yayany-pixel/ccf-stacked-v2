@@ -1,260 +1,408 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
-import CityFilter from "@/components/CityFilter";
-import ShowTimesDrawer, { type TimeSlot } from "@/components/ShowTimesDrawer";
-import type { EventbriteEvent } from "@/lib/eventbrite";
-
-type City = "chicago" | "eugene";
-type Category = 
-  | "Pottery" 
-  | "Mosaic" 
-  | "Glass Fusion" 
-  | "Candle" 
-  | "Terrarium & Bonsai" 
-  | "Painting" 
-  | "Kids & Family" 
-  | "Private" 
-  | "Flash" 
-  | "Other";
-
-interface GroupedEvent {
-  title: string;
-  category: Category;
-  times: TimeSlot[];
-  logo?: string;
-}
-
-function getCityFromEvent(event: EventbriteEvent): City {
-  const title = event.name.text.toLowerCase();
-  if (title.includes("chicago")) return "chicago";
-  if (title.includes("eugene")) return "eugene";
-  // Default fallback
-  return "chicago";
-}
-
-function getCategory(title: string): Category {
-  const t = title.toLowerCase();
-  if (t.includes("wheel") || t.includes("pottery") || t.includes("ceramic") || t.includes("mug") || t.includes("bowl")) return "Pottery";
-  if (t.includes("mosaic")) return "Mosaic";
-  if (t.includes("glass") || t.includes("fuse") || t.includes("fusion")) return "Glass Fusion";
-  if (t.includes("candle")) return "Candle";
-  if (t.includes("terrarium") || t.includes("bonsai")) return "Terrarium & Bonsai";
-  if (t.includes("paint")) return "Painting";
-  if (t.includes("kids") || t.includes("grown-up & me")) return "Kids & Family";
-  if (t.includes("private") || t.includes("lesson")) return "Private";
-  if (t.includes("flash") || t.includes("sale")) return "Flash";
-  return "Other";
-}
-
-function normalizeTitle(title: string): string {
-  return title
-    .toLowerCase()
-    .replace(/\b(chicago|eugene)\b/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-function groupEvents(events: EventbriteEvent[]): GroupedEvent[] {
-  const grouped = new Map<string, GroupedEvent>();
-
-  events.forEach((event) => {
-    const normalized = normalizeTitle(event.name.text);
-    const category = getCategory(event.name.text);
-
-    if (!grouped.has(normalized)) {
-      grouped.set(normalized, {
-        title: event.name.text.replace(/\b(Chicago|Eugene)\b/g, "").trim(),
-        category,
-        times: [],
-        logo: event.logo?.url,
-      });
-    }
-
-    const group = grouped.get(normalized)!;
-    group.times.push({
-      datetime: new Date(event.start.local),
-      bookingUrl: event.url,
-      bookingSource: "eventbrite", // All current events are from Eventbrite
-    });
-  });
-
-  // Sort times within each group
-  grouped.forEach((group) => {
-    group.times.sort((a, b) => a.datetime.getTime() - b.datetime.getTime());
-  });
-
-  return Array.from(grouped.values());
-}
-
-const FEATURED_TITLES = [
-  "date night on the wheel",
-  "turkish lamp mosaic",
-  "beginner wheel throwing",
-  "beginners pottery",
-];
-
-function isFeatured(title: string): boolean {
-  const normalized = title.toLowerCase();
-  return FEATURED_TITLES.some((featured) => normalized.includes(featured));
-}
+import ButtonPill from "@/components/ui/ButtonPill";
+import type { NormalizedEvent } from "@/lib/eventsAPI";
 
 interface EventsGridProps {
-  events: EventbriteEvent[];
+  events: NormalizedEvent[];
 }
 
 export default function EventsGrid({ events }: EventsGridProps) {
-  const [selectedCity, setSelectedCity] = useState<City>("chicago");
+  const [selectedCity, setSelectedCity] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [viewMode, setViewMode] = useState<"grid" | "timeline">("timeline");
 
-  // Layer 1: Filter by city
-  const cityEvents = events.filter((event) => getCityFromEvent(event) === selectedCity);
+  // Extract unique cities and categories
+  const cities = useMemo(() => {
+    const uniqueCities = Array.from(new Set(events.map(e => e.city)));
+    return ["all", ...uniqueCities.sort()];
+  }, [events]);
 
-  // Layer 3: Group and deduplicate
-  const groupedEvents = groupEvents(cityEvents);
+  const categories = useMemo(() => {
+    const uniqueCategories = Array.from(new Set(events.map(e => e.category)));
+    return ["all", ...uniqueCategories.sort()];
+  }, [events]);
 
-  // Layer 4: Split into featured and regular
-  const featuredEvents = groupedEvents.filter((e) => isFeatured(e.title));
-  const regularEvents = groupedEvents.filter((e) => !isFeatured(e.title));
+  // Filter events
+  const filteredEvents = useMemo(() => {
+    return events.filter(event => {
+      const cityMatch = selectedCity === "all" || event.city === selectedCity;
+      const categoryMatch = selectedCategory === "all" || event.category === selectedCategory;
+      return cityMatch && categoryMatch;
+    });
+  }, [events, selectedCity, selectedCategory]);
 
-  // Layer 2: Organize by category
-  const categories: Category[] = [
-    "Pottery",
-    "Mosaic",
-    "Glass Fusion",
-    "Candle",
-    "Terrarium & Bonsai",
-    "Painting",
-    "Kids & Family",
-    "Private",
-    "Flash",
-    "Other",
-  ];
+  // Group events by date for timeline view
+  const groupedEvents = useMemo(() => {
+    const groups: { [key: string]: NormalizedEvent[] } = {};
+    
+    filteredEvents.forEach(event => {
+      const date = new Date(event.startDate);
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const nextWeek = new Date(today);
+      nextWeek.setDate(nextWeek.getDate() + 7);
+      
+      let groupKey: string;
+      
+      if (date.toDateString() === today.toDateString()) {
+        groupKey = "Today";
+      } else if (date.toDateString() === tomorrow.toDateString()) {
+        groupKey = "Tomorrow";
+      } else if (date < nextWeek) {
+        groupKey = "This Week";
+      } else {
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"];
+        groupKey = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+      }
+      
+      if (!groups[groupKey]) {
+        groups[groupKey] = [];
+      }
+      groups[groupKey].push(event);
+    });
+    
+    return groups;
+  }, [filteredEvents]);
 
-  const eventsByCategory = categories.reduce((acc, category) => {
-    const categoryEvents = regularEvents.filter((e) => e.category === category);
-    if (categoryEvents.length > 0) {
-      acc[category] = categoryEvents;
-    }
-    return acc;
-  }, {} as Record<Category, GroupedEvent[]>);
+  // Format date for display
+  function formatEventDate(isoDate: string): string {
+    const date = new Date(isoDate);
+    return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      timeZoneName: 'short'
+    });
+  }
+
+  function formatEventTime(isoDate: string): string {
+    const date = new Date(isoDate);
+    return date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit'
+    });
+  }
+
+  function formatEventDay(isoDate: string): string {
+    const date = new Date(isoDate);
+    return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric'
+    });
+  }
 
   return (
     <>
-      {/* Layer 1: City Toggle */}
-      <div className="mb-12">
-        <Reveal variant="fade-down">
-          <CityFilter onCityChange={setSelectedCity} defaultCity="chicago" />
-        </Reveal>
-      </div>
-
-      {/* Layer 4: Featured Band */}
-      {featuredEvents.length > 0 && (
-        <section className="mb-16">
-          <Reveal variant="fade-up">
-            <h2 className="mb-6 text-center font-serif text-2xl font-bold sm:text-3xl">
-              This Week's Highlights
-            </h2>
-          </Reveal>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredEvents.map((event, idx) => (
-              <EventCard key={event.title} event={event} delay={idx * 50} featured />
-            ))}
+      {/* Filters */}
+      <Reveal variant="fade-up">
+        <div className="mb-8 space-y-4">
+          {/* View Toggle */}
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <p className="text-sm text-white/60">
+              Showing {filteredEvents.length} of {events.length} events
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setViewMode("timeline")}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                  viewMode === "timeline"
+                    ? "bg-purple-500/30 text-purple-200"
+                    : "bg-white/5 text-white/60 hover:bg-white/10"
+                }`}
+              >
+                📅 Timeline
+              </button>
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                  viewMode === "grid"
+                    ? "bg-purple-500/30 text-purple-200"
+                    : "bg-white/5 text-white/60 hover:bg-white/10"
+                }`}
+              >
+                ⊞ Grid
+              </button>
+            </div>
           </div>
-        </section>
+
+          {/* Filter Buttons */}
+          <div className="space-y-3">
+            {/* City Filter */}
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-white/80">Location</label>
+              <div className="flex flex-wrap gap-2">
+                {cities.map(city => (
+                  <button
+                    key={city}
+                    onClick={() => setSelectedCity(city)}
+                    className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                      selectedCity === city
+                        ? "bg-cyan-500/30 text-cyan-200 ring-1 ring-cyan-400/50"
+                        : "bg-white/5 text-white/60 hover:bg-white/10"
+                    }`}
+                  >
+                    {city === "all" ? "All Locations" : city}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Category Filter */}
+            <div>
+              <label className="mb-2 block text-sm font-semibold text-white/80">Category</label>
+              <div className="flex flex-wrap gap-2">
+                {categories.map(category => (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                      selectedCategory === category
+                        ? "bg-purple-500/30 text-purple-200 ring-1 ring-purple-400/50"
+                        : "bg-white/5 text-white/60 hover:bg-white/10"
+                    }`}
+                  >
+                    {category === "all" ? "All Categories" : category}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* Timeline View */}
+      {viewMode === "timeline" && (
+        <div className="space-y-8">
+          {Object.entries(groupedEvents).map(([groupName, groupEvents], groupIndex) => (
+            <Reveal key={groupName} variant="fade-up" delay={groupIndex * 100}>
+              <div>
+                {/* Group Header */}
+                <div className="mb-4 flex items-center gap-3">
+                  <h2 className="bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-2xl font-bold text-transparent">
+                    {groupName}
+                  </h2>
+                  <div className="h-px flex-1 bg-gradient-to-r from-purple-500/30 to-transparent" />
+                  <span className="text-sm text-white/40">
+                    {groupEvents.length} event{groupEvents.length !== 1 ? 's' : ''}
+                  </span>
+                </div>
+
+                {/* Events List */}
+                <div className="space-y-4">
+                  {groupEvents.map((event, index) => (
+                    <Reveal key={event.id} variant="slide-left" delay={index * 30}>
+                      <GlassCard className="overflow-hidden">
+                        <div className="flex flex-col md:flex-row">
+                          {/* Event Image */}
+                          {event.imageUrl && (
+                            <div className="md:w-48 h-48 md:h-auto flex-shrink-0">
+                              <img 
+                                src={event.imageUrl} 
+                                alt={event.title}
+                                className="h-full w-full object-cover"
+                              />
+                            </div>
+                          )}
+
+                          {/* Event Content */}
+                          <div className="flex flex-1 flex-col p-6">
+                            <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                              <div className="flex-1">
+                                {/* Category & City Badges */}
+                                <div className="mb-2 flex flex-wrap items-center gap-2">
+                                  <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-semibold text-purple-300">
+                                    {event.category}
+                                  </span>
+                                  <span className="rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-300">
+                                    📍 {event.city}
+                                  </span>
+                                  {event.price === 0 && (
+                                    <span className="rounded-full bg-green-500/20 px-3 py-1 text-xs font-semibold text-green-300">
+                                      Free
+                                    </span>
+                                  )}
+                                </div>
+
+                                {/* Event Title */}
+                                <h3 className="mb-2 text-xl font-bold text-white">
+                                  {event.title}
+                                </h3>
+
+                                {/* Event Time & Location */}
+                                <div className="mb-3 space-y-1 text-sm text-white/70">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-purple-400">🕒</span>
+                                    <time dateTime={event.startDate}>{formatEventDate(event.startDate)}</time>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-cyan-400">📍</span>
+                                    <span>{event.venueName}</span>
+                                  </div>
+                                </div>
+
+                                {/* Description */}
+                                <p className="line-clamp-2 text-sm text-white/60">
+                                  {event.description}
+                                </p>
+                              </div>
+
+                              {/* Actions */}
+                              <div className="flex flex-row md:flex-col gap-2 md:w-40">
+                                <ButtonPill 
+                                  href={event.bookingUrl}
+                                  variant="primary"
+                                  className="flex-1 md:w-full text-sm"
+                                >
+                                  Book Now
+                                </ButtonPill>
+                                <ButtonPill 
+                                  href={`/events/${event.slug}`}
+                                  variant="ghost"
+                                  className="flex-1 md:w-full text-sm"
+                                >
+                                  Details
+                                </ButtonPill>
+                              </div>
+                            </div>
+
+                            {/* Price & Source */}
+                            <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-3">
+                              {event.price !== null && event.price > 0 && (
+                                <span className="text-sm font-semibold text-pink-300">
+                                  ${event.price.toFixed(2)}
+                                </span>
+                              )}
+                              <span className="ml-auto text-xs text-white/40">
+                                via {event.source === 'eventbrite' ? 'Eventbrite' : 'Acuity'}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </GlassCard>
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
       )}
 
-      {/* Layer 2: Categories */}
-      {Object.entries(eventsByCategory).map(([category, categoryEvents]) => (
-        <section key={category} className="mb-16">
-          <Reveal variant="fade-up">
-            <h2 className="mb-6 border-b border-white/10 pb-3 font-serif text-xl font-bold sm:text-2xl">
-              {category}
-            </h2>
-          </Reveal>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {categoryEvents.map((event, idx) => (
-              <EventCard key={event.title} event={event} delay={idx * 50} />
-            ))}
-          </div>
-        </section>
-      ))}
+      {/* Grid View */}
+      {viewMode === "grid" && (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {filteredEvents.map((event, index) => (
+            <Reveal key={event.id} variant="fade-up" delay={index * 50}>
+              <GlassCard className="flex h-full flex-col">
+                <div className="p-6">
+                  {/* Event Image */}
+                  {event.imageUrl && (
+                    <div className="mb-4 overflow-hidden rounded-lg">
+                      <img 
+                        src={event.imageUrl} 
+                        alt={event.title}
+                        className="h-48 w-full object-cover"
+                      />
+                    </div>
+                  )}
 
-      {/* Empty state for city */}
-      {groupedEvents.length === 0 && (
-        <Reveal variant="scale">
-          <GlassCard className="mx-auto max-w-2xl p-8 text-center">
-            <div className="text-xl font-semibold">No Upcoming Events in {selectedCity}</div>
-            <p className="mt-3 text-white/70">
-              Try selecting the other location or check back soon for new workshops.
+                  {/* Category Badge */}
+                  <div className="mb-2 flex items-center gap-2">
+                    <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-semibold text-purple-300">
+                      {event.category}
+                    </span>
+                    <span className="rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-300">
+                      {event.city}
+                    </span>
+                  </div>
+
+                  {/* Event Title */}
+                  <h2 className="mb-2 text-xl font-bold text-white">
+                    {event.title}
+                  </h2>
+
+                  {/* Event Details */}
+                  <div className="mb-4 space-y-2 text-sm text-white/70">
+                    <div className="flex items-start gap-2">
+                      <span className="text-purple-400">📅</span>
+                      <time dateTime={event.startDate}>{formatEventDay(event.startDate)} at {formatEventTime(event.startDate)}</time>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-cyan-400">📍</span>
+                      <span>{event.venueName}</span>
+                    </div>
+                    {event.price !== null && (
+                      <div className="flex items-start gap-2">
+                        <span className="text-pink-400">💰</span>
+                        <span>
+                          {event.price === 0 ? 'Free' : `$${event.price.toFixed(2)}`}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Description */}
+                  <p className="mb-4 line-clamp-3 text-sm text-white/60">
+                    {event.description}
+                  </p>
+
+                  {/* Actions */}
+                  <div className="mt-auto flex gap-2">
+                    <ButtonPill 
+                      href={event.bookingUrl}
+                      variant="primary"
+                      className="flex-1"
+                    >
+                      Book Now
+                    </ButtonPill>
+                    <ButtonPill 
+                      href={`/events/${event.slug}`}
+                      variant="ghost"
+                    >
+                      Details
+                    </ButtonPill>
+                  </div>
+
+                  {/* Source Badge */}
+                  <div className="mt-3 text-xs text-white/40">
+                    via {event.source === 'eventbrite' ? 'Eventbrite' : 'Acuity'}
+                  </div>
+                </div>
+              </GlassCard>
+            </Reveal>
+          ))}
+        </div>
+      )}
+
+      {/* Empty Filtered State */}
+      {filteredEvents.length === 0 && (
+        <Reveal variant="fade-up">
+          <GlassCard className="p-12 text-center">
+            <p className="text-white/70">
+              No events match your selected filters. Try adjusting your selection.
             </p>
+            <button
+              onClick={() => {
+                setSelectedCity("all");
+                setSelectedCategory("all");
+              }}
+              className="mt-4 text-purple-400 hover:text-purple-300 underline"
+            >
+              Clear all filters
+            </button>
           </GlassCard>
         </Reveal>
       )}
     </>
-  );
-}
-
-interface EventCardProps {
-  event: GroupedEvent;
-  delay?: number;
-  featured?: boolean;
-}
-
-function EventCard({ event, delay = 0, featured = false }: EventCardProps) {
-  return (
-    <Reveal variant="scale" delay={delay}>
-      <GlassCard 
-        className={`h-full overflow-hidden p-0 ${featured ? 'ring-2 ring-white/20' : ''}`}
-      >
-        {/* Event Image */}
-        {event.logo && (
-          <div className="relative aspect-[16/9] w-full overflow-hidden">
-            <Image
-              src={event.logo}
-              alt={event.title}
-              fill
-              className="object-cover transition-transform duration-300"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
-          </div>
-        )}
-
-        {/* Event Details */}
-        <div className="p-6">
-          {/* Category Badge */}
-          <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-white/50">
-            {event.category}
-            {featured && <span className="ml-2 text-cyan-400">★ Featured</span>}
-          </div>
-
-          {/* Event Title */}
-          <h3 className="mb-4 font-serif text-xl font-semibold leading-tight">
-            {event.title}
-          </h3>
-
-          {/* Next Available Time */}
-          <div className="mb-4 text-sm text-white/60">
-            Next: {event.times[0].datetime.toLocaleDateString("en-US", {
-              weekday: "short",
-              month: "short",
-              day: "numeric",
-            })}{" "}
-            at{" "}
-            {event.times[0].datetime.toLocaleTimeString("en-US", {
-              hour: "numeric",
-              minute: "2-digit",
-              hour12: true,
-            })}
-          </div>
-
-          {/* Expandable Times Drawer */}
-          <ShowTimesDrawer times={event.times} maxVisible={4} />
-        </div>
-      </GlassCard>
-    </Reveal>
   );
 }
