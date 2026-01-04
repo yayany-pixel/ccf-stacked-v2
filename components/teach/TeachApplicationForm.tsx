@@ -42,7 +42,6 @@ export default function TeachApplicationForm() {
         method="POST" 
         data-netlify="true" 
         data-netlify-honeypot="bot-field"
-        action="/thanks/instructor-application"
         onSubmit={handleSubmit} 
         className="space-y-6"
       >

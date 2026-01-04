@@ -95,7 +95,6 @@ export default function PrivateEventFormCard({
         method="POST" 
         data-netlify="true" 
         data-netlify-honeypot="bot-field"
-        action="/thanks/private-party"
         onSubmit={handleSubmit}
       >
         <input type="hidden" name="form-name" value="private-party" />

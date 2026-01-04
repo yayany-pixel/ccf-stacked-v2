@@ -56,7 +56,6 @@ export default function NewsletterSignup() {
               method="POST" 
               data-netlify="true" 
               data-netlify-honeypot="bot-field"
-              action="/thanks/newsletter"
               onSubmit={handleSubmit} 
               className="mt-6"
             >
