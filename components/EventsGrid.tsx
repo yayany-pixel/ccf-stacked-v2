@@ -203,7 +203,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
                 {/* Events List */}
                 <div className="space-y-4">
                   {groupEvents.map((event, index) => (
-                    <Reveal key={event.id} variant="slide-left" delay={index * 30}>
+                    <Reveal key={event.id} variant="fade-left" delay={index * 30}>
                       <GlassCard className="overflow-hidden">
                         <div className="flex flex-col md:flex-row">
                           {/* Event Image */}
