@@ -92,8 +92,11 @@ export default function CityHome({ params }: { params: { city: string } }) {
 
             <Reveal delay={300} variant="scale">
               <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-                <ButtonPill href={buildHomeBookLink(city)} variant="primary">
-                  Book a Class →
+                <ButtonPill href={buildHomeBookLink(city)} variant="romanceCta">
+                  Book a Class
+                  <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
                 </ButtonPill>
                 <ButtonPill href="/activities" variant="secondary">
                   Explore All Workshops
