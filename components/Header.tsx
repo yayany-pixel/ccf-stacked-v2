@@ -42,8 +42,8 @@ export default function Header({ city }: { city: City }) {
             <div className="flex items-center gap-2">
               <PrivatePartyCTA variant="header" className="hidden md:inline-flex" />
               <CityToggle city={city} />
-              <ButtonPill href={buildHomeBookLink(city)} variant="primary" className="hidden sm:inline-flex">
-                Book a class
+              <ButtonPill href={buildHomeBookLink(city)} variant="romanceCta" className="hidden sm:inline-flex">
+                Book a Class
               </ButtonPill>
               <MobileMenu items={navItems} />
             </div>
