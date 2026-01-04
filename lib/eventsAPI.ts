@@ -39,7 +39,11 @@ const DEFAULT_TIMEZONE = process.env.DEFAULT_TIMEZONE || 'America/Chicago';
  */
 async function fetchEventbriteEvents(): Promise<NormalizedEvent[]> {
   if (!EVENTBRITE_TOKEN) {
-    console.warn('EVENTBRITE_TOKEN not configured, skipping Eventbrite events');
+    console.warn('⚠️ EVENTBRITE_TOKEN not configured, skipping Eventbrite events');
+    console.warn('Environment check:', {
+      hasToken: !!process.env.EVENTBRITE_TOKEN,
+      hasOrgId: !!process.env.EVENTBRITE_ORG_ID
+    });
     return [];
   }
 
@@ -49,6 +53,8 @@ async function fetchEventbriteEvents(): Promise<NormalizedEvent[]> {
       ? `https://www.eventbriteapi.com/v3/organizations/${EVENTBRITE_ORG_ID}/events/?status=live&order_by=start_asc&page_size=50`
       : `https://www.eventbriteapi.com/v3/users/me/events/?status=live&order_by=start_asc&page_size=50`;
     
+    console.log('✅ Fetching Eventbrite events from:', url.split('?')[0]);
+    
     const response = await fetch(url, {
       headers: {
         'Authorization': `Bearer ${EVENTBRITE_TOKEN}`,
@@ -57,12 +63,16 @@ async function fetchEventbriteEvents(): Promise<NormalizedEvent[]> {
     });
 
     if (!response.ok) {
-      console.error('Eventbrite API error:', response.status, response.statusText);
+      console.error('❌ Eventbrite API error:', response.status, response.statusText);
+      const errorText = await response.text();
+      console.error('Error details:', errorText);
       return [];
     }
 
     const data = await response.json();
     const events = data.events || [];
+    
+    console.log(`✅ Eventbrite: Retrieved ${events.length} events`);
 
     return events.map((event: any) => {
       // Determine city from venue
@@ -129,7 +139,9 @@ async function fetchAcuityEvents(daysAhead = 60): Promise<NormalizedEvent[]> {
     });
 
     if (!typesResponse.ok) {
-      console.error('Acuity appointment types API error:', typesResponse.status);
+      console.error('❌ Acuity appointment types API error:', typesResponse.status);
+      const errorText = await typesResponse.text();
+      console.error('Error details:', errorText);
       return [];
     }
 
@@ -299,15 +311,21 @@ function deduplicateEvents(events: NormalizedEvent[]): NormalizedEvent[] {
  */
 export async function getAllEvents(daysAhead = 60): Promise<NormalizedEvent[]> {
   try {
+    console.log('🔍 getAllEvents: Starting event fetch...');
+    
     // Fetch from both sources in parallel
     const [eventbriteEvents, acuityEvents] = await Promise.all([
       fetchEventbriteEvents(),
       fetchAcuityEvents(daysAhead)
     ]);
 
+    console.log(`📊 Combined: ${eventbriteEvents.length} Eventbrite + ${acuityEvents.length} Acuity = ${eventbriteEvents.length + acuityEvents.length} total`);
+
     // Combine and deduplicate
     const allEvents = [...eventbriteEvents, ...acuityEvents];
     const deduplicated = deduplicateEvents(allEvents);
+
+    console.log(`🔄 After deduplication: ${deduplicated.length} events`);
 
     // Sort by start date ascending
     deduplicated.sort((a, b) => 
@@ -320,9 +338,10 @@ export async function getAllEvents(daysAhead = 60): Promise<NormalizedEvent[]> {
       new Date(event.startDate) > now
     );
 
+    console.log(`✨ Returning ${upcoming.length} upcoming events`);
     return upcoming;
   } catch (error) {
-    console.error('Error in getAllEvents:', error);
+    console.error('❌ Error in getAllEvents:', error);
     return [];
   }
 }
