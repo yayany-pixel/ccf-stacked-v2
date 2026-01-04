@@ -29,7 +29,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-white/70">
-              Expert-led creative workshops in Chicago and Eugene. Pottery, glass art, mosaics, and more.
+              Expert-led creative workshops in Chicago & Eugene. Pottery, glass art, mosaics, and more.
             </p>
           </div>
 

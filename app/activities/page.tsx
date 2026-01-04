@@ -7,7 +7,7 @@ import { getActivitiesByCategory, ACTIVITY_CATEGORIES, type CategoryKey } from "
 
 export const metadata: Metadata = {
   title: "All Classes & Workshops | Color Cocktail Factory",
-  description: "Explore pottery, glass fusion, mosaics, Turkish lamps, bonsai, terrariums, candle making, painting, and more creative workshops in Chicago and Eugene.",
+  description: "Explore pottery, glass fusion, mosaics, Turkish lamps, bonsai, terrariums, candle making, painting, and more creative workshops in Chicago & Eugene.",
   keywords: [
     "pottery classes",
     "glass fusion workshops",

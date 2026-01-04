@@ -13,7 +13,7 @@ export const revalidate = 60; // Revalidate every 60 seconds
 
 export const metadata: Metadata = {
   title: "Upcoming Workshops & Events | Color Cocktail Factory",
-  description: "Browse upcoming creative workshops in Chicago and Eugene. Pottery, glass fusion, mosaics, bonsai, painting, and more. Book your spot today!",
+  description: "Browse upcoming creative workshops in Chicago & Eugene. Pottery, glass fusion, mosaics, bonsai, painting, and more. Book your spot today!",
   keywords: [
     "pottery workshops",
     "pottery classes Chicago",
@@ -139,7 +139,7 @@ export default async function EventsPage() {
               Upcoming Events
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-white/70">
-              Discover our upcoming pottery, glass, painting, and creative workshops in Chicago and Eugene. 
+              Discover our upcoming pottery, glass, painting, and creative workshops in Chicago & Eugene. 
               All skill levels welcome!
             </p>
           </div>

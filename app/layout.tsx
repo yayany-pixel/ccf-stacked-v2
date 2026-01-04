@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     template: "%s | Color Cocktail Factory"
   },
   description:
-    "Book unique, hands-on creative workshops in Chicago (Pilsen) and Eugene, Oregon. Expert-led pottery classes, wheel throwing, Turkish lamp making, glass fusion, mosaics, bonsai, candle making & more. Perfect for date nights, team building, birthdays, and bachelorette parties. Same-day availability. Beginner-friendly.",
+    "Book unique, hands-on creative workshops in Chicago & Eugene. Expert-led pottery classes, wheel throwing, Turkish lamp making, glass fusion, mosaics, bonsai, candle making & more. Perfect for date nights, team building, birthdays, and bachelorette parties. Same-day availability. Beginner-friendly.",
   keywords: [
     // Chicago-specific SEO
     "pottery classes Chicago",

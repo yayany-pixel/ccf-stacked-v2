@@ -8,7 +8,7 @@ import { audiencePageBreadcrumbs } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Team Building Workshops | Corporate Events in Chicago & Eugene",
-  description: "Boost morale and creativity with hands-on team building workshops. Pottery, glass fusion, mosaics & more. Perfect for corporate events, office parties, and team bonding. Chicago (Pilsen) and Eugene, OR.",
+  description: "Boost morale and creativity with hands-on team building workshops. Pottery, glass fusion, mosaics & more. Perfect for corporate events, office parties, and team bonding. Chicago & Eugene.",
   keywords: [
     "team building Chicago",
     "team building Eugene",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Team Building Workshops | Color Cocktail Factory",
-    description: "Hands-on creative workshops for corporate teams. Pottery, glass art & more in Chicago and Eugene.",
+    description: "Hands-on creative workshops for corporate teams. Pottery, glass art & more in Chicago & Eugene.",
     url: "https://colorcocktailfactory.com/team-building",
     type: "website"
   }
@@ -151,7 +151,7 @@ export default function TeamBuildingPage() {
                   <span className="text-2xl">📍</span>
                   <div>
                     <div className="font-semibold">Two Locations</div>
-                    <div className="text-sm text-white/70">Chicago (Pilsen) & Eugene, OR</div>
+                    <div className="text-sm text-white/70">Chicago & Eugene</div>
                   </div>
                 </div>
               </div>
@@ -227,7 +227,7 @@ export default function TeamBuildingPage() {
           <div className="grid gap-8 md:grid-cols-4">
             {[
               { step: "1", title: "Pick Your Workshop", desc: "Choose from pottery, glass, mosaics, and more" },
-              { step: "2", title: "Choose Location & Date", desc: "Chicago or Eugene, weekday or weekend" },
+              { step: "2", title: "Choose Location & Date", desc: "Chicago & Eugene available, weekday or weekend" },
               { step: "3", title: "We Confirm Details", desc: "Get a custom quote and finalize your booking" },
               { step: "4", title: "Show Up & Create", desc: "We provide everything. Just bring your team!" }
             ].map((item, idx) => (

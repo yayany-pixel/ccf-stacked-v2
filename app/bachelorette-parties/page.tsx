@@ -294,7 +294,7 @@ export default function BachelorettePartiesPage() {
               {
                 step: "2",
                 title: "Request Your Date",
-                description: "Share your bachelorette weekend dates and preferred location (Chicago or Eugene). We'll check availability and send pricing."
+                description: "Share your bachelorette weekend dates and preferred location (Chicago & Eugene). We'll check availability and send pricing."
               },
               {
                 step: "3",
@@ -550,7 +550,7 @@ export default function BachelorettePartiesPage() {
               </a>
             </div>
             <p className="mt-8 text-white/80 text-sm">
-              Serving bachelorette parties in Chicago (Pilsen) and Eugene, OR
+              Serving bachelorette parties in Chicago & Eugene
             </p>
           </Reveal>
         </div>

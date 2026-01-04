@@ -16,7 +16,7 @@ export function generateOrganizationSchema() {
     "alternateName": "CCF",
     "url": "https://colorcocktailfactory.com",
     "logo": "https://colorcocktailfactory.com/logo.png",
-    "description": "Premium creative workshops and pottery classes in Chicago and Eugene. Expert-led hands-on experiences including pottery, glass art, mosaics, and more.",
+    "description": "Premium creative workshops and pottery classes in Chicago & Eugene. Expert-led hands-on experiences including pottery, glass art, mosaics, and more.",
     "sameAs": [
       "https://www.instagram.com/colorcocktailfactory",
       "https://www.facebook.com/colorcocktailfactory",

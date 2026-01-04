@@ -6,7 +6,7 @@ import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 
 export const metadata: Metadata = {
   title: "Birthday Party Workshops | Private Art Events in Chicago & Eugene",
-  description: "Celebrate your birthday with hands-on art workshops! Pottery, mosaics, glass fusion & more. Perfect for adults, teens & kids. BYOB friendly. Chicago (Pilsen) & Eugene locations.",
+  description: "Celebrate your birthday with hands-on art workshops! Pottery, mosaics, glass fusion & more. Perfect for adults, teens & kids. BYOB friendly. Chicago & Eugene locations.",
   keywords: [
     "birthday party ideas",
     "adult birthday party",
@@ -236,7 +236,7 @@ export default function BirthdayPartiesPage() {
               {
                 step: "2",
                 title: "Request a Quote",
-                description: "Tell us your preferred date, location (Chicago or Eugene), and group size for personalized pricing"
+                description: "Tell us your preferred date, location (Chicago & Eugene), and group size for personalized pricing"
               },
               {
                 step: "3",
@@ -391,7 +391,7 @@ export default function BirthdayPartiesPage() {
               {
                 icon: "♿",
                 title: "Accessible Venues",
-                description: "Both Chicago and Eugene locations are wheelchair accessible and family-friendly"
+                description: "Both Chicago & Eugene locations are wheelchair accessible and family-friendly"
               }
             ].map((item, index) => (
               <Reveal key={item.title} delay={index * 0.1}>

@@ -173,7 +173,7 @@ export default function BlogPostPage({ params }: Props) {
                 <div className="p-8 text-center">
                   <h2 className="font-serif text-2xl font-bold">Ready to Try Pottery?</h2>
                   <p className="mx-auto mt-4 max-w-2xl leading-relaxed text-white/85">
-                    Join us in Chicago or Eugene for a hands-on pottery experience. All skill levels welcome - we provide everything you need!
+                    Join us in Chicago & Eugene for a hands-on pottery experience. All skill levels welcome - we provide everything you need!
                   </p>
                   <div className="mt-6 flex flex-wrap justify-center gap-3">
                     <ButtonPill href="/chicago" variant="primary">
