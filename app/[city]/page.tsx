@@ -52,7 +52,7 @@ export default function CityHome({ params }: { params: { city: string } }) {
       />
       
       {/* Hero Section */}
-      <section className="gradient-breathing relative flex min-h-[90vh] items-center overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40">
+      <section className="gradient-breathing relative flex min-h-[90vh] items-center overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40 pt-24 sm:pt-28">
         {/* Video Background + Overlays */}
         <HeroVideoBackground />
         
