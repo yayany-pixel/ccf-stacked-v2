@@ -126,10 +126,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
         />
-        <GoogleAnalytics />
-        <MetaPixel />
       </head>
       <body>
+        <GoogleAnalytics />
+        <MetaPixel />
         {/* Skip to main content link for keyboard navigation */}
         <a 
           href="#main-content" 
