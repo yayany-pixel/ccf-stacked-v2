@@ -3,6 +3,7 @@ import Link from "next/link";
 import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
 import Reveal from "@/components/motion/Reveal";
+import VideoSwitcher from "@/components/VideoSwitcher";
 import { generateOrganizationSchema } from "@/lib/enhancedStructuredData";
 
 export const metadata: Metadata = {
@@ -178,6 +179,13 @@ export default function HomePage() {
                 <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-white/85 sm:text-xl">
                   Expert-guided pottery, glass fusion, mosaics, and more. We bring people together through creativity in Chicago's Pilsen neighborhood and Eugene, Oregon. BYOB-friendly, beginner-friendly, memory-making experiences.
                 </p>
+              </Reveal>
+
+              {/* Video Switcher */}
+              <Reveal delay={300} variant="fade-up">
+                <div className="mt-12">
+                  <VideoSwitcher />
+                </div>
               </Reveal>
             </div>
           </div>
