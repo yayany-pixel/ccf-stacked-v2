@@ -7,9 +7,10 @@ export default function GoogleAnalytics() {
   const GA_ID_1 = process.env.NEXT_PUBLIC_GA_ID_1;
   const GA_ID_2 = process.env.NEXT_PUBLIC_GA_ID_2;
   const GOOGLE_TAG_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_ID;
+  const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 
   // Collect all valid IDs
-  const measurementIds = [GA_ID_1, GA_ID_2, GOOGLE_TAG_ID].filter(
+  const measurementIds = [GA_ID_1, GA_ID_2, GOOGLE_TAG_ID, GOOGLE_ADS_ID].filter(
     (id): id is string => typeof id === "string" && id.length > 0
   );
 
