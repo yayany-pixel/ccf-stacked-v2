@@ -7,6 +7,7 @@ interface Video {
   label: string;
   ratio: "9/16" | "16/9";
   title: string;
+  duration?: number; // Duration in seconds (if we want to cut it short)
 }
 
 const videos: Video[] = [
@@ -20,7 +21,8 @@ const videos: Video[] = [
     id: "Mfs8xj765VI", 
     label: "Full Video", 
     ratio: "16/9",
-    title: "Color Cocktail Factory Full Video"
+    title: "Color Cocktail Factory Full Video",
+    duration: 58 // Cut 2 seconds before the end (assuming ~60 second video)
   }
 ];
 
@@ -28,38 +30,26 @@ export default function VideoSwitcher() {
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const activeVideo = videos[activeVideoIndex];
 
-  const getEmbedUrl = (videoId: string) => {
-    return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&playsinline=1`;
+  const goToNext = () => {
+    setActiveVideoIndex((prev) => (prev + 1) % videos.length);
+  };
+
+  const getEmbedUrl = (video: Video) => {
+    let url = `https://www.youtube.com/embed/${video.id}?rel=0&modestbranding=1&playsinline=1`;
+    
+    // If duration is specified, add the end parameter to cut the video short
+    if (video.duration) {
+      url += `&end=${video.duration}`;
+    }
+    
+    return url;
   };
 
   return (
     <div className="mx-auto max-w-3xl px-6">
-      {/* Video Controls */}
-      <div className="mb-6 flex justify-center gap-3">
-        {videos.map((video, index) => (
-          <button
-            key={video.id}
-            onClick={() => setActiveVideoIndex(index)}
-            className={`
-              rounded-full px-6 py-3 font-semibold transition-all duration-300
-              ${
-                activeVideoIndex === index
-                  ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg scale-105"
-                  : "border-2 border-white/20 bg-white/10 text-white/70 hover:bg-white/20 hover:text-white"
-              }
-              focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-slate-900
-            `}
-            aria-pressed={activeVideoIndex === index}
-            aria-label={`Switch to ${video.label}`}
-          >
-            {video.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Video Container */}
+      {/* Video Container with Overlay Next Button */}
       <div 
-        className="relative mx-auto overflow-hidden rounded-2xl shadow-2xl transition-all duration-500 ease-in-out"
+        className="group relative mx-auto overflow-hidden rounded-2xl shadow-2xl transition-all duration-500 ease-in-out"
         style={{
           aspectRatio: activeVideo.ratio,
           maxWidth: activeVideo.ratio === "9/16" ? "520px" : "720px"
@@ -67,7 +57,7 @@ export default function VideoSwitcher() {
       >
         <iframe
           key={activeVideo.id}
-          src={getEmbedUrl(activeVideo.id)}
+          src={getEmbedUrl(activeVideo)}
           title={activeVideo.title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
@@ -75,6 +65,15 @@ export default function VideoSwitcher() {
           loading="lazy"
           className="absolute inset-0 h-full w-full border-0"
         />
+        
+        {/* Next Button Overlay - appears on hover */}
+        <button
+          onClick={goToNext}
+          className="absolute bottom-4 right-4 z-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-2.5 font-semibold text-white shadow-xl opacity-0 transition-all duration-300 hover:scale-110 hover:shadow-2xl group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-slate-900"
+          aria-label="Next video"
+        >
+          Next →
+        </button>
       </div>
 
       {/* Optional caption */}
