@@ -22,7 +22,7 @@ const videos: Video[] = [
     label: "Full Video", 
     ratio: "16/9",
     title: "Color Cocktail Factory Full Video",
-    duration: 58 // Cut 2 seconds before the end (assuming ~60 second video)
+    duration: 45 // Stop at 45 seconds
   }
 ];
 
