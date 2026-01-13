@@ -1,36 +1,50 @@
 "use client";
 
 import Script from "next/script";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function GoogleAnalytics() {
-  // Get all GA IDs from environment variables
-  const GA_ID_1 = process.env.NEXT_PUBLIC_GA_ID_1;
-  const GA_ID_2 = process.env.NEXT_PUBLIC_GA_ID_2;
-  const GOOGLE_TAG_ID = process.env.NEXT_PUBLIC_GOOGLE_TAG_ID;
-  const GOOGLE_ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  
+  // Only use NEXT_PUBLIC_GA_ID_1 as specified
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID_1;
 
-  // Collect all valid IDs
-  const measurementIds = [GA_ID_1, GA_ID_2, GOOGLE_TAG_ID, GOOGLE_ADS_ID].filter(
-    (id): id is string => typeof id === "string" && id.length > 0
-  );
-
-  // If no IDs are configured, don't render anything
-  if (measurementIds.length === 0) {
+  // If GA ID is not configured, don't render anything
+  if (!GA_ID) {
     return null;
   }
 
-  // Use the first ID as the primary one for loading gtag.js
-  const primaryId = measurementIds[0];
+  // Track route changes for App Router SPA navigation
+  useEffect(() => {
+    if (!GA_ID) return;
+
+    const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
+    
+    // Fire page_view event on route change
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'page_view', {
+        page_path: url,
+        page_location: window.location.href,
+        page_title: document.title
+      });
+
+      if (process.env.NODE_ENV === 'development') {
+        console.log('[GA] Page view tracked:', url);
+      }
+    }
+  }, [pathname, searchParams, GA_ID]);
 
   return (
     <>
       {/* Load gtag.js script from Google */}
       <Script
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${primaryId}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
       />
       
-      {/* Initialize gtag and configure all measurement IDs */}
+      {/* Initialize gtag and configure GA4 */}
       <Script
         id="google-analytics-init"
         strategy="afterInteractive"
@@ -39,12 +53,12 @@ export default function GoogleAnalytics() {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            
-            ${measurementIds.map((id) => `gtag('config', '${id}');`).join('\n            ')}
+            gtag('config', '${GA_ID}', {
+              page_path: window.location.pathname + window.location.search
+            });
             
             ${process.env.NODE_ENV === 'development' ? `
-            // Debug logging in development only
-            console.log('[GA] Initialized with IDs:', ${JSON.stringify(measurementIds)});
+            console.log('[GA] Initialized with ID: ${GA_ID}');
             ` : ''}
           `,
         }}
