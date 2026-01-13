@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import BookingLink from "@/components/BookingLink";
 
 export interface TimeSlot {
   datetime: Date;
@@ -12,9 +13,12 @@ export interface TimeSlot {
 interface ShowTimesDrawerProps {
   times: TimeSlot[];
   maxVisible?: number;
+  city: string;
+  classNameText: string;
+  classId: string;
 }
 
-export default function ShowTimesDrawer({ times, maxVisible = 4 }: ShowTimesDrawerProps) {
+export default function ShowTimesDrawer({ times, maxVisible = 4, city, classNameText, classId }: ShowTimesDrawerProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showAll, setShowAll] = useState(false);
 
@@ -79,15 +83,16 @@ export default function ShowTimesDrawer({ times, maxVisible = 4 }: ShowTimesDraw
                       {formattedDate} – {formattedTime}
                     </span>
                   </div>
-                  <Link
+                  <BookingLink
                     href={time.bookingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    city={city}
+                    classNameText={classNameText}
+                    classId={classId}
                     onClick={(e) => e.stopPropagation()}
                     className="whitespace-nowrap rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white transition-all hover:bg-white/20"
                   >
                     Book →
-                  </Link>
+                  </BookingLink>
                 </div>
               );
             })}

@@ -1,0 +1,51 @@
+
+graph TB
+    HOME[Homepage<br/>colorcocktailfactory.com<br/>Location chooser + Brand intro]
+    
+    HOME --> CHICAGO[Chicago Hub<br/>/chicago<br/>SEO landing]
+    HOME --> EUGENE[Eugene Hub<br/>/eugene<br/>SEO landing]
+    HOME --> BLOG[Blog<br/>/blog<br/>Content SEO]
+    HOME --> ACTIVITIES[All Classes<br/>/activities<br/>Catalog]
+    HOME --> TEACH[Teach<br/>/teach<br/>Recruitment]
+    HOME --> PRIVATE[Private Events<br/>/private-events<br/>Group bookings]
+    HOME --> GIFTS[Gift Cards<br/>/gift-cards<br/>E-commerce]
+    
+    CHICAGO --> CHI_DATE[Date Night<br/>High-converter]
+    CHICAGO --> CHI_BEGIN[Beginner Wheel<br/>Entry point]
+    CHICAGO --> CHI_HAND[Handbuilding<br/>Alternative]
+    CHICAGO --> CHI_LAMP[Turkish Lamp<br/>Premium]
+    CHICAGO --> CHI_GLASS[Glass Fusion<br/>Specialty]
+    CHICAGO --> CHI_MOSAIC[Mosaics<br/>Craft]
+    CHICAGO --> CHI_BONSAI[Bonsai<br/>Nature]
+    
+    EUGENE --> EUG_DATE[Date Night<br/>High-converter]
+    EUGENE --> EUG_BEGIN[Beginner Wheel<br/>Entry point]
+    EUGENE --> EUG_TERRA[Terrarium<br/>Nature]
+    EUGENE --> EUG_CANDLE[Candle Making<br/>Craft]
+    EUGENE --> EUG_GLASS[Glass Fusion<br/>Specialty]
+    
+    PRIVATE --> TEAM[Team Building<br/>Corporate]
+    PRIVATE --> BIRTHDAY[Birthday Parties<br/>Celebrations]
+    PRIVATE --> BACH[Bachelorette<br/>Groups]
+    PRIVATE --> CORP[Corporate<br/>Business]
+    
+    BLOG --> BLOG_POST[Posts<br/>/blog/slug<br/>SEO content]
+    
+    TEACH --> TEACH_APPLY[Apply<br/>Form]
+    TEACH --> TEACH_FAQ[FAQ<br/>Info]
+    TEACH --> TEACH_PAY[Pay<br/>Compensation]
+    TEACH --> TEACH_LOGIN[Dashboard<br/>Portal]
+    
+    ACTIVITIES --> ACT_CAT[Detail Pages<br/>/activities/slug]
+    
+    CHI_DATE -.->|RezClick| REZCLICK[Calendar Booking<br/>CONVERSION]
+    EUG_DATE -.->|RezClick| REZCLICK
+    
+    PRIVATE -.->|Submit| THANKS_PARTY[Thank You<br/>Confirmation]
+    TEACH_APPLY -.->|Submit| THANKS_INST[Thank You<br/>Confirmation]
+    
+    style HOME fill:#9333ea,stroke:#7c3aed,color:#fff
+    style CHICAGO fill:#ec4899,stroke:#db2777,color:#fff
+    style EUGENE fill:#10b981,stroke:#059669,color:#fff
+    style REZCLICK fill:#f59e0b,stroke:#d97706,color:#fff,stroke-width:3px
+    style PRIVATE fill:#8b5cf6,stroke:#7c3aed,color:#fff

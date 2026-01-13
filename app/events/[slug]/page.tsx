@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getAllEvents, getEventBySlug, type NormalizedEvent } from "@/lib/eventsAPI";
 import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
+import BookingLink from "@/components/BookingLink";
 import Reveal from "@/components/motion/Reveal";
 
 // Generate static params for all upcoming events
@@ -213,13 +214,15 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
 
               {/* Booking CTA */}
               <div className="flex flex-col gap-4 sm:flex-row">
-                <ButtonPill 
+                <BookingLink
                   href={event.bookingUrl}
-                  variant="primary"
-                  className="flex-1"
+                  city={event.city}
+                  classNameText={event.title}
+                  classId={event.slug}
+                  className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 flex-1 border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
                 >
                   Book This Event →
-                </ButtonPill>
+                </BookingLink>
                 <ButtonPill 
                   href={`/${event.city.toLowerCase()}`}
                   variant="secondary"

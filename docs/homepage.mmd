@@ -1,0 +1,64 @@
+
+graph TB
+    subgraph HERO[" HERO SECTION - Above the Fold "]
+        TAGLINE["Tagline: Creativity is shareable"]
+        H1["H1: Choose Your Location"]
+        DESC["Expert-guided pottery, glass fusion,<br/>mosaics in Chicago & Eugene"]
+        VIDEO["VIDEO SWITCHER<br/>Default: Studio Short 9:16<br/>Option: Full Video 16:9<br/>Next button overlay"]
+    end
+    
+    subgraph LOCATIONS[" LOCATION CARDS "]
+        CHI_CARD["Chicago Card<br/>Pilsen Neighborhood<br/>Top 6 classes<br/>Hours + CTA"]
+        EUG_CARD["Eugene Card<br/>Oregon<br/>Top 6 classes<br/>Hours + CTA"]
+    end
+    
+    subgraph GROUPS[" GROUP EVENTS SECTION "]
+        GROUP_INTRO["Perfect for Groups & Celebrations"]
+        CARDS["Team Building | Birthday | Bachelorette"]
+        QUOTE_CTA["Request Private Event Quote"]
+    end
+    
+    subgraph WHY[" WHY CCF SECTION "]
+        WHY_H2["Why Color Cocktail Factory?"]
+        WHY_STORY["150,000+ guests since 2009<br/>Beginner-friendly | BYOB | Experts"]
+        TRUST_BADGES["Expert Instructors<br/>BYOB Welcome<br/>Take Home Art"]
+    end
+    
+    subgraph FINAL[" FINAL CTA "]
+        READY["Ready to Create Something Amazing?"]
+        DUAL_CTA["Explore Chicago | Explore Eugene"]
+        FOOTER_LINKS["Blog • Events • Activities"]
+    end
+    
+    subgraph FOOTER[" FOOTER "]
+        FOOT_NAV["Navigation: About | Classes | Private Events<br/>Gift Cards | Teach | Blog | Contact"]
+        SOCIAL["Social Media Links"]
+        LEGAL["Privacy | Terms | Accessibility"]
+    end
+    
+    HERO --> VIDEO
+    VIDEO --> LOCATIONS
+    LOCATIONS --> CHI_CARD
+    LOCATIONS --> EUG_CARD
+    CHI_CARD --> GROUPS
+    EUG_CARD --> GROUPS
+    GROUPS --> GROUP_INTRO
+    GROUP_INTRO --> CARDS
+    CARDS --> QUOTE_CTA
+    QUOTE_CTA --> WHY
+    WHY --> WHY_STORY
+    WHY_STORY --> TRUST_BADGES
+    TRUST_BADGES --> FINAL
+    FINAL --> DUAL_CTA
+    DUAL_CTA --> FOOTER
+    FOOTER --> FOOT_NAV
+    FOOT_NAV --> SOCIAL
+    SOCIAL --> LEGAL
+    
+    style HERO fill:#9333ea,stroke:#7c3aed,color:#fff
+    style VIDEO fill:#f59e0b,stroke:#d97706,color:#fff,stroke-width:3px
+    style LOCATIONS fill:#ec4899,stroke:#db2777,color:#fff
+    style GROUPS fill:#8b5cf6,stroke:#7c3aed,color:#fff
+    style WHY fill:#06b6d4,stroke:#0891b2,color:#fff
+    style FINAL fill:#10b981,stroke:#059669,color:#fff
+    style FOOTER fill:#64748b,stroke:#475569,color:#fff

@@ -144,3 +144,60 @@ export function trackVideo(action: string, videoTitle: string, videoUrl?: string
     video_url: videoUrl
   });
 }
+
+/**
+ * Booking provider types
+ */
+export type BookingProvider = 'rezclick' | 'eventbrite' | 'acuity' | 'unknown';
+
+/**
+ * Detect booking provider from URL
+ */
+export function detectBookingProvider(url: string): BookingProvider {
+  const lowerUrl = url.toLowerCase();
+  if (lowerUrl.includes('rezclick.com')) return 'rezclick';
+  if (lowerUrl.includes('eventbrite.com')) return 'eventbrite';
+  if (lowerUrl.includes('acuityscheduling.com')) return 'acuity';
+  return 'unknown';
+}
+
+/**
+ * Track booking click as begin_checkout event (GA4 e-commerce event)
+ */
+export interface BookingTrackingParams {
+  city: string;
+  class_category?: string;
+  class_name: string;
+  class_id: string; // slug
+  booking_provider?: BookingProvider;
+  link_url: string;
+}
+
+export function trackBeginCheckout(params: BookingTrackingParams): void {
+  if (!isGtagAvailable()) {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[GA] trackBeginCheckout (gtag not available):', params);
+    }
+    return;
+  }
+
+  const provider = params.booking_provider || detectBookingProvider(params.link_url);
+
+  try {
+    window.gtag!('event', 'begin_checkout', {
+      city: params.city,
+      class_category: params.class_category || 'workshop',
+      class_name: params.class_name,
+      class_id: params.class_id,
+      booking_provider: provider,
+      link_url: params.link_url,
+    });
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[GA4] begin_checkout:', { ...params, booking_provider: provider });
+    }
+  } catch (error) {
+    console.error('[GA] Error tracking begin_checkout:', error);
+  }
+}
+

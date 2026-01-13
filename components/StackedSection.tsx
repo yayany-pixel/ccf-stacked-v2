@@ -3,6 +3,7 @@ import SectionBand from "@/components/SectionBand";
 import GlassCard from "@/components/ui/GlassCard";
 import TagPill from "@/components/ui/TagPill";
 import ButtonPill from "@/components/ui/ButtonPill";
+import BookingLink from "@/components/BookingLink";
 import MiniValueCard from "@/components/ui/MiniValueCard";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
 import Reveal from "@/components/motion/Reveal";
@@ -67,26 +68,50 @@ export default function StackedSection({
                     </p>
 
                     <div className="mt-6 flex flex-wrap gap-3">
-                      <ButtonPill
-                        href={resolveHref(city, section, section.primaryCta.kind, section.primaryCta.href)}
-                        variant="primary"
-                        trackingData={{
-                          activityName: section.heroTitle,
-                          city: city.label
-                        }}
-                      >
-                        {section.primaryCta.label}
-                      </ButtonPill>
-                      <ButtonPill
-                        href={resolveHref(city, section, section.secondaryCta.kind, section.secondaryCta.href)}
-                        variant="secondary"
-                        trackingData={{
-                          activityName: section.heroTitle,
-                          city: city.label
-                        }}
-                      >
-                        {section.secondaryCta.label}
-                      </ButtonPill>
+                      {section.primaryCta.kind === 'booking' ? (
+                        <BookingLink
+                          href={resolveHref(city, section, section.primaryCta.kind, section.primaryCta.href)}
+                          city={city.label}
+                          classNameText={section.heroTitle}
+                          classId={section.slug}
+                          className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+                        >
+                          {section.primaryCta.label}
+                        </BookingLink>
+                      ) : (
+                        <ButtonPill
+                          href={resolveHref(city, section, section.primaryCta.kind, section.primaryCta.href)}
+                          variant="primary"
+                          trackingData={{
+                            activityName: section.heroTitle,
+                            city: city.label
+                          }}
+                        >
+                          {section.primaryCta.label}
+                        </ButtonPill>
+                      )}
+                      {section.secondaryCta.kind === 'booking' ? (
+                        <BookingLink
+                          href={resolveHref(city, section, section.secondaryCta.kind, section.secondaryCta.href)}
+                          city={city.label}
+                          classNameText={section.heroTitle}
+                          classId={section.slug}
+                          className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 border border-white/15 bg-white/5 text-white/85 hover:bg-white/10"
+                        >
+                          {section.secondaryCta.label}
+                        </BookingLink>
+                      ) : (
+                        <ButtonPill
+                          href={resolveHref(city, section, section.secondaryCta.kind, section.secondaryCta.href)}
+                          variant="secondary"
+                          trackingData={{
+                            activityName: section.heroTitle,
+                            city: city.label
+                          }}
+                        >
+                          {section.secondaryCta.label}
+                        </ButtonPill>
+                      )}
                     </div>
 
                     {/* Sub-classes chips (for grouped sections) */}

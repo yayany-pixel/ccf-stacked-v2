@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCF Website Structure - Visual Documentation</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: white;
+            color: #1a1a1a;
+        }
+        
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            padding: 0.75in;
+            margin: 0 auto 20px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            page-break-after: always;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #9333ea;
+            border-bottom: 3px solid #9333ea;
+            padding-bottom: 10px;
+        }
+        
+        .page-subtitle {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .mermaid {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .legend {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .legend h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        
+        .legend-badge {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        .conversion-path {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .conversion-path h4 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #856404;
+        }
+        
+        .conversion-path code {
+            background: #fff;
+            padding: 8px 12px;
+            border-radius: 4px;
+            display: block;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .page {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
+            }
+            
+            @page {
+                margin: 0.5in;
+            }
+        }
+        
+        .print-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #9333ea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(147, 51, 234, 0.3);
+            z-index: 1000;
+        }
+        
+        .print-button:hover {
+            background: #7c3aed;
+        }
+        
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PAGE 1: Site Structure Map -->
+    <div class="page">
+        <h1 class="page-title">Color Cocktail Factory - Website Structure Map</h1>
+        <p class="page-subtitle">Information Architecture | Navigation Hierarchy | Conversion Paths</p>
+        
+        <div class="mermaid">
+graph TB
+    HOME[Homepage<br/>colorcocktailfactory.com<br/>Location chooser]
+    
+    HOME --> CHICAGO[Chicago Hub<br/>/chicago]
+    HOME --> EUGENE[Eugene Hub<br/>/eugene]
+    HOME --> BLOG[Blog<br/>/blog]
+    HOME --> ACTIVITIES[All Classes<br/>/activities]
+    HOME --> TEACH[Teach<br/>/teach]
+    HOME --> PRIVATE[Private Events<br/>/private-events]
+    HOME --> GIFTS[Gift Cards<br/>/gift-cards]
+    
+    CHICAGO --> CHI_DATE[Date Night<br/>High-converter]
+    CHICAGO --> CHI_BEGIN[Beginner Wheel<br/>Entry point]
+    CHICAGO --> CHI_HAND[Handbuilding]
+    CHICAGO --> CHI_LAMP[Turkish Lamp<br/>Premium]
+    CHICAGO --> CHI_GLASS[Glass Fusion]
+    CHICAGO --> CHI_MOSAIC[Mosaics]
+    CHICAGO --> CHI_BONSAI[Bonsai]
+    
+    EUGENE --> EUG_DATE[Date Night<br/>High-converter]
+    EUGENE --> EUG_BEGIN[Beginner Wheel]
+    EUGENE --> EUG_TERRA[Terrarium]
+    EUGENE --> EUG_CANDLE[Candles]
+    EUGENE --> EUG_GLASS[Glass Fusion]
+    
+    PRIVATE --> TEAM[Team Building]
+    PRIVATE --> BIRTHDAY[Birthdays]
+    PRIVATE --> BACH[Bachelorette]
+    PRIVATE --> CORP[Corporate]
+    
+    BLOG --> BLOG_POST[Blog Posts<br/>/blog/slug]
+    
+    TEACH --> TEACH_APPLY[Apply]
+    TEACH --> TEACH_FAQ[FAQ]
+    TEACH --> TEACH_PAY[Pay Info]
+    TEACH --> TEACH_LOGIN[Dashboard]
+    
+    ACTIVITIES --> ACT_CAT[Class Details<br/>/activities/slug]
+    
+    CHI_DATE -.->|RezClick| REZCLICK[Booking<br/>CONVERSION]
+    EUG_DATE -.->|RezClick| REZCLICK
+    
+    PRIVATE -.->|Submit| THANKS[Thank You]
+    
+    style HOME fill:#9333ea,stroke:#7c3aed,color:#fff
+    style CHICAGO fill:#ec4899,stroke:#db2777,color:#fff
+    style EUGENE fill:#10b981,stroke:#059669,color:#fff
+    style REZCLICK fill:#f59e0b,stroke:#d97706,color:#fff,stroke-width:4px
+    style PRIVATE fill:#8b5cf6,stroke:#7c3aed,color:#fff
+        </div>
+        
+        <div class="legend">
+            <h3>🏷️ Legend & Color Coding</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <div class="legend-badge" style="background: #9333ea;">🏠</div>
+                    <span>Homepage / Entry</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-badge" style="background: #ec4899;">📍</div>
+                    <span>Chicago Location</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-badge" style="background: #10b981;">🌲</div>
+                    <span>Eugene Location</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-badge" style="background: #f59e0b;">💳</div>
+                    <span>Booking Conversion</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-badge" style="background: #8b5cf6;">🎉</div>
+                    <span>Group/Private Events</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-badge" style="background: #3b82f6;">📝</div>
+                    <span>Content / SEO</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="conversion-path">
+            <h4>🎯 Primary Conversion Path</h4>
+            <code>Homepage → Location Hub → Class Detail → RezClick Calendar → Booking Complete</code>
+        </div>
+        
+        <div class="conversion-path">
+            <h4>🎉 Private Event Path</h4>
+            <code>Homepage → Private Events → Form Fill → Thank You → Sales Follow-up</code>
+        </div>
+    </div>
+    
+    <!-- PAGE 2: Homepage Wireframe -->
+    <div class="page">
+        <h1 class="page-title">Homepage Structure - Above Fold to Footer</h1>
+        <p class="page-subtitle">Section Flow | Content Hierarchy | CTA Placement</p>
+        
+        <div class="mermaid">
+graph TB
+    subgraph HERO[" 🏠 HERO - Above the Fold "]
+        TAGLINE["Creativity is shareable"]
+        H1["H1: Choose Your Location"]
+        DESC["Expert-guided pottery, glass,<br/>mosaics in CHI & EUG"]
+        VIDEO["📹 VIDEO SWITCHER<br/>Default: Studio Short 9:16<br/>Next: Full Video 16:9"]
+    end
+    
+    subgraph LOCATIONS[" 📍 LOCATION CARDS "]
+        CHI_CARD["Chicago<br/>Pilsen • Top 6 classes<br/>Hours • Book CTA"]
+        EUG_CARD["Eugene<br/>Oregon • Top 6 classes<br/>Hours • Book CTA"]
+    end
+    
+    subgraph GROUPS[" 🎉 GROUP EVENTS "]
+        GROUP_H2["Perfect for Groups"]
+        CARDS["Team Building<br/>Birthdays<br/>Bachelorette"]
+        QUOTE_CTA["Request Quote"]
+    end
+    
+    subgraph WHY[" ✨ WHY CCF "]
+        WHY_H2["Why Color Cocktail?"]
+        STORY["150K+ guests since 2009<br/>BYOB • Experts • Beginner-friendly"]
+        TRUST["Trust Badges:<br/>Instructors | BYOB | Art"]
+    end
+    
+    subgraph FINAL[" 🚀 FINAL CTA "]
+        READY["Ready to Create?"]
+        DUAL_CTA["Chicago | Eugene"]
+        LINKS["Blog • Events • Classes"]
+    end
+    
+    subgraph FOOTER[" 📄 FOOTER "]
+        NAV["About • Classes • Private<br/>Gift Cards • Teach • Blog"]
+        SOCIAL["Social Media"]
+        LEGAL["Privacy • Terms"]
+    end
+    
+    HERO --> VIDEO
+    VIDEO --> LOCATIONS
+    LOCATIONS --> CHI_CARD
+    LOCATIONS --> EUG_CARD
+    CHI_CARD --> GROUPS
+    EUG_CARD --> GROUPS
+    GROUPS --> GROUP_H2
+    GROUP_H2 --> CARDS
+    CARDS --> QUOTE_CTA
+    QUOTE_CTA --> WHY
+    WHY --> STORY
+    STORY --> TRUST
+    TRUST --> FINAL
+    FINAL --> DUAL_CTA
+    DUAL_CTA --> FOOTER
+    FOOTER --> NAV
+    NAV --> SOCIAL
+    
+    style HERO fill:#9333ea,stroke:#7c3aed,color:#fff
+    style VIDEO fill:#f59e0b,stroke:#d97706,color:#fff,stroke-width:3px
+    style LOCATIONS fill:#ec4899,stroke:#db2777,color:#fff
+    style GROUPS fill:#8b5cf6,stroke:#7c3aed,color:#fff
+    style WHY fill:#06b6d4,stroke:#0891b2,color:#fff
+    style FINAL fill:#10b981,stroke:#059669,color:#fff
+    style FOOTER fill:#64748b,stroke:#475569,color:#fff
+        </div>
+        
+        <div class="legend">
+            <h3>📐 Section Purposes</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <div class="legend-badge">🏠</div>
+                    <span><strong>Hero:</strong> Brand intro + location choice</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-badge">📹</div>
+                    <span><strong>Video:</strong> Social proof + engagement</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-badge">📍</div>
+                    <span><strong>Locations:</strong> Primary CTAs to hubs</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-badge">🎉</div>
+                    <span><strong>Groups:</strong> B2B lead generation</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-badge">✨</div>
+                    <span><strong>Why:</strong> Trust building</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-badge">🚀</div>
+                    <span><strong>Final CTA:</strong> Last conversion opportunity</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="conversion-path">
+            <h4>📱 Mobile Considerations</h4>
+            <code>• Video: Full-width, touch Next button<br/>• Cards: Stacked vertical<br/>• Nav: Hamburger menu<br/>• CTAs: Full-width buttons</code>
+        </div>
+        
+        <div class="conversion-path">
+            <h4>💻 Desktop Optimizations</h4>
+            <code>• Video: Centered, max 720px, hover overlay<br/>• Cards: Side-by-side grid<br/>• Nav: Full pill navigation<br/>• CTAs: Inline with icons</code>
+        </div>
+    </div>
+    
+    <button class="print-button" onclick="window.print()">🖨️ Print to PDF</button>
+    
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

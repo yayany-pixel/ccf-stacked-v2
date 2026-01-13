@@ -4,6 +4,7 @@ import SectionBand from "@/components/SectionBand";
 import GlassCard from "@/components/ui/GlassCard";
 import TagPill from "@/components/ui/TagPill";
 import ButtonPill from "@/components/ui/ButtonPill";
+import BookingLink from "@/components/BookingLink";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
 import { sections, type SectionConfig } from "@/lib/config";
 import { getCityByParam, buildBookingLink } from "@/lib/links";
@@ -101,9 +102,15 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
               <p className="mt-4 text-base leading-relaxed text-white/80">{section.heroDescription}</p>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <ButtonPill href={booking} variant="primary">
+                <BookingLink
+                  href={booking}
+                  city={city.label}
+                  classNameText={section.heroTitle}
+                  classId={section.slug}
+                  className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+                >
                   Open booking
-                </ButtonPill>
+                </BookingLink>
                 <ButtonPill href="/gift-cards" variant="secondary">
                   Gift cards
                 </ButtonPill>
@@ -149,9 +156,15 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
                 <div className="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="text-sm font-semibold">Quick links</div>
                   <div className="mt-3 grid gap-2">
-                    <ButtonPill href={booking} variant="primary" full>
+                    <BookingLink
+                      href={booking}
+                      city={city.label}
+                      classNameText={section.heroTitle}
+                      classId={section.slug}
+                      className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 w-full border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+                    >
                       Open calendar
-                    </ButtonPill>
+                    </BookingLink>
                     {related.map((r) => (
                       <ButtonPill key={r.id} href={`/${city.param}/${r.slug}`} variant="secondary" full>
                         Related: {r.navLabel}

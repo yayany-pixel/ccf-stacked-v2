@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import BookingLink from "@/components/BookingLink";
 
 export interface BookingLinks {
   rezclick?: string;
@@ -18,9 +19,18 @@ export interface UpcomingTime {
 interface HomeTimesDrawerProps {
   bookingLinks: BookingLinks;
   upcomingTimes?: UpcomingTime[];
+  city: string;
+  classNameText: string;
+  classId: string;
 }
 
-export default function HomeTimesDrawer({ bookingLinks, upcomingTimes = [] }: HomeTimesDrawerProps) {
+export default function HomeTimesDrawer({ 
+  bookingLinks, 
+  upcomingTimes = [],
+  city,
+  classNameText,
+  classId
+}: HomeTimesDrawerProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const hasAnyLink = bookingLinks.rezclick || bookingLinks.eventbrite || bookingLinks.acuity;
@@ -62,12 +72,13 @@ export default function HomeTimesDrawer({ bookingLinks, upcomingTimes = [] }: Ho
           <div className="flex flex-wrap gap-3">
             {/* Groupon/RezClick */}
             {bookingLinks.rezclick ? (
-              <Link
+              <BookingLink
                 href={bookingLinks.rezclick}
-                target="_blank"
-                rel="noopener noreferrer"
+                city={city}
+                classNameText={classNameText}
+                classId={classId}
                 className="group flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 transition-all hover:border-white/30 hover:bg-white/15 hover:shadow-lg hover:shadow-white/5"
-                aria-label="Book via Groupon (RezClick)"
+                ariaLabel="Book via Groupon (RezClick)"
               >
                 <div className="relative h-7 w-7">
                   <GrouponIcon />
@@ -75,7 +86,7 @@ export default function HomeTimesDrawer({ bookingLinks, upcomingTimes = [] }: Ho
                 <span className="text-xs font-semibold text-white/90 group-hover:text-white">
                   Groupon
                 </span>
-              </Link>
+              </BookingLink>
             ) : (
               <div
                 className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 opacity-40"
@@ -90,12 +101,13 @@ export default function HomeTimesDrawer({ bookingLinks, upcomingTimes = [] }: Ho
 
             {/* Eventbrite */}
             {bookingLinks.eventbrite ? (
-              <Link
+              <BookingLink
                 href={bookingLinks.eventbrite}
-                target="_blank"
-                rel="noopener noreferrer"
+                city={city}
+                classNameText={classNameText}
+                classId={classId}
                 className="group flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 transition-all hover:border-white/30 hover:bg-white/15 hover:shadow-lg hover:shadow-white/5"
-                aria-label="Book via Eventbrite"
+                ariaLabel="Book via Eventbrite"
               >
                 <div className="relative h-7 w-7">
                   <EventbriteIcon />
@@ -103,7 +115,7 @@ export default function HomeTimesDrawer({ bookingLinks, upcomingTimes = [] }: Ho
                 <span className="text-xs font-semibold text-white/90 group-hover:text-white">
                   Eventbrite
                 </span>
-              </Link>
+              </BookingLink>
             ) : (
               <div
                 className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 opacity-40"
@@ -118,12 +130,13 @@ export default function HomeTimesDrawer({ bookingLinks, upcomingTimes = [] }: Ho
 
             {/* Acuity */}
             {bookingLinks.acuity ? (
-              <Link
+              <BookingLink
                 href={bookingLinks.acuity}
-                target="_blank"
-                rel="noopener noreferrer"
+                city={city}
+                classNameText={classNameText}
+                classId={classId}
                 className="group flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 transition-all hover:border-white/30 hover:bg-white/15 hover:shadow-lg hover:shadow-white/5"
-                aria-label="Book remaining seats via Acuity"
+                ariaLabel="Book remaining seats via Acuity"
               >
                 <div className="relative h-7 w-7">
                   <AcuityIcon />
@@ -131,7 +144,7 @@ export default function HomeTimesDrawer({ bookingLinks, upcomingTimes = [] }: Ho
                 <span className="text-xs font-semibold text-white/90 group-hover:text-white">
                   Acuity
                 </span>
-              </Link>
+              </BookingLink>
             ) : (
               <div
                 className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 opacity-40"
@@ -158,14 +171,15 @@ export default function HomeTimesDrawer({ bookingLinks, upcomingTimes = [] }: Ho
                 className="flex items-center justify-between gap-3 rounded border border-white/5 bg-white/5 px-3 py-2 text-sm"
               >
                 <span className="text-white/70">{time.label}</span>
-                <Link
+                <BookingLink
                   href={time.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  city={city}
+                  classNameText={classNameText}
+                  classId={classId}
                   className="whitespace-nowrap rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white transition-all hover:bg-white/20"
                 >
                   Book →
-                </Link>
+                </BookingLink>
               </div>
             ))}
           </div>
