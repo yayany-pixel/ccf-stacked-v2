@@ -5,6 +5,7 @@ import Link from "next/link";
 import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
 import Reveal from "@/components/motion/Reveal";
+import LandingVideos from "@/components/LandingVideos";
 
 type City = "chicago" | "eugene";
 
@@ -175,6 +176,9 @@ export default function LocationSelector() {
               <p>📍 {currentCity.location}</p>
               <p className="mt-1">⏰ {currentCity.hours}</p>
             </div>
+
+            {/* Videos - shown for both locations */}
+            <LandingVideos />
           </div>
         </div>
       </GlassCard>

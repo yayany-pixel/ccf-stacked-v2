@@ -3,7 +3,6 @@ import Link from "next/link";
 import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
 import Reveal from "@/components/motion/Reveal";
-import VideoSwitcher from "@/components/VideoSwitcher";
 import LocationSelector from "@/components/LocationSelector";
 import { generateOrganizationSchema } from "@/lib/enhancedStructuredData";
 
@@ -167,46 +166,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Location Selector Section */}
+        {/* Location Selector Section (now includes videos) */}
         <section className="py-20">
           <div className="mx-auto max-w-3xl px-6">
             <LocationSelector />
-            
-            {/* Scroll for details affordance */}
-            <Reveal delay={100}>
-              <div className="mt-8 text-center">
-                <a 
-                  href="#groups-section"
-                  className="inline-flex items-center gap-2 text-sm text-purple-300 hover:text-purple-200 transition-colors group"
-                >
-                  <span>Just browsing? Scroll for details</span>
-                  <svg 
-                    className="w-4 h-4 animate-bounce group-hover:translate-y-0.5 transition-transform" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                </a>
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* Videos Section - Moved here */}
-        <section className="bg-gradient-to-br from-purple-900/10 to-pink-900/10 py-16">
-          <div className="mx-auto max-w-7xl px-6">
-            <Reveal variant="fade-up">
-              <div className="text-center mb-8">
-                <h2 className="font-serif text-3xl font-bold">See Our Studio in Action</h2>
-                <p className="mt-2 text-white/70">Watch what makes our workshops special</p>
-              </div>
-            </Reveal>
-
-            <Reveal delay={100} variant="fade-up">
-              <VideoSwitcher />
-            </Reveal>
           </div>
         </section>
 
