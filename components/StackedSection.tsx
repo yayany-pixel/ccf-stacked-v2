@@ -6,6 +6,7 @@ import ButtonPill from "@/components/ui/ButtonPill";
 import BookingLink from "@/components/BookingLink";
 import MiniValueCard from "@/components/ui/MiniValueCard";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
+import LandingVideos from "@/components/LandingVideos";
 import Reveal from "@/components/motion/Reveal";
 import type { City, SectionConfig } from "@/lib/config";
 import { buildBookingLink } from "@/lib/links";
@@ -48,10 +49,16 @@ export default function StackedSection({
           <div className="mx-auto max-w-5xl">
             <Reveal variant="fade-up" delay={100}>
               {section.slug === "private-parties" ? (
-                <PrivateEventFormCard
-                  city={city}
-                  timeWindows={section.scheduleRows.map((r) => `${r.time}${r.note ? ` (${r.note})` : ""}`)}
-                />
+                <>
+                  <PrivateEventFormCard
+                    city={city}
+                    timeWindows={section.scheduleRows.map((r) => `${r.time}${r.note ? ` (${r.note})` : ""}`)}
+                  />
+                  {/* Videos immediately after Private Party form */}
+                  <div className="mt-12">
+                    <LandingVideos />
+                  </div>
+                </>
               ) : (
                 <GlassCard>
                   <div className="p-7">

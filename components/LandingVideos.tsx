@@ -89,17 +89,18 @@ export default function LandingVideos() {
       <Reveal variant="fade-up" delay={200}>
         <div className="mt-6 text-center">
           <a 
-            href="#groups-section"
+            href="#explore"
             className="inline-flex items-center gap-2 text-sm text-purple-300/80 hover:text-purple-200 transition-colors group focus:outline-none focus:ring-2 focus:ring-purple-400/50 focus:ring-offset-2 focus:ring-offset-slate-900 rounded px-2 py-1"
             onClick={(e) => {
               e.preventDefault();
-              document.getElementById('groups-section')?.scrollIntoView({ 
+              const target = document.getElementById('explore') || document.querySelector('[id*="date-night"]') || document.querySelector('section:has([id])');
+              target?.scrollIntoView({ 
                 behavior: 'smooth',
                 block: 'start'
               });
             }}
           >
-            <span>Want the full scoop? Keep scrolling</span>
+            <span>Keep scrolling — workshops & details are below</span>
             <svg 
               className="w-4 h-4 animate-bounce group-hover:translate-y-0.5 transition-transform" 
               fill="none" 
