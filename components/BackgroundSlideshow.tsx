@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import NextImage from "next/image";
 
 export default function BackgroundSlideshow({ 
   images,
@@ -33,11 +34,13 @@ export default function BackgroundSlideshow({
             zIndex: index === currentIndex ? 1 : 0
           }}
         >
-          <img
+          <NextImage
             src={image}
             alt=""
-            className="h-full w-full object-cover opacity-30"
-            loading="lazy"
+            fill
+            sizes="100vw"
+            className="object-cover opacity-30"
+            priority={index === 0}
           />
         </div>
       ))}

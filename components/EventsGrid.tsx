@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import NextImage from "next/image";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
 import ButtonPill from "@/components/ui/ButtonPill";
@@ -209,11 +210,13 @@ export default function EventsGrid({ events }: EventsGridProps) {
                         <div className="flex flex-col md:flex-row">
                           {/* Event Image */}
                           {event.imageUrl && (
-                            <div className="md:w-48 h-48 md:h-auto flex-shrink-0">
-                              <img 
+                            <div className="md:w-48 h-48 md:h-auto flex-shrink-0 relative">
+                              <NextImage 
                                 src={event.imageUrl} 
                                 alt={event.title}
-                                className="h-full w-full object-cover"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 192px"
+                                className="object-cover"
                               />
                             </div>
                           )}
@@ -313,11 +316,13 @@ export default function EventsGrid({ events }: EventsGridProps) {
                 <div className="p-6">
                   {/* Event Image */}
                   {event.imageUrl && (
-                    <div className="mb-4 overflow-hidden rounded-lg">
-                      <img 
+                    <div className="mb-4 overflow-hidden rounded-lg relative h-48">
+                      <NextImage 
                         src={event.imageUrl} 
                         alt={event.title}
-                        className="h-48 w-full object-cover"
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover"
                       />
                     </div>
                   )}

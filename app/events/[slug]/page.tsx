@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import NextImage from "next/image";
 import { getAllEvents, getEventBySlug, type NormalizedEvent } from "@/lib/eventsAPI";
 import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
@@ -139,11 +140,14 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
           <GlassCard className="overflow-hidden">
             {/* Event Image */}
             {event.imageUrl && (
-              <div className="h-64 overflow-hidden sm:h-96">
-                <img 
+              <div className="h-64 overflow-hidden sm:h-96 relative">
+                <NextImage 
                   src={event.imageUrl} 
                   alt={event.title}
-                  className="h-full w-full object-cover"
+                  fill
+                  sizes="100vw"
+                  priority
+                  className="object-cover"
                 />
               </div>
             )}
