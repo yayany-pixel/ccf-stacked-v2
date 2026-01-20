@@ -3,6 +3,7 @@
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, Suspense } from "react";
+import { reportWebVitals } from "@/lib/analytics";
 
 function GoogleAnalyticsInner() {
   const pathname = usePathname();
@@ -35,6 +36,23 @@ function GoogleAnalyticsInner() {
       }
     }
   }, [pathname, searchParams, GA_ID]);
+
+  // Week 2: Report Web Vitals
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Dynamically import web-vitals only on client
+    // Note: FID is deprecated in web-vitals v4, replaced by INP
+    import('web-vitals').then(({ onCLS, onFCP, onLCP, onTTFB, onINP }) => {
+      onCLS(reportWebVitals);
+      onFCP(reportWebVitals);
+      onLCP(reportWebVitals);
+      onTTFB(reportWebVitals);
+      onINP(reportWebVitals);
+    }).catch((err) => {
+      console.error('[Web Vitals] Failed to load:', err);
+    });
+  }, []);
 
   return (
     <>

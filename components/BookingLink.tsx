@@ -3,6 +3,7 @@
 import { type ReactNode } from 'react';
 import Link from 'next/link';
 import { trackBeginCheckout } from '@/lib/analytics';
+import { useCTATracking } from '@/lib/analyticsHooks';
 
 export interface BookingLinkProps {
   href: string;
@@ -16,10 +17,16 @@ export interface BookingLinkProps {
   target?: string;
   rel?: string;
   ariaLabel?: string;
+  /** Week 2: CTA location context (e.g., "Hero", "Date Night Section") */
+  ctaLocation?: string;
+  /** Week 2: CTA type (default: "primary") */
+  ctaType?: 'primary' | 'secondary' | 'text-link';
 }
 
 /**
  * BookingLink - Tracks all booking clicks as GA4 begin_checkout events
+ * 
+ * Week 2: Enhanced with CTA taxonomy (location, text, type)
  * 
  * Usage:
  * <BookingLink
@@ -27,6 +34,8 @@ export interface BookingLinkProps {
  *   city="Chicago"
  *   classNameText="Date Night Pottery"
  *   classId="date-night-wheel"
+ *   ctaLocation="Hero"
+ *   ctaType="primary"
  *   className="btn btn-primary"
  * >
  *   Book Now
@@ -44,9 +53,13 @@ export default function BookingLink({
   target,
   rel,
   ariaLabel,
+  ctaLocation,
+  ctaType = 'primary',
 }: BookingLinkProps) {
+  const trackCTA = useCTATracking();
+
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Track begin_checkout event
+    // Track begin_checkout event (existing)
     trackBeginCheckout({
       city,
       class_name: classNameText,
@@ -54,6 +67,15 @@ export default function BookingLink({
       class_category: classCategory,
       link_url: href,
     });
+
+    // Week 2: Track CTA click with enhanced taxonomy
+    if (ctaLocation) {
+      trackCTA({
+        location: ctaLocation,
+        text: typeof children === 'string' ? children : 'Book Now',
+        type: ctaType,
+      });
+    }
 
     // Call optional onClick handler
     if (onClick) {

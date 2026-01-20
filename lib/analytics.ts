@@ -201,3 +201,104 @@ export function trackBeginCheckout(params: BookingTrackingParams): void {
   }
 }
 
+/**
+ * WEEK 2: PERFORMANCE MONITORING
+ * Core Web Vitals tracking with Next.js web-vitals
+ */
+
+/**
+ * Detect device type from user agent
+ */
+function getDeviceType(): 'mobile' | 'tablet' | 'desktop' {
+  if (typeof navigator === 'undefined') return 'desktop';
+  
+  const ua = navigator.userAgent.toLowerCase();
+  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+    return 'tablet';
+  }
+  if (/mobile|iphone|ipod|android|blackberry|opera mini|opera mobi|iemobile/i.test(ua)) {
+    return 'mobile';
+  }
+  return 'desktop';
+}
+
+/**
+ * Detect connection type from Network Information API
+ */
+function getConnectionType(): string {
+  if (typeof navigator === 'undefined' || !('connection' in navigator)) {
+    return 'unknown';
+  }
+  
+  const connection = (navigator as any).connection;
+  return connection?.effectiveType || 'unknown';
+}
+
+/**
+ * Extract city from pathname (e.g., /chicago → chicago)
+ */
+function getCityFromPath(): string {
+  if (typeof window === 'undefined') return 'unknown';
+  
+  const path = window.location.pathname;
+  const cityMatch = path.match(/^\/(chicago|eugene)/);
+  return cityMatch ? cityMatch[1] : 'global';
+}
+
+/**
+ * Report Web Vitals to GA4
+ * Compatible with web-vitals v4
+ * Note: FID is deprecated in web-vitals v4, replaced by INP
+ */
+export function reportWebVitals(metric: {
+  id: string;
+  name: string;
+  value: number;
+  rating?: 'good' | 'needs-improvement' | 'poor';
+  delta?: number;
+  navigationType?: string;
+}): void {
+  if (!isGtagAvailable()) {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Web Vitals] gtag not available:', metric);
+    }
+    return;
+  }
+
+  // Only track actual web vitals (not custom metrics)
+  const validMetrics = ['CLS', 'FCP', 'LCP', 'TTFB', 'INP'];
+  if (!validMetrics.includes(metric.name)) {
+    return;
+  }
+
+  try {
+    // Round value for cleaner reporting
+    const value = Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value);
+    
+    window.gtag!('event', metric.name, {
+      event_category: 'Web Vitals',
+      event_label: metric.id,
+      value: value,
+      metric_value: value,
+      metric_id: metric.id,
+      metric_rating: metric.rating || 'unknown',
+      page_path: window.location.pathname,
+      city: getCityFromPath(),
+      device_type: getDeviceType(),
+      connection_type: getConnectionType(),
+      non_interaction: true,
+    });
+
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Web Vitals]', metric.name, {
+        value,
+        rating: metric.rating,
+        city: getCityFromPath(),
+        device: getDeviceType(),
+      });
+    }
+  } catch (error) {
+    console.error('[GA] Error reporting web vital:', error);
+  }
+}
+
