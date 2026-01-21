@@ -73,16 +73,16 @@ export default function HomePage() {
         "name": "Color Cocktail Factory - Chicago",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "1000 W 35th St",
+          "streetAddress": "1142 W. 18th Street",
           "addressLocality": "Chicago",
           "addressRegion": "IL",
-          "postalCode": "60609",
+          "postalCode": "60608",
           "addressCountry": "US"
         },
         "geo": {
           "@type": "GeoCoordinates",
-          "latitude": 41.8307,
-          "longitude": -87.6567
+          "latitude": 41.8577,
+          "longitude": -87.6698
         },
         "telephone": "+1-312-881-9929",
         "url": "https://colorcocktailfactory.com/chicago",
