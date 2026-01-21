@@ -95,6 +95,28 @@ export const blogPosts: BlogPost[] = [
       "national museum of mexican art",
       "pilsen street art"
     ]
+  },
+  {
+    slug: "art-classes-near-me",
+    title: "Art Classes Near Me: Find the Right Class for Adults, Kids, and Date Nights",
+    description: "Find art classes near you—pottery, mosaics, bonsai, and more. Choose your city, pick a time, and book in minutes. Beginner-friendly.",
+    date: "2026-01-20",
+    author: "Color Cocktail Factory",
+    category: "Local Guides",
+    readTime: "10 min read",
+    image: "/images/blog/art-classes.jpg",
+    keywords: [
+      "art classes near me",
+      "art classes near me for adults",
+      "art classes near me for kids",
+      "art classes for kids near me",
+      "local art classes for adults near me",
+      "summer art classes near me",
+      "drawing classes for kids near me",
+      "painting classes near me",
+      "drawing classes near me",
+      "art classes for adults near me"
+    ]
   }
 ];
 
