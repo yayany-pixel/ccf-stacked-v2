@@ -42,7 +42,7 @@ export default function PotteryMembershipPage() {
         "name": "Is this really beginner-friendly?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Our instructors (Brittany Diaz and Yahya Moosavi) have each taught pottery to absolute beginners for 10+ years. Most students can make simple pieces by themselves after session 1 or 2. We teach step-by-step, answer questions live, and provide supportive feedback throughout."
+          "text": "Yes. Our instructors (Brittany and Yahya) have each taught pottery to absolute beginners for 10+ years. Most students can make simple pieces by themselves after session 1 or 2. We teach step-by-step, answer questions live, and provide supportive feedback throughout."
         }
       },
       {
@@ -113,11 +113,11 @@ export default function PotteryMembershipPage() {
       "instructor": [
         {
           "@type": "Person",
-          "name": "Brittany Diaz"
+          "name": "Brittany"
         },
         {
           "@type": "Person",
-          "name": "Yahya Moosavi"
+          "name": "Yahya"
         }
       ]
     }
@@ -324,7 +324,7 @@ export default function PotteryMembershipPage() {
               <div className="mt-10 grid gap-8 sm:grid-cols-2">
                 <GlassCard>
                   <div className="p-8">
-                    <h3 className="text-2xl font-bold text-white">Brittany Diaz</h3>
+                    <h3 className="text-2xl font-bold text-white">Brittany</h3>
                     <div className="mt-2 text-sm text-purple-300">10+ Years Teaching Pottery</div>
                     <p className="mt-4 leading-relaxed text-white/75">
                       Brittany has taught thousands of beginners—from kids to retirees—how to throw their first pot. Her teaching style is patient, clear, and encouraging. She breaks down complex techniques into manageable steps and gives honest, supportive feedback that builds confidence fast.
@@ -336,7 +336,7 @@ export default function PotteryMembershipPage() {
                 </GlassCard>
                 <GlassCard>
                   <div className="p-8">
-                    <h3 className="text-2xl font-bold text-white">Yahya Moosavi</h3>
+                    <h3 className="text-2xl font-bold text-white">Yahya</h3>
                     <div className="mt-2 text-sm text-purple-300">10+ Years Teaching Pottery</div>
                     <p className="mt-4 leading-relaxed text-white/75">
                       Yahya is known for his calm, methodical approach to teaching wheel throwing. He excels at troubleshooting common beginner mistakes and helping students develop muscle memory quickly. His classes are interactive, hands-on, and designed to build both skill and independence.
@@ -471,7 +471,7 @@ export default function PotteryMembershipPage() {
                 {[
                   {
                     q: "Is this really beginner-friendly?",
-                    a: "Yes. Our instructors (Brittany Diaz and Yahya Moosavi) have each taught pottery to absolute beginners for 10+ years. Most students can make simple pieces by themselves after session 1 or 2. We teach step-by-step, answer questions live, and provide supportive feedback throughout."
+                    a: "Yes. Our instructors (Brittany and Yahya) have each taught pottery to absolute beginners for 10+ years. Most students can make simple pieces by themselves after session 1 or 2. We teach step-by-step, answer questions live, and provide supportive feedback throughout."
                   },
                   {
                     q: "What if I miss a session?",
