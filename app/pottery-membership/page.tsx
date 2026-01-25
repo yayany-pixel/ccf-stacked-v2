@@ -42,7 +42,7 @@ export default function PotteryMembershipPage() {
         "name": "Is this really beginner-friendly?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Our instructors (Brittany and Yahya) have each taught pottery to absolute beginners for 10+ years. Most students can make simple pieces by themselves after session 1 or 2. We teach step-by-step, answer questions live, and provide supportive feedback throughout."
+          "text": "Yes. Our instructors (Aurora and Yahya) have each taught pottery to absolute beginners for 10+ years. Most students can make simple pieces by themselves after session 1 or 2. We teach step-by-step, answer questions live, and provide supportive feedback throughout."
         }
       },
       {
@@ -113,7 +113,7 @@ export default function PotteryMembershipPage() {
       "instructor": [
         {
           "@type": "Person",
-          "name": "Brittany"
+          "name": "Aurora"
         },
         {
           "@type": "Person",
@@ -210,7 +210,7 @@ export default function PotteryMembershipPage() {
                       2
                     </div>
                     <h3 className="mb-2 font-semibold text-white">Attend 12 Live Sessions</h3>
-                    <p className="text-sm text-white/70">Join live online classes with Brittany or Yahya. Ask questions, get feedback, and practice alongside other students.</p>
+                    <p className="text-sm text-white/70">Join live online classes with Aurora or Yahya. Ask questions, get feedback, and practice alongside other students.</p>
                   </div>
                 </GlassCard>
                 <GlassCard>
@@ -324,10 +324,10 @@ export default function PotteryMembershipPage() {
               <div className="mt-10 grid gap-8 sm:grid-cols-2">
                 <GlassCard>
                   <div className="p-8">
-                    <h3 className="text-2xl font-bold text-white">Brittany</h3>
+                    <h3 className="text-2xl font-bold text-white">Aurora</h3>
                     <div className="mt-2 text-sm text-purple-300">10+ Years Teaching Pottery</div>
                     <p className="mt-4 leading-relaxed text-white/75">
-                      Brittany has taught thousands of beginners—from kids to retirees—how to throw their first pot. Her teaching style is patient, clear, and encouraging. She breaks down complex techniques into manageable steps and gives honest, supportive feedback that builds confidence fast.
+                      Aurora has taught thousands of beginners—from kids to retirees—how to throw their first pot. Her teaching style is patient, clear, and encouraging. She breaks down complex techniques into manageable steps and gives honest, supportive feedback that builds confidence fast.
                     </p>
                     <p className="mt-3 text-sm text-white/60">
                       "I love watching students realize they can create something beautiful with their own hands. That moment of surprise and pride never gets old."
@@ -471,7 +471,7 @@ export default function PotteryMembershipPage() {
                 {[
                   {
                     q: "Is this really beginner-friendly?",
-                    a: "Yes. Our instructors (Brittany and Yahya) have each taught pottery to absolute beginners for 10+ years. Most students can make simple pieces by themselves after session 1 or 2. We teach step-by-step, answer questions live, and provide supportive feedback throughout."
+                    a: "Yes. Our instructors (Aurora and Yahya) have each taught pottery to absolute beginners for 10+ years. Most students can make simple pieces by themselves after session 1 or 2. We teach step-by-step, answer questions live, and provide supportive feedback throughout."
                   },
                   {
                     q: "What if I miss a session?",
