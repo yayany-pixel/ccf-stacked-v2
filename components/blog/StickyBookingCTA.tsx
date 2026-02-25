@@ -21,7 +21,7 @@ export default function StickyBookingCTA() {
 
   const bookingUrl = selectedCity === "chicago"
     ? "https://www.rezclick.com/colorcocktailfactory/index.php?page=calendar"
-    : "https://colorcocktailfactoryoregon.rezclick.com/index.php?page=calendar";
+    : "https://colorcocktailfactory.as.me/schedule/a8dfb300";
 
   return (
     <div className="fixed bottom-4 right-4 z-40 hidden md:block">

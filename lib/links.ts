@@ -12,7 +12,7 @@ export const cities: City[] = [
   {
     param: "eugene",
     label: "Eugene",
-    rezclickBase: "https://colorcocktailfactoryoregon.rezclick.com/index.php?page=calendar&term=",
+    rezclickBase: "https://colorcocktailfactory.as.me/schedule/a8dfb300",
     address: "Eugene, OR",
     locationName: "Color Cocktail Factory (Eugene)"
   }
@@ -30,8 +30,13 @@ export function getCityByParam(param: string): City {
 
 export function buildBookingLink(city: City, section: SectionConfig) {
   if (section.booking?.customUrl) return section.booking.customUrl;
-  const term = section.booking?.term ?? "";
-  return `${city.rezclickBase}${term}`;
+  // Only append term for RezClick-style URLs (which include &term= in the base)
+  if (city.rezclickBase.includes("term=")) {
+    const term = section.booking?.term ?? "";
+    return `${city.rezclickBase}${term}`;
+  }
+  // Acuity-style URLs are used as-is (e.g. Eugene)
+  return city.rezclickBase;
 }
 
 export function buildHomeBookLink(city: City) {

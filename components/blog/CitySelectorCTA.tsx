@@ -12,15 +12,22 @@ export default function CitySelectorCTA() {
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
 
   const getCityBookingLinks = (city: City) => {
-    const base = city === "chicago" 
-      ? "https://www.rezclick.com/colorcocktailfactory/index.php?page=calendar&term="
-      : "https://colorcocktailfactoryoregon.rezclick.com/index.php?page=calendar&term=";
-    
+    if (city === "chicago") {
+      const base = "https://www.rezclick.com/colorcocktailfactory/index.php?page=calendar&term=";
+      return {
+        pottery: `${base}pottery`,
+        mosaic: `${base}mosaic`,
+        bonsai: `${base}bonsai`,
+        cityPage: "/chicago"
+      };
+    }
+    // Eugene uses Acuity — all class links go to the same booking page
+    const acuityUrl = "https://colorcocktailfactory.as.me/schedule/a8dfb300";
     return {
-      pottery: `${base}pottery`,
-      mosaic: `${base}mosaic`,
-      bonsai: `${base}bonsai`,
-      cityPage: `/${city}`
+      pottery: acuityUrl,
+      mosaic: acuityUrl,
+      bonsai: acuityUrl,
+      cityPage: "/eugene"
     };
   };
 
