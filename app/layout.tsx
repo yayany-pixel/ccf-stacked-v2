@@ -104,10 +104,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://colorcocktailfactory.com"
-  },
-  verification: {
-    google: "your-google-verification-code",
-    // Add other verification codes as needed
   }
 };
 
