@@ -24,6 +24,22 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
+  // Redirects for old/expired event URLs
+  async redirects() {
+    return [
+      {
+        source: '/events/eventbrite-1981076370754-eugene-date-night-pottery',
+        destination: 'https://colorcocktailfactory.as.me/',
+        permanent: true,
+      },
+      // Catch-all for other old eventbrite event URLs
+      {
+        source: '/events/eventbrite-:id(\\d+)-:slug*',
+        destination: 'https://colorcocktailfactory.as.me/',
+        permanent: false,
+      },
+    ];
+  },
   // Security headers
   async headers() {
     return [
