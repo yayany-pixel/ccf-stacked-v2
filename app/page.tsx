@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import HomePageClient from "@/components/HomePageClient";
-import { generateOrganizationSchema } from "@/lib/enhancedStructuredData";
 
 export const metadata: Metadata = {
   title: "Color Cocktail Factory | Pottery & Creative Workshops in Chicago & Eugene",
@@ -45,9 +44,6 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  // Organization schema with both locations
-  const organizationSchema = generateOrganizationSchema();
-  
   // Multi-location business schema
   const multiLocationSchema = {
     "@context": "https://schema.org",
@@ -113,7 +109,7 @@ export default function HomePage() {
         "name": "Color Cocktail Factory - Eugene",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "123 Main St",
+          "streetAddress": "1162 Lorella Ave",
           "addressLocality": "Eugene",
           "addressRegion": "OR",
           "postalCode": "97401",

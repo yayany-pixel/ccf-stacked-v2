@@ -183,7 +183,7 @@ export const sections: SectionConfig[] = [
     bookingLinks: {
       rezclick: "https://www.rezclick.com/color-cocktail-factory/date-night-pottery",
       eventbrite: "https://www.eventbrite.com/e/date-night-on-the-wheel-tickets",
-      acuity: "ACUITY_PLACEHOLDER_DATE_NIGHT"
+      acuity: "https://colorcocktailfactory.as.me/"
     },
     upcomingTimes: [
       { label: "Fri Dec 27 · 5:30 PM", url: "https://www.rezclick.com/color-cocktail-factory/date-night-pottery" },

@@ -48,12 +48,11 @@ export function generateLocalBusinessSchema(city: City) {
     telephone: "+1-312-881-9929",
   };
   
-  // Eugene data omitted where not verified - only include known accurate information
   const eugeneData = {
+    streetAddress: "1162 Lorella Ave",
     addressLocality: "Eugene",
     addressRegion: "OR",
-    streetAddress: undefined,
-    postalCode: undefined,
+    postalCode: "97401",
     latitude: undefined,
     longitude: undefined,
     telephone: undefined,

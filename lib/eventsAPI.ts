@@ -209,7 +209,7 @@ async function fetchAcuityEvents(daysAhead = 60): Promise<NormalizedEvent[]> {
               endDate: endDate.toISOString(),
               city,
               venueName: city === 'Chicago' ? 'Color Cocktail Factory - Pilsen' : 'Color Cocktail Factory - Eugene',
-              streetAddress: city === 'Chicago' ? '1850 W 21st St' : '454 Willamette St',
+              streetAddress: city === 'Chicago' ? '1142 W. 18th Street' : '1162 Lorella Ave',
               addressLocality: city === 'Chicago' ? 'Chicago' : 'Eugene',
               addressRegion: city === 'Chicago' ? 'IL' : 'OR',
               postalCode: city === 'Chicago' ? '60608' : '97401',
