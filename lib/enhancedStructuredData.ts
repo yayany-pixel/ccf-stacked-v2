@@ -12,15 +12,16 @@ export function generateOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": "https://colorcocktailfactory.com/#organization",
     "name": "Color Cocktail Factory",
     "alternateName": "CCF",
     "url": "https://colorcocktailfactory.com",
     "logo": "https://colorcocktailfactory.com/logo.png",
     "description": "Premium creative workshops and pottery classes in Chicago & Eugene. Expert-led hands-on experiences including pottery, glass art, mosaics, and more.",
+    "slogan": "Creativity is shareable.",
     "sameAs": [
       "https://www.instagram.com/colorcocktailfactory",
-      "https://www.facebook.com/colorcocktailfactory",
-      // Add other social media URLs
+      "https://www.facebook.com/colorcocktailfactory"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
@@ -28,7 +29,59 @@ export function generateOrganizationSchema() {
       "contactType": "customer service",
       "email": "support@colorcocktailfactory.com",
       "availableLanguage": "English"
-    }
+    },
+    "location": [
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://colorcocktailfactory.com/chicago#localbusiness",
+        "name": "Color Cocktail Factory - Chicago",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "1142 W. 18th Street",
+          "addressLocality": "Chicago",
+          "addressRegion": "IL",
+          "postalCode": "60608",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 41.8577,
+          "longitude": -87.6698
+        },
+        "telephone": "+1-312-881-9929",
+        "url": "https://colorcocktailfactory.com/chicago",
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Wednesday", "Thursday", "Friday"], "opens": "17:30", "closes": "21:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "12:00", "closes": "21:30" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "14:30", "closes": "18:30" }
+        ]
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://colorcocktailfactory.com/eugene#localbusiness",
+        "name": "Color Cocktail Factory - Eugene",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "1162 Lorella Ave",
+          "addressLocality": "Eugene",
+          "addressRegion": "OR",
+          "postalCode": "97401",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 44.0390,
+          "longitude": -123.0840
+        },
+        "telephone": "+1-312-881-9929",
+        "url": "https://colorcocktailfactory.com/eugene",
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Wednesday", "Thursday", "Friday"], "opens": "17:30", "closes": "21:00" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "12:00", "closes": "21:30" },
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": "Sunday", "opens": "14:30", "closes": "18:30" }
+        ]
+      }
+    ]
   };
 }
 
@@ -53,8 +106,8 @@ export function generateLocalBusinessSchema(city: City) {
     addressLocality: "Eugene",
     addressRegion: "OR",
     postalCode: "97401",
-    latitude: undefined,
-    longitude: undefined,
+    latitude: 44.0390,
+    longitude: -123.0840,
     telephone: undefined,
   };
   
@@ -86,29 +139,26 @@ export function generateLocalBusinessSchema(city: City) {
     ...(locationData.telephone && { "telephone": locationData.telephone }),
     "email": "support@colorcocktailfactory.com",
     "priceRange": "$$",
-    // Only include opening hours for Chicago (verified data)
-    ...(isChicago && {
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Wednesday", "Thursday", "Friday"],
-          "opens": "17:30",
-          "closes": "21:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": "Saturday",
-          "opens": "12:00",
-          "closes": "21:30"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": "Sunday",
-          "opens": "14:30",
-          "closes": "18:30"
-        }
-      ]
-    }),
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Wednesday", "Thursday", "Friday"],
+        "opens": "17:30",
+        "closes": "21:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "12:00",
+        "closes": "21:30"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Sunday",
+        "opens": "14:30",
+        "closes": "18:30"
+      }
+    ],
     "aggregateRating": {
       "@type": "AggregateRating",
       "ratingValue": "4.9",
