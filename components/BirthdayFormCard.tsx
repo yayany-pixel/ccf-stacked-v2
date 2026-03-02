@@ -54,9 +54,6 @@ export default function BirthdayFormCard() {
   const [error, setError] = React.useState("");
 
   const minDate = getDateString(7);
-  const guestNum = parseInt(s.guestCount, 10) || 0;
-  const qualifiesForBonus = guestNum >= 8;
-  const nudgeCount = guestNum > 0 && guestNum < 8 ? 8 - guestNum : 0;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -102,11 +99,6 @@ export default function BirthdayFormCard() {
           your custom quote and available dates. Once everything&apos;s agreed, we&apos;ll send
           a registration link so each guest can book their own spot individually.
         </p>
-        {qualifiesForBonus && (
-          <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-pink-400/30 bg-pink-500/20 px-4 py-2 text-sm font-semibold text-pink-200">
-            🎁 Your party qualifies for the FREE Pottery Wheel + Kit ($145 value)!
-          </div>
-        )}
         <p className="mt-6 text-xs text-white/40">
           Questions in the meantime? Email support@colorcocktailfactory.com or call (312) 881-9929.
         </p>
@@ -264,7 +256,7 @@ export default function BirthdayFormCard() {
             />
           </label>
 
-          {/* Guest Count — with bonus logic */}
+          {/* Guest Count */}
           <label className={labelClass}>
             <span className={labelTextClass}>Number of Guests *</span>
             <input
@@ -280,23 +272,6 @@ export default function BirthdayFormCard() {
               disabled={isSubmitting}
               aria-label="Number of guests"
             />
-            {qualifiesForBonus && (
-              <div
-                aria-live="polite"
-                className="mt-2 flex items-center gap-2 rounded-xl border border-pink-400/40 bg-pink-500/15 px-3 py-2 text-xs font-semibold text-pink-200 transition-all"
-              >
-                🎁 You qualify for the FREE Portable Pottery Wheel + Kit ($145 value)!
-              </div>
-            )}
-            {nudgeCount > 0 && (
-              <div
-                aria-live="polite"
-                className="mt-2 flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/55 transition-all"
-              >
-                🎯 Invite {nudgeCount} more guest{nudgeCount !== 1 ? "s" : ""} to unlock the
-                FREE Pottery Wheel + Kit bonus!
-              </div>
-            )}
           </label>
 
           {/* Experience Type */}
