@@ -4,51 +4,91 @@ import Reveal from "@/components/motion/Reveal";
 import GlassCard from "@/components/ui/GlassCard";
 import BirthdayFormCard from "@/components/BirthdayFormCard";
 
-// --- Metadata ----------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Set to false to swap BYOB block for non-alcoholic guidance */
+const BYOB_ENABLED = true;
+
+const BYOB_RULES = [
+  "Beer and wine welcome — hard liquor allowed too",
+  "Bring your own cups, ice, and any mixers you need",
+  "Keep drinks off the art-making surfaces to protect your work",
+  "BYOB is for guests 21+ (valid ID may be requested by studio staff)",
+  "Outside food and food delivery welcome — cupcakes preferred over whole cakes",
+  "Cleanup is shared — we handle the studio, you handle your bottles and trash",
+];
+
+const BYOB_OFF_COPY =
+  "Our studio is alcohol-free, but you're welcome to bring non-alcoholic beverages, sparkling water, and celebratory mocktails. Great spots for after-party drinks are steps from both locations.";
+
+const UPGRADES = [
+  {
+    icon: "🥂",
+    label: "Champagne Toast Setup",
+    detail: "Chilled bottles, flutes, and a dedicated toast moment built into the session",
+  },
+  {
+    icon: "🎂",
+    label: "Cake Table Styling",
+    detail: "We set a styled table so your dessert moment is photo-ready",
+  },
+  {
+    icon: "🎈",
+    label: "Balloon Aesthetic Package",
+    detail: "Curated balloon display matching your color palette — set up before you arrive",
+  },
+  {
+    icon: "📸",
+    label: "Photographer Add-On",
+    detail: "A dedicated photographer captures candid moments throughout the session",
+  },
+  {
+    icon: "🎶",
+    label: "Custom Playlist + Birthday Spotlight",
+    detail: "Your playlist queued up, plus a birthday spotlight moment mid-session the group won't forget",
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// METADATA
+// ─────────────────────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
-  title: "Birthday Party Venue in Chicago & Eugene | Art & Pottery Birthday Parties",
+  title: "Adult Birthday Party Venue Chicago & Eugene | CCF Creative Parties",
   description:
-    "Book a private hands-on art birthday party at Color Cocktail Factory. Pottery, mosaics, glass art, candles & more. BYOB welcome. All ages. $55–$95/person. Chicago & Eugene.",
+    "Private, guided art birthday experiences for adults in Chicago (Pilsen) and Eugene, OR. Pottery wheel, paint, mosaics, candles & more. BYOB. 21+ friendly. Milestone-worthy. $55–$95/person.",
   keywords: [
-    "birthday party venue",
-    "birthday party venue near me",
-    "kids birthday party venue",
     "adult birthday party venue",
-    "pottery birthday party",
-    "clay birthday party",
-    "art birthday party",
-    "craft birthday party",
-    "paint your own pottery party",
-    "pottery painting birthday party",
-    "kids art studio birthday party",
+    "birthday party venue near me",
+    "birthday party packages",
     "party space rental",
     "birthday party rentals",
-    "birthday party packages",
-    "private birthday party space",
-    "kids activities near me",
-    "family activities near me",
-    "family entertainment near me",
-    "fun family activities near me",
-    "art birthday party theme",
-    "pottery party theme",
-    "Chicago birthday party venue",
-    "Eugene birthday party venue",
-    "birthday party Chicago Pilsen",
-    "birthday party Eugene Oregon",
     "party rental halls near me",
     "creative birthday party ideas",
-    "unique birthday party ideas",
-    "hands on birthday party",
+    "unique birthday experience",
+    "art birthday party",
+    "pottery birthday party",
+    "craft birthday party",
     "BYOB birthday party",
+    "birthday party Chicago",
+    "birthday party Eugene Oregon",
+    "milestone birthday ideas",
+    "21st birthday venue",
+    "30th birthday venue",
+    "40th birthday venue",
+    "private party studio Chicago",
+    "private party studio Eugene",
+    "adult art class party",
+    "paint and sip birthday",
+    "pottery wheel party adults",
   ],
-  alternates: {
-    canonical: "https://colorcocktailfactory.com/birthday-parties",
-  },
+  alternates: { canonical: "https://colorcocktailfactory.com/birthday-parties" },
   openGraph: {
-    title: "Birthday Party Venue | Art & Pottery Birthday Parties — Color Cocktail Factory",
+    title: "Adult Birthday Party Venue | Creative Experiences — Color Cocktail Factory",
     description:
-      "Private hands-on art birthday parties in Chicago & Eugene. Pottery, mosaics, glass art, candles & more. BYOB. All ages. $55–$95/person.",
+      "Private art birthday parties for adults in Chicago & Eugene. Pottery, paint, mosaics & more. BYOB welcome. Milestone-worthy. $55–$95/person.",
     url: "https://colorcocktailfactory.com/birthday-parties",
     type: "website",
     images: [
@@ -56,154 +96,168 @@ export const metadata: Metadata = {
         url: "https://colorcocktailfactory.com/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Birthday Party at Color Cocktail Factory",
+        alt: "Adult Birthday Party at Color Cocktail Factory",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Birthday Party Venue | Art & Pottery Parties — Color Cocktail Factory",
+    title: "Adult Birthday Party Venue | CCF Creative Parties",
     description:
-      "Private hands-on art birthday parties in Chicago & Eugene. BYOB. All ages. $55–$95/person.",
+      "Private art birthday parties for adults in Chicago & Eugene. BYOB. Milestone-worthy. $55–$95/person.",
   },
 };
 
-// --- Static Data -------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
+// STATIC DATA
+// ─────────────────────────────────────────────────────────────────────────────
 
-const faqs = [
+const packages = [
   {
-    q: "How much does a birthday party cost?",
-    a: "Birthday parties are $55–$95 per person. You choose your budget level when you submit your inquiry — a higher budget means more special touches, premium materials, and elevated extras. All tiers include professional instruction, all materials, a private studio session, and everyone takes home what they make.",
+    emoji: "🏺",
+    badge: "Most Popular",
+    badgeColor: "border-pink-400/40 bg-pink-500/15 text-pink-300",
+    title: "Wheel Night Party",
+    subtitle: "Pottery Wheel Experience",
+    description:
+      "Everyone at their own wheel — centering clay, shaping bowls, cups, or freeform pieces. The most immersive experience we offer. Pairs perfectly with your BYOB setup.",
+    bullets: [
+      "Private studio — your group only",
+      "Instructor-guided from the very first touch",
+      "Optional glaze & kiln fire (small fee, ~3-week pickup)",
+      "BYOB welcome — bring wine, cocktails, or spirits",
+    ],
+    bestFor: "21st · 30th · 40th · milestone birthdays · date-night energy groups",
+    duration: "2 hours",
   },
   {
-    q: "What ages are birthday parties suitable for?",
-    a: "We welcome all ages! Kids (8 and up with an adult present), teens, and adults are all at home here. Activity types vary by age-appropriateness — pottery wheel and glass fusion tend to suit teens and adults best, while handbuilt pottery, candle making, and terrarium building work wonderfully for younger groups too. Let us know ages when you inquire and we'll suggest the best fit.",
+    emoji: "🎨",
+    badge: "Great for Groups",
+    badgeColor: "border-violet-400/40 bg-violet-500/15 text-violet-300",
+    title: "Paint & Sip Party",
+    subtitle: "Canvas or Wine-Glass Painting",
+    description:
+      "Guided painting session — everyone works at their own canvas or decorates wine glasses. Social, relaxed, zero experience required. Your vibe, your music, your drinks.",
+    bullets: [
+      "Canvas or wine-glass format — your choice",
+      "Step-by-step instruction, no experience needed",
+      "Take your finished piece home the same day",
+      "Ideal for groups of any size",
+    ],
+    bestFor: "Any adult age · large groups · low-key celebration energy",
+    duration: "2 hours",
   },
   {
-    q: "Can we bring our own cake, food, and drinks?",
-    a: "Absolutely. We're BYOB-friendly and you're welcome to bring finger foods, cupcakes, and cake (cupcakes preferred — easier to serve in the studio). Bring whatever drinks you'd like to celebrate with. We just ask that you keep food and beverages away from the art-making surfaces to protect everyone's work.",
-  },
-  {
-    q: "How long does a birthday party last?",
-    a: "Each birthday party session is 2 hours. That includes instructor-guided art time, a celebration break, and time to wrap up. If you'd like more time, let us know in your inquiry and we'll see what we can accommodate.",
-  },
-  {
-    q: "What's the maximum number of guests?",
-    a: "We can host birthday parties of up to 60 guests. If you're planning a large group, mention the size in your inquiry so we can confirm studio availability and any logistics.",
-  },
-  {
-    q: "What if our guest count changes after we submit the inquiry?",
-    a: "No problem — guest counts often shift before the day of. We'll finalize the headcount when guests register individually via the link we send after you agree on your quote. Just let us know about any significant changes and we'll adjust accordingly.",
-  },
-  {
-    q: "Can we choose a specific party theme?",
-    a: "The activity is the theme — and honestly, it's more memorable than any decoration package. A pottery-wheel birthday feels completely different from a mosaic birthday or a Turkish lamp night. We don't currently offer separate theme décor packages, but you're welcome to bring your own decorations to the studio.",
-  },
-  {
-    q: "What do guests take home after the party?",
-    a: "Every guest takes home what they make. For pottery (wheel-thrown or handbuilt), pieces can optionally be glazed and kiln-fired for a small additional fee — ready for pickup approximately 3 weeks after the party. For mosaics, Turkish lamps, glass fusion, candles, and terrariums, guests take their finished piece home the same day.",
-  },
-  {
-    q: "Is there parking? Is the studio wheelchair accessible?",
-    a: "Free street parking is available at both our Chicago (Pilsen) and Eugene locations. Our Chicago studio is wheelchair accessible for pottery classes. Please mention any mobility or accessibility needs in your inquiry so we can prepare accordingly.",
-  },
-  {
-    q: "How do I book? What happens after I fill out the form?",
-    a: "Fill out the birthday inquiry form below. We'll email you within 24 hours with a custom quote, available date options, and all the details. Once you agree on the package and date, we'll send you a registration link that each of your guests can use to book their own spot individually. No deposit is required to inquire.",
+    emoji: "✨",
+    badge: "Bold Take-Home",
+    badgeColor: "border-cyan-400/40 bg-cyan-500/15 text-cyan-300",
+    title: "Signature Experience",
+    subtitle: "Mosaics · Turkish Lamp · Candle · Terrarium",
+    description:
+      "Choose from crafted glass mosaic art, hand-assembled Turkish lamps, scented candle pours, or living terrariums. Striking finished pieces — same-day take-home.",
+    bullets: [
+      "Finished piece goes home with every guest",
+      "No kiln wait — done the same night",
+      "Multiple activity formats to choose from",
+      "Visible results from the very first session",
+    ],
+    bestFor: "Creative groups · bachelorette crossovers · milestone celebrations",
+    duration: "2 hours",
   },
 ];
 
 const testimonials = [
   {
     quote:
-      "My daughter's 11th birthday here was the easiest party I've ever planned — and the most fun she's ever had. Every kid made a terrarium they got to bring home. The instructor was so patient. We booked again for her 12th before we even left.",
-    name: "Sarah M.",
+      "I planned my wife's 40th here and it was genuinely the best party I've ever hosted. The whole group was on pottery wheels. Nobody looked at their phones for two straight hours. The instructor made it feel effortless and we all left with something we're proud of.",
+    name: "Marcus T.",
     location: "Chicago",
-    initials: "SM",
-    avatarColor: "from-pink-500 to-rose-500",
+    initials: "MT",
+    avatar: "from-purple-500 to-indigo-600",
   },
   {
     quote:
-      "This was the ONLY birthday idea that actually made everyone put down their phones and fully engage. My daughter turned 16 and we did the mosaic workshop. Parents were just as into it as the kids. The studio handled everything effortlessly.",
-    name: "Tanya R.",
+      "We did the Turkish lamp workshop for my 35th and every single person said it was the most unique birthday they'd ever been to. The vibe was incredible — our playlist, our wine, low studio lighting. The lamps we made now hang in my apartment.",
+    name: "Jasmine L.",
     location: "Eugene",
-    initials: "TR",
-    avatarColor: "from-purple-500 to-indigo-500",
+    initials: "JL",
+    avatar: "from-pink-500 to-rose-500",
   },
   {
     quote:
-      "I've thrown birthday parties at restaurants and rooftop bars for years. Nothing has ever been this easy to plan OR this memorable. I sent the form on a Tuesday, had a quote by Wednesday morning, and the whole event was handled. Perfect.",
-    name: "Devon K.",
+      "I've done rooftop bars, escape rooms, wine tours — nothing kept everyone engaged like this. We booked the wheel night for my 30th. Zero phones the entire time. We added the photographer and having those pictures is everything.",
+    name: "Renée C.",
     location: "Chicago",
-    initials: "DK",
-    avatarColor: "from-cyan-500 to-blue-500",
+    initials: "RC",
+    avatar: "from-cyan-500 to-blue-600",
   },
   {
     quote:
-      "I threw my dad a 60th birthday here and everyone — adults in their 50s and 60s — had the time of their lives on the pottery wheel. Nobody wanted to leave. The studio handled everything seamlessly. I cannot recommend this enough.",
+      "Planned my dad's 60th here — eight adults between 50 and 68. Everyone was nervous going in and completely obsessed by the end. They talked about it for weeks. The studio handled every detail. I couldn't have asked for a better night.",
     name: "Diane F.",
     location: "Eugene",
     initials: "DF",
-    avatarColor: "from-amber-500 to-orange-500",
+    avatar: "from-amber-500 to-orange-500",
   },
 ];
 
-const experiences = [
+const faqs: { q: string; a: string }[] = [
   {
-    emoji: "🏺",
-    title: "Pottery Wheel Birthday",
-    subtitle: "Wheel Throwing Party",
-    description:
-      "Everyone gets on a wheel and throws their own piece — cups, bowls, vases, or freeform. The most immersive experience we offer. Pairs perfectly with BYOB wine or cocktails.",
-    bestFor: "Teens & Adults · Date night groups · Milestone birthdays",
-    duration: "2 hours",
-    takeHome: "Your own piece (optional fire & glaze, 3-week pickup)",
-    tag: "Most Popular",
-    tagColor: "border-pink-400/40 bg-pink-500/15 text-pink-300",
-    href: "/chicago/beginner-wheel",
+    q: "Is this venue 21+ or all ages?",
+    a: "We're all-ages friendly, but adult birthday parties tend to be our specialty. The atmosphere, BYOB policy, and guided creative format naturally draw 21+ groups. If you want a fully adult-vibe private session, just mention it in your inquiry and we'll make sure the setup matches.",
   },
   {
-    emoji: "🎨",
-    title: "Handbuilt Pottery Birthday",
-    subtitle: "Clay Sculpting Party",
-    description:
-      "No wheel required — guests sculpt by hand, building cups, planters, animals, or whatever they imagine. Tactile, social, and great for mixed ages.",
-    bestFor: "All ages (kids 8+) · Family groups · Any crowd",
-    duration: "2 hours",
-    takeHome: "Your own piece (optional fire & glaze, 3-week pickup)",
-    tag: "All Ages",
-    tagColor: "border-green-400/40 bg-green-500/15 text-green-300",
-    href: "/chicago/handbuilding",
+    q: "Can we bring our own alcohol (BYOB)?",
+    a: BYOB_ENABLED
+      ? "Yes — we're BYOB-friendly. Beer, wine, and spirits are welcome. Bring your own cups, ice, and mixers. Keep drinks off the art-making surfaces to protect your work. BYOB is for guests 21+ (valid ID may be requested). Outside food and delivery also welcome."
+      : BYOB_OFF_COPY,
   },
   {
-    emoji: "✨",
-    title: "Mosaic & Turkish Lamp Birthday",
-    subtitle: "Glass Art Party",
-    description:
-      "Create a stunning mosaic or a handcrafted Turkish lamp using glass, tile, and mirror. Beautiful, bold results from the very first session — no experience needed.",
-    bestFor: "Teens & Adults · Bachelorette crossovers · Creative groups",
-    duration: "2 hours",
-    takeHome: "Finished piece home the same day",
-    tag: "Same-Day Take-Home",
-    tagColor: "border-cyan-400/40 bg-cyan-500/15 text-cyan-300",
-    href: "/chicago/turkish",
+    q: "What's included in the price?",
+    a: "All materials, a private studio session for your group, and professional instruction from start to finish. Pottery pieces can optionally be glazed and kiln-fired for a small additional fee (ready ~3 weeks later). For all other activities guests take their finished piece home the same day.",
   },
   {
-    emoji: "🕯️",
-    title: "Candle · Terrarium · Glass Fusion",
-    subtitle: "Craft & Make Party",
-    description:
-      "Choose from candle pouring, terrarium building, or glass fusion art. Relaxed, sensory, and endlessly customizable. Everyone leaves with something beautiful.",
-    bestFor: "Kids & adults · Relaxed celebrations · Corporate crossovers",
-    duration: "2 hours",
-    takeHome: "Finished piece home the same day",
-    tag: "Beginner Friendly",
-    tagColor: "border-purple-400/40 bg-purple-500/15 text-purple-300",
-    href: "/chicago/candle",
+    q: "How much does an adult birthday party cost?",
+    a: "Birthday party packages start at $55 per person and go up to $95 depending on your chosen experience and preferences. You select a budget tier when you submit your inquiry — higher tiers include premium materials and elevated extras. We'll send you a custom quote within 24 hours.",
+  },
+  {
+    q: "What's the minimum and maximum guest count?",
+    a: "We're flexible on minimums — reach out and we'll let you know what's available for your group size. We can host private birthday parties of up to 60 guests. If you're planning a large group, mention that in your inquiry so we can confirm availability.",
+  },
+  {
+    q: "How long does a birthday party session last?",
+    a: "Each session is 2 hours. That covers instructor-led creative time, a celebration break, and wrap-up. If your group wants more time, just mention it in your inquiry and we'll see what we can arrange.",
+  },
+  {
+    q: "Can we bring a cake or food?",
+    a: "Absolutely. Bring finger foods, cupcakes, cake — cupcakes are preferred since they're easier to serve in the studio. Outside delivery is also welcome (pizza, charcuterie, etc.). We ask that food stays off the art-making surfaces.",
+  },
+  {
+    q: "Are there paid upgrades available?",
+    a: "Yes — you can add extras like a photographer, champagne toast setup, cake table styling, a balloon aesthetic package, and a custom birthday playlist plus spotlight moment. These are paid add-ons; ask about pricing when you submit your inquiry.",
+  },
+  {
+    q: "Do you have availability on weekends?",
+    a: "Weekend slots fill up fastest. We recommend reaching out at least 2–3 weeks in advance for weekend availability. We'll respond within 24 hours with current openings and options. Weekday evening sessions are typically more flexible.",
+  },
+  {
+    q: "What about deposits, changes, or cancellations?",
+    // PLACEHOLDER — update with actual policy before launch
+    a: "No deposit is required to submit your initial inquiry. Booking terms are confirmed after your quote is agreed upon. Please mention any changes to your guest count as soon as you know — we'll always work with you. Contact us at (312) 881-9929 or hello@colorcocktailfactory.com.",
+  },
+  {
+    q: "Is there parking? Are the studios accessible?",
+    a: "Free street parking is available at both our Chicago (Pilsen, 18th St) and Eugene (Lorella Ave) locations. Both studios are wheelchair accessible for pottery classes. Let us know about any accessibility needs in your inquiry and we'll prepare accordingly.",
+  },
+  {
+    q: "Can we pick a theme or customize the experience?",
+    a: "The activity is the theme — and it's more memorable than any décor package. A pottery-wheel night feels completely different from a Turkish lamp night. You're welcome to bring your own decorations, balloons, or anything else that personalizes the space.",
   },
 ];
 
-// --- JSON-LD ------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
+// JSON-LD
+// ─────────────────────────────────────────────────────────────────────────────
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -220,16 +274,35 @@ const localBusinessSchema = {
   "@type": "LocalBusiness",
   name: "Color Cocktail Factory",
   description:
-    "Premium hands-on creative birthday party venue in Chicago (Pilsen) and Eugene, Oregon.",
+    "Premium adult birthday party venue offering private guided art experiences in Chicago (Pilsen) and Eugene, Oregon.",
   url: "https://colorcocktailfactory.com/birthday-parties",
   telephone: "+1-312-881-9929",
   priceRange: "$$",
+  address: [
+    {
+      "@type": "PostalAddress",
+      streetAddress: "1142 W. 18th Street",
+      addressLocality: "Chicago",
+      addressRegion: "IL",
+      postalCode: "60608",
+      addressCountry: "US",
+    },
+    {
+      "@type": "PostalAddress",
+      streetAddress: "1162 Lorella Ave",
+      addressLocality: "Eugene",
+      addressRegion: "OR",
+      postalCode: "97401",
+      addressCountry: "US",
+    },
+  ],
 };
 
-// --- Page ---------------------------------------------------------------------
+// ─────────────────────────────────────────────────────────────────────────────
+// PAGE COMPONENT
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function BirthdayPartiesPage() {
-
   return (
     <main className="min-h-screen">
       {/* Structured Data */}
@@ -242,105 +315,135 @@ export default function BirthdayPartiesPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
       />
 
-      {/* CSS animations */}
+      {/* CSS */}
       <style>{`
-        @keyframes confetti-fall {
-          0%   { transform: translateY(-10px) rotate(0deg) scale(1);   opacity: 1; }
-          80%  { opacity: 0.6; }
-          100% { transform: translateY(120px) rotate(400deg) scale(0.8); opacity: 0; }
+        @keyframes shimmer-ring {
+          0%   { transform: rotate(0deg)   scale(1);     opacity: 0.55; }
+          50%  { transform: rotate(180deg) scale(1.05);  opacity: 0.8; }
+          100% { transform: rotate(360deg) scale(1);     opacity: 0.55; }
         }
-        @keyframes badge-pulse {
-          0%, 100% { box-shadow: 0 0 12px rgba(236,72,153,0.25); }
-          50%       { box-shadow: 0 0 28px rgba(236,72,153,0.55), 0 0 50px rgba(168,85,247,0.3); }
+        @keyframes badge-glow {
+          0%, 100% { box-shadow: 0 0 10px rgba(168,85,247,0.2); }
+          50%       { box-shadow: 0 0 24px rgba(168,85,247,0.5), 0 0 40px rgba(236,72,153,0.2); }
         }
-        .confetti-piece { animation: confetti-fall ease-in infinite; }
-        .badge-pulse    { animation: badge-pulse 2.2s ease-in-out infinite; }
-        .card-hover {
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
+        @keyframes shimmer-sweep {
+          0%   { background-position: -200% center; }
+          100% { background-position:  200% center; }
         }
-        .card-hover:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 20px 40px rgba(168,85,247,0.2);
+        .shimmer-ring { animation: shimmer-ring 10s linear infinite; }
+        .badge-glow   { animation: badge-glow 3s ease-in-out infinite; }
+        .shimmer-text {
+          background: linear-gradient(90deg, #c084fc 0%, #f9a8d4 30%, #ffffff 50%, #f9a8d4 70%, #c084fc 100%);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: shimmer-sweep 4s linear infinite;
         }
+        .card-lift { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+        .card-lift:hover { transform: translateY(-5px); box-shadow: 0 24px 48px rgba(168,85,247,0.22); }
+        .upgrade-chip { transition: transform 0.2s ease, background 0.2s ease; }
+        .upgrade-chip:hover { transform: translateY(-2px); background: rgba(255,255,255,0.09); }
         details summary::-webkit-details-marker { display: none; }
         details[open] .faq-chevron { transform: rotate(180deg); }
         .faq-chevron { transition: transform 0.2s ease; }
+        @media (max-width: 767px) {
+          .sticky-cta {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+            padding: 12px 16px;
+            background: linear-gradient(to top, rgba(15,10,30,0.97) 0%, rgba(15,10,30,0.85) 100%);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255,255,255,0.08);
+          }
+        }
+        @media (min-width: 768px) { .sticky-cta { display: none; } }
       `}</style>
 
-      {/* --------------- 1. HERO --------------- */}
-      <section className="gradient-breathing relative overflow-hidden bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950 pb-24 pt-32">
-        {/* Confetti */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
-          {[...Array(14)].map((_, i) => (
-            <div
-              key={i}
-              className="confetti-piece absolute h-2 w-2 rounded-sm"
-              style={{
-                left: `${5 + i * 6.5}%`,
-                top: "-12px",
-                backgroundColor: ["#f472b6","#a78bfa","#34d399","#fbbf24","#60a5fa","#fb923c","#e879f9"][i % 7],
-                animationDelay: `${i * 0.22}s`,
-                animationDuration: `${2.8 + (i % 4) * 0.4}s`,
-              }}
-            />
-          ))}
+      {/* ─── STICKY MOBILE CTA ─── */}
+      <div className="sticky-cta" aria-label="Mobile sticky CTA">
+        <a
+          href="#birthday-form"
+          className="block w-full rounded-full bg-gradient-to-r from-pink-500 to-purple-600 py-3 text-center text-sm font-bold text-white shadow-lg"
+        >
+          Get Birthday Quote
+        </a>
+      </div>
+
+      {/* ──────────────────────────────────────────────────────────────
+          1. HERO
+      ────────────────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950 pb-28 pt-32">
+        {/* Rotating ring accent */}
+        <div aria-hidden="true" className="shimmer-ring pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3">
+          <svg width="640" height="640" viewBox="0 0 640 640" fill="none" className="text-purple-500/15">
+            <circle cx="320" cy="320" r="290" stroke="currentColor" strokeWidth="2" strokeDasharray="18 10" />
+            <circle cx="320" cy="320" r="230" stroke="currentColor" strokeWidth="1" strokeDasharray="6 14" opacity="0.6" />
+            <circle cx="320" cy="320" r="170" stroke="currentColor" strokeWidth="1.5" strokeDasharray="12 8" opacity="0.4" />
+          </svg>
         </div>
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10" />
 
-        <div className="sparkle-noise absolute inset-0 bg-[url('/noise.png')] opacity-15" />
-
-        <div className="relative z-20 mx-auto max-w-7xl px-6 text-center">
+        <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
           <Reveal variant="scale">
-            <div className="badge-pulse inline-flex items-center gap-2 rounded-full border border-pink-400/30 bg-pink-500/15 px-4 py-2 text-sm font-semibold text-pink-300 backdrop-blur-xl">
-              🎂 Birthday Party Venue · Chicago &amp; Eugene
+            <div className="badge-glow mb-6 inline-flex items-center gap-2 rounded-full border border-purple-400/30 bg-purple-500/10 px-4 py-2 text-sm font-semibold text-purple-300 backdrop-blur-xl">
+              ✦ Adult Birthday Party Venue · Chicago &amp; Eugene
             </div>
           </Reveal>
 
-          <Reveal delay={100} variant="fade-up">
-            <h1 className="mx-auto mt-6 max-w-5xl font-serif text-4xl font-light leading-tight tracking-wide sm:text-6xl sm:leading-tight">
-              The Birthday Party Where{" "}
-              <span className="italic bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-300 bg-clip-text text-transparent">
-                Everyone
-              </span>{" "}
-              Makes Something They Keep.
+          <Reveal delay={80} variant="fade-up">
+            <h1 className="mx-auto max-w-4xl font-serif text-4xl font-light leading-tight tracking-wide sm:text-6xl sm:leading-[1.1]">
+              The{" "}
+              <span className="shimmer-text font-normal italic">Adult Birthday Party Venue</span>
+              {" "}Near You
             </h1>
           </Reveal>
 
-          <Reveal delay={200} variant="fade-up">
-            <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-white/80">
-              A private, hands-on art party where everyone actually participates — not just watches.
-              Pottery, mosaics, glass art, candles, and more. BYOB welcome. All ages.
-              Perfect for kids, teens, and adults who want something better than the usual birthday venue near you.
+          <Reveal delay={160} variant="fade-up">
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/75">
+              Date-night energy for your whole crew. Private, guided creative experiences for
+              birthdays — pottery, paint, mosaics, candles, and more.
+            </p>
+            <p className="mx-auto mt-2 max-w-xl text-sm text-white/50">
+              21+ friendly. Milestone-worthy. BYOB welcome. $55–$95/person.
+              Chicago (Pilsen) &amp; Eugene, OR.
             </p>
           </Reveal>
 
-          <Reveal delay={300} variant="fade-up">
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <Reveal delay={240} variant="fade-up">
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="#birthday-form"
-                className="inline-flex items-center gap-2 rounded-full border border-pink-400/30 bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-pink-500/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-pink-400/50"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-purple-600/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-500/40"
               >
-                🎉 Request Birthday Party
+                Check Availability
               </a>
               <a
-                href="#packages"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-8 py-4 text-base font-semibold text-white backdrop-blur-sm transition hover:bg-white/15"
+                href="#birthday-form"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur-sm transition hover:bg-white/10"
               >
-                See Experiences ↓
+                Get My Birthday Quote
+              </a>
+              <a
+                href="tel:3128819929"
+                className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-6 py-4 text-sm font-semibold text-emerald-300 backdrop-blur-sm transition hover:bg-emerald-500/15"
+                aria-label="Call us"
+              >
+                📞 (312) 881-9929
               </a>
             </div>
           </Reveal>
 
-          <Reveal delay={400} variant="fade-up">
+          <Reveal delay={320} variant="fade-up">
             <div className="mx-auto mt-14 flex max-w-2xl flex-wrap justify-center gap-10">
               {[
-                { stat: "$55–$95", label: "per person" },
-                { stat: "2 hours", label: "party duration" },
+                { stat: "2 hrs", label: "private session" },
                 { stat: "Up to 60", label: "guests" },
-                { stat: "All ages", label: "welcome" },
+                { stat: "$55–$95", label: "per person" },
+                { stat: "21+", label: "friendly vibe" },
               ].map(({ stat, label }) => (
                 <div key={stat} className="text-center">
                   <div className="text-2xl font-bold text-white">{stat}</div>
-                  <div className="mt-0.5 text-sm text-white/55">{label}</div>
+                  <div className="mt-0.5 text-xs uppercase tracking-wider text-white/50">{label}</div>
                 </div>
               ))}
             </div>
@@ -348,180 +451,133 @@ export default function BirthdayPartiesPage() {
         </div>
       </section>
 
-      {/* --------------- 2. WHY PARENTS BOOK THIS --------------- */}
+      {/* ──────────────────────────────────────────────────────────────
+          2. THE VIBE
+      ────────────────────────────────────────────────────────────── */}
       <section className="bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 py-24">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-4xl px-6">
           <Reveal variant="fade-up">
-            <div className="mx-auto max-w-3xl text-center">
+            <div className="text-center">
               <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">
-                The Birthday Venue for{" "}
-                <span className="italic text-purple-300">Families Who Want More</span>
+                Date-night energy,{" "}
+                <span className="italic text-purple-300">for your whole crew</span>
               </h2>
-              <p className="mt-4 text-lg text-white/70">
-                When you search for <em>kids activities near me</em> or{" "}
-                <em>family entertainment near me</em>, you usually find the same options — bounce
-                houses, escape rooms, or a restaurant with a cake. This is different.
+              <p className="mx-auto mt-4 max-w-2xl text-white/65">
+                No awkward mixing with strangers. No restaurant noise. Just your people, a private studio,
+                good drinks, and an instructor who makes everyone look like they actually know what they're doing.
               </p>
             </div>
           </Reveal>
 
-          <div className="mt-16 grid gap-8 md:grid-cols-3">
+          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              {
-                icon: "🙌",
-                title: "Everyone Participates",
-                description:
-                  "This is a hands-on creative experience — not a show. Every guest gets a workstation, materials, and an instructor guiding them through something real. No standing around.",
-              },
-              {
-                icon: "🎁",
-                title: "Everyone Takes Something Home",
-                description:
-                  "Every guest leaves with the thing they made — a bowl, a terrarium, a lamp, a candle. Not a party favor bag. An actual piece of art they made with their own hands.",
-              },
-              {
-                icon: "🍾",
-                title: "BYOB + Private Studio",
-                description:
-                  "Bring your own food, cupcakes, wine, or cocktails. Your group gets a private session — no shared space with strangers. It feels like renting your own creative studio.",
-              },
+              { icon: "🎯", text: "Guided from start to finish — zero experience, zero stress" },
+              { icon: "🍷", text: "BYOB welcome — bring your wine, cocktails, or spirits" },
+              { icon: "🔒", text: "Private studio — your group only, no shared space with strangers" },
+              { icon: "✨", text: "Ambient lighting, your playlist, premium atmosphere" },
+              { icon: "🎁", text: "Every guest leaves with the art they made — not a party favor" },
+              { icon: "🎂", text: "Built for milestones — 21st, 30th, 40th, 50th, and beyond" },
             ].map((item, i) => (
-              <Reveal key={item.title} delay={i * 100} variant="fade-up">
-                <GlassCard className="card-hover h-full p-8">
-                  <div className="mb-4 text-4xl">{item.icon}</div>
-                  <h3 className="mb-3 text-xl font-bold">{item.title}</h3>
-                  <p className="leading-relaxed text-white/70">{item.description}</p>
-                </GlassCard>
+              <Reveal key={i} delay={i * 60} variant="fade-up">
+                <div className="flex items-start gap-4 rounded-2xl border border-white/8 bg-white/4 p-5 backdrop-blur-sm">
+                  <span className="mt-0.5 shrink-0 text-2xl">{item.icon}</span>
+                  <p className="text-sm leading-relaxed text-white/75">{item.text}</p>
+                </div>
               </Reveal>
             ))}
           </div>
-
-          <Reveal delay={200} variant="fade-up">
-            <div className="mx-auto mt-12 max-w-3xl rounded-3xl border border-white/10 bg-white/5 p-6 text-center backdrop-blur-sm">
-              <p className="text-sm text-white/60">
-                Looking for <strong className="text-white/80">fun family activities near me</strong>,
-                a <strong className="text-white/80">kids birthday party venue</strong>, or an{" "}
-                <strong className="text-white/80">adult birthday party venue</strong> that&apos;s
-                actually worth showing up to? You&apos;re in the right place.
-              </p>
-            </div>
-          </Reveal>
         </div>
       </section>
 
-      {/* --------------- 3. BIRTHDAY EXPERIENCES --------------- */}
+      {/* ──────────────────────────────────────────────────────────────
+          3. PARTY MODES
+      ────────────────────────────────────────────────────────────── */}
       <section id="packages" className="bg-gradient-to-br from-indigo-900/30 via-purple-900/40 to-pink-900/30 py-24">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-6xl px-6">
           <Reveal variant="fade-up">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">
                 Choose Your{" "}
-                <span className="italic text-pink-300">Birthday Experience</span>
+                <span className="italic text-pink-300">Adult Party Mode</span>
               </h2>
-              <p className="mt-4 text-white/70">
-                All experiences run 2 hours and start at $55/person. Budget level is chosen on the
-                inquiry form — higher tiers include premium materials and extra special touches.
+              <p className="mt-4 text-white/65">
+                Three approaches to a birthday they'll actually remember. All run 2 hours, starting at $55/person.
               </p>
             </div>
           </Reveal>
 
-          <div className="mt-14 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-            {experiences.map((exp, i) => (
-              <Reveal key={exp.title} delay={i * 80} variant="fade-up">
-                <GlassCard className="card-hover flex h-full flex-col p-7 hover:border-purple-400/30">
-                  <div className="mb-1 flex items-start justify-between">
-                    <span className="text-4xl">{exp.emoji}</span>
-                    <span
-                      className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold ${exp.tagColor}`}
-                    >
-                      {exp.tag}
+          <div className="mt-14 grid gap-8 lg:grid-cols-3">
+            {packages.map((pkg, i) => (
+              <Reveal key={pkg.title} delay={i * 100} variant="fade-up">
+                <GlassCard className="card-lift flex h-full flex-col p-8 hover:border-purple-400/25">
+                  <div className="mb-3 flex items-start justify-between">
+                    <span className="text-4xl">{pkg.emoji}</span>
+                    <span className={`rounded-full border px-2.5 py-0.5 text-xs font-semibold ${pkg.badgeColor}`}>
+                      {pkg.badge}
                     </span>
                   </div>
-                  <h3 className="mt-3 text-xl font-bold leading-snug">{exp.title}</h3>
-                  <p className="mt-0.5 text-xs font-medium uppercase tracking-wider text-white/50">
-                    {exp.subtitle}
-                  </p>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-white/70">
-                    {exp.description}
-                  </p>
-                  <div className="mt-5 space-y-2 border-t border-white/10 pt-4 text-xs text-white/55">
-                    <div>⏱ {exp.duration}</div>
-                    <div>🎁 {exp.takeHome}</div>
-                    <div>👤 Best for: {exp.bestFor}</div>
+                  <h3 className="mt-2 text-xl font-bold leading-snug">{pkg.title}</h3>
+                  <p className="mt-0.5 text-xs font-medium uppercase tracking-wider text-white/45">{pkg.subtitle}</p>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-white/70">{pkg.description}</p>
+                  <ul className="mt-5 space-y-1.5 border-t border-white/10 pt-5">
+                    {pkg.bullets.map((b) => (
+                      <li key={b} className="flex items-start gap-2 text-xs text-white/60">
+                        <span className="mt-0.5 shrink-0 text-purple-400">✓</span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-5 space-y-1 text-xs text-white/40">
+                    <div>⏱ {pkg.duration}</div>
+                    <div>👥 Best for: {pkg.bestFor}</div>
                   </div>
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="text-base font-bold text-white">From $55/person</span>
-                    <Link
-                      href={exp.href}
-                      className="rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold text-white/80 transition hover:bg-white/10"
-                    >
-                      See Class →
-                    </Link>
-                  </div>
+                  <a
+                    href="#birthday-form"
+                    className="mt-6 block rounded-full border border-white/15 bg-white/5 py-2.5 text-center text-sm font-semibold text-white/80 transition hover:bg-white/10"
+                  >
+                    Book This Experience →
+                  </a>
                 </GlassCard>
               </Reveal>
             ))}
           </div>
 
           <Reveal delay={200} variant="fade-up">
-            <p className="mt-8 text-center text-sm text-white/45">
-              Not sure which to pick? Tell us about your group in the form below and we&apos;ll recommend the best fit.
+            <p className="mt-8 text-center text-sm text-white/40">
+              Not sure which to pick? Tell us about your group in the inquiry form and we'll suggest the best fit.
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* --------------- 5. HOW IT WORKS --------------- */}
-      <section className="bg-gradient-to-br from-slate-900 via-indigo-900/20 to-slate-900 py-24">
-        <div className="mx-auto max-w-7xl px-6">
+      {/* ──────────────────────────────────────────────────────────────
+          4. PREMIUM UPGRADES
+      ────────────────────────────────────────────────────────────── */}
+      <section className="bg-gradient-to-br from-slate-900 via-indigo-900/15 to-slate-900 py-20">
+        <div className="mx-auto max-w-5xl px-6">
           <Reveal variant="fade-up">
-            <div className="mx-auto max-w-2xl text-center">
-              <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">
-                How It Works
+            <div className="mb-10 text-center">
+              <h2 className="font-serif text-3xl font-light tracking-wide sm:text-4xl">
+                Elevate the Night —{" "}
+                <span className="italic text-purple-300">Premium Upgrades</span>
               </h2>
-              <p className="mt-4 text-white/65">
-                Planning a birthday party at Color Cocktail Factory is genuinely easy.
+              <p className="mt-3 text-sm text-white/55">
+                Paid add-ons available on request. Ask about pricing in your birthday inquiry.
               </p>
             </div>
           </Reveal>
 
-          <div className="mt-14 grid gap-8 md:grid-cols-4">
-            {[
-              {
-                step: "01",
-                emoji: "📝",
-                title: "Fill Out the Inquiry Form",
-                desc: "Tell us who's celebrating, the activity you're drawn to, your preferred date, and your guest count.",
-              },
-              {
-                step: "02",
-                emoji: "📬",
-                title: "We Reply Within 24 Hours",
-                desc: "We'll email you a custom quote, available dates, and everything you need to confirm.",
-              },
-              {
-                step: "03",
-                emoji: "🔗",
-                title: "Guests Register Individually",
-                desc: "Once you agree on details, we send you a link. Each guest books their own spot — no group payment headache.",
-              },
-              {
-                step: "04",
-                emoji: "🎂",
-                title: "Show Up & Create",
-                desc: "Walk in, bring your drinks and cupcakes, and let us handle everything. Your only job is to celebrate.",
-              },
-            ].map((item, i) => (
-              <Reveal key={item.step} delay={i * 100} variant="fade-up">
-                <div className="relative text-center">
-                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-purple-400/30 bg-gradient-to-br from-purple-600/30 to-pink-600/30 text-2xl shadow-lg shadow-purple-500/20">
-                    {item.emoji}
-                  </div>
-                  <div className="mb-1 text-xs font-bold uppercase tracking-widest text-white/30">
-                    Step {item.step}
-                  </div>
-                  <h3 className="text-lg font-bold">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/60">{item.desc}</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            {UPGRADES.map((u, i) => (
+              <Reveal key={u.label} delay={i * 60} variant="fade-up">
+                <div className="upgrade-chip flex max-w-xs flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+                  <div className="text-2xl">{u.icon}</div>
+                  <div className="text-sm font-bold text-white/90">{u.label}</div>
+                  <p className="text-xs leading-relaxed text-white/55">{u.detail}</p>
+                  {/* PLACEHOLDER pricing — update labels before launch */}
+                  <span className="mt-1 self-start rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-white/35">
+                    Ask in inquiry
+                  </span>
                 </div>
               </Reveal>
             ))}
@@ -529,90 +585,102 @@ export default function BirthdayPartiesPage() {
         </div>
       </section>
 
-      {/* --------------- 6. BIRTHDAY FORM --------------- */}
-      <section
-        id="birthday-form"
-        className="bg-gradient-to-br from-purple-950 via-pink-950/60 to-indigo-950 py-24"
-      >
+      {/* ──────────────────────────────────────────────────────────────
+          5. BYOB BLOCK
+      ────────────────────────────────────────────────────────────── */}
+      <section className="bg-gradient-to-br from-indigo-900/25 via-slate-900 to-purple-900/20 py-20">
         <div className="mx-auto max-w-3xl px-6">
+          <Reveal variant="fade-up">
+            <GlassCard className="p-8">
+              <div className="mb-2 text-2xl">{BYOB_ENABLED ? "🍷" : "🥤"}</div>
+              <h2 className="font-serif text-2xl font-light tracking-wide">
+                {BYOB_ENABLED ? "BYOB — How It Works" : "Drinks at Color Cocktail Factory"}
+              </h2>
+              {BYOB_ENABLED ? (
+                <ul className="mt-5 space-y-2.5">
+                  {BYOB_RULES.map((rule) => (
+                    <li key={rule} className="flex items-start gap-3 text-sm text-white/70">
+                      <span className="mt-0.5 shrink-0 text-purple-400">✓</span>
+                      {rule}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-4 text-sm leading-relaxed text-white/70">{BYOB_OFF_COPY}</p>
+              )}
+            </GlassCard>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────────
+          6. HOW IT WORKS
+      ────────────────────────────────────────────────────────────── */}
+      <section className="bg-gradient-to-br from-slate-900 via-purple-900/15 to-slate-900 py-24">
+        <div className="mx-auto max-w-5xl px-6">
+          <Reveal variant="fade-up">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">How It Works</h2>
+              <p className="mt-3 text-white/60">Planning an adult birthday party here is genuinely easy.</p>
+            </div>
+          </Reveal>
+
+          <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+            {[
+              { step: "01", icon: "📝", title: "Pick a date + experience", desc: "Fill out the short form with your preferred date, activity, and guest count." },
+              { step: "02", icon: "📬", title: "We reply in 24 hrs", desc: "Custom quote, available dates, and every detail you need to say yes." },
+              { step: "03", icon: "👥", title: "Invite your guests", desc: "We send a registration link so each guest books their own spot individually." },
+              { step: "04", icon: "✨", title: "Add your upgrades", desc: "Photographer, champagne toast, cake styling — opt in before the day." },
+              { step: "05", icon: "🎂", title: "Celebrate + create", desc: "Walk in, set your drinks on the table, and let us handle everything from there." },
+            ].map((item, i) => (
+              <Reveal key={item.step} delay={i * 80} variant="fade-up">
+                <div className="text-center">
+                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-purple-400/30 bg-gradient-to-br from-purple-600/25 to-pink-600/25 text-xl">
+                    {item.icon}
+                  </div>
+                  <div className="mb-1 text-xs font-bold uppercase tracking-widest text-white/25">{item.step}</div>
+                  <h3 className="text-sm font-bold leading-snug">{item.title}</h3>
+                  <p className="mt-1.5 text-xs leading-relaxed text-white/55">{item.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ──────────────────────────────────────────────────────────────
+          7. FORM
+      ────────────────────────────────────────────────────────────── */}
+      <section id="birthday-form" className="bg-gradient-to-br from-purple-950 via-pink-950/50 to-indigo-950 py-24">
+        <div className="mx-auto max-w-2xl px-6">
           <Reveal variant="fade-up">
             <div className="mb-10 text-center">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-pink-400/25 bg-pink-500/10 px-4 py-1.5 text-xs font-semibold text-pink-300">
-                🎂 Birthday Party Request Form
+                ✦ Birthday Inquiry
               </div>
-              <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">
-                Plan My{" "}
-                <span className="italic text-pink-300">Birthday Party</span>
+              <h2 className="font-serif text-3xl font-light tracking-wide sm:text-4xl">
+                Get My <span className="italic text-pink-300">Birthday Quote</span>
               </h2>
-              <p className="mx-auto mt-4 max-w-xl text-white/65">
-                We reply within 24 hours with a custom quote and available dates. No deposit required.
+              <p className="mx-auto mt-3 max-w-md text-sm text-white/55">
+                We reply within 24 hours. No deposit to inquire.
               </p>
             </div>
           </Reveal>
           <Reveal delay={100} variant="fade-up">
-            <BirthdayFormCard />
+            <BirthdayFormCard byobEnabled={BYOB_ENABLED} />
           </Reveal>
         </div>
       </section>
 
-      {/* --------------- 8. GALLERY --------------- */}
-      <section className="bg-gradient-to-br from-indigo-900/30 via-purple-900/30 to-pink-900/30 py-24">
-        <div className="mx-auto max-w-7xl px-6">
-          <Reveal variant="fade-up">
-            <div className="mx-auto mb-12 max-w-2xl text-center">
-              <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">
-                What Birthdays{" "}
-                <span className="italic text-pink-300">Look Like Here</span>
-              </h2>
-              <p className="mt-4 text-white/60">
-                Real people, real art, real cake. This is what your party looks like.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { label: "Guests at the pottery wheel", gradient: "from-purple-800/60 to-pink-800/60", emoji: "🏺" },
-              { label: "Birthday person throwing clay", gradient: "from-pink-800/60 to-rose-800/60", emoji: "🎂" },
-              { label: "Group photo with finished pieces", gradient: "from-indigo-800/60 to-purple-800/60", emoji: "📸" },
-              { label: "Cupcakes and BYOB drinks on the table", gradient: "from-amber-800/60 to-orange-800/60", emoji: "🥂" },
-              { label: "Turkish lamp glowing at the end of the night", gradient: "from-cyan-800/60 to-teal-800/60", emoji: "✨" },
-              { label: "Birthday person with their handbuilt piece", gradient: "from-rose-800/60 to-pink-800/60", emoji: "🎂" },
-            ].map((item, i) => (
-              <Reveal key={item.label} delay={i * 60} variant="fade-up">
-                <div
-                  className={`aspect-[4/3] rounded-2xl border border-white/10 bg-gradient-to-br ${item.gradient} flex flex-col items-center justify-center gap-3 p-6 text-center`}
-                >
-                  <span className="text-5xl" role="img" aria-label={item.label}>{item.emoji}</span>
-                  <span className="text-sm font-medium text-white/60">{item.label}</span>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-          <Reveal delay={200} variant="fade-up">
-            <p className="mt-6 text-center text-xs text-white/35">
-              Tag us{" "}
-              <a
-                href="https://www.instagram.com/colorcocktailfactory"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-pink-400/80 hover:text-pink-300"
-              >
-                @colorcocktailfactory
-              </a>{" "}
-              for a feature on our page
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* --------------- 9. TESTIMONIALS --------------- */}
+      {/* ──────────────────────────────────────────────────────────────
+          8. TESTIMONIALS
+      ────────────────────────────────────────────────────────────── */}
       <section className="bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 py-24">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-6xl px-6">
           <Reveal variant="fade-up">
             <div className="mx-auto mb-14 max-w-2xl text-center">
               <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">
-                What Birthday Guests{" "}
+                What Adults{" "}
                 <span className="italic text-purple-300">Actually Said</span>
               </h2>
             </div>
@@ -621,15 +689,13 @@ export default function BirthdayPartiesPage() {
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             {testimonials.map((t, i) => (
               <Reveal key={t.name} delay={i * 80} variant="fade-up">
-                <GlassCard className="card-hover flex h-full flex-col p-7">
+                <GlassCard className="card-lift flex h-full flex-col p-7">
                   <div className="mb-4 text-sm text-yellow-400" aria-label="5 stars">★★★★★</div>
                   <blockquote className="flex-1 text-sm leading-relaxed text-white/80">
                     &ldquo;{t.quote}&rdquo;
                   </blockquote>
                   <div className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
-                    <div
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${t.avatarColor} text-xs font-bold text-white`}
-                    >
+                    <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${t.avatar} text-xs font-bold text-white`}>
                       {t.initials}
                     </div>
                     <div className="min-w-0">
@@ -641,7 +707,7 @@ export default function BirthdayPartiesPage() {
                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                         <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
                         <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84z"/>
                       </svg>
                       <span className="text-xs">Google</span>
                     </div>
@@ -653,27 +719,26 @@ export default function BirthdayPartiesPage() {
         </div>
       </section>
 
-      {/* --------------- 10. FAQ --------------- */}
-      <section className="bg-gradient-to-br from-indigo-950 via-purple-950/50 to-slate-950 py-24">
+      {/* ──────────────────────────────────────────────────────────────
+          9. FAQ
+      ────────────────────────────────────────────────────────────── */}
+      <section className="bg-gradient-to-br from-indigo-950 via-purple-950/40 to-slate-950 py-24">
         <div className="mx-auto max-w-3xl px-6">
           <Reveal variant="fade-up">
             <div className="mb-12 text-center">
               <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">
-                Birthday Party{" "}
-                <span className="italic text-pink-300">FAQs</span>
+                Questions? <span className="italic text-pink-300">Answered.</span>
               </h2>
-              <p className="mt-4 text-white/60">Everything you need to know before you book.</p>
+              <p className="mt-3 text-white/55">Everything you need to know before you book.</p>
             </div>
           </Reveal>
 
-          <div className="space-y-3">
+          <div className="space-y-2.5">
             {faqs.map((faq, i) => (
-              <Reveal key={i} delay={i * 30} variant="fade-up">
+              <Reveal key={i} delay={i * 25} variant="fade-up">
                 <details className="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4">
-                    <span className="text-sm font-semibold text-white/90 sm:text-base">
-                      {faq.q}
-                    </span>
+                    <span className="text-sm font-semibold text-white/90 sm:text-base">{faq.q}</span>
                     <span className="faq-chevron shrink-0 text-white/40">▾</span>
                   </summary>
                   <p className="px-6 pb-5 pt-1 text-sm leading-relaxed text-white/65">{faq.a}</p>
@@ -681,21 +746,36 @@ export default function BirthdayPartiesPage() {
               </Reveal>
             ))}
           </div>
+
+          <Reveal delay={100} variant="fade-up">
+            <div className="mt-10 text-center">
+              <p className="text-sm text-white/40">
+                More questions?{" "}
+                <a href="tel:3128819929" className="text-purple-400 transition hover:text-purple-300">
+                  Call (312) 881-9929
+                </a>{" "}
+                or{" "}
+                <a href="mailto:hello@colorcocktailfactory.com" className="text-purple-400 transition hover:text-purple-300">
+                  email us
+                </a>.
+              </p>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* --------------- 11. LOCATIONS --------------- */}
-      <section className="bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 py-24">
-        <div className="mx-auto max-w-5xl px-6">
+      {/* ──────────────────────────────────────────────────────────────
+          10. LOCATIONS
+      ────────────────────────────────────────────────────────────── */}
+      <section className="bg-gradient-to-br from-slate-900 via-purple-900/15 to-slate-900 py-24">
+        <div className="mx-auto max-w-4xl px-6">
           <Reveal variant="fade-up">
             <div className="mb-12 text-center">
               <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">
-                Find Us{" "}
+                Find a Studio{" "}
                 <span className="italic text-purple-300">Near You</span>
               </h2>
-              <p className="mt-4 text-white/60">
-                Two studios. Both private. Both ready to host your birthday.
-              </p>
+              <p className="mt-3 text-white/55">Two private studios. Both ready for your birthday.</p>
             </div>
           </Reveal>
 
@@ -703,62 +783,45 @@ export default function BirthdayPartiesPage() {
             {[
               {
                 city: "Chicago",
-                neighborhood: "Pilsen",
+                neighborhood: "Pilsen, IL",
                 address: "1142 W. 18th Street, Chicago, IL 60608",
-                phone: "(312) 881-9929",
                 parking: "Free street parking on 18th St",
                 access: "Wheelchair accessible (pottery classes)",
                 emoji: "🏙️",
                 gradient: "from-purple-800/40 to-indigo-800/40",
                 href: "/chicago",
-                cta: "See Chicago Studio",
-                seoNote: "Chicago birthday party venue · Pilsen art studio · kids birthday party venue Chicago",
+                cta: "View Chicago Studio",
               },
               {
                 city: "Eugene",
-                neighborhood: "Eugene, Oregon",
+                neighborhood: "Eugene, OR",
                 address: "1162 Lorella Ave, Eugene, OR 97401",
-                phone: "(312) 881-9929",
                 parking: "Free street parking",
                 access: "Wheelchair accessible (pottery classes)",
                 emoji: "🌲",
                 gradient: "from-green-800/40 to-teal-800/40",
                 href: "/eugene",
-                cta: "See Eugene Studio",
-                seoNote: "Eugene birthday party venue · Eugene art studio · private birthday party space Eugene OR",
+                cta: "View Eugene Studio",
               },
             ].map((loc, i) => (
               <Reveal key={loc.city} delay={i * 100} variant="fade-up">
-                <GlassCard className="card-hover h-full p-8">
-                  <div
-                    className={`mb-5 flex h-20 w-full items-center justify-center rounded-2xl bg-gradient-to-br ${loc.gradient} text-4xl`}
-                  >
+                <GlassCard className="card-lift h-full p-8">
+                  <div className={`mb-5 flex h-16 w-full items-center justify-center rounded-2xl bg-gradient-to-br ${loc.gradient} text-3xl`}>
                     {loc.emoji}
                   </div>
-                  <h3 className="text-2xl font-bold">{loc.city}</h3>
-                  <p className="mt-0.5 text-sm text-purple-300">{loc.neighborhood}</p>
-                  <div className="mt-4 space-y-2 text-sm text-white/65">
-                    <div className="flex items-start gap-2">
-                      <span className="shrink-0">📍</span>
-                      {loc.address}
+                  <h3 className="text-xl font-bold">{loc.city}</h3>
+                  <p className="mt-0.5 text-xs uppercase tracking-wider text-purple-300">{loc.neighborhood}</p>
+                  <div className="mt-4 space-y-2 text-sm text-white/60">
+                    <div className="flex items-start gap-2"><span>📍</span>{loc.address}</div>
+                    <div className="flex items-center gap-2"><span>📞</span>
+                      <a href="tel:3128819929" className="transition hover:text-white">(312) 881-9929</a>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span>📞</span>
-                      <a href="tel:3128819929" className="hover:text-white">
-                        {loc.phone}
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span>🚗</span> {loc.parking}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <span>♿</span> {loc.access}
-                    </div>
+                    <div className="flex items-center gap-2"><span>🚗</span>{loc.parking}</div>
+                    <div className="flex items-center gap-2"><span>♿</span>{loc.access}</div>
                   </div>
-                  <p className="mt-3 text-xs italic text-white/25">{loc.seoNote}</p>
                   <Link
                     href={loc.href}
-                    className="mt-5 block rounded-full border border-white/15 bg-white/5 py-2.5 text-center text-sm font-semibold text-white/80 transition hover:bg-white/10"
+                    className="mt-5 block rounded-full border border-white/15 bg-white/5 py-2.5 text-center text-sm font-semibold text-white/75 transition hover:bg-white/10"
                   >
                     {loc.cta} →
                   </Link>
@@ -769,44 +832,45 @@ export default function BirthdayPartiesPage() {
         </div>
       </section>
 
-      {/* --------------- 12. FINAL CTA --------------- */}
+      {/* ──────────────────────────────────────────────────────────────
+          11. FINAL CTA
+      ────────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-gradient-to-br from-pink-950 via-purple-950 to-indigo-950 py-28 text-center">
-        <div className="sparkle-noise absolute inset-0 opacity-10" />
-
-        <div className="relative z-10 mx-auto max-w-3xl px-6">
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-8" />
+        <div className="relative z-10 mx-auto max-w-2xl px-6">
           <Reveal variant="scale">
-            <div className="mb-6 text-6xl">🎂</div>
+            <div className="mb-5 text-5xl">🎂</div>
           </Reveal>
-          <Reveal delay={100} variant="fade-up">
+          <Reveal delay={80} variant="fade-up">
             <h2 className="font-serif text-4xl font-light leading-tight tracking-wide sm:text-5xl">
-              Ready to Plan a Birthday{" "}
-              <span className="italic text-pink-300">They&apos;ll Never Forget?</span>
+              Ready for a Birthday{" "}
+              <span className="italic text-pink-300">Worth Remembering?</span>
             </h2>
           </Reveal>
-          <Reveal delay={200} variant="fade-up">
-            <p className="mx-auto mt-5 max-w-xl text-lg text-white/70">
-              Inquire today — we reply within 24 hours with a quote, available dates, and everything
-              you need. No deposit to get started.
+          <Reveal delay={160} variant="fade-up">
+            <p className="mx-auto mt-4 max-w-md text-white/65">
+              Send a quick inquiry — we reply within 24 hours with availability, pricing, and everything you
+              need. No deposit required to get started.
             </p>
           </Reveal>
-          <Reveal delay={300} variant="fade-up">
+          <Reveal delay={240} variant="fade-up">
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <a
                 href="#birthday-form"
-                className="inline-flex items-center gap-2 rounded-full border border-pink-400/30 bg-gradient-to-r from-pink-500 to-purple-600 px-9 py-4 text-base font-bold text-white shadow-lg shadow-pink-500/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-pink-400/50"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-9 py-4 text-base font-bold text-white shadow-lg shadow-pink-500/30 transition-all hover:-translate-y-0.5"
               >
-                🎉 Plan My Birthday Party
+                Get My Birthday Quote
               </a>
-              <Link
-                href="/private-events"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/8 px-8 py-4 text-base font-semibold text-white/80 backdrop-blur-sm transition hover:bg-white/15"
+              <a
+                href="tel:3128819929"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-8 py-4 text-sm font-semibold text-white/75 backdrop-blur-sm transition hover:bg-white/10"
               >
-                Corporate &amp; Private Events →
-              </Link>
+                📞 Call (312) 881-9929
+              </a>
             </div>
           </Reveal>
-          <Reveal delay={400} variant="fade-up">
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-white/40">
+          <Reveal delay={320} variant="fade-up">
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-5 text-xs text-white/35">
               <Link href="/chicago" className="transition hover:text-purple-300">Chicago Studio</Link>
               <span>·</span>
               <Link href="/eugene" className="transition hover:text-purple-300">Eugene Studio</Link>
@@ -820,7 +884,12 @@ export default function BirthdayPartiesPage() {
           </Reveal>
         </div>
       </section>
+
+      {/*
+        NEGATIVE KEYWORDS (dev reference — NOT shown to users):
+        bounce house rentals, tent rentals, table-and-chair rentals,
+        water slide rentals, mechanical bull rental
+      */}
     </main>
   );
 }
-
