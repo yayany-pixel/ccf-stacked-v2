@@ -75,6 +75,13 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
         body,
       });
       if (!res.ok) throw new Error("Network response not ok");
+      // Fire GA4 conversion event — imported into Google Ads as a conversion action
+      if (typeof window !== 'undefined' && window.gtag) {
+        window.gtag('event', 'generate_lead', {
+          event_category: 'birthday_inquiry',
+          event_label: form.experience || 'unspecified',
+        });
+      }
       setStatus("success");
       setForm(INITIAL);
     } catch {

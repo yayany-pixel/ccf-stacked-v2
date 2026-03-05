@@ -68,6 +68,12 @@ export default function PrivateEventFormCard({
       });
 
       if (response.ok) {
+        // Fire GA4 conversion event — imported into Google Ads as a conversion action
+        if (typeof window !== 'undefined' && window.gtag) {
+          window.gtag('event', 'generate_lead', {
+            event_category: 'private_party_inquiry',
+          });
+        }
         // Redirect to thank you page
         window.location.href = "/thanks/private-party";
       } else {
