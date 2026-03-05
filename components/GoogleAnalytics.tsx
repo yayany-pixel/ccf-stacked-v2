@@ -9,8 +9,10 @@ function GoogleAnalyticsInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   
-  // Only use NEXT_PUBLIC_GA_ID_1 as specified
+  // GA4 measurement ID
   const GA_ID = process.env.NEXT_PUBLIC_GA_ID_1;
+  // Google Ads conversion tag
+  const GADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
 
   // If GA ID is not configured, don't render anything
   if (!GA_ID) {
@@ -56,13 +58,13 @@ function GoogleAnalyticsInner() {
 
   return (
     <>
-      {/* Load gtag.js script from Google */}
+      {/* Load gtag.js — shared by GA4 + Google Ads (one script, two configs) */}
       <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
       />
       
-      {/* Initialize gtag and configure GA4 */}
+      {/* Initialize GA4 and Google Ads conversion tag */}
       <Script
         id="google-analytics-init"
         strategy="afterInteractive"
@@ -71,12 +73,18 @@ function GoogleAnalyticsInner() {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+
+            // GA4 — page tracking + web vitals
             gtag('config', '${GA_ID}', {
               page_path: window.location.pathname + window.location.search
             });
+
+            // Google Ads — conversion measurement
+            ${GADS_ID ? `gtag('config', '${GADS_ID}');` : '// NEXT_PUBLIC_GOOGLE_ADS_ID not set'}
             
             ${process.env.NODE_ENV === 'development' ? `
-            console.log('[GA] Initialized with ID: ${GA_ID}');
+            console.log('[GA] Initialized: ${GA_ID}');
+            ${GADS_ID ? `console.log('[Google Ads] Initialized: ${GADS_ID}');` : ''}
             ` : ''}
           `,
         }}
