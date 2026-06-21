@@ -378,6 +378,30 @@ export default function PrivateEventsPage() {
           </div>
         </section>
 
+        {/* Inquiry Form — moved up for conversion */}
+        <section id="inquiry-form" className="py-20">
+          <div className="mx-auto max-w-4xl px-6">
+            <div className="mb-12 text-center">
+              <h2 className="font-serif text-4xl font-bold">Get Your Custom Quote</h2>
+              <p className="mt-4 text-lg text-white/75">
+                Share a few details and we'll respond within 24 hours with availability, pricing, and next steps.
+              </p>
+            </div>
+
+            <Reveal variant="fade-up">
+              <PrivateEventFormCard
+                city={cities[0]}
+                timeWindows={[]}
+              />
+            </Reveal>
+
+            <div className="mt-8 text-center text-sm text-white/60">
+              <p>Prefer to call? Reach us at <a href="tel:+13128819929" className="inline-block py-2 font-semibold text-purple-300 hover:text-purple-200">312-881-9929</a></p>
+              <p className="mt-1">Or email <a href="mailto:support@colorcocktailfactory.com" className="inline-block py-2 font-semibold text-purple-300 hover:text-purple-200">support@colorcocktailfactory.com</a></p>
+            </div>
+          </div>
+        </section>
+
         {/* Social Proof Section */}
         <section className="border-y border-white/10 bg-gradient-to-br from-purple-900/20 to-pink-900/20 py-12">
           <div className="mx-auto max-w-7xl px-6">
@@ -665,30 +689,6 @@ export default function PrivateEventsPage() {
                   </GlassCard>
                 </Reveal>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Inquiry Form */}
-        <section id="inquiry-form" className="py-20">
-          <div className="mx-auto max-w-4xl px-6">
-            <div className="mb-12 text-center">
-              <h2 className="font-serif text-4xl font-bold">Get Your Custom Quote</h2>
-              <p className="mt-4 text-lg text-white/75">
-                Share a few details and we'll respond within 24 hours with availability, pricing, and next steps.
-              </p>
-            </div>
-
-            <Reveal variant="fade-up">
-              <PrivateEventFormCard 
-                city={cities[0]} 
-                timeWindows={[]} 
-              />
-            </Reveal>
-
-            <div className="mt-8 text-center text-sm text-white/60">
-              <p>Prefer to call? Reach us at <a href="tel:+13128819929" className="inline-block py-2 font-semibold text-purple-300 hover:text-purple-200">312-881-9929</a></p>
-              <p className="mt-1">Or email <a href="mailto:support@colorcocktailfactory.com" className="inline-block py-2 font-semibold text-purple-300 hover:text-purple-200">support@colorcocktailfactory.com</a></p>
             </div>
           </div>
         </section>
