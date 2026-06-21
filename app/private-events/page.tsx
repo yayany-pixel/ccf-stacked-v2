@@ -318,12 +318,13 @@ export default function PrivateEventsPage() {
       />
 
       <main className="min-h-screen">
-        {/* Hero Section */}
+        {/* Hero + Form */}
         <section className="gradient-breathing relative overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40">
           <div className="sparkle-noise absolute inset-0 bg-[url('/noise.png')] opacity-20" />
-          
-          <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 sm:py-32">
-            <div className="mx-auto max-w-4xl text-center">
+
+          <div className="relative z-10 mx-auto max-w-4xl px-6 py-16 sm:py-24">
+            {/* Heading */}
+            <div className="mb-10 text-center">
               <Reveal variant="fade-up">
                 <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-xl">
                   <span className="relative flex h-2 w-2">
@@ -342,62 +343,25 @@ export default function PrivateEventsPage() {
                 </h1>
               </Reveal>
 
-              <Reveal delay={200}>
-                <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-white/85 sm:text-xl">
-                  Host unforgettable gatherings where creativity flows and memories are made. 
-                  From team building to bachelorette parties, weddings to birthdays—bring your group for 
-                  expert-led pottery, mosaics, glass art, and more. <strong className="text-white">BYOB welcome.</strong>
+              <Reveal delay={150} variant="fade-up">
+                <p className="mx-auto mt-4 max-w-2xl text-base text-white/70">
+                  BYOB-friendly, expert-led pottery, mosaics, glass art & more — for groups of 8–50+.
                 </p>
               </Reveal>
-
-              <Reveal delay={300} variant="scale">
-                <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-                  <ButtonPill href="#inquiry-form" variant="primary">
-                    Get a Custom Quote →
-                  </ButtonPill>
-                  <ButtonPill href="#experiences" variant="secondary">
-                    Browse Experiences
-                  </ButtonPill>
-                </div>
-              </Reveal>
-
-              <Reveal delay={400}>
-                <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-white/70">
-                  <span className="flex items-center gap-2">
-                    <span className="text-lg">🍷</span> BYOB Friendly
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <span className="text-lg">⏰</span> Arrive 30 min early to decorate
-                  </span>
-                  <span className="flex items-center gap-2">
-                    <span className="text-lg">👥</span> Groups of 8-50+
-                  </span>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </section>
-
-        {/* Inquiry Form — moved up for conversion */}
-        <section id="inquiry-form" className="py-20">
-          <div className="mx-auto max-w-4xl px-6">
-            <div className="mb-12 text-center">
-              <h2 className="font-serif text-4xl font-bold">Get Your Custom Quote</h2>
-              <p className="mt-4 text-lg text-white/75">
-                Share a few details and we'll respond within 24 hours with availability, pricing, and next steps.
-              </p>
             </div>
 
-            <Reveal variant="fade-up">
+            {/* Form */}
+            <Reveal delay={200} variant="fade-up">
               <PrivateEventFormCard
                 city={cities[0]}
                 timeWindows={[]}
               />
             </Reveal>
 
-            <div className="mt-8 text-center text-sm text-white/60">
-              <p>Prefer to call? Reach us at <a href="tel:+13128819929" className="inline-block py-2 font-semibold text-purple-300 hover:text-purple-200">312-881-9929</a></p>
-              <p className="mt-1">Or email <a href="mailto:support@colorcocktailfactory.com" className="inline-block py-2 font-semibold text-purple-300 hover:text-purple-200">support@colorcocktailfactory.com</a></p>
+            <div className="mt-6 text-center text-sm text-white/50">
+              <p>Prefer to call? <a href="tel:+13128819929" className="font-semibold text-purple-300 hover:text-purple-200">312-881-9929</a>
+              {" · "}
+              <a href="mailto:support@colorcocktailfactory.com" className="font-semibold text-purple-300 hover:text-purple-200">support@colorcocktailfactory.com</a></p>
             </div>
           </div>
         </section>
