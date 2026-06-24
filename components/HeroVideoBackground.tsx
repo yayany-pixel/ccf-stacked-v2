@@ -33,7 +33,7 @@ export default function HeroVideoBackground() {
         playsInline
         preload="metadata"
         poster="/videos/ccf-header-poster.jpg"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-contain sm:object-cover object-center"
         aria-hidden="true"
       >
         {/* Prefer WebM for better compression, fallback to MP4 */}

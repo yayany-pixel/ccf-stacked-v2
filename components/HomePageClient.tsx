@@ -102,8 +102,8 @@ export default function HomePageClient() {
             </Reveal>
           </div>
 
-          {/* 4 CTA Cards */}
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {/* 3 CTA Cards */}
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {CTAS.map((cta, i) => (
               <Reveal key={cta.title} variant="fade-up" delay={i * 80}>
                 <Link
