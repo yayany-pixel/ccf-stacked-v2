@@ -57,17 +57,6 @@ const CTAS = [
     shadow: "group-hover:shadow-pink-500/30",
   },
   {
-    Icon: IconStore,
-    title: "Visit Our Online Store",
-    description: "Shop handcrafted ceramics, art kits, and unique gifts made with love.",
-    label: "Shop on Etsy",
-    href: ETSY_URL,
-    gradientBg: "from-amber-500/20 to-orange-500/20",
-    hoverBorder: "hover:border-amber-400/60",
-    buttonClass: "bg-gradient-to-r from-amber-500 to-orange-500",
-    shadow: "group-hover:shadow-amber-500/30",
-  },
-  {
     Icon: IconContact,
     title: "Contact Us",
     description: "Questions? Ideas? Slide into our DMs — we're always happy to help.",
