@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import type { City } from "@/lib/config";
+import { trackLead } from "@/lib/metaPixel";
 
 type FormState = {
   name: string;
@@ -74,6 +75,8 @@ export default function PrivateEventFormCard({
             event_category: 'private_party_inquiry',
           });
         }
+        // Meta Pixel: Lead fires only on successful form submission
+        trackLead({ content_name: 'Private Party Inquiry' });
         // Redirect to thank you page
         window.location.href = "/thanks/private-party";
       } else {

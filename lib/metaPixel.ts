@@ -100,3 +100,17 @@ export function trackRezClickBooking(
     });
   }
 }
+
+/**
+ * Track InitiateCheckout — call when any booking button is clicked
+ */
+export function trackInitiateCheckout(params?: Record<string, any>): void {
+  track('InitiateCheckout', params);
+}
+
+/**
+ * Track Lead — call only after a successful private-event form submission
+ */
+export function trackLead(params?: Record<string, any>): void {
+  track('Lead', params);
+}
