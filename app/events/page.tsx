@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 60; // Revalidate every 60 seconds
 
 export const metadata: Metadata = {
-  title: "Upcoming Workshops & Events | Color Cocktail Factory",
+  title: "Upcoming Workshops & Events",
   description: "Browse upcoming creative workshops in Chicago & Eugene. Pottery, glass fusion, mosaics, bonsai, painting, and more. Book your spot today!",
   openGraph: {
     title: "Upcoming Creative Workshops | Color Cocktail Factory",

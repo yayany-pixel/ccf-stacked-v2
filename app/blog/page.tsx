@@ -5,7 +5,7 @@ import Reveal from "@/components/motion/Reveal";
 import { getAllBlogPosts } from "@/lib/blogPosts";
 
 export const metadata: Metadata = {
-  title: "Blog - Pottery Tips, Creative Ideas & Workshop Guides | Color Cocktail Factory",
+  title: "Blog - Pottery Tips, Creative Ideas & Workshop Guides",
   description: "Expert pottery tutorials, date night ideas, creative workshop guides, and ceramic art inspiration from Color Cocktail Factory in Chicago & Eugene.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/blog"

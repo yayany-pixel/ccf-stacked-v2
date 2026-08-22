@@ -8,7 +8,7 @@ import { cities } from "@/lib/links";
 import type { City } from "@/lib/config";
 
 export const metadata: Metadata = {
-  title: "Private Events & Parties | Color Cocktail Factory",
+  title: "Private Events & Parties",
   description: "Host unforgettable private parties in Chicago & Eugene. BYOB pottery, mosaics, glass fusion for weddings, team building, birthdays & more. Groups of 8-50+.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/private-events"

@@ -44,7 +44,7 @@ export async function generateMetadata({
   const url = `https://colorcocktailfactory.com/activities/${activity.slug}`;
 
   return {
-    title,
+    title: activity.heroTitle,
     description,
     alternates: {
       canonical: url

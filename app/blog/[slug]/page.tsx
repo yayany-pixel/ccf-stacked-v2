@@ -22,12 +22,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   
   if (!post) {
     return {
-      title: "Post Not Found | Color Cocktail Factory Blog"
+      title: "Post Not Found"
     };
   }
 
   return {
-    title: `${post.title} | CCF Blog`,
+    title: post.title,
     description: post.description,
     alternates: {
       canonical: `https://colorcocktailfactory.com/blog/${post.slug}`

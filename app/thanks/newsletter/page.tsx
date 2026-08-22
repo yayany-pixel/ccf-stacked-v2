@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Check, Mail, Calendar, Paintbrush } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Thanks for Subscribing! | Color Cocktail Factory",
+  title: "Thanks for Subscribing!",
   description: "You're all set! Check out our upcoming pottery, mosaic, and glass fusion workshops in Chicago & Eugene.",
   robots: "noindex, nofollow"
 };

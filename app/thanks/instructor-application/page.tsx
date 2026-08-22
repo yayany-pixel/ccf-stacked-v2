@@ -3,7 +3,7 @@ import Link from "next/link";
 import ButtonPill from "@/components/ui/ButtonPill";
 
 export const metadata: Metadata = {
-  title: "Application Submitted — Thank You | Color Cocktail Factory",
+  title: "Application Submitted — Thank You",
   description: "Your instructor application has been submitted. We'll review it and be in touch within 5-7 business days.",
   robots: "noindex, nofollow"
 };

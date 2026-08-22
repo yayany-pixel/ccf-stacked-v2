@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Check, Clock, Users, Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Thanks for Your Inquiry! | Color Cocktail Factory",
+  title: "Thanks for Your Inquiry!",
   description: "We received your private party request and will get back to you within 24 hours with available dates and project ideas.",
   robots: "noindex, nofollow"
 };

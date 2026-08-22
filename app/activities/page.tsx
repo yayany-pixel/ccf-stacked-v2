@@ -6,7 +6,7 @@ import Reveal from "@/components/motion/Reveal";
 import { getActivitiesByCategory, ACTIVITY_CATEGORIES, type CategoryKey } from "@/lib/activities";
 
 export const metadata: Metadata = {
-  title: "All Classes & Workshops | Color Cocktail Factory",
+  title: "All Classes & Workshops",
   description: "Explore pottery, glass fusion, mosaics, Turkish lamps, bonsai, terrariums, candle making, painting, and more creative workshops in Chicago & Eugene.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/activities"

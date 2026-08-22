@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 60; // Revalidate every 60 seconds
 
 export const metadata: Metadata = {
-  title: "Acuity Schedule | Color Cocktail Factory",
+  title: "Acuity Schedule",
   description: "Book creative workshops directly through our Acuity reservation system. Pottery, glass fusion, mosaics, and more.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/events/acuity"

@@ -4,7 +4,7 @@ import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
 
 export const metadata: Metadata = {
-  title: "Analytics Dashboard | Color Cocktail Factory",
+  title: "Analytics Dashboard",
   description: "Internal analytics and performance dashboard",
   robots: {
     index: false,

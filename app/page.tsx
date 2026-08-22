@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import HomePageClient from "@/components/HomePageClient";
 
 export const metadata: Metadata = {
-  title: "Color Cocktail Factory | Pottery & Creative Workshops in Chicago & Eugene",
+  title: { absolute: "Color Cocktail Factory | Pottery & Creative Workshops in Chicago & Eugene" },
   description: "Choose your location: Expert-guided pottery, glass fusion, mosaics & more in Chicago (Pilsen) and Eugene, Oregon. BYOB, beginner-friendly creative experiences.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/"

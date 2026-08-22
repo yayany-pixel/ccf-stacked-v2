@@ -56,7 +56,7 @@ const UPGRADES = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
-  title: "Adult Birthday Party Venue Chicago & Eugene | CCF Creative Parties",
+  title: "Adult Birthday Party Venue Chicago & Eugene",
   description:
     "Private, guided art birthday experiences for adults in Chicago (Pilsen) and Eugene, OR. Pottery wheel, paint, mosaics, candles & more. BYOB. 21+ friendly. Milestone-worthy. $55–$95/person.",
   alternates: { canonical: "https://colorcocktailfactory.com/birthday-parties" },

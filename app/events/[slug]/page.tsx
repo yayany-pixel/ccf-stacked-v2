@@ -22,12 +22,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   
   if (!event) {
     return {
-      title: "Event Not Found | Color Cocktail Factory"
+      title: "Event Not Found"
     };
   }
 
   return {
-    title: `${event.title} | Color Cocktail Factory`,
+    title: event.title,
     description: event.description,
     openGraph: {
       title: event.title,
