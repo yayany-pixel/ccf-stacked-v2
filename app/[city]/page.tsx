@@ -14,6 +14,12 @@ import { generateLocalBusinessSchema, generateOrganizationSchema, generateBreadc
 import type { Metadata } from "next";
 import { buildCityMetadata } from "@/lib/seo";
 
+export function generateStaticParams() {
+  return [{ city: "chicago" }, { city: "eugene" }];
+}
+
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }: { params: { city: string } }): Promise<Metadata> {
   const city = getCityByParam(params.city);
   return buildCityMetadata(city);
