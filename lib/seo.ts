@@ -10,7 +10,7 @@ export function buildCityMetadata(city: City): Metadata {
     : "Whiteaker, Downtown, University District";
   
   return {
-    title: `${city.label} Creative Workshops & Pottery Classes | ${neighborhood} Art Studio`,
+    title: `${city.label} Creative Workshops & Pottery Classes | Color Cocktail Factory`,
     description: `Top-rated creative workshops in ${neighborhood}, ${city.label}, ${state}. Expert pottery classes, wheel throwing, Turkish lamps, glass fusion, mosaics. Perfect for date nights, birthdays, team building. Walk-ins welcome! Serving ${nearbyAreas}. Book online today.`,
     openGraph: {
       title: `Color Cocktail Factory — Creative Workshops in ${city.label}`,
