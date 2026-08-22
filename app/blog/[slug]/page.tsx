@@ -304,7 +304,7 @@ export default function BlogPostPage({ params }: Props) {
                     <div>
                       <h2 className="text-xl font-bold">Mosaic Art Making</h2>
                       <p className="mt-2 leading-relaxed text-white/75">
-                        Create colorful mosaic artwork together! Our <Link href="/chicago/mosaics" className="text-orange-300 underline">Mosaic class</Link> teaches you to design and assemble beautiful patterns. Perfect for couples who love color and creativity.
+                        Create colorful mosaic artwork together! Our <Link href="/chicago/mosaic" className="text-orange-300 underline">Mosaic class</Link> teaches you to design and assemble beautiful patterns. Perfect for couples who love color and creativity.
                       </p>
                       <p className="mt-2 text-sm text-orange-300">📍 Pilsen, Chicago • $80/couple</p>
                     </div>
