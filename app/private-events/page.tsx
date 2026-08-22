@@ -320,12 +320,13 @@ export default function PrivateEventsPage() {
               </Reveal>
             </div>
 
-            {/* Form */}
+            {/* CTA to inquiry form */}
             <Reveal delay={200} variant="fade-up">
-              <PrivateEventFormCard
-                city={cities[0]}
-                timeWindows={[]}
-              />
+              <div className="text-center">
+                <ButtonPill href="#inquiry-form" variant="primary">
+                  Plan Your Event
+                </ButtonPill>
+              </div>
             </Reveal>
 
             <div className="mt-6 text-center text-sm text-white/50">
@@ -512,6 +513,24 @@ export default function PrivateEventsPage() {
                 </p>
               </div>
             </GlassCard>
+          </div>
+        </section>
+
+        {/* Inquiry Form */}
+        <section id="inquiry-form" className="scroll-mt-28 py-20">
+          <div className="mx-auto max-w-4xl px-6">
+            <div className="mb-10 text-center">
+              <h2 className="font-serif text-4xl font-bold">Tell Us About Your Event</h2>
+              <p className="mt-4 text-lg text-white/75">
+                Share a few details and we'll get back to you within 24 hours.
+              </p>
+            </div>
+            <Reveal variant="fade-up">
+              <PrivateEventFormCard
+                city={cities[0]}
+                timeWindows={[]}
+              />
+            </Reveal>
           </div>
         </section>
 

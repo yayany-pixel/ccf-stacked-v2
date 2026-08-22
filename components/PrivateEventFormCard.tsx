@@ -31,7 +31,7 @@ const initial: FormState = {
   groupSize: "",
   occasion: "",
   preferredProject: "Choose or leave blank",
-  budget: "$55",
+  budget: "",
   details: ""
 };
 
@@ -209,6 +209,7 @@ export default function PrivateEventFormCard({
               disabled={isSubmitting}
               aria-label="Budget per person"
             >
+              <option value="">Select a budget</option>
               <option value="$45">$45</option>
               <option value="$55">$55</option>
               <option value="$65">$65</option>

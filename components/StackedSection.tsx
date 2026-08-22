@@ -5,7 +5,6 @@ import TagPill from "@/components/ui/TagPill";
 import ButtonPill from "@/components/ui/ButtonPill";
 import BookingLink from "@/components/BookingLink";
 import MiniValueCard from "@/components/ui/MiniValueCard";
-import PrivateEventFormCard from "@/components/PrivateEventFormCard";
 import LandingVideos from "@/components/LandingVideos";
 import Reveal from "@/components/motion/Reveal";
 import type { City, SectionConfig } from "@/lib/config";
@@ -50,11 +49,32 @@ export default function StackedSection({
             <Reveal variant="fade-up" delay={100}>
               {section.slug === "private-parties" ? (
                 <>
-                  <PrivateEventFormCard
-                    city={city}
-                    timeWindows={section.scheduleRows.map((r) => `${r.time}${r.note ? ` (${r.note})` : ""}`)}
-                  />
-                  {/* Videos immediately after Private Party form */}
+                  <GlassCard>
+                    <div className="p-7 text-center">
+                      <div className="flex flex-wrap items-center justify-center gap-2">
+                        <TagPill>{section.badge}</TagPill>
+                      </div>
+                      <h2 className="mt-4 font-serif text-4xl leading-tight md:text-5xl">
+                        {section.heroTitle}
+                      </h2>
+                      <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80">
+                        {section.heroDescription}
+                      </p>
+                      <div className="mt-6 flex flex-wrap justify-center gap-3">
+                        <ButtonPill
+                          href="/private-events"
+                          variant="primary"
+                          trackingData={{
+                            activityName: section.heroTitle,
+                            city: city.label
+                          }}
+                        >
+                          Plan Your Private Event
+                        </ButtonPill>
+                      </div>
+                    </div>
+                  </GlassCard>
+                  {/* Videos immediately after Private Party card */}
                   <div className="mt-12">
                     <LandingVideos />
                   </div>
