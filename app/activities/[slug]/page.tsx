@@ -280,6 +280,9 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
                       ))}
                     </div>
                   </GlassCard>
+                  <p className="mt-3 text-sm text-white/60">
+                    Check the calendar for current dates and times.
+                  </p>
                 </section>
               )}
 

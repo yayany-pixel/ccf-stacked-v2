@@ -158,7 +158,7 @@ export const sections: SectionConfig[] = [
       "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=1920&q=80"  // Clay shaping hands
     ],
 
-    scheduleLabel: "THIS WEEK",
+    scheduleLabel: "Typical Schedule",
     scheduleTitle: "Date Night on the Wheel",
     schedulePill: "COUPLES",
     scheduleRows: [
