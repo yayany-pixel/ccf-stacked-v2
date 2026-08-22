@@ -94,6 +94,7 @@ export function activityJsonLd(city: City, section: SectionConfig) {
     name: `${section.heroTitle}`,
     description: section.heroDescription,
     keywords: section.tags.join(", "),
+    image: "https://colorcocktailfactory.com/og-image.jpg",
     provider: {
       "@type": "Organization",
       name: "Color Cocktail Factory",

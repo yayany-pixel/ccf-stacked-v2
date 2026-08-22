@@ -118,6 +118,7 @@ export function generateLocalBusinessSchema(city: City) {
     "@type": "LocalBusiness",
     "@id": `https://colorcocktailfactory.com/${city.param}`,
     "name": `Color Cocktail Factory - ${city.label}`,
+    "image": "https://colorcocktailfactory.com/og-image.jpg",
     "description": `Creative workshops and pottery classes in ${city.label}. Expert-led pottery, glass fusion, mosaics, and more. Perfect for date nights and team building.`,
     "address": {
       "@type": "PostalAddress",
@@ -201,6 +202,7 @@ export function generateWorkshopEventSchema(
     "@type": "Event",
     "name": section.heroTitle,
     "description": section.heroDescription,
+    "image": "https://colorcocktailfactory.com/og-image.jpg",
     "startDate": date || new Date().toISOString(),
     "endDate": date || new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // 2 hours later
     "eventStatus": "https://schema.org/EventScheduled",

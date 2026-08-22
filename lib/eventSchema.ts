@@ -54,7 +54,7 @@ export function eventSchemaJsonLd(event: EventbriteEvent, city: "chicago" | "eug
     
     // Image
     image: event.logo?.url ? [event.logo.url] : [
-      "https://colorcocktailfactory.com/apple-touch-icon.png"
+      "https://colorcocktailfactory.com/og-image.jpg"
     ],
     
     // Organizer
