@@ -16,6 +16,7 @@ export const metadata: Metadata = {
     type: "article",
     publishedTime: "2026-01-20",
     authors: ["Color Cocktail Factory"],
+    images: ["/og-image.jpg"],
   },
   twitter: {
     card: "summary_large_image",

@@ -14,7 +14,8 @@ export const metadata: Metadata = {
     title: "Blog | Color Cocktail Factory",
     description: "Pottery tips, creative inspiration, and workshop guides from our expert instructors.",
     url: "https://colorcocktailfactory.com/blog",
-    type: "website"
+    type: "website",
+    images: ["/og-image.jpg"]
   }
 };
 

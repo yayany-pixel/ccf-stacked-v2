@@ -18,7 +18,8 @@ export const metadata: Metadata = {
     title: "Upcoming Creative Workshops | Color Cocktail Factory",
     description: "Join us for hands-on pottery, glass art, mosaics, and more. Expert-guided workshops for all skill levels.",
     type: "website",
-    url: "https://colorcocktailfactory.com/events"
+    url: "https://colorcocktailfactory.com/events",
+    images: ["/og-image.jpg"]
   },
   twitter: {
     card: "summary_large_image",

@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     openGraph: {
       title: event.title,
       description: event.description,
-      images: event.imageUrl ? [event.imageUrl] : undefined,
+      images: event.imageUrl ? [event.imageUrl] : ["/og-image.jpg"],
       type: "website",
       url: `https://colorcocktailfactory.com/events/${event.slug}`
     },

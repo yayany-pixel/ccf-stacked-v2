@@ -10,7 +10,7 @@ export function buildCityMetadata(city: City): Metadata {
     : "Whiteaker, Downtown, University District";
   
   return {
-    title: `${city.label} Creative Workshops & Pottery Classes | Color Cocktail Factory`,
+    title: `${city.label} Creative Workshops & Pottery Classes`,
     description: `Top-rated creative workshops in ${neighborhood}, ${city.label}, ${state}. Expert pottery classes, wheel throwing, Turkish lamps, glass fusion, mosaics. Perfect for date nights, birthdays, team building. Walk-ins welcome! Serving ${nearbyAreas}. Book online today.`,
     openGraph: {
       title: `Color Cocktail Factory — Creative Workshops in ${city.label}`,
@@ -18,7 +18,8 @@ export function buildCityMetadata(city: City): Metadata {
       url: `https://colorcocktailfactory.com/${city.param}`,
       type: "website",
       locale: "en_US",
-      siteName: "Color Cocktail Factory"
+      siteName: "Color Cocktail Factory",
+      images: ["/og-image.jpg"]
     },
     twitter: {
       card: "summary_large_image",
@@ -46,7 +47,8 @@ export function buildActivityMetadata(city: City, section: SectionConfig): Metad
       url: `https://colorcocktailfactory.com/${city.param}/${section.slug}`,
       type: "website",
       locale: "en_US",
-      siteName: "Color Cocktail Factory"
+      siteName: "Color Cocktail Factory",
+      images: ["/og-image.jpg"]
     },
     twitter: {
       card: "summary_large_image",

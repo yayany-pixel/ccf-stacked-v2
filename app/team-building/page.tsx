@@ -16,7 +16,8 @@ export const metadata: Metadata = {
     title: "Team Building Workshops | Color Cocktail Factory",
     description: "Hands-on creative workshops for corporate teams. Pottery, glass art & more in Chicago & Eugene.",
     url: "https://colorcocktailfactory.com/team-building",
-    type: "website"
+    type: "website",
+    images: ["/og-image.jpg"]
   }
 };
 

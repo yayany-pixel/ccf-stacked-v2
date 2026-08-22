@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     title: "3-Month Online Pottery Membership | Free Wheel + Money-Back Guarantee",
     description: "Master pottery from home in 12 live sessions. Includes FREE pottery wheel, tools, clay & glazing kit. Money-back guarantee.",
     type: "website",
+    images: ["/og-image.jpg"],
   },
   alternates: {
     canonical: "https://colorcocktailfactory.com/pottery-membership"

@@ -11,7 +11,8 @@ export const metadata: Metadata = {
     title: "Color Cocktail Factory | Pottery & Creative Workshops",
     description: "Expert-guided pottery, glass fusion, mosaics & more in Chicago & Eugene. BYOB, beginner-friendly.",
     url: "https://colorcocktailfactory.com/",
-    type: "website"
+    type: "website",
+    images: ["/og-image.jpg"]
   },
   twitter: {
     card: "summary_large_image",

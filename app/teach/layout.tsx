@@ -12,7 +12,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Teach Wheel Throwing with Color Cocktail Factory",
     description: "Partner with CCF to teach pottery date nights from your own space nationwide. Kiln required, wheel lease available.",
-    type: "website"
+    type: "website",
+    images: ["/og-image.jpg"]
   }
 };
 

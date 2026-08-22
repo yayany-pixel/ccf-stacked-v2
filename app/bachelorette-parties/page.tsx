@@ -15,6 +15,7 @@ export const metadata: Metadata = {
     description: "Make your bachelorette party unforgettable with hands-on art workshops! BYOB friendly and Instagram-worthy.",
     type: "website",
     url: "https://colorcocktailfactory.com/bachelorette-parties",
+    images: ["/og-image.jpg"],
   },
 };
 

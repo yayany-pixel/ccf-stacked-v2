@@ -66,6 +66,7 @@ export const metadata: Metadata = {
       "Private art birthday parties for adults in Chicago & Eugene. Pottery, paint, mosaics & more. BYOB welcome. Milestone-worthy. $55–$95/person.",
     url: "https://colorcocktailfactory.com/birthday-parties",
     type: "website",
+    images: ["/og-image.jpg"],
   },
   twitter: {
     card: "summary_large_image",

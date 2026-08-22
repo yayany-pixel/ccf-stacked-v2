@@ -19,7 +19,7 @@ export const blogPosts: BlogPost[] = [
     author: "Color Cocktail Factory",
     category: "Pottery Basics",
     readTime: "8 min read",
-    image: "/images/blog/pottery-101.jpg",
+    image: "/og-image.jpg", // TODO: replace with real post photo (was /images/blog/pottery-101.jpg, file missing)
     keywords: [
       "pottery for beginners",
       "how to start pottery",
@@ -39,7 +39,7 @@ export const blogPosts: BlogPost[] = [
     author: "Color Cocktail Factory",
     category: "Date Night Ideas",
     readTime: "6 min read",
-    image: "/images/blog/date-night-chicago.jpg",
+    image: "/og-image.jpg", // TODO: replace with real post photo (was /images/blog/date-night-chicago.jpg, file missing)
     keywords: [
       "date night chicago",
       "unique date ideas chicago",
@@ -59,7 +59,7 @@ export const blogPosts: BlogPost[] = [
     author: "Color Cocktail Factory",
     category: "Date Night Ideas",
     readTime: "6 min read",
-    image: "/images/blog/date-night-eugene.jpg",
+    image: "/og-image.jpg", // TODO: replace with real post photo (was /images/blog/date-night-eugene.jpg, file missing)
     keywords: [
       "date night eugene oregon",
       "unique date ideas eugene",
@@ -80,7 +80,7 @@ export const blogPosts: BlogPost[] = [
     author: "Color Cocktail Factory",
     category: "Neighborhood Guides",
     readTime: "12 min read",
-    image: "/images/blog/pilsen-guide.jpg",
+    image: "/og-image.jpg", // TODO: replace with real post photo (was /images/blog/pilsen-guide.jpg, file missing)
     keywords: [
       "pilsen chicago guide",
       "things to do in pilsen",
@@ -104,7 +104,7 @@ export const blogPosts: BlogPost[] = [
     author: "Color Cocktail Factory",
     category: "Local Guides",
     readTime: "10 min read",
-    image: "/images/blog/art-classes.jpg",
+    image: "/og-image.jpg", // TODO: replace with real post photo (was /images/blog/art-classes.jpg, file missing)
     keywords: [
       "art classes near me",
       "art classes near me for adults",

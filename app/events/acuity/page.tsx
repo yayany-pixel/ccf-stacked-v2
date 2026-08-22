@@ -20,7 +20,8 @@ export const metadata: Metadata = {
     title: "Acuity Schedule | Color Cocktail Factory",
     description: "Book creative workshops directly through our reservation system.",
     type: "website",
-    url: "https://colorcocktailfactory.com/events/acuity"
+    url: "https://colorcocktailfactory.com/events/acuity",
+    images: ["/og-image.jpg"]
   },
   twitter: {
     card: "summary_large_image",
