@@ -207,30 +207,6 @@ export default function CityHome({ params }: { params: { city: string } }) {
             
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               <div className="text-left">
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-white/80">Popular {city.label} Classes</h3>
-                <ul className="mt-2 space-y-1 text-xs text-white/65">
-                  <li>Pottery Wheel Throwing {city.label}</li>
-                  <li>Turkish Lamp Mosaics</li>
-                  <li>Glass Fusion Workshop</li>
-                  <li>Handbuilding Pottery</li>
-                  <li>Date Night Pottery Class</li>
-                  <li>Beginner Ceramics</li>
-                </ul>
-              </div>
-              
-              <div className="text-left">
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-white/80">Perfect For</h3>
-                <ul className="mt-2 space-y-1 text-xs text-white/65">
-                  <li>Date Nights & Couples Activities</li>
-                  <li>Team Building Events {city.label}</li>
-                  <li>Birthday Parties</li>
-                  <li>Bachelorette Parties</li>
-                  <li>Corporate Events</li>
-                  <li>Experience Gift Cards</li>
-                </ul>
-              </div>
-              
-              <div className="text-left">
                 <h3 className="text-xs font-semibold uppercase tracking-wide text-white/80">Quick Links</h3>
                 <ul className="mt-2 space-y-2 text-sm">
                   <li>
@@ -273,9 +249,7 @@ export default function CityHome({ params }: { params: { city: string } }) {
             
             <div className="mt-6 border-t border-white/10 pt-4">
               <p className="text-xs text-white/55">
-                © {new Date().getFullYear()} Color Cocktail Factory. {city.label} creative workshops, pottery classes, and art studio. 
-                Serving {city.param === 'chicago' ? 'Pilsen, West Loop, South Loop, and greater Chicago area' : 'downtown Eugene, Whiteaker, and greater Eugene area'}. 
-                All rights reserved.
+                © {new Date().getFullYear()} Color Cocktail Factory. All rights reserved.
               </p>
             </div>
           </div>
