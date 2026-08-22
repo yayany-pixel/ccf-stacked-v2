@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import SectionBand from "@/components/SectionBand";
 import GlassCard from "@/components/ui/GlassCard";
 import TagPill from "@/components/ui/TagPill";
@@ -7,7 +8,7 @@ import ButtonPill from "@/components/ui/ButtonPill";
 import BookingLink from "@/components/BookingLink";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
 import { sections, type SectionConfig } from "@/lib/config";
-import { getCityByParam, buildBookingLink } from "@/lib/links";
+import { cities, getCityByParam, buildBookingLink } from "@/lib/links";
 import { buildActivityMetadata } from "@/lib/seo";
 import { activityJsonLd, faqJsonLd, breadcrumbJsonLd } from "@/lib/structuredData";
 import { generateFAQSchema, generateCourseSchema, generateBreadcrumbSchema } from "@/lib/enhancedStructuredData";
@@ -16,6 +17,16 @@ function getSection(slug: string): SectionConfig | undefined {
   return sections.find((s) => s.slug === slug);
 }
 
+// Only slugs that exist in config are valid routes. Anything else must be a
+// real 404 (previously these soft-404'd with a 200 status because the
+// streaming boundary committed the response before notFound() ran).
+export function generateStaticParams() {
+  return cities.flatMap((city) =>
+    sections.map((section) => ({ city: city.param, slug: section.slug }))
+  );
+}
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params
 }: {
@@ -23,7 +34,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const city = getCityByParam(params.city);
   const section = getSection(params.slug);
-  if (!section) return { title: "Class", description: "Explore classes and workshops." };
+  if (!section) {
+    // Ensure the response carries a real 404 status even though this
+    // segment streams (a loading.tsx boundary would otherwise commit a
+    // 200 before the page body can call notFound()).
+    notFound();
+  }
   return buildActivityMetadata(city, section);
 }
 
@@ -32,22 +48,7 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
   const section = getSection(params.slug);
 
   if (!section) {
-    return (
-      <main className="min-h-screen px-6">
-        <div className="h-24" />
-        <div className="mx-auto max-w-3xl">
-          <GlassCard className="p-6">
-            <h1 className="text-2xl font-semibold">Not found</h1>
-            <p className="mt-2 text-white/75">This activity page doesn’t exist in config yet.</p>
-            <div className="mt-4">
-              <Link className="text-white/80 underline decoration-white/30 underline-offset-4" href={`/${city.param}`}>
-                Back home
-              </Link>
-            </div>
-          </GlassCard>
-        </div>
-      </main>
-    );
+    notFound();
   }
 
   const booking = buildBookingLink(city, section);
