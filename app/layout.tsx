@@ -20,21 +20,12 @@ export const metadata: Metadata = {
       "Join expert-led pottery, glass art, and creative workshops. Perfect for beginners, couples, and groups. Book your hands-on art experience today!",
     type: "website",
     siteName: "Color Cocktail Factory",
-    locale: "en_US",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Color Cocktail Factory Creative Workshops"
-      }
-    ]
+    locale: "en_US"
   },
   twitter: {
     card: "summary_large_image",
     title: "Color Cocktail Factory — Creative Workshops",
-    description: "Premium pottery, glass art & creative workshops in Chicago and Eugene",
-    images: ["/og-image.jpg"]
+    description: "Premium pottery, glass art & creative workshops in Chicago and Eugene"
   },
   robots: { 
     index: true, 

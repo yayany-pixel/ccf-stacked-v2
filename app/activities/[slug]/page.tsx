@@ -53,15 +53,7 @@ export async function generateMetadata({
       title,
       description,
       url,
-      type: "website",
-      images: [
-        {
-          url: `https://colorcocktailfactory.com/og-${activity.slug}.jpg`,
-          width: 1200,
-          height: 630,
-          alt: activity.heroTitle
-        }
-      ]
+      type: "website"
     },
     twitter: {
       card: "summary_large_image",

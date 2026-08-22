@@ -15,15 +15,7 @@ export const metadata: Metadata = {
     title: "All Classes & Workshops | Color Cocktail Factory",
     description: "Explore pottery, glass fusion, mosaics, Turkish lamps, bonsai, terrariums, candle making, painting, and more creative workshops.",
     url: "https://colorcocktailfactory.com/activities",
-    type: "website",
-    images: [
-      {
-        url: "https://colorcocktailfactory.com/og-activities.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Color Cocktail Factory Classes"
-      }
-    ]
+    type: "website"
   },
   twitter: {
     card: "summary_large_image",

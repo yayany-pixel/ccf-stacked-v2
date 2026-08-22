@@ -17,15 +17,7 @@ export const metadata: Metadata = {
     title: "Private Events & Parties | Color Cocktail Factory",
     description: "Host unforgettable private parties in Chicago & Eugene. BYOB pottery, mosaics, glass fusion for weddings, team building, birthdays & more.",
     url: "https://colorcocktailfactory.com/private-events",
-    type: "website",
-    images: [
-      {
-        url: "https://colorcocktailfactory.com/og-private-events.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Private Events at Color Cocktail Factory"
-      }
-    ]
+    type: "website"
   },
   twitter: {
     card: "summary_large_image",

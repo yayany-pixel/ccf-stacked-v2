@@ -15,6 +15,7 @@ export function buildCityMetadata(city: City): Metadata {
     openGraph: {
       title: `Color Cocktail Factory — Creative Workshops in ${city.label}`,
       description: `Join us in ${neighborhood} for pottery, glass art, and creative workshops. Perfect for beginners, couples, and groups. Book today!`,
+      url: `https://colorcocktailfactory.com/${city.param}`,
       type: "website",
       locale: "en_US",
       siteName: "Color Cocktail Factory"
@@ -42,6 +43,7 @@ export function buildActivityMetadata(city: City, section: SectionConfig): Metad
     openGraph: {
       title,
       description: enhancedDescription,
+      url: `https://colorcocktailfactory.com/${city.param}/${section.slug}`,
       type: "website",
       locale: "en_US",
       siteName: "Color Cocktail Factory"

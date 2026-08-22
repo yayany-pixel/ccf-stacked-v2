@@ -18,21 +18,12 @@ export const metadata: Metadata = {
     title: "Upcoming Creative Workshops | Color Cocktail Factory",
     description: "Join us for hands-on pottery, glass art, mosaics, and more. Expert-guided workshops for all skill levels.",
     type: "website",
-    url: "https://colorcocktailfactory.com/events",
-    images: [
-      {
-        url: "https://colorcocktailfactory.com/og-events.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Color Cocktail Factory Workshops"
-      }
-    ]
+    url: "https://colorcocktailfactory.com/events"
   },
   twitter: {
     card: "summary_large_image",
     title: "Upcoming Workshops | Color Cocktail Factory",
-    description: "Browse creative workshops: pottery, glass art, mosaics, and more.",
-    images: ["https://colorcocktailfactory.com/og-events.jpg"]
+    description: "Browse creative workshops: pottery, glass art, mosaics, and more."
   },
   alternates: {
     canonical: "https://colorcocktailfactory.com/events"
