@@ -105,7 +105,7 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
               "addressCountry": "US"
             }
           ],
-          "telephone": "+1-312-555-0100"
+          "telephone": "+1-312-881-9929"
         },
         "category": categoryInfo.label,
         "offers": {
