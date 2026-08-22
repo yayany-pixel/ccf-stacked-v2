@@ -148,12 +148,7 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
               />
             ) : (
               <GlassCard className="p-6">
-                <div className="text-xs font-semibold tracking-wide text-white/70">CITY-AWARE BOOKING</div>
-                <p className="mt-2 text-sm text-white/80">
-                  Links on this page automatically switch based on the city.
-                </p>
-
-                <div className="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="text-sm font-semibold">Quick links</div>
                   <div className="mt-3 grid gap-2">
                     <BookingLink
@@ -171,11 +166,6 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
                       </ButtonPill>
                     ))}
                   </div>
-                </div>
-
-                <div className="mt-6 text-xs text-white/55">
-                  Edit content, keywords, videos, and sample schedules in{" "}
-                  <span className="rounded bg-white/10 px-1.5 py-0.5 font-mono">lib/config.ts</span>.
                 </div>
               </GlassCard>
             )}
@@ -214,7 +204,6 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <div className="text-sm font-semibold">Explore more</div>
-                <div className="text-xs text-white/60">Internal links help Google and humans.</div>
               </div>
               <div className="flex flex-wrap gap-2">
                 <Link
