@@ -20,6 +20,9 @@ export const metadata: Metadata = {
     "creative workshop booking",
     "art class reservations"
   ],
+  alternates: {
+    canonical: "https://colorcocktailfactory.com/events/acuity"
+  },
   openGraph: {
     title: "Acuity Schedule | Color Cocktail Factory",
     description: "Book creative workshops directly through our reservation system.",

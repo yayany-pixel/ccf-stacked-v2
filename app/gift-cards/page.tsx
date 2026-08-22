@@ -6,7 +6,10 @@ import { giftCardUrl } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "Gift Cards",
-  description: "Give the gift of creativity. Gift cards for Color Cocktail Factory pottery, glass, and art workshops."
+  description: "Give the gift of creativity. Gift cards for Color Cocktail Factory pottery, glass, and art workshops.",
+  alternates: {
+    canonical: "https://colorcocktailfactory.com/gift-cards"
+  }
 };
 
 export default function GiftCardsPage() {

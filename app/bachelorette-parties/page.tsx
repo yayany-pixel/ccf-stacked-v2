@@ -21,6 +21,9 @@ export const metadata: Metadata = {
     "Instagram worthy bachelorette",
     "artsy bachelorette party"
   ],
+  alternates: {
+    canonical: "https://colorcocktailfactory.com/bachelorette-parties"
+  },
   openGraph: {
     title: "Bachelorette Party Workshops | Color Cocktail Factory",
     description: "Make your bachelorette party unforgettable with hands-on art workshops! BYOB friendly and Instagram-worthy.",
