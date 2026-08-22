@@ -10,28 +10,6 @@ import type { City } from "@/lib/config";
 export const metadata: Metadata = {
   title: "Private Events & Parties | Color Cocktail Factory",
   description: "Host unforgettable private parties in Chicago & Eugene. BYOB pottery, mosaics, glass fusion for weddings, team building, birthdays & more. Groups of 8-50+.",
-  keywords: [
-    "private party venue Chicago",
-    "private party venue Eugene",
-    "team building Chicago",
-    "team building Eugene",
-    "bachelorette party ideas Chicago",
-    "bachelorette party ideas Eugene",
-    "birthday party venue near me",
-    "wedding guest activity",
-    "corporate events Chicago",
-    "corporate events Eugene",
-    "BYOB party venue",
-    "pottery party",
-    "private pottery class",
-    "group art classes",
-    "bridal shower venue",
-    "anniversary party ideas",
-    "kids birthday party Chicago",
-    "kids birthday party Eugene",
-    "private creative workshop",
-    "team outing ideas"
-  ],
   alternates: {
     canonical: "https://colorcocktailfactory.com/private-events"
   },

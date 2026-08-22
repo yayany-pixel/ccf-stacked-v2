@@ -14,19 +14,6 @@ export const revalidate = 60; // Revalidate every 60 seconds
 export const metadata: Metadata = {
   title: "Upcoming Workshops & Events | Color Cocktail Factory",
   description: "Browse upcoming creative workshops in Chicago & Eugene. Pottery, glass fusion, mosaics, bonsai, painting, and more. Book your spot today!",
-  keywords: [
-    "pottery workshops",
-    "pottery classes Chicago",
-    "pottery classes Eugene",
-    "creative workshops",
-    "glass fusion classes",
-    "mosaic workshops",
-    "art classes near me",
-    "date night pottery",
-    "team building activities",
-    "things to do in Chicago",
-    "things to do in Eugene"
-  ],
   openGraph: {
     title: "Upcoming Creative Workshops | Color Cocktail Factory",
     description: "Join us for hands-on pottery, glass art, mosaics, and more. Expert-guided workshops for all skill levels.",

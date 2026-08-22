@@ -7,20 +7,6 @@ import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 export const metadata: Metadata = {
   title: "Bachelorette Party Workshops | Creative Events in Chicago & Eugene",
   description: "Make your bachelorette party unforgettable with hands-on pottery, mosaics, glass fusion & more! BYOB friendly, Instagram-worthy, and totally unique. Chicago & Eugene locations.",
-  keywords: [
-    "bachelorette party ideas",
-    "bachelorette party activities",
-    "unique bachelorette party",
-    "girls night out",
-    "bridal shower alternatives",
-    "pottery bachelorette",
-    "creative bachelorette party",
-    "Chicago bachelorette party",
-    "Eugene bachelorette party",
-    "BYOB bachelorette",
-    "Instagram worthy bachelorette",
-    "artsy bachelorette party"
-  ],
   alternates: {
     canonical: "https://colorcocktailfactory.com/bachelorette-parties"
   },

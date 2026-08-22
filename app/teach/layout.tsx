@@ -9,18 +9,6 @@ export const metadata: Metadata = {
   },
   description:
     "Partner with Color Cocktail Factory to teach wheel throwing date nights from your own space. Nationwide USA & Canada. Kiln required. Wheel lease-to-own available. Earn from classes and finishing fees.",
-  keywords: [
-    "pottery instructor partner",
-    "wheel throwing instructor",
-    "pottery teaching partnership",
-    "pottery instructor USA",
-    "pottery instructor Canada",
-    "teach pottery from home",
-    "pottery business opportunity",
-    "kiln required pottery job",
-    "wheel throwing teaching",
-    "pottery partnership program"
-  ],
   openGraph: {
     title: "Teach Wheel Throwing with Color Cocktail Factory",
     description: "Partner with CCF to teach pottery date nights from your own space nationwide. Kiln required, wheel lease available.",

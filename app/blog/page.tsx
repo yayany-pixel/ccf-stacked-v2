@@ -7,16 +7,6 @@ import { getAllBlogPosts } from "@/lib/blogPosts";
 export const metadata: Metadata = {
   title: "Blog - Pottery Tips, Creative Ideas & Workshop Guides | Color Cocktail Factory",
   description: "Expert pottery tutorials, date night ideas, creative workshop guides, and ceramic art inspiration from Color Cocktail Factory in Chicago & Eugene.",
-  keywords: [
-    "pottery blog",
-    "pottery tutorials",
-    "pottery tips for beginners",
-    "date night ideas chicago",
-    "creative workshop guides",
-    "ceramic art blog",
-    "pottery class tips",
-    "handbuilding tutorials"
-  ],
   alternates: {
     canonical: "https://colorcocktailfactory.com/blog"
   },
@@ -84,11 +74,6 @@ export default function BlogPage() {
                       <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-purple-300">
                         Read Article
                         <span>→</span>
-                      </div>
-
-                      {/* Keywords for SEO */}
-                      <div className="sr-only">
-                        {post.keywords.join(", ")}
                       </div>
                     </div>
                   </GlassCard>

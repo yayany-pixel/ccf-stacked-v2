@@ -9,18 +9,6 @@ import PricingDisplay from "@/components/PricingDisplay";
 export const metadata: Metadata = {
   title: "3-Month Online Pottery Membership | Learn Wheel Throwing at Home",
   description: "Master pottery from home in 12 live sessions. Includes FREE pottery wheel, tools, clay & glazing kit. Money-back guarantee. Adults & kids classes. Expert instructors with 10+ years experience.",
-  keywords: [
-    "online pottery classes",
-    "pottery membership",
-    "learn pottery at home",
-    "pottery wheel classes online",
-    "beginner pottery course",
-    "online wheel throwing",
-    "pottery classes for adults",
-    "pottery classes for kids",
-    "pottery starter kit",
-    "free pottery wheel"
-  ],
   openGraph: {
     title: "3-Month Online Pottery Membership | Free Wheel + Money-Back Guarantee",
     description: "Master pottery from home in 12 live sessions. Includes FREE pottery wheel, tools, clay & glazing kit. Money-back guarantee.",

@@ -8,19 +8,6 @@ import { getActivitiesByCategory, ACTIVITY_CATEGORIES, type CategoryKey } from "
 export const metadata: Metadata = {
   title: "All Classes & Workshops | Color Cocktail Factory",
   description: "Explore pottery, glass fusion, mosaics, Turkish lamps, bonsai, terrariums, candle making, painting, and more creative workshops in Chicago & Eugene.",
-  keywords: [
-    "pottery classes",
-    "glass fusion workshops",
-    "mosaic art",
-    "Turkish lamp making",
-    "bonsai workshops",
-    "terrarium classes",
-    "candle making",
-    "painting classes",
-    "date night pottery",
-    "creative workshops Chicago",
-    "art classes Eugene"
-  ],
   alternates: {
     canonical: "https://colorcocktailfactory.com/activities"
   },

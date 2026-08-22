@@ -29,7 +29,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${post.title} | CCF Blog`,
     description: post.description,
-    keywords: post.keywords,
     alternates: {
       canonical: `https://colorcocktailfactory.com/blog/${post.slug}`
     },

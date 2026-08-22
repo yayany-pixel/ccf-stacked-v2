@@ -13,13 +13,6 @@ export const revalidate = 60; // Revalidate every 60 seconds
 export const metadata: Metadata = {
   title: "Acuity Schedule | Color Cocktail Factory",
   description: "Book creative workshops directly through our Acuity reservation system. Pottery, glass fusion, mosaics, and more.",
-  keywords: [
-    "acuity scheduling",
-    "book pottery class",
-    "pottery reservations",
-    "creative workshop booking",
-    "art class reservations"
-  ],
   alternates: {
     canonical: "https://colorcocktailfactory.com/events/acuity"
   },

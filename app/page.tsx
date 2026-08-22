@@ -4,21 +4,6 @@ import HomePageClient from "@/components/HomePageClient";
 export const metadata: Metadata = {
   title: "Color Cocktail Factory | Pottery & Creative Workshops in Chicago & Eugene",
   description: "Choose your location: Expert-guided pottery, glass fusion, mosaics & more in Chicago (Pilsen) and Eugene, Oregon. BYOB, beginner-friendly creative experiences.",
-  keywords: [
-    "pottery classes",
-    "pottery classes chicago",
-    "pottery classes eugene",
-    "creative workshops",
-    "art classes chicago",
-    "art classes eugene",
-    "date night pottery",
-    "team building chicago",
-    "team building eugene",
-    "glass fusion",
-    "mosaic classes",
-    "pottery studio chicago",
-    "pottery studio eugene"
-  ],
   alternates: {
     canonical: "https://colorcocktailfactory.com/"
   },

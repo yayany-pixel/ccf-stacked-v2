@@ -10,21 +10,6 @@ import StickyBookingCTA from "@/components/blog/StickyBookingCTA";
 export const metadata: Metadata = {
   title: "Art Classes Near Me | Book Local Workshops",
   description: "Find art classes near you—pottery, mosaics, bonsai, and more. Choose your city, pick a time, and book in minutes. Beginner-friendly.",
-  keywords: [
-    "art classes near me",
-    "art classes near me for adults",
-    "art classes near me for kids",
-    "art classes for kids near me",
-    "local art classes for adults near me",
-    "summer art classes near me",
-    "drawing classes for kids near me",
-    "painting classes near me",
-    "drawing classes near me",
-    "art classes for adults near me",
-    "pottery classes near me",
-    "ceramic classes near me",
-    "creative workshops near me"
-  ],
   openGraph: {
     title: "Art Classes Near Me: Find the Right Class for Adults, Kids, and Date Nights",
     description: "Find art classes near you—pottery, mosaics, bonsai, and more. Choose your city, pick a time, and book in minutes. Beginner-friendly.",

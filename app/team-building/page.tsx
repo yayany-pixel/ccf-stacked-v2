@@ -9,20 +9,6 @@ import { audiencePageBreadcrumbs } from "@/lib/breadcrumbs";
 export const metadata: Metadata = {
   title: "Team Building Workshops | Corporate Events in Chicago & Eugene",
   description: "Boost morale and creativity with hands-on team building workshops. Pottery, glass fusion, mosaics & more. Perfect for corporate events, office parties, and team bonding. Chicago & Eugene.",
-  keywords: [
-    "team building Chicago",
-    "team building Eugene",
-    "corporate events Chicago",
-    "corporate team building",
-    "office party ideas",
-    "team bonding activities",
-    "creative team building",
-    "pottery team building",
-    "corporate workshops Chicago",
-    "team building activities Eugene",
-    "company event ideas",
-    "employee appreciation events"
-  ],
   alternates: {
     canonical: "https://colorcocktailfactory.com/team-building"
   },

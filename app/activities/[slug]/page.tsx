@@ -46,14 +46,6 @@ export async function generateMetadata({
   return {
     title,
     description,
-    keywords: [
-      ...activity.tags,
-      `${activity.navLabel} Chicago`,
-      `${activity.navLabel} Eugene`,
-      "creative workshops",
-      "art classes",
-      "Color Cocktail Factory"
-    ],
     alternates: {
       canonical: url
     },
