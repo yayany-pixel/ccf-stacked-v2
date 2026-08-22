@@ -383,13 +383,6 @@ export default function PrivateEventsPage() {
                 <div className="mt-2 text-sm text-white/70">Happy Guests Served</div>
               </div>
             </div>
-
-            <div className="mt-12 text-center">
-              <p className="text-lg italic text-white/80">
-                "The perfect blend of creative, fun, and memorable. Our team loved it!"
-              </p>
-              <p className="mt-2 text-sm text-white/60">— Sarah M., Corporate Event Organizer</p>
-            </div>
           </div>
         </section>
 

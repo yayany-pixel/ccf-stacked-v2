@@ -159,13 +159,6 @@ export function generateLocalBusinessSchema(city: City) {
         "closes": "18:30"
       }
     ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "150",
-      "bestRating": "5",
-      "worstRating": "1"
-    },
     "paymentAccepted": "Cash, Credit Card, Debit Card",
     "currenciesAccepted": "USD",
     "areaServed": {

@@ -16,78 +16,20 @@ type Testimonial = {
   initials: string;
 };
 
-const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    name: "Sarah M.",
-    location: "Chicago, IL",
-    rating: 5,
-    text: "Best date night ever! The pottery wheel class was so much fun and our instructor was incredibly patient. We made beautiful pieces and got to take them home. Highly recommend!",
-    workshop: "Date Night Pottery",
-    date: "2 weeks ago",
-    avatarColor: "from-purple-500 to-pink-500",
-    initials: "SM"
-  },
-  {
-    id: 2,
-    name: "James T.",
-    location: "Eugene, OR",
-    rating: 5,
-    text: "Took my team here for a corporate event. The mosaic workshop was perfect - creative, engaging, and everyone left with something unique. Great for team building!",
-    workshop: "Mosaic Workshop",
-    date: "1 month ago",
-    avatarColor: "from-cyan-500 to-blue-500",
-    initials: "JT"
-  },
-  {
-    id: 3,
-    name: "Emily R.",
-    location: "Chicago, IL",
-    rating: 5,
-    text: "The Turkish lamp class exceeded all expectations! The instructor guided us through every step. My lamp is now the centerpiece of my living room. Worth every penny!",
-    workshop: "Turkish Lamp Making",
-    date: "3 weeks ago",
-    avatarColor: "from-orange-500 to-pink-500",
-    initials: "ER"
-  },
-  {
-    id: 4,
-    name: "Michael K.",
-    location: "Eugene, OR",
-    rating: 5,
-    text: "Incredible experience! Never touched clay before but the beginner wheel throwing class made it so approachable. Can't wait to come back for another session.",
-    workshop: "Beginner Wheel Throwing",
-    date: "1 week ago",
-    avatarColor: "from-green-500 to-teal-500",
-    initials: "MK"
-  },
-  {
-    id: 5,
-    name: "Lisa P.",
-    location: "Chicago, IL",
-    rating: 5,
-    text: "Booked a private event for my daughter's 16th birthday. The staff was amazing, the space was beautiful, and all the girls had an absolute blast. Thank you CCF!",
-    workshop: "Private Party",
-    date: "2 months ago",
-    avatarColor: "from-rose-500 to-purple-500",
-    initials: "LP"
-  },
-  {
-    id: 6,
-    name: "David W.",
-    location: "Eugene, OR",
-    rating: 5,
-    text: "The bonsai workshop was meditative and educational. I learned so much about the art form and left with a beautiful tree. The instructor's knowledge was impressive!",
-    workshop: "Bonsai Workshop",
-    date: "3 weeks ago",
-    avatarColor: "from-emerald-500 to-cyan-500",
-    initials: "DW"
-  }
-];
+// Intentionally empty: placeholder reviews were removed.
+// Populate only with real, verifiable customer reviews (e.g. from the
+// studio's actual Google/Yelp profiles). The component renders nothing
+// while this array is empty.
+const testimonials: Testimonial[] = [];
 
 export default function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  
+
+  // Render nothing until real reviews are added.
+  if (testimonials.length === 0) {
+    return null;
+  }
+
   const nextTestimonial = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
   };
