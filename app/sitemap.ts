@@ -2,7 +2,6 @@ import type { MetadataRoute } from "next";
 import { sections } from "@/lib/config";
 import { getAllActivitySlugs } from "@/lib/activities";
 import { blogPosts } from "@/lib/blogPosts";
-import { getAllEvents } from "@/lib/eventsAPI";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://colorcocktailfactory.com";
@@ -57,19 +56,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   ];
 
-  // Individual event detail pages - fetched dynamically
-  let eventDetailPages: MetadataRoute.Sitemap = [];
-  try {
-    const allEvents = await getAllEvents(60);
-    eventDetailPages = allEvents.map((event) => ({
-      url: `${base}/events/${event.slug}`,
-      lastModified: new Date(event.lastUpdated),
-      changeFrequency: "weekly" as const,
-      priority: 0.85
-    }));
-  } catch (error) {
-    console.error("Error fetching events for sitemap:", error);
-  }
+  // Individual event session pages are intentionally excluded: they are
+  // date-stamped, short-lived URLs that churn constantly. The /events index
+  // (crawled daily) links to all current sessions.
 
   // Activities index - high priority
   const activitiesIndex: MetadataRoute.Sitemap = [
@@ -136,12 +125,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9
-    },
-    {
-      url: `${base}/corporate`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.85
     }
   ];
 
@@ -151,7 +134,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...giftCards,
     ...privateEvents,
     ...eventsPage,
-    ...eventDetailPages,
     ...activitiesIndex,
     ...activityPages,
     ...cityActivityPages,
