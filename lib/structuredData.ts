@@ -59,8 +59,8 @@ export function localBusinessJsonLd(city: City) {
           latitude: 44.0521,
           longitude: -123.0868
         },
-    telephone: isChicago ? "+1-312-XXX-XXXX" : "+1-541-XXX-XXXX",
-    email: "info@colorcocktailfactory.com",
+    telephone: "+1-312-881-9929",
+    email: "support@colorcocktailfactory.com",
     hasMap: isChicago
       ? "https://maps.google.com/?q=1142+W+18th+Street+Chicago+IL"
       : "https://maps.google.com/?q=Eugene+OR",
@@ -94,12 +94,11 @@ export function activityJsonLd(city: City, section: SectionConfig) {
     name: `${section.heroTitle}`,
     description: section.heroDescription,
     keywords: section.tags.join(", "),
-    image: "https://colorcocktailfactory.com/og-image.jpg",
     provider: {
       "@type": "Organization",
       name: "Color Cocktail Factory",
       url: `https://colorcocktailfactory.com/${city.param}`,
-      logo: "https://colorcocktailfactory.com/logo.png",
+      logo: "https://colorcocktailfactory.com/apple-touch-icon.png",
       sameAs: ["https://www.instagram.com/colorcocktailfactory"]
     },
     url: `https://colorcocktailfactory.com/${city.param}/${section.slug}`,

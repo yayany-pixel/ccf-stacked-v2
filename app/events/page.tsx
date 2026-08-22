@@ -68,7 +68,7 @@ export default async function EventsPage() {
         "addressCountry": event.addressCountry
       }
     },
-    "image": event.imageUrl || "https://colorcocktailfactory.com/images/ccf-logo.png",
+    "image": event.imageUrl || "https://colorcocktailfactory.com/apple-touch-icon.png",
     "organizer": {
       "@type": "Organization",
       "name": "Color Cocktail Factory",

@@ -16,7 +16,7 @@ export function generateOrganizationSchema() {
     "name": "Color Cocktail Factory",
     "alternateName": "CCF",
     "url": "https://colorcocktailfactory.com",
-    "logo": "https://colorcocktailfactory.com/logo.png",
+    "logo": "https://colorcocktailfactory.com/apple-touch-icon.png",
     "description": "Premium creative workshops and pottery classes in Chicago & Eugene. Expert-led hands-on experiences including pottery, glass art, mosaics, and more.",
     "slogan": "Creativity is shareable.",
     "sameAs": [
@@ -118,7 +118,6 @@ export function generateLocalBusinessSchema(city: City) {
     "@type": "LocalBusiness",
     "@id": `https://colorcocktailfactory.com/${city.param}`,
     "name": `Color Cocktail Factory - ${city.label}`,
-    "image": "https://colorcocktailfactory.com/og-image.jpg",
     "description": `Creative workshops and pottery classes in ${city.label}. Expert-led pottery, glass fusion, mosaics, and more. Perfect for date nights and team building.`,
     "address": {
       "@type": "PostalAddress",
@@ -202,7 +201,6 @@ export function generateWorkshopEventSchema(
     "@type": "Event",
     "name": section.heroTitle,
     "description": section.heroDescription,
-    "image": "https://colorcocktailfactory.com/og-image.jpg",
     "startDate": date || new Date().toISOString(),
     "endDate": date || new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(), // 2 hours later
     "eventStatus": "https://schema.org/EventScheduled",

@@ -85,7 +85,7 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
         "provider": {
           "@type": "LocalBusiness",
           "name": "Color Cocktail Factory",
-          "image": "https://colorcocktailfactory.com/logo.png",
+          "image": "https://colorcocktailfactory.com/apple-touch-icon.png",
           "address": [
             {
               "@type": "PostalAddress",

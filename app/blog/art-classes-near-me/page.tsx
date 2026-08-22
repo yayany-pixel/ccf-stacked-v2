@@ -44,7 +44,7 @@ export default function ArtClassesNearMePage() {
       "name": "Color Cocktail Factory",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://colorcocktailfactory.com/images/logo.png"
+        "url": "https://colorcocktailfactory.com/apple-touch-icon.png"
       }
     },
     "datePublished": "2026-01-20",
