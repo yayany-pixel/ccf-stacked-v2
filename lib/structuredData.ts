@@ -23,14 +23,20 @@ export function localBusinessJsonLd(city: City) {
       {
         "@type": "OpeningHoursSpecification",
         dayOfWeek: ["Wednesday", "Thursday", "Friday"],
-        opens: "17:00",
+        opens: "17:30",
         closes: "21:00"
       },
       {
         "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Saturday", "Sunday"],
-        opens: "10:00",
-        closes: "21:00"
+        dayOfWeek: "Saturday",
+        opens: "12:00",
+        closes: "21:30"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: "Sunday",
+        opens: "14:30",
+        closes: "18:30"
       }
     ],
     address: isChicago
