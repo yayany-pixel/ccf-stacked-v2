@@ -281,7 +281,7 @@ export default function ArtClassesNearMePage() {
                         <p className="mt-2 text-sm text-white/70">
                           Mosaic workshops, glass fusion, Turkish lamp making
                         </p>
-                        <Link href="/chicago/mosaics-and-glass" className="mt-2 inline-block text-sm text-cyan-300 hover:underline">
+                        <Link href="/chicago/mosaic" className="mt-2 inline-block text-sm text-cyan-300 hover:underline">
                           Explore mosaic classes →
                         </Link>
                       </div>

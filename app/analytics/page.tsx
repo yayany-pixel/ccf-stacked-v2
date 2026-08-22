@@ -320,18 +320,6 @@ export default function AnalyticsPage() {
                 </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                   <Link 
-                    href="/analytics/setup-guide" 
-                    className="rounded-full border border-purple-400/30 bg-purple-500/10 px-6 py-2 text-sm font-semibold text-purple-300 transition hover:bg-purple-500/20"
-                  >
-                    📖 Setup Guide
-                  </Link>
-                  <Link 
-                    href="/analytics/kpis" 
-                    className="rounded-full border border-cyan-400/30 bg-cyan-500/10 px-6 py-2 text-sm font-semibold text-cyan-300 transition hover:bg-cyan-500/20"
-                  >
-                    🎯 KPI Definitions
-                  </Link>
-                  <Link 
                     href="/" 
                     className="rounded-full border border-white/20 bg-white/10 px-6 py-2 text-sm font-semibold transition hover:bg-white/20"
                   >

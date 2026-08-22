@@ -60,7 +60,7 @@ export default function NewsletterThanksPage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {/* Wheel Throwing */}
             <Link 
-              href="/chicago/date-night-wheel-throwing"
+              href="/chicago/date-night-wheel"
               className="group rounded-2xl border border-white/10 bg-white/5 p-6 transition-all hover:border-purple-400/40 hover:bg-white/10"
             >
               <div className="mb-3 text-sm font-semibold uppercase tracking-wide text-purple-300">
@@ -76,7 +76,7 @@ export default function NewsletterThanksPage() {
 
             {/* Mosaics */}
             <Link 
-              href="/chicago/mosaic-workshop"
+              href="/chicago/turkish-lamp"
               className="group rounded-2xl border border-white/10 bg-white/5 p-6 transition-all hover:border-pink-400/40 hover:bg-white/10"
             >
               <div className="mb-3 text-sm font-semibold uppercase tracking-wide text-pink-300">
@@ -92,7 +92,7 @@ export default function NewsletterThanksPage() {
 
             {/* Glass Fusion */}
             <Link 
-              href="/chicago/glass-fusion-workshop"
+              href="/chicago/glass-fusion"
               className="group rounded-2xl border border-white/10 bg-white/5 p-6 transition-all hover:border-orange-400/40 hover:bg-white/10"
             >
               <div className="mb-3 text-sm font-semibold uppercase tracking-wide text-orange-300">
@@ -108,7 +108,7 @@ export default function NewsletterThanksPage() {
 
             {/* Terrariums */}
             <Link 
-              href="/chicago/terrarium-workshop"
+              href="/chicago/terrarium"
               className="group rounded-2xl border border-white/10 bg-white/5 p-6 transition-all hover:border-green-400/40 hover:bg-white/10"
             >
               <div className="mb-3 text-sm font-semibold uppercase tracking-wide text-green-300">
@@ -124,7 +124,7 @@ export default function NewsletterThanksPage() {
 
             {/* Bonsai */}
             <Link 
-              href="/chicago/bonsai-workshop"
+              href="/chicago/bonsai"
               className="group rounded-2xl border border-white/10 bg-white/5 p-6 transition-all hover:border-teal-400/40 hover:bg-white/10"
             >
               <div className="mb-3 text-sm font-semibold uppercase tracking-wide text-teal-300">
@@ -140,7 +140,7 @@ export default function NewsletterThanksPage() {
 
             {/* Candle Making */}
             <Link 
-              href="/chicago/candle-making-workshop"
+              href="/chicago/candle-making"
               className="group rounded-2xl border border-white/10 bg-white/5 p-6 transition-all hover:border-yellow-400/40 hover:bg-white/10"
             >
               <div className="mb-3 text-sm font-semibold uppercase tracking-wide text-yellow-300">

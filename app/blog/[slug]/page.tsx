@@ -483,7 +483,7 @@ export default function BlogPostPage({ params }: Props) {
                     <div>
                       <h2 className="text-xl font-bold">Mosaic Art Making</h2>
                       <p className="mt-2 leading-relaxed text-white/75">
-                        Piece together a colorful masterpiece! Our <Link href="/eugene/mosaics" className="text-orange-300 underline">Mosaic class</Link> teaches you to create intricate patterns and designs. Perfect for artistic couples who love working with color.
+                        Piece together a colorful masterpiece! Our <Link href="/eugene/mosaic" className="text-orange-300 underline">Mosaic class</Link> teaches you to create intricate patterns and designs. Perfect for artistic couples who love working with color.
                       </p>
                       <p className="mt-2 text-sm text-orange-300">📍 Downtown Eugene • $80/couple</p>
                     </div>
