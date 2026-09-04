@@ -33,7 +33,31 @@ const IconContact = () => (
   </svg>
 );
 
-const CTAS = [
+// Pottery wheel: vessel rising from a spinning wheel head.
+// TODO: swap for a real studio pottery-wheel photo when one is added to
+// /public/images — no real (non-stock) pottery photos exist in the repo yet.
+const IconWheel = () => (
+  <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 3h6M9.75 3c0 3-1.5 4.5-1.5 7.5a3.75 3 0 0 0 7.5 0c0-3-1.5-4.5-1.5-7.5M4.5 16.5h15M6.75 16.5 5.25 21m12-4.5 1.5 4.5" />
+  </svg>
+);
+
+type HomeCta = {
+  Icon: () => JSX.Element;
+  eyebrow?: string;
+  title: string;
+  description: string;
+  schedule?: string[];
+  price?: string;
+  label: string;
+  href: string;
+  gradientBg: string;
+  hoverBorder: string;
+  buttonClass: string;
+  shadow: string;
+};
+
+const CTAS: HomeCta[] = [
   {
     Icon: IconClass,
     title: "Book a Class",
@@ -55,6 +79,21 @@ const CTAS = [
     hoverBorder: "hover:border-pink-400/60",
     buttonClass: "bg-gradient-to-r from-pink-500 to-rose-500",
     shadow: "group-hover:shadow-pink-500/30",
+  },
+  {
+    Icon: IconWheel,
+    eyebrow: "LIVE ONLINE",
+    title: "Pottery at Home",
+    description:
+      "Six live Saturday sessions with a beginner tabletop pottery wheel kit delivered to you and yours to keep.",
+    schedule: ["Starts September 26", "Saturdays at noon Central"],
+    price: "$150",
+    label: "Reserve Your Spot",
+    href: "https://colorcocktailfactory.as.me/onlinewheelthrowing",
+    gradientBg: "from-amber-500/20 to-orange-500/20",
+    hoverBorder: "hover:border-amber-400/60",
+    buttonClass: "bg-gradient-to-r from-amber-500 to-orange-500",
+    shadow: "group-hover:shadow-amber-500/30",
   },
   {
     Icon: IconContact,
@@ -102,8 +141,8 @@ export default function HomePageClient() {
             </Reveal>
           </div>
 
-          {/* 3 CTA Cards */}
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {/* 4 CTA Cards — 1 col mobile, 2 cols medium, 4 cols wide */}
+          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
             {CTAS.map((cta, i) => (
               <Reveal key={cta.title} variant="fade-up" delay={i * 80}>
                 <Link
@@ -115,15 +154,30 @@ export default function HomePageClient() {
                 >
                   <GlassCard
                     interactive
-                    className={`h-full p-8 text-center transition-all duration-300 bg-gradient-to-br ${cta.gradientBg} ${cta.hoverBorder}`}
+                    className={`flex h-full flex-col p-8 text-center transition-all duration-300 bg-gradient-to-br ${cta.gradientBg} ${cta.hoverBorder}`}
                   >
                     <div className="flex justify-center mb-5 text-white/80">
                       <cta.Icon />
                     </div>
+                    {cta.eyebrow ? (
+                      <div className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
+                        {cta.eyebrow}
+                      </div>
+                    ) : null}
                     <h2 className="text-xl font-bold mb-3 text-white">{cta.title}</h2>
-                    <p className="text-sm text-white/70 mb-8 leading-relaxed">{cta.description}</p>
+                    <p className="text-sm text-white/70 mb-6 leading-relaxed">{cta.description}</p>
+                    {cta.schedule ? (
+                      <div className="mb-3 space-y-0.5 text-sm font-medium text-white/80">
+                        {cta.schedule.map((line) => (
+                          <div key={line}>{line}</div>
+                        ))}
+                      </div>
+                    ) : null}
+                    {cta.price ? (
+                      <div className="mb-6 text-lg font-bold text-white">{cta.price}</div>
+                    ) : null}
                     <span
-                      className={`inline-block ${cta.buttonClass} text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-lg ${cta.shadow} transition-all duration-300 group-hover:shadow-xl group-hover:scale-105`}
+                      className={`mt-auto inline-block self-center ${cta.buttonClass} text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-lg ${cta.shadow} transition-all duration-300 group-hover:shadow-xl group-hover:scale-105`}
                     >
                       {cta.label} →
                     </span>
@@ -132,6 +186,20 @@ export default function HomePageClient() {
               </Reveal>
             ))}
           </div>
+
+          {/* Understated in-person alternative */}
+          <Reveal variant="fade-up" delay={340}>
+            <p className="mt-8 text-center text-sm text-white/60">
+              Try pottery in person.{" "}
+              <Link
+                href="/activities/beginner-wheel"
+                className="font-medium text-white/80 underline underline-offset-2 hover:text-white"
+              >
+                Beginner wheel throwing
+              </Link>{" "}
+              starts at $35 per person.
+            </p>
+          </Reveal>
         </div>
       </section>
     </main>

@@ -498,6 +498,20 @@ export default function PotteryMembershipPage() {
             </div>
           </Reveal>
 
+          {/* From the Blog */}
+          <Reveal variant="fade-up">
+            <div className="mt-16 text-center">
+              <h3 className="font-serif text-xl font-semibold">New to pottery?</h3>
+              <p className="mt-2 text-sm text-white/70">
+                Start with our{" "}
+                <Link href="/blog/pottery-101-beginners-guide" className="text-purple-300 underline hover:text-purple-200">
+                  Pottery 101 beginner’s guide
+                </Link>{" "}
+                to learn the basics before your first live session.
+              </p>
+            </div>
+          </Reveal>
+
           {/* Final CTA */}
           <Reveal variant="fade-up">
             <div className="mt-20 text-center">

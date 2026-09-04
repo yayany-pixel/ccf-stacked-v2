@@ -6,143 +6,68 @@ import ButtonPill from "@/components/ui/ButtonPill";
 import Reveal from "@/components/motion/Reveal";
 import CitySelectorCTA from "@/components/blog/CitySelectorCTA";
 import StickyBookingCTA from "@/components/blog/StickyBookingCTA";
+import BlogPostSchema from "@/components/blog/BlogPostSchema";
+import {
+  getBlogPostBySlug,
+  getPostImage,
+  getPostImageAlt,
+  getPostPublishedAt,
+  getPostUpdatedAt,
+} from "@/lib/blogPosts";
+import { getAuthorBySlug, getAuthorUrl } from "@/lib/authors";
 
-export const metadata: Metadata = {
-  title: "Art Classes Near Me | Book Local Workshops",
-  description: "Find art classes near you—pottery, mosaics, bonsai, and more. Choose your city, pick a time, and book in minutes. Beginner-friendly.",
-  openGraph: {
-    title: "Art Classes Near Me: Find the Right Class for Adults, Kids, and Date Nights",
-    description: "Find art classes near you—pottery, mosaics, bonsai, and more. Choose your city, pick a time, and book in minutes. Beginner-friendly.",
-    type: "article",
-    publishedTime: "2026-01-20",
-    authors: ["Color Cocktail Factory"],
-    images: ["/og-image.jpg"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Art Classes Near Me | Book Local Workshops",
-    description: "Find art classes near you—pottery, mosaics, bonsai, and more. Beginner-friendly workshops in Chicago & Eugene."
-  },
-  alternates: {
-    canonical: "https://colorcocktailfactory.com/blog/art-classes-near-me"
-  }
-};
+const POST_SLUG = "art-classes-near-me";
+
+export function generateMetadata(): Metadata {
+  const post = getBlogPostBySlug(POST_SLUG);
+  if (!post) return { title: "Art Classes Near Me | Book Local Workshops" };
+
+  const url = `https://colorcocktailfactory.com/blog/${post.slug}`;
+  const image = getPostImage(post);
+  const imageAlt = getPostImageAlt(post);
+  const author = getAuthorBySlug(post.authorSlug);
+
+  return {
+    title: post.title,
+    description: post.description,
+    keywords: post.keywords,
+    authors: author
+      ? [{ name: author.name, url: getAuthorUrl(author.slug) }]
+      : undefined,
+    alternates: { canonical: url },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url,
+      type: "article",
+      siteName: "Color Cocktail Factory",
+      locale: "en_US",
+      publishedTime: getPostPublishedAt(post),
+      modifiedTime: getPostUpdatedAt(post),
+      authors: author ? [getAuthorUrl(author.slug)] : undefined,
+      section: post.category,
+      tags: post.keywords,
+      images: [{ url: image, alt: imageAlt, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [image],
+    },
+  };
+}
 
 export default function ArtClassesNearMePage() {
-  // JSON-LD structured data
-  const blogPostingSchema = {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": "Art Classes Near Me: Find the Right Class for Adults, Kids, and Date Nights",
-    "description": "Find art classes near you—pottery, mosaics, bonsai, and more. Choose your city, pick a time, and book in minutes. Beginner-friendly.",
-    "author": {
-      "@type": "Organization",
-      "name": "Color Cocktail Factory",
-      "url": "https://colorcocktailfactory.com"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Color Cocktail Factory",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://colorcocktailfactory.com/apple-touch-icon.png"
-      }
-    },
-    "datePublished": "2026-01-20",
-    "dateModified": "2026-01-20",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://colorcocktailfactory.com/blog/art-classes-near-me"
-    }
-  };
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What types of art classes are available near me?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Common art classes near you include pottery and ceramics (wheel throwing, handbuilding), painting (watercolor, acrylic, oil), drawing (figure drawing, sketching), glass art (fusion, blowing, stained glass), mosaics, mixed media, sculpture, printmaking, and craft workshops like candle making, bonsai, and terrarium building. Many studios offer beginner-friendly sessions with all materials included."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Are there art classes for kids near me?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes! Many art studios offer kids and family-friendly sessions, especially during school breaks, summer camps, and weekends. Look for age-specific classes (5-7, 8-12, teens) or family workshops where kids and adults work together. Common kids' classes include drawing, painting, pottery, clay sculpture, and craft projects designed for young artists."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "How can I find local art classes for adults?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "To find local art classes for adults: 1) Search Google Maps for 'pottery classes near me' or 'art studios near me', 2) Check community centers and recreation departments, 3) Browse studio websites for class calendars, 4) Look on platforms like Eventbrite or ClassPass, 5) Ask at local art supply stores, 6) Follow studios on Instagram for schedule updates. Many studios offer drop-in sessions perfect for beginners."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What are the benefits of taking art classes?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Benefits of art classes include: stress relief and relaxation, creative self-expression, learning new skills, meeting like-minded people, improved focus and mindfulness, creating meaningful handmade gifts, boosting confidence, trying something outside your routine, and having a screen-free hobby. Art classes provide hands-on experiences that engage both mind and body."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Where can I find summer art classes near me?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Summer art classes are offered by art studios, community centers, parks & recreation departments, university extension programs, and camps. Summer sessions often include kids' camps, intensive workshops, outdoor classes, and themed programs. Check studio websites in May-June for summer schedules, or search for 'summer art camps near me' or 'summer pottery workshops'."
-        }
-      }
-    ]
-  };
-
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://colorcocktailfactory.com"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "Blog",
-        "item": "https://colorcocktailfactory.com/blog"
-      },
-      {
-        "@type": "ListItem",
-        "position": 3,
-        "name": "Art Classes Near Me",
-        "item": "https://colorcocktailfactory.com/blog/art-classes-near-me"
-      }
-    ]
-  };
+  const post = getBlogPostBySlug(POST_SLUG);
+  // JSON-LD structured data is emitted below via <BlogPostSchema />
+  // (BlogPosting + BreadcrumbList). FAQPage schema was intentionally
+  // removed — Google stopped showing FAQ rich results in May 2026, so
+  // the extra bytes have no ranking benefit.
 
   return (
     <>
-      {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
+      {post ? <BlogPostSchema post={post} /> : null}
 
       <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
         <div className="sparkle-noise absolute inset-0 opacity-20" />

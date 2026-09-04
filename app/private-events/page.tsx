@@ -640,6 +640,34 @@ export default function PrivateEventsPage() {
           </div>
         </section>
 
+        {/* From the Blog */}
+        <section className="border-t border-white/10 py-16">
+          <div className="mx-auto max-w-4xl px-6">
+            <div className="mb-6 text-center">
+              <h2 className="font-serif text-2xl font-bold">From the Blog</h2>
+              <p className="mt-2 text-sm text-white/60">Creative date-night and group inspiration in each city.</p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Link
+                href="/blog/chicago-date-night-ideas"
+                className="block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-white/25 hover:bg-white/10"
+              >
+                <div className="text-xs font-semibold uppercase tracking-wide text-purple-300">Chicago</div>
+                <div className="mt-1 font-semibold text-white">10 Unique Date Night Ideas in Chicago</div>
+                <p className="mt-1 text-sm text-white/70">Beyond dinner and a movie — creative workshops that make great group events too.</p>
+              </Link>
+              <Link
+                href="/blog/eugene-date-night-ideas"
+                className="block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-white/25 hover:bg-white/10"
+              >
+                <div className="text-xs font-semibold uppercase tracking-wide text-purple-300">Eugene</div>
+                <div className="mt-1 font-semibold text-white">10 Romantic Date Night Ideas in Eugene, Oregon</div>
+                <p className="mt-1 text-sm text-white/70">Hands-on creative experiences perfect for couples and small groups.</p>
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* Final CTA */}
         <section className="gradient-breathing border-t border-white/10 bg-gradient-to-br from-purple-900/40 to-pink-900/40 py-16">
           <div className="mx-auto max-w-3xl px-6 text-center">

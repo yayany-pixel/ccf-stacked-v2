@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { sections } from "@/lib/config";
 import { getAllActivitySlugs } from "@/lib/activities";
-import { blogPosts } from "@/lib/blogPosts";
+import { blogPosts, getPostUpdatedAt } from "@/lib/blogPosts";
+import { getAllAuthors } from "@/lib/authors";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://colorcocktailfactory.com";
@@ -101,9 +102,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const blogPostPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${base}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+    lastModified: new Date(getPostUpdatedAt(post)),
     changeFrequency: "monthly" as const,
     priority: 0.7
+  }));
+
+  // Author profile pages
+  const authorPages: MetadataRoute.Sitemap = getAllAuthors().map((author) => ({
+    url: `${base}/author/${author.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.5
   }));
 
   // Audience/customer-type landing pages - high priority (conversion pages)
@@ -139,6 +148,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...cityActivityPages,
     ...blogIndex,
     ...blogPostPages,
+    ...authorPages,
     ...audiencePages
   ];
 }

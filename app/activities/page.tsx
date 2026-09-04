@@ -149,6 +149,34 @@ export default function ActivitiesIndexPage() {
         })}
       </div>
 
+      {/* From the Blog */}
+      <div className="border-t border-white/10 py-16">
+        <div className="mx-auto max-w-4xl px-6">
+          <div className="mb-6 text-center">
+            <h2 className="font-serif text-2xl font-bold">From the Blog</h2>
+            <p className="mt-2 text-sm text-white/60">Extra reading before you pick a class.</p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Link
+              href="/blog/art-classes-near-me"
+              className="block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-white/25 hover:bg-white/10"
+            >
+              <div className="text-xs font-semibold uppercase tracking-wide text-purple-300">Local Guides</div>
+              <div className="mt-1 font-semibold text-white">Art Classes Near Me</div>
+              <p className="mt-1 text-sm text-white/70">Choose your city, compare formats, and book in minutes.</p>
+            </Link>
+            <Link
+              href="/blog/pottery-101-beginners-guide"
+              className="block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-white/25 hover:bg-white/10"
+            >
+              <div className="text-xs font-semibold uppercase tracking-wide text-purple-300">Pottery Basics</div>
+              <div className="mt-1 font-semibold text-white">Pottery 101: A Beginner’s Guide</div>
+              <p className="mt-1 text-sm text-white/70">Wheel throwing, handbuilding, clay types, and what to expect.</p>
+            </Link>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom CTA Section */}
       <div className="border-t border-white/10 bg-gradient-to-br from-indigo-900/30 via-purple-900/20 to-pink-900/30 py-16">
         <div className="mx-auto max-w-4xl px-6 text-center">
