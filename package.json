@@ -10,8 +10,10 @@
     "test": "tsx tests/selftest.ts"
   },
   "dependencies": {
+    "@netlify/database": "^2.0.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
+    "drizzle-orm": "^1.0.0-beta.22",
     "lucide-react": "^0.562.0",
     "next": "^14.2.0",
     "react": "^18.2.0",
@@ -24,6 +26,7 @@
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.16",
+    "drizzle-kit": "^1.0.0-beta.22",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.2.0",
     "postcss": "^8.4.33",

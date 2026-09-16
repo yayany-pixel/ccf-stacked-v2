@@ -1,10 +1,18 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { generateOrganizationSchema } from "@/lib/enhancedStructuredData";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import MetaPixel from "@/components/MetaPixel";
 import Footer from "@/components/Footer";
 import PrivatePartyCTA from "@/components/PrivatePartyCTA";
+import AskCCFWidget from "@/components/askccf/AskCCFWidget";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // Zooming stays available; capped rather than disabled so pinch-zoom works.
+  maximumScale: 5,
+};
 
 export const metadata: Metadata = {
   title: {
@@ -55,7 +63,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
         <meta name="theme-color" content="#1a1a2e" />
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="icon" href="/favicon.ico" sizes="32x32" />
@@ -79,6 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <Footer />
         <PrivatePartyCTA variant="sticky" />
+        <AskCCFWidget />
       </body>
     </html>
   );
