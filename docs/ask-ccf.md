@@ -1,5 +1,18 @@
 # Ask CCF — staff guide
 
+## September 17 reliability update
+
+- Search enforces requested craft, date range, earliest local start, group size and budget. Only future sessions with reported available booking slots are recommended. Booking slots are converted to people only with explicit ticket coverage.
+- Weekdays and time-zone labels are generated from timestamps. Multi-session courses are identified as one series; kit-delivery and late-enrollment conditions appear on booking cards.
+- Eugene has conflicting current class addresses (Cross Street versus Lorella Avenue). The assistant does not publish one address for every Eugene class. Update `knowledge.ts` when the studio confirms the mapping; specific descriptions can supply a class address with a confirmation reminder.
+- Anonymous chat cannot access personal pickup records. Customers use the staff email for verification; the existing pickup database remains intact. A verified sign-in or email verification flow is required before reopening automated personal lookups.
+- Inquiry retries check notification status. Failed deliveries can be claimed and retried; concurrent delivery attempts have a two-minute lease. Only an accepted Netlify Forms handoff produces a sent confirmation. Email notification delivery itself still depends on the project's Forms notification settings.
+- Chat requests reserve the daily quota atomically before model use and stop safely if durable quota storage is unavailable. Inquiries also limit by IP and email, validate origin/body size, and require durable storage.
+- Start over aborts pending browser requests and ignores stale replies. The mobile composer uses the visual viewport and bottom safe area, a 16px input, and larger controls; replies are announced in a live log and support links are clickable.
+- Run `npm test`, TypeScript checks, and a production build before deploy. The regression suite uses fake booking data and sends no inquiries or emails.
+
+The sections below describe the original implementation; this update supersedes the old anonymous pickup-lookup behavior and inquiry/database fallback descriptions.
+
 Ask CCF is the AI assistant behind the **Ask CCF** button in the bottom-left corner of the
 public site. It answers questions about classes, policies, pottery pickup and private
 parties, and it can only state facts that come from the live booking system, the curated

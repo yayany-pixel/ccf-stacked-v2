@@ -33,7 +33,7 @@ export type KnowledgeEntry = {
 };
 
 /** Bumped whenever the set of entries below changes. */
-export const KNOWLEDGE_VERSION = "2026-09-12";
+export const KNOWLEDGE_VERSION = "2026-09-17";
 
 export const knowledgeBase: KnowledgeEntry[] = [
   {
@@ -52,9 +52,10 @@ export const knowledgeBase: KnowledgeEntry[] = [
     topics: ["location", "address", "where", "directions", "parking", "pilsen", "chicago", "eugene", "studio"],
     cities: ["all"],
     content:
-      "Chicago studio: 1142 W. 18th Street, Chicago, IL 60608 (Pilsen). Eugene studio: 1162 Lorella Ave, Eugene, OR 97401. Chicago and Eugene run different class line-ups, schedules and prices, so always confirm which studio the customer means before recommending anything.",
+      "Chicago studio: 1142 W. 18th Street, Chicago, IL 60608 (Pilsen). Eugene records currently disagree: recent pottery confirmations show 3295 Cross Street, while a watercolor confirmation shows 1162 Lorella Avenue. Do not apply one address to every Eugene class. Customers should use their own class confirmation and ask support@colorcocktailfactory.com to resolve a mismatch before travelling. Chicago and Eugene run different class line-ups, schedules and prices.",
     source: "https://colorcocktailfactory.com/chicago, /eugene, Acuity calendar records",
-    verifiedOn: "2026-09-12",
+    verifiedOn: "2026-09-17",
+    conflict: "Eugene addresses differ across current booking confirmations. A universal Eugene address has not been confirmed. Chicago's published address is unaffected.",
   },
   {
     id: "hours",
@@ -140,7 +141,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
     topics: ["pickup process", "collect", "pick up my", "how do i get", "storage", "60 days", "lost"],
     cities: ["all"],
     content:
-      "Pickup happens at the studio where you took the class, during studio hours, and no appointment is needed. Bring the name the class was booked under. Fired pieces are kept for 60 days after firing. If a customer wants to know whether a specific piece is ready, either look it up in the pickup tracker (which needs the email on the booking plus the last name) or hand it to staff at support@colorcocktailfactory.com — do not estimate a single piece's status from the class date.",
+      "Pickup happens at the studio where you took the class, during studio hours, and no appointment is needed. Bring the name the class was booked under. Fired pieces are kept for 60 days after firing. For a specific piece's status, email support@colorcocktailfactory.com with the booking details and a photo. Anonymous chat cannot verify ownership and does not access private pickup records. Do not estimate a single piece's status from the class date.",
     source: "Acuity class listings; studio pickup practice documented in /public/llms.txt",
     verifiedOn: "2026-09-12",
   },

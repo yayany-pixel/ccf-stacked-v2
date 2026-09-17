@@ -11,13 +11,15 @@ import {
   searchClasses,
   toCardShape,
   toToolShape,
+  requestedActivity,
+  matchingTimes,
+  type Activity,
+  type SearchParams,
   type CatalogClass,
   type CatalogLocation,
 } from "./catalog";
 import { searchKnowledge, toKnowledgeShape, type KnowledgeCity } from "./knowledge";
-import { consumeRateLimit, lookupPickup } from "./store";
-import { aiConfig } from "./config";
-import { hashId } from "./store";
+import { validDate, studioTimeZone } from "./schedule";
 
 export type InquiryDraft = {
   name: string;
@@ -35,6 +37,10 @@ export type ToolContext = {
   sessionId: string;
   /** City the website is currently showing, when there is one. */
   siteCity: CatalogLocation | null;
+  /** Directly expressed activity takes precedence over a model's looser search. */
+  requiredActivity?: Activity;
+  searchParams?: SearchParams;
+  scheduleDates?: Array<{ startISO: string; location: CatalogLocation }>;
 };
 
 export type ToolOutcome = {
@@ -67,6 +73,11 @@ export const toolDefinitions = [
               "Free text of what they want, e.g. 'date night pottery wheel' or 'mosaic for a group of 10'.",
           },
           max_price_per_ticket: { type: "number", description: "Optional budget ceiling in USD per ticket." },
+          max_price_per_person: { type: "number", description: "Customer's budget per person; couple ticket coverage is accounted for." },
+          required_activity: { type: "string", enum: ["wheel", "handbuilding", "watercolor", "mosaic", "candle", "bonsai", "terrarium", "glass"], description: "Strict activity filter. Always set when the customer specifies a craft." },
+          date_from: { type: "string", description: "First requested date, YYYY-MM-DD in the studio time zone. Resolve relative dates before searching." },
+          date_to: { type: "string", description: "Last requested date, YYYY-MM-DD. For one exact day set both date fields to that day." },
+          start_after: { type: "string", description: "Earliest local start time, 24-hour HH:MM, e.g. 18:00." },
           group_size: { type: "number", description: "Optional number of people, used to exclude classes that are too small." },
           limit: { type: "number", description: "How many options to return (1-4). Default 3." },
         },
@@ -119,23 +130,6 @@ export const toolDefinitions = [
           city: { type: "string", enum: ["chicago", "eugene", "online", "all"], description: "Optional city filter." },
         },
         required: ["question"],
-        additionalProperties: false,
-      },
-    },
-  },
-  {
-    type: "function" as const,
-    function: {
-      name: "lookup_pottery_pickup",
-      description:
-        "Check the studio's pottery pickup tracker for a customer. Requires BOTH the email used to book AND their last name — ask for both before calling, and never call with only one. Returns verified records, or tells you no verified record exists so you can give a clearly-labelled estimate instead.",
-      parameters: {
-        type: "object",
-        properties: {
-          email: { type: "string", description: "Email address used for the booking." },
-          last_name: { type: "string", description: "Customer's last name." },
-        },
-        required: ["email", "last_name"],
         additionalProperties: false,
       },
     },
@@ -199,13 +193,25 @@ export async function runTool(
     switch (name) {
       case "search_classes": {
         const location = asLocation(rawArgs.city, ctx.siteCity);
-        const classes = await searchClasses({
+        const dateFrom = validDate(rawArgs.date_from);
+        const dateTo = validDate(rawArgs.date_to);
+        if ((rawArgs.date_from && !dateFrom) || (rawArgs.date_to && !dateTo) || (dateFrom && dateTo && dateFrom > dateTo)) {
+          return { result: { error: "invalid_date_range", guidance: "Use real YYYY-MM-DD dates and an ordered range." } };
+        }
+        const params: SearchParams = {
           location,
           interests: str(rawArgs.interests, 300) ?? undefined,
           maxPricePerTicket: positiveNumber(rawArgs.max_price_per_ticket),
+          maxPricePerPerson: positiveNumber(rawArgs.max_price_per_person),
           groupSize: positiveNumber(rawArgs.group_size),
           limit: positiveNumber(rawArgs.limit) ?? 3,
-        });
+          requiredActivity: ctx.requiredActivity ?? requestedActivity(String(rawArgs.required_activity ?? rawArgs.interests ?? "")),
+          dateFrom, dateTo,
+          startAfter: typeof rawArgs.start_after === "string" && /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(rawArgs.start_after) ? rawArgs.start_after : undefined,
+        };
+        ctx.searchParams = params;
+        const classes = await searchClasses(params);
+        for (const c of classes) for (const t of c.matchingTimes ?? []) ctx.scheduleDates?.push({ startISO: t.startISO, location: c.location });
 
         if (classes.length === 0) {
           return {
@@ -246,6 +252,7 @@ export async function runTool(
             ...toToolShape(found),
             full_description: found.description.slice(0, 1200),
             address: found.address,
+            address_guidance: found.location === "eugene" ? "Eugene addresses conflict across current listings. This address, if present, is from this class description only. Ask the customer to check their own confirmation or contact staff before travelling; never apply one Eugene address to all classes." : null,
           },
           classes: [found],
         };
@@ -258,25 +265,31 @@ export async function runTool(
           return { result: { error: "class_not_found", guidance: `Offer ${BOOKING_PORTAL} instead.` } };
         }
         const daysAhead = Math.min(Math.max(positiveNumber(rawArgs.days_ahead) ?? 45, 1), 60);
-        const times = await getClassTimes(found.id, daysAhead);
+        const allTimes = await getClassTimes(found.id, daysAhead, found.location);
+        const times = matchingTimes(found, allTimes, ctx.searchParams ?? {});
+        for (const t of times) ctx.scheduleDates?.push({ startISO: t.startISO, location: found.location });
+        const datedClass = { ...found, matchingTimes: times, nextStartISO: times[0]?.startISO ?? null, nextLocaleTime: times[0]?.localeTime ?? null };
         return {
           result: {
             class_id: found.id,
             title: found.title,
             data_source: "Acuity Scheduling (live)",
             booking_url: found.bookingUrl,
+            time_zone: studioTimeZone(found.location),
+            schedule_type: toToolShape(found).schedule_type,
+            enrollment_conditions: found.enrollmentNotes,
             upcoming: times.slice(0, 8).map((time) => ({
               starts_at: time.startISO,
               local_time: time.localeTime,
-              seats_available: time.seatsAvailable,
-              seats_total: time.seatsTotal,
+              booking_slots_available: time.seatsAvailable,
+              booking_slots_total: time.seatsTotal,
             })),
             note:
               times.length === 0
                 ? "Nothing currently scheduled in this window. Say that and link the booking page; do not invent dates."
                 : "Seat counts are live. State them only as given, with no urgency language.",
           },
-          classes: [found],
+          classes: [datedClass],
         };
       }
 
@@ -297,54 +310,9 @@ export async function runTool(
       }
 
       case "lookup_pottery_pickup": {
-        const email = str(rawArgs.email, 200);
-        const lastName = str(rawArgs.last_name, 80);
-        if (!email || !EMAIL_RE.test(email) || !lastName) {
-          return {
-            result: {
-              error: "verification_incomplete",
-              guidance:
-                "Ask for both the email used to book and the last name on the booking before looking anything up.",
-            },
-          };
-        }
-
-        // Enumeration guard: a session gets a small number of lookups per hour.
-        const limit = await consumeRateLimit(
-          `pickup:${hashId(ctx.sessionId)}:${new Date().toISOString().slice(0, 13)}`,
-          aiConfig.pickupLookupsPerHour,
-          3_600_000,
-        );
-        if (!limit.allowed) {
-          return {
-            result: {
-              error: "too_many_lookups",
-              guidance: `Too many pickup lookups this hour. Ask them to email ${STAFF_EMAIL} with their booking details.`,
-            },
-          };
-        }
-
-        const result = await lookupPickup(email, lastName);
-        if (result.outcome === "found") {
-          return {
-            result: {
-              data_source: "CCF pickup tracker (staff-maintained, verified record)",
-              verified: true,
-              records: result.records,
-              guidance:
-                "These are verified records. Report status as written. 'ready' means ready; anything else is still in progress — do not upgrade it.",
-            },
-          };
-        }
-        return {
-          result: {
-            verified: false,
-            records: [],
-            reason: result.outcome === "no_records" ? "no_matching_record" : "tracker_unavailable",
-            guidance:
-              `No verified record matched, so do not confirm any piece is ready. Give the general timeline as an estimate (kiln-fired pottery is usually ready a few weeks after class, and individual class listings vary), say elapsed time alone cannot confirm a specific piece, and offer to have staff check: ${STAFF_EMAIL}.`,
-          },
-        };
+        // Email + surname is identification, not proof of ownership. No private
+        // database records are exposed through an anonymous model tool.
+        return { result: { verified: false, records: [], reason: "staff_verification_required", guidance: `For a specific piece, email ${STAFF_EMAIL} with your booking details and a photo. Do not request personal identifiers in this chat. General pickup timelines are estimates only.` } };
       }
 
       case "prepare_private_party_inquiry": {
@@ -354,7 +322,7 @@ export async function runTool(
         const missing: string[] = [];
         if (!name) missing.push("name");
         if (!email || !EMAIL_RE.test(email)) missing.push("a valid email");
-        if (!city) missing.push("city");
+        if (!city || !/^(chicago|eugene)$/i.test(city)) missing.push("Chicago or Eugene");
         if (!str(rawArgs.preferred_date, 60)) missing.push("preferred date");
         if (!str(rawArgs.group_size, 40)) missing.push("approximate group size");
         if (!str(rawArgs.activity, 160)) missing.push("interested activity");

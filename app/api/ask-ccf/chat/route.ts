@@ -9,14 +9,16 @@ import { NextResponse } from "next/server";
 import { aiConfig, providerStatus, resolveProvider } from "@/lib/askccf/config";
 import { buildSystemPrompt, extractClassTag, OPENING_MESSAGE, tidyReply } from "@/lib/askccf/prompt";
 import { runTool, toolDefinitions, type InquiryDraft, type ToolContext } from "@/lib/askccf/tools";
-import { toCardShape, type CatalogClass, type CatalogLocation } from "@/lib/askccf/catalog";
+import { toCardShape, requestedActivity, type CatalogClass, type CatalogLocation } from "@/lib/askccf/catalog";
+import { correctScheduleWeekdays } from "@/lib/askccf/schedule";
+import { clientIp, payloadError, readPayload } from "@/lib/askccf/security";
 import {
   consumeRateLimit,
   databaseConfigured,
   databaseStatus,
   hashId,
   recordUsage,
-  requestsToday,
+  reserveDailyRequest,
 } from "@/lib/askccf/store";
 
 export const dynamic = "force-dynamic";
@@ -43,12 +45,6 @@ const STAFF_EMAIL = "support@colorcocktailfactory.com";
 const FALLBACK_TEXT = `I can't reach my studio data right now. You can browse everything and book at ${BOOKING_PORTAL} — or email ${STAFF_EMAIL} and the team will help.`;
 
 const CONTROL_CHARS = /[\u0000-\u0008\u000b-\u001f\u007f]/g;
-
-function clientIp(request: Request): string {
-  const forwarded =
-    request.headers.get("x-nf-client-connection-ip") ?? request.headers.get("x-forwarded-for");
-  return forwarded?.split(",")[0]?.trim() || "unknown";
-}
 
 function normaliseCity(value: unknown): CatalogLocation | null {
   const raw = typeof value === "string" ? value.toLowerCase().trim() : "";
@@ -82,14 +78,13 @@ function unavailable(reason: string, reply: string, status = 503) {
 }
 
 export async function POST(request: Request) {
-  let body: unknown;
+  let payload: Record<string, unknown>;
   try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ state: "error", reason: "invalid_json" }, { status: 400 });
+    payload = await readPayload(request);
+  } catch (error) {
+    const { reason, status } = payloadError(error);
+    return NextResponse.json({ state: "error", reason }, { status });
   }
-
-  const payload = (body ?? {}) as Record<string, unknown>;
   const rawMessage =
     typeof payload.message === "string" ? sanitise(payload.message, aiConfig.maxMessageChars) : "";
   if (rawMessage.length === 0) {
@@ -136,22 +131,24 @@ export async function POST(request: Request) {
     );
   }
 
-  const usedToday = await requestsToday();
-  if (usedToday !== null && usedToday >= aiConfig.dailyRequestCap) {
+  const dailyReservation = await reserveDailyRequest(aiConfig.dailyRequestCap);
+  if (dailyReservation === "unavailable") {
+    return unavailable("usage_store_unavailable", FALLBACK_TEXT);
+  }
+  if (dailyReservation === "limited") {
     return unavailable(
       "daily_cap",
       `I've hit today's usage limit for the assistant. Everything is still bookable at ${BOOKING_PORTAL}, and ${STAFF_EMAIL} is always open.`,
     );
   }
 
-  const ctx: ToolContext = { sessionId, siteCity };
+  const ctx: ToolContext = { sessionId, siteCity, requiredActivity: requestedActivity(rawMessage), scheduleDates: [] };
   const messages: ApiMessage[] = [
     {
       role: "system",
       content: buildSystemPrompt({
         siteCity,
         pagePath,
-        pickupTrackerAvailable: databaseConfigured(),
       }),
     },
     ...history.map((message) => ({ role: message.role, content: message.content }) as ApiMessage),
@@ -196,7 +193,15 @@ export async function POST(request: Request) {
             args = {};
           }
           const outcome = await runTool(call.function?.name ?? "", args, ctx);
-          for (const found of outcome.classes ?? []) seenClasses.set(found.id, found);
+          for (const found of outcome.classes ?? []) {
+            const previous = seenClasses.get(found.id);
+            seenClasses.set(found.id, {
+              ...previous, ...found,
+              nextStartISO: found.nextStartISO ?? previous?.nextStartISO,
+              nextLocaleTime: found.nextLocaleTime ?? previous?.nextLocaleTime,
+              matchingTimes: found.matchingTimes ?? previous?.matchingTimes,
+            });
+          }
           if (outcome.draft) draft = outcome.draft;
           messages.push({
             role: "tool",
@@ -212,7 +217,7 @@ export async function POST(request: Request) {
       if (rawText.length === 0) break;
 
       const { text: tagged, ids } = extractClassTag(rawText);
-      const text = tidyReply(tagged);
+      const text = correctScheduleWeekdays(tidyReply(tagged), ctx.scheduleDates ?? []);
       // Cards render only from classes a tool actually returned this turn.
       const cards = ids
         .map((id) => seenClasses.get(id))
@@ -245,7 +250,7 @@ export async function POST(request: Request) {
       failed: true,
     });
     return NextResponse.json({
-      state: "ok",
+      state: "timeout",
       reply: `That one is taking me longer than it should. Ask me again in a simpler way, or browse the full schedule at ${BOOKING_PORTAL}.`,
       cards: [],
       draft,

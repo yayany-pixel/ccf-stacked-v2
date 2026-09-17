@@ -44,7 +44,7 @@ export default function InquiryCard({
         {rows.map((row) => (
           <div key={row.key} className="flex gap-2">
             <dt className="w-28 shrink-0 text-white/55">{row.label}</dt>
-            <dd className="text-white/90">{draft[row.key]}</dd>
+            <dd className="min-w-0 break-words text-white/90">{draft[row.key]}</dd>
           </div>
         ))}
       </dl>

@@ -8,6 +8,8 @@
  */
 import { NextResponse } from "next/server";
 import { aiConfig } from "@/lib/askccf/config";
+import { clientIp, formOrigin, payloadError, readPayload } from "@/lib/askccf/security";
+import { validDate } from "@/lib/askccf/schedule";
 import {
   consumeRateLimit,
   hashId,
@@ -29,31 +31,16 @@ function field(value: unknown, max: number): string | null {
   return cleaned.length > 0 ? cleaned : null;
 }
 
-/**
- * Public origin of this deploy, used to reach Netlify's form handler. The
- * forwarded host is preferred so deploy previews post to themselves; the
- * request origin is the last resort for local development.
- */
-function siteOrigin(request: Request): string {
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-  if (host && /^[A-Za-z0-9.-]+(:\d+)?$/.test(host)) {
-    const protocol = host.startsWith("localhost") || host.startsWith("127.") ? "http" : "https";
-    return `${protocol}://${host}`;
-  }
-  const fromEnv = process.env.DEPLOY_PRIME_URL || process.env.URL;
-  if (fromEnv) return fromEnv.replace(/\/+$/, "");
-  return new URL(request.url).origin;
-}
-
+/** Save, claim notification delivery, then confirm only a successful handoff. */
 export async function POST(request: Request) {
-  let body: unknown;
+  let payload: Record<string, unknown>;
   try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json({ status: "error", reason: "invalid_json" }, { status: 400 });
+    payload = await readPayload(request);
+  } catch (error) {
+    const { reason, status } = payloadError(error);
+    return NextResponse.json({ status: "error", reason }, { status });
   }
-
-  const payload = (body ?? {}) as Record<string, unknown>;
+  if (field(payload.website, 200)) return NextResponse.json({ status: "invalid" }, { status: 400 });
   const sessionId = typeof payload.sessionId === "string" ? payload.sessionId.slice(0, 64) : "";
   if (!/^[A-Za-z0-9_-]{8,64}$/.test(sessionId)) {
     return NextResponse.json({ status: "error", reason: "invalid_session" }, { status: 400 });
@@ -72,9 +59,9 @@ export async function POST(request: Request) {
   const missing: string[] = [];
   if (!name) missing.push("name");
   if (!email || !EMAIL_RE.test(email)) missing.push("email");
-  if (!city) missing.push("city");
-  if (!preferredDate) missing.push("preferredDate");
-  if (!groupSize) missing.push("groupSize");
+  if (!city || !/^(chicago|eugene)$/i.test(city)) missing.push("city");
+  if (!validDate(preferredDate)) missing.push("preferredDate");
+  if (!groupSize || !/^\d{1,3}(?:\s*[-–]\s*\d{1,3})?$/.test(groupSize) || Number.parseInt(groupSize) < 1) missing.push("groupSize");
   if (!activity) missing.push("activity");
   if (missing.length > 0) {
     return NextResponse.json({ status: "invalid", missing }, { status: 400 });
@@ -82,12 +69,15 @@ export async function POST(request: Request) {
 
   // One customer session can only file a few inquiries per day.
   const day = new Date().toISOString().slice(0, 10);
-  const limit = await consumeRateLimit(
-    `inq:${hashId(sessionId)}:${day}`,
-    aiConfig.inquiriesPerDay,
-    86_400_000,
-  );
-  if (!limit.allowed) {
+  const limits = await Promise.all([
+    consumeRateLimit(`inq:${hashId(sessionId)}:${day}`, aiConfig.inquiriesPerDay, 86_400_000),
+    consumeRateLimit(`inq-email:${hashId(email!.toLowerCase())}:${day}`, 6, 86_400_000),
+    consumeRateLimit(`inq-ip:${hashId(clientIp(request))}:${new Date().toISOString().slice(0, 13)}`, 10, 3_600_000),
+  ]);
+  if (limits.some((limit) => limit.degraded)) {
+    return NextResponse.json({ status: "error", message: `The inquiry service is temporarily unavailable. Please email ${STAFF_EMAIL}.` }, { status: 503 });
+  }
+  if (limits.some((limit) => !limit.allowed)) {
     return NextResponse.json(
       {
         status: "rate_limited",
@@ -118,6 +108,12 @@ export async function POST(request: Request) {
       message: "That inquiry is already with the team — no need to send it twice. They'll be in touch by email.",
     });
   }
+  if (saved.outcome === "busy") {
+    return NextResponse.json({ status: "pending", message: "Your inquiry is still being delivered. Please wait a moment before trying again." }, { status: 409 });
+  }
+  if (saved.outcome === "unavailable") {
+    return NextResponse.json({ status: "error", message: `I couldn't safely save your inquiry. Please try again or email ${STAFF_EMAIL}.` }, { status: 503 });
+  }
 
   // Hand off to the existing private-party form. The registered form has no
   // phone field, so phone and the assistant's notes are folded into details.
@@ -147,7 +143,7 @@ export async function POST(request: Request) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 10_000);
     try {
-      const response = await fetch(`${siteOrigin(request)}/netlify-forms.html`, {
+      const response = await fetch(`${formOrigin(request)}/netlify-forms.html`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formBody.toString(),
