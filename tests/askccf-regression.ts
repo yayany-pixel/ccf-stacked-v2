@@ -83,6 +83,11 @@ async function main() {
   const pickup = await runTool("lookup_pottery_pickup", {email:"audit@example.com",last_name:"Test"}, {sessionId:"test_session",siteCity:"chicago"});
   assert.equal((pickup.result as any).reason, "staff_verification_required");
   assert.deepEqual((pickup.result as any).records, []);
+  const invalidDraft = await runTool("prepare_private_party_inquiry", {
+    name: "Preview Test", email: "audit@example.com", city: "chicago", preferred_date: "2026-02-30", group_size: "0", activity: "wheel pottery",
+  }, {sessionId:"test_session",siteCity:"chicago"});
+  assert.equal(invalidDraft.draft, undefined, "never display a sendable draft that the inquiry endpoint will reject");
+  assert.equal((invalidDraft.result as any).error, "missing_fields");
   if (!process.env.NETLIFY_DB_URL && !process.env.DATABASE_URL && !process.env.NETLIFY_DATABASE_URL && !process.env.NETLIFY_DATABASE_URL_UNPOOLED) {
     assert.equal(await reserveDailyRequest(10), "unavailable", "cost protection must fail closed without its durable store");
   }

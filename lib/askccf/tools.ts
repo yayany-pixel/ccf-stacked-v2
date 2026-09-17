@@ -147,7 +147,7 @@ export const toolDefinitions = [
           email: { type: "string" },
           phone: { type: "string", description: "Optional." },
           city: { type: "string", enum: ["chicago", "eugene"] },
-          preferred_date: { type: "string", description: "Preferred date, ideally YYYY-MM-DD." },
+          preferred_date: { type: "string", description: "A real preferred date in YYYY-MM-DD format. Resolve relative dates; ask for one preferred date if the customer only gives a broad range, and preserve flexibility in notes." },
           group_size: { type: "string", description: "Approximate group size, e.g. '12' or '15-18'." },
           activity: { type: "string", description: "Activity they are interested in." },
           budget: { type: "string", description: "Optional budget, e.g. '$65 per person'." },
@@ -323,8 +323,9 @@ export async function runTool(
         if (!name) missing.push("name");
         if (!email || !EMAIL_RE.test(email)) missing.push("a valid email");
         if (!city || !/^(chicago|eugene)$/i.test(city)) missing.push("Chicago or Eugene");
-        if (!str(rawArgs.preferred_date, 60)) missing.push("preferred date");
-        if (!str(rawArgs.group_size, 40)) missing.push("approximate group size");
+        if (!validDate(rawArgs.preferred_date)) missing.push("a valid preferred date (YYYY-MM-DD)");
+        const groupSize = str(rawArgs.group_size, 40);
+        if (!groupSize || !/^\d{1,3}(?:\s*[-–]\s*\d{1,3})?$/.test(groupSize) || Number.parseInt(groupSize) < 1) missing.push("approximate group size as a positive number or range");
         if (!str(rawArgs.activity, 160)) missing.push("interested activity");
 
         if (missing.length > 0) {
