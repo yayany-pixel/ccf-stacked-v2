@@ -2,10 +2,9 @@
  * Ask CCF — durable state (Netlify Database / Postgres).
  *
  * Rate limits, usage counters, private-party inquiries and the staff pottery
- * pickup tracker all live here. Every call degrades gracefully: if the database
- * is unreachable the assistant keeps working, rate limiting falls back to an
- * in-process window, and inquiry delivery falls back to the Netlify form alone
- * (and says so, rather than silently dropping a lead).
+ * pickup tracker all live here. Hourly limits can fall back to memory, but
+ * model calls and inquiry submission stop if their durable controls are
+ * unavailable. The UI then offers booking and staff contact links.
  */
 import { and, eq, sql } from "drizzle-orm";
 import { createHash } from "node:crypto";
@@ -179,6 +178,30 @@ export async function requestsToday(): Promise<number | null> {
   }
 }
 
+/** Reserve before calling the model, atomically across every function instance.
+ * Seed from existing usage when deployed mid-day. Database failure fails closed.
+ */
+export async function reserveDailyRequest(limit: number): Promise<"allowed" | "limited" | "unavailable"> {
+  if (!databaseConfigured()) return "unavailable";
+  const day = new Date().toISOString().slice(0, 10);
+  const bucket = `daily-chat:${day}`;
+  try {
+    const result: any = await getDb().execute(sql`
+      insert into ask_ccf_rate_limits (bucket, count, expires_at)
+      select ${bucket}, coalesce(sum(requests), 0)::integer + 1, now() + interval '2 days'
+      from ask_ccf_usage where day = ${day}::date
+      having coalesce(sum(requests), 0) < ${limit}
+      on conflict (bucket) do update set count = ask_ccf_rate_limits.count + 1
+      where ask_ccf_rate_limits.count < ${limit}
+      returning count
+    `);
+    return (result.rows ?? result).length > 0 ? "allowed" : "limited";
+  } catch (error) {
+    console.error("[AskCCF] request reservation unavailable:", describe(error));
+    return "unavailable";
+  }
+}
+
 /* ------------------------------------------------------------------ *
  * Private-party inquiries
  * ------------------------------------------------------------------ */
@@ -211,6 +234,7 @@ export function inquiryDedupeKey(input: InquiryInput): string {
 export type SaveInquiryResult =
   | { outcome: "saved"; id: number }
   | { outcome: "duplicate" }
+  | { outcome: "busy" }
   | { outcome: "unavailable"; reason: string };
 
 export async function saveInquiry(input: InquiryInput): Promise<SaveInquiryResult> {
@@ -232,11 +256,27 @@ export async function saveInquiry(input: InquiryInput): Promise<SaveInquiryResul
         budget: input.budget ?? null,
         notes: input.notes ?? null,
         dedupeKey: inquiryDedupeKey(input),
+        status: "notifying",
+        notifyStartedAt: new Date(),
       })
       .onConflictDoNothing({ target: askCcfInquiries.dedupeKey })
       .returning({ id: askCcfInquiries.id });
 
-    if (rows.length === 0) return { outcome: "duplicate" };
+    if (rows.length === 0) {
+      // Claim a failed attempt or an expired lease. Only one concurrent retry
+      // may notify; a saved row alone is never treated as proof of delivery.
+      const [retry] = await getDb().update(askCcfInquiries).set({
+        status: "notifying", notifyStartedAt: new Date(), notifyError: null,
+        name: input.name, phone: input.phone ?? null, budget: input.budget ?? null, notes: input.notes ?? null,
+      }).where(and(
+        eq(askCcfInquiries.dedupeKey, inquiryDedupeKey(input)),
+        sql`(${askCcfInquiries.status} in ('received', 'notify_failed') or (${askCcfInquiries.status} = 'notifying' and ${askCcfInquiries.notifyStartedAt} < now() - interval '2 minutes'))`,
+      )).returning({ id: askCcfInquiries.id });
+      if (retry) return { outcome: "saved", id: retry.id };
+      const [existing] = await getDb().select({ status: askCcfInquiries.status }).from(askCcfInquiries)
+        .where(eq(askCcfInquiries.dedupeKey, inquiryDedupeKey(input))).limit(1);
+      return { outcome: existing?.status === "notified" ? "duplicate" : "busy" };
+    }
     return { outcome: "saved", id: rows[0].id };
   } catch (error) {
     return { outcome: "unavailable", reason: describe(error) };

@@ -10,6 +10,7 @@
  * Server-only: never import this from a client component.
  */
 
+import { formatClassTime, localDateAndTime, studioTimeZone } from "./schedule";
 export type CatalogLocation = "chicago" | "eugene" | "online" | "unknown";
 
 export type PriceUnit = "per_couple" | "per_ticket";
@@ -50,6 +51,8 @@ export type CatalogClass = {
   nextStartISO?: string | null;
   nextLocaleTime?: string | null;
   upcomingCount?: number;
+  matchingTimes?: ClassTime[];
+  enrollmentNotes: string[];
 };
 
 export type ClassTime = {
@@ -76,7 +79,8 @@ export const LOCATION_LABELS: Record<CatalogLocation, string> = {
 
 export const LOCATION_ADDRESSES: Record<CatalogLocation, string | null> = {
   chicago: "1142 W. 18th Street, Chicago, IL 60608",
-  eugene: "1162 Lorella Ave, Eugene, OR 97401",
+  // Eugene listings currently disagree. Do not send every customer to one address.
+  eugene: null,
   online: null,
   unknown: null,
 };
@@ -216,13 +220,19 @@ export function derivePricing(name: string, description: string, price: string |
     };
   }
 
+  const singleEvidence = all.find((sentence) => /one (?:ticket|registration) (?:includes|covers|admits) one (?:student|person|participant)|\bper (?:person|participant)\b/i.test(sentence));
+  if (singleEvidence) return {
+    price: numeric, currency: "USD", unit: "per_ticket", covers: 1,
+    evidence: singleEvidence, summary: `${money} per ticket for 1 participant.`,
+  };
+
   return {
     price: numeric,
     currency: "USD",
     unit: "per_ticket",
     covers: null,
     evidence: null,
-    summary: `${money} per ticket. The listing does not state that a ticket covers more than one person, so book one ticket per participant and let the checkout page confirm the total.`,
+    summary: `${money} per ticket. Ticket coverage is not specified; checkout confirms the quantity and total for your group.`,
   };
 }
 
@@ -268,8 +278,8 @@ function locationFor(type: AcuityType): CatalogLocation {
   return "unknown";
 }
 
-function normalize(type: AcuityType): CatalogClass {
-  const description = (type.description ?? "").replace(/\r\n/g, "\n").trim();
+export function normalize(type: AcuityType): CatalogClass {
+  const description = (type.description ?? "").replace(/<br\s*\/?\s*>/gi, "\n").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\r\n/g, "\n").trim();
   const location = locationFor(type);
   const isPrivateSession = (type.category ?? "").toLowerCase().includes("private session");
 
@@ -280,7 +290,7 @@ function normalize(type: AcuityType): CatalogClass {
     shortDescription: sentences(description).slice(0, 2).join(" ").slice(0, 320),
     location,
     locationLabel: LOCATION_LABELS[location],
-    address: LOCATION_ADDRESSES[location],
+    address: description.match(/\b(?:3295\s+Cross\s+(?:Street|St\.?|St)|1162\s+Lorella\s+(?:Avenue|Ave\.?|Ave))\b/i)?.[0] ?? LOCATION_ADDRESSES[location],
     category: type.category ?? "Uncategorised",
     craft: inferCraft(type.name, description),
     durationMinutes: typeof type.duration === "number" ? type.duration : null,
@@ -294,6 +304,7 @@ function normalize(type: AcuityType): CatalogClass {
     byob: /byob|bring (a )?(bottle|your (own|favorite) drink)/i.test(description),
     isPrivateSession,
     kind: (type.type as CatalogClass["kind"]) ?? "class",
+    enrollmentNotes: description.split(/\n|(?<=[.!?])\s+/).map((s) => s.trim()).filter((s) => /register by|late enroll|kit (?:delivery|arrival)|shipping deadline/i.test(s)).slice(0, 4),
   };
 }
 
@@ -308,6 +319,7 @@ export async function getCatalog(): Promise<CatalogClass[]> {
 
   return types
     .filter((t) => t.active)
+    .filter((t) => !t.private)
     .filter((t) => !MANUALLY_HIDDEN_IDS.has(String(t.id)))
     .filter((t) => !isOneOffPrivateEvent(t.name))
     .map(normalize);
@@ -325,7 +337,49 @@ export type SearchParams = {
   maxPricePerTicket?: number;
   groupSize?: number;
   limit?: number;
+  requiredActivity?: Activity;
+  dateFrom?: string;
+  dateTo?: string;
+  startAfter?: string;
+  maxPricePerPerson?: number;
 };
+
+export type Activity = "wheel" | "handbuilding" | "watercolor" | "mosaic" | "candle" | "bonsai" | "terrarium" | "glass";
+export function requestedActivity(text: string): Activity | undefined {
+  if (/\bwheel\b|\bthrowing\b/i.test(text)) return "wheel";
+  if (/hand[ -]?build|kurinuki/i.test(text)) return "handbuilding";
+  if (/water[ -]?colou?r/i.test(text)) return "watercolor";
+  if (/mosaic|turkish lamp/i.test(text)) return "mosaic";
+  if (/candle/i.test(text)) return "candle";
+  if (/bonsai/i.test(text)) return "bonsai";
+  if (/terrarium/i.test(text)) return "terrarium";
+  if (/glass/i.test(text)) return "glass";
+  return undefined;
+}
+
+export function matchesActivity(c: CatalogClass, activity?: Activity): boolean {
+  if (!activity) return true;
+  const title = c.title.toLowerCase();
+  const patterns: Record<Activity, RegExp> = {
+    wheel: /wheel|throwing/, handbuilding: /hand[ -]?build|kurinuki/,
+    watercolor: /water[ -]?colou?r/, mosaic: /mosaic|turkish lamp/, candle: /candle/,
+    bonsai: /bonsai/, terrarium: /terrarium/, glass: /glass/,
+  };
+  return patterns[activity].test(title) && !(activity === "wheel" && /hand[ -]?build/.test(title));
+}
+
+export function matchingTimes(c: CatalogClass, times: ClassTime[], params: SearchParams): ClassTime[] {
+  return times.filter((slot) => {
+    const local = localDateAndTime(slot.startISO, c.location);
+    if (params.dateFrom && local.date < params.dateFrom) return false;
+    if (params.dateTo && local.date > params.dateTo) return false;
+    if (params.startAfter && local.time < params.startAfter) return false;
+    // Acuity availability is measured in booking slots. Unknown ticket coverage
+    // cannot establish whether a whole group fits; leave that to checkout.
+    const ticketsNeeded = params.groupSize == null ? 1 : Math.ceil(params.groupSize / (c.pricing.covers ?? 1));
+    return slot.seatsAvailable != null && slot.seatsAvailable >= ticketsNeeded;
+  });
+}
 
 const STOP_WORDS = new Set([
   "a", "an", "and", "the", "for", "with", "class", "classes", "something",
@@ -347,14 +401,16 @@ export async function searchClasses(params: SearchParams): Promise<CatalogClass[
 
   const scored = catalog
     .filter((c) => (location ? c.location === location : true))
+    .filter((c) => matchesActivity(c, params.requiredActivity ?? requestedActivity(params.interests ?? "")))
     .filter((c) =>
       params.maxPricePerTicket != null && c.pricing.price != null
         ? c.pricing.price <= params.maxPricePerTicket
-        : true,
+        : params.maxPricePerTicket == null,
     )
+    .filter((c) => params.maxPricePerPerson == null || (c.pricing.price != null && c.pricing.price / (c.pricing.covers ?? 1) <= params.maxPricePerPerson))
     .filter((c) =>
       params.groupSize != null && c.maxGroupSize != null
-        ? c.maxGroupSize >= params.groupSize
+        ? c.maxGroupSize * (c.pricing.covers ?? 1) >= params.groupSize
         : true,
     )
     .map((c) => {
@@ -372,40 +428,42 @@ export async function searchClasses(params: SearchParams): Promise<CatalogClass[
     .filter(({ score }) => (terms.length > 0 ? score > 0 : true))
     .sort((a, b) => b.score - a.score || (a.c.pricing.price ?? 1e9) - (b.c.pricing.price ?? 1e9));
 
-  const candidates = scored.slice(0, Math.min(limit * 3, 9)).map(({ c }) => c);
+  const candidates = scored.slice(0, 24).map(({ c }) => c);
 
   // Only recommend classes the booking system is actually running. Seasonal
   // listings stay active in Acuity all year, so score alone would surface a
   // Mother's Day class in September.
-  const checked = await Promise.all(
-    candidates.map(async (c) => {
+  const checked: CatalogClass[] = [];
+  let availabilityFailed = false;
+  for (let offset = 0; offset < candidates.length; offset += 6) {
+    const batch = await Promise.all(candidates.slice(offset, offset + 6).map(async (c) => {
       try {
-        const times = await getClassTimes(c.id, 60);
+        const allTimes = await getClassTimes(c.id, 60, c.location);
+        const times = matchingTimes(c, allTimes, params);
         return {
           ...c,
           nextStartISO: times[0]?.startISO ?? null,
           nextLocaleTime: times[0]?.localeTime ?? null,
           upcomingCount: times.length,
+          matchingTimes: times,
         };
       } catch {
-        // Availability unknown: keep the class, but say nothing about dates.
-        return { ...c, nextStartISO: null, nextLocaleTime: null, upcomingCount: undefined };
+        availabilityFailed = true;
+        return null;
       }
-    }),
-  );
-
-  const scheduled = checked.filter((c) => (c.upcomingCount ?? 0) > 0);
-  const unknown = checked.filter((c) => c.upcomingCount === undefined);
-  const ranked = scheduled.length > 0 ? [...scheduled, ...unknown] : checked;
-
-  return ranked.slice(0, limit);
+    }));
+    checked.push(...batch.filter((c): c is NonNullable<typeof c> => c !== null && c.upcomingCount > 0));
+    if (checked.length >= limit) break;
+  }
+  if (checked.length === 0 && availabilityFailed) throw new Error("acuity_availability_unavailable");
+  return checked.slice(0, limit);
 }
 
 /**
  * Live upcoming times for a class, including real remaining seats as reported
  * by Acuity. Returns an empty array when Acuity has nothing scheduled.
  */
-export async function getClassTimes(id: string, daysAhead = 45): Promise<ClassTime[]> {
+export async function getClassTimes(id: string, daysAhead = 45, location: CatalogLocation = "chicago"): Promise<ClassTime[]> {
   const start = new Date();
   const end = new Date(start.getTime() + daysAhead * 86_400_000);
   const iso = (d: Date) => d.toISOString().slice(0, 10);
@@ -421,7 +479,7 @@ export async function getClassTimes(id: string, daysAhead = 45): Promise<ClassTi
     .filter((slot) => typeof slot.time === "string")
     .map((slot) => ({
       startISO: slot.time as string,
-      localeTime: slot.localeTime ?? (slot.time as string),
+      localeTime: formatClassTime(slot.time as string, location),
       seatsTotal: typeof slot.slots === "number" ? slot.slots : null,
       seatsAvailable: typeof slot.slotsAvailable === "number" ? slot.slotsAvailable : null,
     }))
@@ -438,6 +496,10 @@ export function toToolShape(c: CatalogClass) {
     location_label: c.locationLabel,
     craft: c.craft,
     duration_minutes: c.durationMinutes,
+    schedule_type: c.kind === "series" || /\b\d+[ -]week|\bcourse\b/i.test(c.title) ? "series_lessons_not_separate_start_dates" : "individual_class",
+    time_zone: studioTimeZone(c.location),
+    enrollment_conditions: c.enrollmentNotes,
+    upcoming_matching_times: c.matchingTimes?.slice(0, 8).map((t) => ({ starts_at: t.startISO, display_time: t.localeTime, booking_slots_available: t.seatsAvailable })),
     max_group_size: c.maxGroupSize,
     price_usd: c.pricing.price,
     price_unit: c.pricing.unit,
@@ -468,6 +530,8 @@ export function toCardShape(c: CatalogClass) {
     pricingSummary: c.pricing.summary,
     durationMinutes: c.durationMinutes,
     nextLocaleTime: c.nextLocaleTime ?? null,
+    enrollmentNotes: c.enrollmentNotes,
+    isSeries: c.kind === "series" || /\b\d+[ -]week|\bcourse\b/i.test(c.title),
     imageUrl: c.imageUrl,
     bookingUrl: c.bookingUrl,
   };

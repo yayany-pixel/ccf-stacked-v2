@@ -16,6 +16,8 @@ export type ClassCard = {
   nextLocaleTime: string | null;
   imageUrl: string | null;
   bookingUrl: string;
+  enrollmentNotes?: string[];
+  isSeries?: boolean;
 };
 
 export type InquiryDraft = {
@@ -53,7 +55,7 @@ export type ChatResponse = {
 };
 
 export type InquiryResponse = {
-  status: "received" | "duplicate" | "notify_failed" | "rate_limited" | "invalid" | "error";
+  status: "received" | "duplicate" | "notify_failed" | "rate_limited" | "invalid" | "error" | "pending";
   message?: string;
   persisted?: boolean;
 };

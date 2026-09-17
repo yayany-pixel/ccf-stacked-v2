@@ -32,10 +32,11 @@ export default function ClassCards({ cards }: { cards: ClassCard[] }) {
             <div className="text-sm font-semibold leading-snug text-white">{card.title}</div>
             <div className="mt-1 flex flex-wrap gap-x-2 gap-y-1 text-xs text-white/60">
               <span>{card.locationLabel}</span>
-              {card.durationMinutes ? <span>• {card.durationMinutes} min</span> : null}
-              {card.nextLocaleTime ? <span>• next: {card.nextLocaleTime}</span> : null}
+              {card.durationMinutes ? <span>• {card.durationMinutes} min{card.isSeries ? " total across the course" : ""}</span> : null}
+              {card.nextLocaleTime ? <span>• {card.isSeries ? "Next lesson" : "Next class"}: {card.nextLocaleTime}</span> : null}
             </div>
             <div className="mt-2 text-xs text-white/80">{card.pricingSummary}</div>
+            {card.enrollmentNotes?.map((note, i) => <p key={i} className="mt-2 text-xs text-amber-200">{note}</p>)}
             <a
               href={card.bookingUrl}
               target="_blank"

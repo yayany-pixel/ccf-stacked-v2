@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Netlify deploy URLs are build-time metadata and may be absent from the
+  // Next.js function environment. Embed only these public origins, never keys.
+  env: {
+    CCF_SITE_ORIGIN: process.env.URL || 'https://colorcocktailfactory.com',
+    CCF_DEPLOY_ORIGIN: process.env.DEPLOY_PRIME_URL || '',
+    CCF_DEPLOY_PERMALINK: process.env.DEPLOY_URL || '',
+  },
   // ESLint runs via `npm run lint`. Skipping during production build preserves
   // the project's prior behavior (no .eslintrc.json existed before) and avoids
   // failing on hundreds of pre-existing react/no-unescaped-entities errors

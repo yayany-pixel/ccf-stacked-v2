@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { trackEvent } from "@/lib/analytics";
 import ClassCards from "./ClassCards";
 import InquiryCard from "./InquiryCard";
+import ReplyText from "./ReplyText";
 import type { ChatMessage, ChatResponse, InquiryResponse } from "./types";
 
 /** Must match OPENING_MESSAGE in lib/askccf/prompt.ts: the server filters this
@@ -82,11 +83,39 @@ export default function AskCCFWidget() {
   const [sending, setSending] = React.useState(false);
   const [status, setStatus] = React.useState<string>("");
   const [sessionId, setSessionId] = React.useState("");
+  const [mobileViewport, setMobileViewport] = React.useState<{ height: number; bottom: number } | null>(null);
 
   const launcherRef = React.useRef<HTMLButtonElement>(null);
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
   const logEndRef = React.useRef<HTMLDivElement>(null);
   const lastUserMessage = React.useRef<string>("");
+  const generationRef = React.useRef(0);
+  const pendingRef = React.useRef(new Set<AbortController>());
+
+  React.useEffect(() => () => {
+    generationRef.current += 1;
+    pendingRef.current.forEach((controller) => controller.abort());
+  }, []);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const viewport = window.visualViewport;
+    const update = () => {
+      setMobileViewport(window.innerWidth < 640 && viewport ? {
+        height: Math.round(viewport.height * 0.85),
+        bottom: Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop),
+      } : null);
+    };
+    update();
+    viewport?.addEventListener("resize", update);
+    viewport?.addEventListener("scroll", update);
+    window.addEventListener("resize", update);
+    return () => {
+      viewport?.removeEventListener("resize", update);
+      viewport?.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [open]);
 
   // Restore the session-long conversation (survives navigation, not new tabs).
   React.useEffect(() => {
@@ -153,6 +182,11 @@ export default function AskCCFWidget() {
   }
 
   function startNewConversation() {
+    generationRef.current += 1;
+    pendingRef.current.forEach((controller) => controller.abort());
+    pendingRef.current.clear();
+    setSending(false);
+    setInput("");
     const id = newSessionId();
     lastUserMessage.current = "";
     setMessages([]);
@@ -188,11 +222,16 @@ export default function AskCCFWidget() {
     setInput("");
     setSending(true);
     setStatus("Thinking…");
+    const generation = generationRef.current;
+    const controller = new AbortController();
+    pendingRef.current.add(controller);
+    const timeout = window.setTimeout(() => controller.abort(), 60_000);
 
     try {
       const response = await fetch("/api/ask-ccf/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
         body: JSON.stringify({
           sessionId,
           message: trimmed,
@@ -203,6 +242,7 @@ export default function AskCCFWidget() {
       });
 
       const data = (await response.json().catch(() => ({}))) as ChatResponse;
+      if (generation !== generationRef.current) return;
       const reply =
         data.reply ??
         "Something went wrong on my end. Try again, or email support@colorcocktailfactory.com.";
@@ -221,6 +261,7 @@ export default function AskCCFWidget() {
       ]);
       setStatus(data.state === "ok" ? "Reply received." : "The assistant is unavailable.");
     } catch {
+      if (generation !== generationRef.current) return;
       setMessages((current) => [
         ...current,
         {
@@ -232,7 +273,9 @@ export default function AskCCFWidget() {
       ]);
       setStatus("Connection problem.");
     } finally {
-      setSending(false);
+      window.clearTimeout(timeout);
+      pendingRef.current.delete(controller);
+      if (generation === generationRef.current) setSending(false);
     }
   }
 
@@ -245,13 +288,19 @@ export default function AskCCFWidget() {
       );
 
     update({ draftState: "sending" });
+    const generation = generationRef.current;
+    const controller = new AbortController();
+    pendingRef.current.add(controller);
+    const timeout = window.setTimeout(() => controller.abort(), 20_000);
     try {
       const response = await fetch("/api/ask-ccf/inquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId, ...target.draft }),
+        signal: controller.signal,
+        body: JSON.stringify({ sessionId, ...target.draft, website: "" }),
       });
       const data = (await response.json().catch(() => ({}))) as InquiryResponse;
+      if (generation !== generationRef.current) return;
 
       if (data.status === "received" || data.status === "duplicate") {
         update({
@@ -278,12 +327,16 @@ export default function AskCCFWidget() {
         setStatus("The inquiry didn't send.");
       }
     } catch {
+      if (generation !== generationRef.current) return;
       update({
         draftState: "failed",
         draftMessage:
           "That didn't go through — check your connection and try again, or email support@colorcocktailfactory.com.",
       });
       setStatus("The inquiry didn't send.");
+    } finally {
+      window.clearTimeout(timeout);
+      pendingRef.current.delete(controller);
     }
   }
 
@@ -312,7 +365,8 @@ export default function AskCCFWidget() {
           id="ask-ccf-panel"
           role="dialog"
           aria-label="Studio help — CCF AI assistant"
-          className="fixed inset-x-0 bottom-0 z-50 flex h-[85vh] flex-col supports-[height:1dvh]:h-[85dvh] rounded-t-3xl border border-white/10 bg-[#12101f]/95 shadow-2xl backdrop-blur-xl sm:inset-x-auto sm:bottom-24 sm:left-6 sm:h-[32rem] sm:w-[24rem] sm:rounded-3xl"
+          style={mobileViewport ?? undefined}
+          className="fixed inset-x-0 bottom-0 z-50 flex h-[85vh] flex-col supports-[height:1dvh]:h-[85dvh] rounded-t-3xl border border-white/10 bg-[#12101f]/95 shadow-2xl backdrop-blur-xl sm:inset-x-auto sm:bottom-24 sm:left-6 sm:h-[32rem] sm:max-h-[calc(100dvh-7rem)] sm:w-[24rem] sm:rounded-3xl"
         >
           <header className="flex items-start justify-between gap-2 border-b border-white/10 px-4 py-3">
             <div>
@@ -323,7 +377,7 @@ export default function AskCCFWidget() {
               <button
                 type="button"
                 onClick={startNewConversation}
-                className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-white/70 transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="min-h-11 rounded-full border border-white/15 px-3 py-2 text-xs text-white/80 transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 Start over
               </button>
@@ -331,14 +385,14 @@ export default function AskCCFWidget() {
                 type="button"
                 onClick={closePanel}
                 aria-label="Close studio help"
-                className="rounded-full border border-white/15 px-2 py-1 text-[11px] text-white/70 transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="min-h-11 min-w-11 rounded-full border border-white/15 px-3 py-2 text-xs text-white/80 transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 ✕
               </button>
             </div>
           </header>
 
-          <div className="flex-1 overflow-y-auto px-4 py-3" aria-live="off">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-3">
             <div className="rounded-2xl bg-white/5 p-3 text-sm text-white/85">{OPENING_MESSAGE}</div>
 
             {showSuggestions ? (
@@ -357,7 +411,7 @@ export default function AskCCFWidget() {
               </ul>
             ) : null}
 
-            <ol className="mt-3 space-y-3">
+            <ol className="mt-3 space-y-3" role="log" aria-label="Conversation" aria-live="polite" aria-relevant="additions" aria-atomic="false">
               {messages.map((message) => (
                 <li key={message.id}>
                   <div
@@ -370,7 +424,7 @@ export default function AskCCFWidget() {
                     <span className="sr-only">
                       {message.role === "user" ? "You said: " : "Assistant said: "}
                     </span>
-                    <span className="whitespace-pre-wrap">{message.text}</span>
+                    {message.role === "assistant" ? <ReplyText text={message.text} /> : <span className="whitespace-pre-wrap break-words">{message.text}</span>}
                   </div>
 
                   {message.cards && message.cards.length > 0 ? (
@@ -424,7 +478,7 @@ export default function AskCCFWidget() {
           </p>
 
           <form
-            className="border-t border-white/10 p-3"
+            className="shrink-0 border-t border-white/10 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
             onSubmit={(event) => {
               event.preventDefault();
               send(input);
@@ -448,16 +502,17 @@ export default function AskCCFWidget() {
                   }
                 }}
                 placeholder="Type your question…"
-                className="max-h-24 flex-1 resize-none rounded-2xl border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400"
+                className="max-h-24 min-h-11 min-w-0 flex-1 resize-none rounded-2xl border border-white/15 bg-white/5 px-3 py-2 text-base text-white placeholder:text-white/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400"
               />
               <button
                 type="submit"
-                disabled={sending || input.trim().length === 0}
-                className="rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                disabled={!sessionId || sending || input.trim().length === 0}
+                className="min-h-11 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 Send
               </button>
             </div>
+            <p className="mt-2 text-[11px] leading-relaxed text-white/70">AI processes this chat. Avoid payment or sensitive details. <a className="underline" href={`mailto:${STAFF_EMAIL}`}>Email the studio</a></p>
           </form>
         </div>
       ) : null}

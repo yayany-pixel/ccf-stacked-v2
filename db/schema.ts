@@ -37,9 +37,10 @@ export const askCcfInquiries = pgTable(
     activity: text(),
     budget: text(),
     notes: text(),
-    // "received" | "notified" | "notify_failed"
+    // "received" | "notifying" | "notified" | "notify_failed"
     status: text().notNull().default("received"),
     notifyError: text("notify_error"),
+    notifyStartedAt: timestamp("notify_started_at"),
     // Stable hash of the inquiry content; blocks accidental double submits.
     dedupeKey: text("dedupe_key").notNull(),
     createdAt: timestamp("created_at").defaultNow(),
