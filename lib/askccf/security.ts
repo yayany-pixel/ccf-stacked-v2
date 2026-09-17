@@ -10,7 +10,15 @@ export function clientIp(request: Request): string {
 export function sameOrigin(request: Request): boolean {
   const origin = request.headers.get("origin");
   if (!origin) return true;
-  const allowed = [new URL(request.url).origin, process.env.URL, process.env.DEPLOY_PRIME_URL];
+  const allowed = [
+    new URL(request.url).origin,
+    process.env.CCF_SITE_ORIGIN,
+    process.env.CCF_DEPLOY_ORIGIN,
+    process.env.CCF_DEPLOY_PERMALINK,
+    process.env.URL,
+    process.env.DEPLOY_PRIME_URL,
+    process.env.DEPLOY_URL,
+  ];
   return allowed.some((url) => {
     try { return Boolean(url) && new URL(url!).origin === origin; } catch { return false; }
   });
@@ -53,7 +61,8 @@ export function payloadError(error: unknown): { reason: string; status: number }
 
 /** Only trusted deploy configuration may choose the recipient of form data. */
 export function formOrigin(request: Request): string {
-  const configured = process.env.DEPLOY_URL || process.env.DEPLOY_PRIME_URL || process.env.URL;
+  const configured = process.env.CCF_DEPLOY_PERMALINK || process.env.CCF_DEPLOY_ORIGIN ||
+    process.env.DEPLOY_URL || process.env.DEPLOY_PRIME_URL || process.env.CCF_SITE_ORIGIN || process.env.URL;
   if (configured) return new URL(configured).origin;
   const url = new URL(request.url);
   if (url.hostname === "localhost" || url.hostname === "127.0.0.1") return url.origin;

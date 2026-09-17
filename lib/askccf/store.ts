@@ -2,10 +2,9 @@
  * Ask CCF — durable state (Netlify Database / Postgres).
  *
  * Rate limits, usage counters, private-party inquiries and the staff pottery
- * pickup tracker all live here. Every call degrades gracefully: if the database
- * is unreachable the assistant keeps working, rate limiting falls back to an
- * in-process window, and inquiry delivery falls back to the Netlify form alone
- * (and says so, rather than silently dropping a lead).
+ * pickup tracker all live here. Hourly limits can fall back to memory, but
+ * model calls and inquiry submission stop if their durable controls are
+ * unavailable. The UI then offers booking and staff contact links.
  */
 import { and, eq, sql } from "drizzle-orm";
 import { createHash } from "node:crypto";

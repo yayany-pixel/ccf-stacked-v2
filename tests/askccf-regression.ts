@@ -67,6 +67,18 @@ async function main() {
   await assert.rejects(readPayload(req(JSON.stringify({message:"x".repeat(MAX_BODY_BYTES)}))), /body_too_large/);
   const origin = formOrigin(req("{}", {"x-forwarded-host":"untrusted.example"}));
   assert.notEqual(origin, "https://untrusted.example");
+  const oldDeployOrigin = process.env.CCF_DEPLOY_ORIGIN;
+  process.env.CCF_DEPLOY_ORIGIN = "https://deploy-preview-4--teal-concha-819f3e.netlify.app";
+  try {
+    const internalRequest = (origin: string) => new Request("http://localhost:3000/api/ask-ccf/chat", {
+      method: "POST", headers: { "content-type": "application/json", origin, "x-forwarded-host": "untrusted.example" }, body: "{}",
+    });
+    assert.deepEqual(await readPayload(internalRequest(process.env.CCF_DEPLOY_ORIGIN)), {}, "Netlify's internal URL must accept the baked public preview origin");
+    await assert.rejects(readPayload(internalRequest("https://untrusted.example")), /forbidden_origin/);
+    assert.equal(formOrigin(internalRequest(process.env.CCF_DEPLOY_ORIGIN)), process.env.CCF_DEPLOY_ORIGIN);
+  } finally {
+    if (oldDeployOrigin === undefined) delete process.env.CCF_DEPLOY_ORIGIN; else process.env.CCF_DEPLOY_ORIGIN = oldDeployOrigin;
+  }
   assert.equal(toolDefinitions.some(t=>t.function.name === "lookup_pottery_pickup"), false);
   const pickup = await runTool("lookup_pottery_pickup", {email:"audit@example.com",last_name:"Test"}, {sessionId:"test_session",siteCity:"chicago"});
   assert.equal((pickup.result as any).reason, "staff_verification_required");
