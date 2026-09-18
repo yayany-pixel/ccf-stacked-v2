@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 interface PrivatePartyCTAProps {
   variant?: "header" | "footer" | "sticky";
@@ -14,6 +15,7 @@ interface PrivatePartyCTAProps {
  */
 export default function PrivatePartyCTA({ variant = "header", className = "" }: PrivatePartyCTAProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (variant === "sticky") {
@@ -38,7 +40,7 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
     }
   };
 
-  if (!isVisible) return null;
+  if (!isVisible || (variant === "sticky" && pathname?.startsWith("/play"))) return null;
 
   // Header variant (compact)
   if (variant === "header") {

@@ -79,6 +79,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/play" className="hover:text-purple-300 transition">
+                  Explore & Play
+                </Link>
+              </li>
+              <li>
                 <Link href="/events" className="hover:text-purple-300 transition">
                   Upcoming Events
                 </Link>

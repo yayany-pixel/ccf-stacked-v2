@@ -202,6 +202,16 @@ export default function HomePageClient() {
           </Reveal>
         </div>
       </section>
+      <section className="border-y border-[#d9d4c7] bg-[#f6f1e7] px-6 py-14 text-[#32362e]">
+        <div className="mx-auto flex max-w-5xl flex-col items-start justify-between gap-7 sm:flex-row sm:items-center">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[.2em] text-[#aa5038]">A new little corner of Color Cocktail Factory</p>
+            <h2 className="mt-3 font-serif text-3xl sm:text-4xl">Meet your curious side.</h2>
+            <p className="mt-3 text-sm text-[#747161]">Spin the class wheel. Find your maker match. Make room for a little play.</p>
+          </div>
+          <Link href="/play" className="shrink-0 rounded border border-[#2549a2] bg-[#2549a2] px-6 py-4 text-sm text-white transition hover:bg-[#1e397c]">Explore & Play →</Link>
+        </div>
+      </section>
     </main>
   );
 }

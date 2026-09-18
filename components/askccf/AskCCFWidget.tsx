@@ -29,7 +29,7 @@ const MAX_STORED = 40;
 const MAX_CHARS = 1500;
 
 /** Routes where the customer assistant should not appear. */
-const HIDDEN_PREFIXES = ["/teach", "/analytics"];
+const HIDDEN_PREFIXES = ["/teach", "/analytics", "/play/review"];
 
 function newSessionId(): string {
   if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
@@ -75,6 +75,7 @@ function detectCity(pathname: string): "chicago" | "eugene" | null {
 
 export default function AskCCFWidget() {
   const pathname = usePathname() ?? "/";
+  const studioPage = pathname === "/play";
   const hidden = HIDDEN_PREFIXES.some((prefix) => pathname.startsWith(prefix));
 
   const [open, setOpen] = React.useState(false);
@@ -354,10 +355,10 @@ export default function AskCCFWidget() {
         aria-expanded={open}
         aria-controls="ask-ccf-panel"
         aria-label={open ? "Close studio help" : "Open studio help, the CCF AI assistant"}
-        className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-4 z-40 inline-flex items-center gap-2 rounded-full border border-white/15 bg-gradient-to-br from-purple-600 to-cyan-600 px-4 py-3 text-sm font-semibold text-white shadow-2xl backdrop-blur-xl transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:left-6"
+        className={`fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-4 z-40 inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold text-white shadow-2xl transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:left-6 ${studioPage ? "border-[#2549a2] bg-[#2549a2] focus-visible:ring-[#2549a2]" : "border-white/15 bg-gradient-to-br from-purple-600 to-cyan-600 backdrop-blur-xl focus-visible:ring-white"}`}
       >
         <span aria-hidden="true">💬</span>
-        <span>{open ? "Close" : "Need a hand?"}</span>
+        <span className={studioPage ? "hidden sm:inline" : undefined}>{open ? "Close" : "Need a hand?"}</span>
       </button>
 
       {open ? (

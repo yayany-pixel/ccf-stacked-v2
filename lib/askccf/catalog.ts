@@ -342,6 +342,8 @@ export type SearchParams = {
   dateTo?: string;
   startAfter?: string;
   maxPricePerPerson?: number;
+  /** Optional server-side constraint applied before the availability shortlist. */
+  classFilter?: (item: CatalogClass) => boolean;
 };
 
 export type Activity = "wheel" | "handbuilding" | "watercolor" | "mosaic" | "candle" | "bonsai" | "terrarium" | "glass";
@@ -400,6 +402,7 @@ export async function searchClasses(params: SearchParams): Promise<CatalogClass[
     .filter((t) => t.length > 2 && !STOP_WORDS.has(t));
 
   const scored = catalog
+    .filter((c) => params.classFilter?.(c) ?? true)
     .filter((c) => (location ? c.location === location : true))
     .filter((c) => matchesActivity(c, params.requiredActivity ?? requestedActivity(params.interests ?? "")))
     .filter((c) =>
