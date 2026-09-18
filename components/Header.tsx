@@ -10,6 +10,7 @@ import { buildHomeBookLink } from "@/lib/links";
 export default function Header({ city }: { city: City }) {
   // Navigation items for the header
   const navItems = [
+    { id: "play", label: "Explore & Play", href: "/play" },
     { id: "blog", label: "Blog", href: "/blog" },
     { id: "pigment-lab", label: "Pigment Lab", href: `/${city.param}/paper-pigment` },
     { id: "activities", label: "All Classes", href: "/activities" },
