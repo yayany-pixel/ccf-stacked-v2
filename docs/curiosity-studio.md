@@ -23,6 +23,17 @@ Gallery prompt: three equally spaced separate clay objects on warm ivory paper: 
 
 ## Validation
 
-`npm test` includes date/time-zone boundaries, input rejection, quiz routing, odd-group ticket math, unknown pricing, filtered Acuity results, no availability and upstream failure. `npx tsc --noEmit` validates types. Netlify's production build is the deployment gate. Record browser preview checks before review.
+`npm test` includes date/time-zone boundaries, input rejection, quiz routing, odd-group ticket math, unknown pricing, filtered Acuity results, no availability and upstream failure. Tests, TypeScript, focused ESLint, the local production build and both Netlify deploy previews pass.
+
+Browser review on September 18, 2026:
+
+- Desktop hero, quiz and illustrated gallery render correctly. Gallery captions expand and collapse.
+- A 390px iframe supplies a real narrow CSS viewport (373px content area with this desktop browser's scrollbar); document and viewport widths match, with no horizontal page overflow. This checks responsive rendering, not physical iOS or Android devices.
+- Quiz completes, its match survives reload through the URL, and its finder handoff selects the right activity. Clipboard sharing reports successful copying.
+- Chicago, this weekend, two people, $35/person, pottery wheel returns the real $55 Date Night on the Pottery Wheel class, one ticket covering two people, the actual Friday September 18 slot, and the `/datenight` Acuity booking link.
+- Changing the group size clears the old result; a three-person group at $35/person correctly yields no confirmed match rather than underpricing two couple tickets.
+- The online finder returns a real $15 watercolor class with its upcoming date and explicitly states that ticket coverage is unspecified.
+
+Final mobile polish uses full-width, 16px form controls and a compact assistant launcher. Course duration is omitted where Acuity does not distinguish total course length from lesson length. Reduced-motion preferences also disable smooth page scrolling.
 
 No new credentials, database migrations, AI model calls, or customer submissions are required.

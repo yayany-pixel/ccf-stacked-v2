@@ -40,7 +40,7 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
     }
   };
 
-  if (!isVisible || (variant === "sticky" && pathname === "/play")) return null;
+  if (!isVisible || (variant === "sticky" && pathname?.startsWith("/play"))) return null;
 
   // Header variant (compact)
   if (variant === "header") {

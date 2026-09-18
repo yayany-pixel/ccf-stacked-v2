@@ -195,7 +195,7 @@ export default function CuriosityStudio() {
           <div aria-live="polite" aria-atomic="true" className={s.liveStatus}>{busy ? "Checking the class schedule for your choices." : searched && !result ? notice : ""}</div>
           {result && <article className={s.result}>
             <p className={s.eyebrow}><Sparkles size={14}/> YOUR LITTLE POSSIBILITY</p><h4 ref={resultHeading} tabIndex={-1}>{result.title}</h4>
-            <p className={s.resultMeta}><MapPin size={14}/>{result.locationLabel}{result.durationMinutes && <><span>·</span><Clock3 size={14}/>{result.durationMinutes} min{result.isSeries ? " per session" : ""}</>}</p>
+            <p className={s.resultMeta}><MapPin size={14}/>{result.locationLabel}{result.durationMinutes && !result.isSeries && <><span>·</span><Clock3 size={14}/>{result.durationMinutes} min</>}</p>
             {result.isSeries && <p className={s.seriesNote}>Multi-session course · This is a scheduled lesson; confirm the course start and enrollment conditions below.</p>}
             <p className={s.resultDate}>{result.nextLocaleTime}</p>
             <p className={s.price}>{result.priceUsd == null ? "See booking calendar for price" : `$${result.priceUsd} per ticket`}{result.ticketCovers != null && <span> · covers {result.ticketCovers} {result.ticketCovers === 1 ? "person" : "people"}</span>}</p>
