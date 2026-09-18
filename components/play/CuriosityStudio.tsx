@@ -209,7 +209,7 @@ export default function CuriosityStudio() {
       </section>
 
       <section id="maker-match" className={s.quiz} aria-labelledby="quiz-title">
-        <div className={s.quizIntro}><p className={s.eyebrow}>02 / YOUR KIND OF CREATIVE</p><h2 id="quiz-title">What should we<br/>make <em>together?</em></h2><p>For first dates, old friends, and a little time<br/>with yourself. Three tiny questions.<br/>One lovely place to start.</p><span className={s.quizScribble}>a little less “what do you want to do?”<br/>a little more “let’s do this.”</span><Star className={s.quizStar}/></div>
+        <div className={s.quizIntro}><p className={s.eyebrow}>02 / YOUR KIND OF CREATIVE</p><h2 id="quiz-title">What should we<br/>make <em>together?</em></h2><p>For first dates, old friends, and a little time<br/> with yourself. Three tiny questions.<br/> One lovely place to start.</p><span className={s.quizScribble}>a little less “what do you want to do?”<br/>a little more “let’s do this.”</span><Star className={s.quizStar}/></div>
         <div className={s.quizCard}>
           {match ? <>
             <div className={s.quizCardTop}><span>YOUR MAKER MATCH</span><span>✳</span></div><span className={s.matchMark} aria-hidden="true">{MATCHES[match].mark}</span><h3 ref={quizHeading} tabIndex={-1}>{MATCHES[match].name}</h3><p className={s.matchNote}>{MATCHES[match].note}</p><span className={s.matchCraft}>A little nudge toward {MATCHES[match].craft.toLowerCase()}</span>
