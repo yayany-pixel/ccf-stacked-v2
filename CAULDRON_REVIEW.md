@@ -1,25 +1,28 @@
-# The Cauldron Factory — review branch
+# The Cauldron Factory — review only
 
-New route: `/cauldron` in the existing `ccf-stacked-v2` Next.js application. Target existing Netlify project: `teal-concha-819f3e` (59df13dc-1a2e-40e2-8a0c-20901ea6422e).
+Route: `/cauldron`. Existing Netlify project: `teal-concha-819f3e` (59df13dc-1a2e-40e2-8a0c-20901ea6422e). Branch: `cauldron-factory-review`, draft PR #6. Do not merge or swap the homepage without owner approval.
 
-## Implemented
-- Cauldron hero → date night (wheel + hand-building) → private parties → wheel throwing → other local public classes → online/contact → practical FAQs.
-- Approved name, subtitle, and CCF endorsement; responsive charcoal/plum/copper design; subtle firelight and embers.
-- Optional synthesized fireplace ambience, off by default, user gesture required, stopped on hide/unmount. Pause-atmosphere control and reduced-motion support.
-- Chicago/Eugene selection; explicit Chicago cauldron label when no Eugene cauldron exists; unknown-location listings are not silently assigned to a studio.
-- Server-only use of existing getCatalog() Acuity reader. Current prices, ticket coverage and appointment-specific links; no new secrets or invented data.
-- Root layout still supplies AskCCFWidget, footer, analytics and private-event CTA; no duplicate integrations.
-- Existing homepage is untouched. Review ribbon and noindex on new page.
+## Revision 02: seamless and clearer
+- Removed the card grid, card containers, shadows, framed hero arch, and repeated panel backgrounds.
+- One continuous atmospheric canvas. Featured classes use open alternating photo/text spreads; remaining classes use aligned thumbnail/name/price/booking rows.
+- Clear headings and preserved order: Cauldron → Date Night Pottery (wheel and hand-building) → Private Parties → Wheel Throwing → All Other Classes.
+- Private-party image fades into the surrounding page. Mobile feature photography extends to screen edges; catalog rows remain compact with visible prices and booking links.
+- Sticky section navigation, city controls, class search/filter, larger price labels, reduced-motion support and optional fire ambience.
+- Existing Acuity catalog, appointment-specific URLs, price units, class images, online/contact links, finishing notes, and location safeguards remain.
+- `app/page.tsx`, `app/layout.tsx`, Ask CCF integration, analytics, footer, and private-event backend are unchanged. No new dependencies, secrets, or fabricated class data.
 
-## Audit before publishing or swapping homepage
-1. Full npm run build, lint and existing tests with project dependencies. Conversation checks were TypeScript transpilation/CSS parsing, not a production build.
-2. Confirm Acuity access in preview context. Failure remains visible rather than inventing prices.
-3. Visually approve the actual cauldron image returned by Acuity. An artistic comparison of all photos was not completed. public/images currently has no project photography; no stock/AI substitute introduced.
-4. Private-party imagery uses an available public private-session image, otherwise the cauldron class image. Replace with an approved group photograph when available.
-5. Verify date-night wheel and hand-building matches; ordinary hand-building is labeled as such when a separate couple-priced listing is absent.
-6. Verify complete booking journeys, price units, location, finishing and pickup. Booking clicks are not purchase events.
-7. Test mobile chat/sticky CTA spacing, keyboard, VoiceOver, iOS Safari, image errors, sound and reduced motion.
-8. Do not publish production, merge, replace app/page.tsx, modify environment variables or change domains before owner approval.
+## Validation performed for revision 02
+- TypeScript transpilation: zero syntax diagnostics. CSS parsed with PostCSS. All component CSS selectors resolve.
+- Offline Chromium layout fixture exercised populated and unavailable-catalog states at 320, 390, 768, 1024, and 1440px. No horizontal document overflow or out-of-bounds headings/prices/booking links; featured/list containers have transparent backgrounds. Desktop and phone fixture layouts were visually inspected.
+- Fixture data and local screenshots are NOT committed or published. These checks are not live Acuity, chat, or checkout verification and are not a full React hydration test.
+- Netlify build/deploy status must be checked separately. The live preview URL could not be opened by the conversation web/browser network, so online end-to-end verification remains outstanding.
 
-## Homepage swap after explicit approval
-Reuse the new component in app/page.tsx, remove review ribbon and noindex there, update canonical to /. Keep /cauldron as the campaign landing route with appropriate canonical. Leave root layout unchanged and retain the old homepage in version history.
+## Remaining audit before production
+1. Confirm actual class photography and catalog loading; approve the most mystical owned cauldron image. The existing Acuity-image selection is retained, not independently curated.
+2. Approve a genuine private-party/group photograph; current fallback uses the cauldron image when no public private-session image exists.
+3. Confirm date-night matches, prices/ticket coverage, location, pickup terms, and complete Acuity booking journeys.
+4. Test Ask CCF replies, iOS Safari, keyboard/VoiceOver, audio playback, and interaction with the inherited sticky controls.
+5. Do not publish production, merge, modify environments/domains, or replace the homepage without approval.
+
+## Later homepage swap
+After explicit approval, reuse the reviewed component in `app/page.tsx`, remove its review ribbon/noindex as appropriate, update the canonical, and retain a rollback in version control. Keep existing root integrations intact.
