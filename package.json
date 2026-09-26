@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "node --import tsx tests/selftest.ts && node --import tsx tests/askccf-regression.ts"
+    "test": "node --import tsx tests/selftest.ts && node --import tsx tests/askccf-regression.ts && node --import tsx tests/acuity-mcp.ts"
   },
   "dependencies": {
     "@netlify/database": "^2.0.1",

@@ -162,6 +162,74 @@ function clampMax(value: unknown, fallback = 100) {
   return Math.max(1, Math.min(100, Math.trunc(parsed)));
 }
 
+function writeArgs(
+  value: unknown,
+  allowed: string[],
+  required: string[] = []
+): Record<string, any> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error("Tool arguments must be an object.");
+  }
+  const args = value as Record<string, any>;
+  const unknown = Object.keys(args).filter((key) => !allowed.includes(key));
+  if (unknown.length) throw new Error(`Unsupported argument(s): ${unknown.join(", ")}`);
+  for (const key of required) {
+    if (args[key] === undefined || args[key] === null || args[key] === "") {
+      throw new Error(`${key} is required.`);
+    }
+  }
+  return args;
+}
+
+function positiveId(value: unknown, key: string) {
+  if (typeof value !== "number" || !Number.isSafeInteger(value) || value < 1) {
+    throw new Error(`${key} must be a positive integer.`);
+  }
+}
+
+function textField(value: unknown, key: string, allowEmpty = false) {
+  if (typeof value !== "string" || (!allowEmpty && !value.trim())) {
+    throw new Error(`${key} must be ${allowEmpty ? "a string" : "a non-empty string"}.`);
+  }
+}
+
+function booleanField(value: unknown, key: string) {
+  if (typeof value !== "boolean") throw new Error(`${key} must be a boolean.`);
+}
+
+function validateAppointmentFields(value: unknown) {
+  if (!Array.isArray(value) || value.some((field) =>
+    !field || typeof field !== "object" || Array.isArray(field) ||
+    Object.keys(field).some((key) => !["id", "value"].includes(key)) ||
+    !Number.isSafeInteger(field.id) || field.id < 1 || typeof field.value !== "string"
+  )) throw new Error("fields must be an array of { id, value } objects.");
+}
+
+function validateLabels(value: unknown) {
+  if (!Array.isArray(value) || value.length > 1 || value.some((label) =>
+    !label || typeof label !== "object" || Array.isArray(label) ||
+    Object.keys(label).some((key) => key !== "id") ||
+    !Number.isSafeInteger(label.id) || label.id < 1
+  )) throw new Error("labels must contain at most one { id } object.");
+}
+
+function validateAppointmentDetails(args: Record<string, any>, certificateRequiresAdmin = false) {
+  for (const key of ["firstName", "lastName", "email", "phone", "timezone", "certificate", "notes"]) {
+    if (args[key] !== undefined) textField(args[key], key, ["phone", "notes"].includes(key));
+  }
+  if (args.fields !== undefined) validateAppointmentFields(args.fields);
+  if (args.labels !== undefined) validateLabels(args.labels);
+  if (args.smsOptIn !== undefined) booleanField(args.smsOptIn, "smsOptIn");
+  if (args.admin !== undefined) booleanField(args.admin, "admin");
+  if ((args.notes !== undefined || (certificateRequiresAdmin && args.certificate !== undefined)) && args.admin !== true) {
+    throw new Error("admin=true is required to set notes or update certificate.");
+  }
+}
+
+function bodyFields(args: Record<string, any>, keys: string[]) {
+  return Object.fromEntries(keys.filter((key) => args[key] !== undefined).map((key) => [key, args[key]]));
+}
+
 function compactAppointment(a: any, includeForms = false) {
   const base: Record<string, any> = {
     id: a.id,
@@ -189,6 +257,46 @@ function compactAppointment(a: any, includeForms = false) {
   if (includeForms) base.forms = a.forms;
   return base;
 }
+
+const formFieldsSchema = {
+  type: "array",
+  items: {
+    type: "object",
+    properties: { id: { type: "integer", minimum: 1 }, value: { type: "string" } },
+    required: ["id", "value"],
+    additionalProperties: false,
+  },
+};
+
+const labelsSchema = {
+  type: "array",
+  maxItems: 1,
+  items: {
+    type: "object",
+    properties: { id: { type: "integer", minimum: 1 } },
+    required: ["id"],
+    additionalProperties: false,
+  },
+};
+
+const appointmentDetailProperties = {
+  firstName: { type: "string", minLength: 1 },
+  lastName: { type: "string", minLength: 1 },
+  email: { type: "string", minLength: 1 },
+  phone: { type: "string" },
+  certificate: { type: "string", description: "Package or coupon code; admin=true is required when updating." },
+  fields: formFieldsSchema,
+  notes: { type: "string", description: "Admin only." },
+  labels: labelsSchema,
+  smsOptIn: { type: "boolean" },
+};
+
+const writeAnnotations = {
+  readOnlyHint: false,
+  destructiveHint: false,
+  idempotentHint: false,
+  openWorldHint: true,
+};
 
 const tools = [
   {
@@ -347,6 +455,108 @@ const tools = [
       openWorldHint: false,
     },
   },
+  {
+    name: "acuity_create_appointment",
+    description:
+      "Create a live Acuity appointment. Requires customer details and a listed appointment type. By default Acuity checks availability and may send notifications; admin=true bypasses availability checks and requires calendarID. noEmail=true suppresses Acuity confirmation email/SMS but not other side effects.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        datetime: { type: "string", minLength: 1, description: "Appointment date and time; include a timezone offset to avoid ambiguity." },
+        appointmentTypeID: { type: "integer", minimum: 1 },
+        calendarID: { type: "integer", minimum: 1 },
+        ...appointmentDetailProperties,
+        timezone: { type: "string", minLength: 1 },
+        addonIDs: { type: "array", items: { type: "integer", minimum: 1 } },
+        admin: { type: "boolean", default: false },
+        noEmail: { type: "boolean", default: false },
+      },
+      required: ["datetime", "appointmentTypeID", "firstName", "lastName"],
+      additionalProperties: false,
+    },
+    annotations: writeAnnotations,
+  },
+  {
+    name: "acuity_update_appointment",
+    description:
+      "Update only Acuity's editable appointment details. Provide id and at least one field to change. Use the separate tools to reschedule or cancel. notes and certificate require admin=true.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "integer", minimum: 1 },
+        ...appointmentDetailProperties,
+        admin: { type: "boolean", default: false },
+      },
+      required: ["id"],
+      additionalProperties: false,
+    },
+    annotations: writeAnnotations,
+  },
+  {
+    name: "acuity_reschedule_appointment",
+    description:
+      "Move an existing Acuity appointment to a new datetime and optionally a calendar. Class series and canceled appointments cannot be rescheduled. admin=true bypasses availability checks; noEmail=true suppresses Acuity reschedule email/SMS.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "integer", minimum: 1 },
+        datetime: { type: "string", minLength: 1, description: "New date and time; include a timezone offset to avoid ambiguity." },
+        calendarID: { anyOf: [{ type: "integer", minimum: 1 }, { type: "null" }], description: "Omit to keep the calendar; null asks Acuity to find one." },
+        timezone: { type: "string", minLength: 1 },
+        admin: { type: "boolean", default: false },
+        noEmail: { type: "boolean", default: false },
+      },
+      required: ["id", "datetime"],
+      additionalProperties: false,
+    },
+    annotations: { ...writeAnnotations, destructiveHint: true },
+  },
+  {
+    name: "acuity_cancel_appointment",
+    description:
+      "Cancel an Acuity appointment permanently; cancellation cannot be undone. cancelNote is sent with cancellation notifications. noShow requires admin=true; noEmail=true suppresses Acuity cancellation email/SMS.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        id: { type: "integer", minimum: 1 },
+        cancelNote: { type: "string" },
+        noShow: { type: "boolean" },
+        admin: { type: "boolean", default: false },
+        noEmail: { type: "boolean", default: false },
+      },
+      required: ["id"],
+      additionalProperties: false,
+    },
+    annotations: { ...writeAnnotations, destructiveHint: true },
+  },
+  {
+    name: "acuity_create_calendar_block",
+    description:
+      "Block time on an Acuity calendar. This changes live calendar availability. Supply start and end times with timezone offsets and an existing calendarID.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        start: { type: "string", minLength: 1 },
+        end: { type: "string", minLength: 1 },
+        calendarID: { type: "integer", minimum: 1 },
+        notes: { type: "string" },
+      },
+      required: ["start", "end", "calendarID"],
+      additionalProperties: false,
+    },
+    annotations: writeAnnotations,
+  },
+  {
+    name: "acuity_delete_calendar_block",
+    description: "Permanently delete an Acuity calendar block by its block ID, reopening that time to availability.",
+    inputSchema: {
+      type: "object",
+      properties: { id: { type: "integer", minimum: 1 } },
+      required: ["id"],
+      additionalProperties: false,
+    },
+    annotations: { ...writeAnnotations, destructiveHint: true },
+  },
 ];
 
 async function runTool(name: string, args: Record<string, any>): Promise<ToolResult> {
@@ -440,6 +650,98 @@ async function runTool(name: string, args: Record<string, any>): Promise<ToolRes
         );
         return toolOk(data);
       }
+      case "acuity_create_appointment": {
+        const input = writeArgs(args, [
+          "datetime", "appointmentTypeID", "calendarID", "firstName", "lastName",
+          "email", "phone", "timezone", "certificate", "fields", "notes",
+          "addonIDs", "labels", "smsOptIn", "admin", "noEmail",
+        ], ["datetime", "appointmentTypeID", "firstName", "lastName"]);
+        textField(input.datetime, "datetime");
+        positiveId(input.appointmentTypeID, "appointmentTypeID");
+        if (input.calendarID !== undefined) positiveId(input.calendarID, "calendarID");
+        validateAppointmentDetails(input);
+        if (input.admin === true && input.calendarID === undefined) {
+          throw new Error("calendarID is required when admin=true.");
+        }
+        if (input.admin !== true && input.email === undefined) {
+          throw new Error("email is required unless admin=true.");
+        }
+        if (input.noEmail !== undefined) booleanField(input.noEmail, "noEmail");
+        if (input.addonIDs !== undefined && (
+          !Array.isArray(input.addonIDs) ||
+          input.addonIDs.some((id: unknown) => typeof id !== "number" || !Number.isSafeInteger(id) || id < 1)
+        )) throw new Error("addonIDs must be an array of positive integers.");
+        const data = await acuityWrite("POST", "appointments", bodyFields(input, [
+          "datetime", "appointmentTypeID", "calendarID", "firstName", "lastName",
+          "email", "phone", "timezone", "certificate", "fields", "notes",
+          "addonIDs", "labels", "smsOptIn",
+        ]), { admin: input.admin === true ? true : undefined, noEmail: input.noEmail === true ? true : undefined });
+        return toolOk(data && typeof data === "object" ? compactAppointment(data, true) : data);
+      }
+      case "acuity_update_appointment": {
+        const input = writeArgs(args, [
+          "id", "firstName", "lastName", "email", "phone", "certificate",
+          "fields", "notes", "labels", "smsOptIn", "admin",
+        ], ["id"]);
+        positiveId(input.id, "id");
+        validateAppointmentDetails(input, true);
+        const body = bodyFields(input, [
+          "firstName", "lastName", "email", "phone", "certificate",
+          "fields", "notes", "labels", "smsOptIn",
+        ]);
+        if (!Object.keys(body).length) throw new Error("Provide at least one appointment field to update.");
+        const data = await acuityWrite("PUT", `appointments/${input.id}`, body,
+          { admin: input.admin === true ? true : undefined });
+        return toolOk(data && typeof data === "object" ? compactAppointment(data, true) : data);
+      }
+      case "acuity_reschedule_appointment": {
+        const input = writeArgs(args, [
+          "id", "datetime", "calendarID", "timezone", "admin", "noEmail",
+        ], ["id", "datetime"]);
+        positiveId(input.id, "id");
+        textField(input.datetime, "datetime");
+        if (input.calendarID !== undefined && input.calendarID !== null) positiveId(input.calendarID, "calendarID");
+        if (input.timezone !== undefined) textField(input.timezone, "timezone");
+        if (input.admin !== undefined) booleanField(input.admin, "admin");
+        if (input.noEmail !== undefined) booleanField(input.noEmail, "noEmail");
+        const data = await acuityWrite("PUT", `appointments/${input.id}/reschedule`,
+          bodyFields(input, ["datetime", "calendarID", "timezone"]),
+          { admin: input.admin === true ? true : undefined, noEmail: input.noEmail === true ? true : undefined });
+        return toolOk(data && typeof data === "object" ? compactAppointment(data, true) : data);
+      }
+      case "acuity_cancel_appointment": {
+        const input = writeArgs(args, ["id", "cancelNote", "noShow", "admin", "noEmail"], ["id"]);
+        positiveId(input.id, "id");
+        if (input.cancelNote !== undefined) textField(input.cancelNote, "cancelNote", true);
+        if (input.noShow !== undefined) booleanField(input.noShow, "noShow");
+        if (input.admin !== undefined) booleanField(input.admin, "admin");
+        if (input.noEmail !== undefined) booleanField(input.noEmail, "noEmail");
+        if (input.noShow !== undefined && input.admin !== true) {
+          throw new Error("admin=true is required to set noShow.");
+        }
+        const body = bodyFields(input, ["cancelNote", "noShow"]);
+        const data = await acuityWrite("PUT", `appointments/${input.id}/cancel`,
+          Object.keys(body).length ? body : undefined,
+          { admin: input.admin === true ? true : undefined, noEmail: input.noEmail === true ? true : undefined });
+        return toolOk(data && typeof data === "object" ? compactAppointment(data, true) : data);
+      }
+      case "acuity_create_calendar_block": {
+        const input = writeArgs(args, ["start", "end", "calendarID", "notes"],
+          ["start", "end", "calendarID"]);
+        textField(input.start, "start");
+        textField(input.end, "end");
+        positiveId(input.calendarID, "calendarID");
+        if (input.notes !== undefined) textField(input.notes, "notes", true);
+        const data = await acuityWrite("POST", "blocks",
+          bodyFields(input, ["start", "end", "calendarID", "notes"]));
+        return toolOk(data);
+      }
+      case "acuity_delete_calendar_block": {
+        const input = writeArgs(args, ["id"], ["id"]);
+        positiveId(input.id, "id");
+        await acuityWrite("DELETE", `blocks/${input.id}`);
+        return toolOk({ deleted: true, id: input.id });
+      }
       default:
         return toolError(`Unknown tool: ${name}`);
     }
@@ -457,7 +759,7 @@ export async function GET(
     {
       name: "CCF Acuity MCP",
       ok: true,
-      mode: "read-only",
+      mode: "read-write",
     },
     { headers: { "Cache-Control": "no-store" } }
   );
@@ -495,10 +797,10 @@ export async function POST(
         },
         serverInfo: {
           name: "ccf-acuity",
-          version: "1.0.0",
+          version: "1.1.0",
         },
         instructions:
-          "This server provides read-only access to Color Cocktail Factory's Acuity Scheduling account. Use calendar and appointment-type IDs from the listing tools before applying narrow filters. Intake forms may contain customer data; request them only when relevant.",
+          "This server can read and modify Color Cocktail Factory's Acuity Scheduling account. Use calendar and appointment-type IDs from the listing tools before filtering or writing. Write tools change live data and may trigger Acuity notifications or integrations; call them only for changes the user has authorized. Cancellations and block deletions cannot be undone through this API. Intake forms may contain customer data; request them only when relevant.",
       });
     }
     case "ping":
