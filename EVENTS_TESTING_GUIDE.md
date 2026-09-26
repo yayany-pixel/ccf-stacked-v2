@@ -167,10 +167,10 @@ npm run dev
 **Check 1: Environment Variables**
 ```powershell
 # In .env.local file:
-EVENTBRITE_TOKEN=3UWPGA57LF6GGCI23VQA
+EVENTBRITE_TOKEN=YOUR_EVENTBRITE_TOKEN
 EVENTBRITE_ORG_ID=213181179995
 ACUITY_USER_ID=35932879
-ACUITY_API_KEY=09fce6787fa7467207fb557c1652d72a
+ACUITY_API_KEY=YOUR_ACUITY_API_KEY
 ```
 
 **Check 2: Restart Dev Server**
@@ -182,11 +182,11 @@ npm run dev
 **Check 3: Test API Directly**
 ```powershell
 # Test Eventbrite
-curl -H "Authorization: Bearer 3UWPGA57LF6GGCI23VQA" `
+curl -H "Authorization: Bearer YOUR_EVENTBRITE_TOKEN" `
   "https://www.eventbriteapi.com/v3/organizations/213181179995/events/"
 
 # Test Acuity (Basic Auth)
-$auth = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("35932879:09fce6787fa7467207fb557c1652d72a"))
+$auth = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("35932879:YOUR_ACUITY_API_KEY"))
 curl -H "Authorization: Basic $auth" `
   "https://acuityscheduling.com/api/v1/appointment-types"
 ```
@@ -240,10 +240,10 @@ Route (app)
 
 1. **Environment Variables** (in Netlify dashboard):
    ```
-   EVENTBRITE_TOKEN=3UWPGA57LF6GGCI23VQA
+   EVENTBRITE_TOKEN=YOUR_EVENTBRITE_TOKEN
    EVENTBRITE_ORG_ID=213181179995
    ACUITY_USER_ID=35932879
-   ACUITY_API_KEY=09fce6787fa7467207fb557c1652d72a
+   ACUITY_API_KEY=YOUR_ACUITY_API_KEY
    DEFAULT_TIMEZONE=America/Chicago
    ```
 
