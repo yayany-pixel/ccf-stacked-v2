@@ -30,7 +30,7 @@ export type NormalizedEvent = {
 // Environment variables
 const EVENTBRITE_TOKEN = process.env.EVENTBRITE_TOKEN || '';
 const EVENTBRITE_ORG_ID = process.env.EVENTBRITE_ORG_ID || '';
-const ACUITY_USER_ID = process.env.ACUITY_USER_ID || '35932879';
+const ACUITY_USER_ID = process.env.ACUITY_USER_ID || '';
 const ACUITY_API_KEY = process.env.ACUITY_API_KEY || '';
 const DEFAULT_TIMEZONE = process.env.DEFAULT_TIMEZONE || 'America/Chicago';
 
