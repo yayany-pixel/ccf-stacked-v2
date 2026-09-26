@@ -1,8 +1,13 @@
-// Test API credentials
-const EVENTBRITE_TOKEN = '3UWP6A57LFGGGCI23VQA';
-const EVENTBRITE_ORG_ID = '213181179995';
-const ACUITY_USER_ID = '35932879';
-const ACUITY_API_KEY = '09fce6787fa7467207fb557c1652d72a';
+// Test API credentials are read from the environment; never hard-code secrets here.
+const EVENTBRITE_TOKEN = process.env.EVENTBRITE_TOKEN || '';
+const EVENTBRITE_ORG_ID = process.env.EVENTBRITE_ORG_ID || '';
+const ACUITY_USER_ID = process.env.ACUITY_USER_ID || '';
+const ACUITY_API_KEY = process.env.ACUITY_API_KEY || '';
+
+if (!EVENTBRITE_TOKEN || !EVENTBRITE_ORG_ID || !ACUITY_USER_ID || !ACUITY_API_KEY) {
+  console.error('Missing required API environment variables.');
+  process.exit(1);
+}
 
 console.log('Testing Eventbrite API...');
 try {
