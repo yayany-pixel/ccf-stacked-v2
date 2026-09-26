@@ -1,3 +1,6 @@
+import { extraReadTools, runExtraReadTool } from "@/lib/acuity-mcp-extra-reads";
+import { extraWriteTools, runExtraWriteTool } from "@/lib/acuity-mcp-extra-writes";
+
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
@@ -40,15 +43,38 @@ function jsonRpcError(
   );
 }
 
+function redactToolData(value: unknown): any {
+  const secrets = [process.env.CCF_MCP_TOKEN, process.env.ACUITY_API_KEY, process.env.ACUITY_USER_ID]
+    .filter((item): item is string => Boolean(item));
+  if (typeof value === "string") {
+    return secrets.reduce((safe, secret) => safe.split(secret).join("[REDACTED]"), value);
+  }
+  if (typeof value === "number" && secrets.includes(String(value))) return "[REDACTED]";
+  if (Array.isArray(value)) return value.map(redactToolData);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([key, item]) => {
+      if (/^(api[_-]?key|access[_-]?token|refresh[_-]?token|authorization|password|secret)$/i.test(key)) {
+        return [key, "[REDACTED]"];
+      }
+      if (key === "target" && typeof item === "string") {
+        try { return [key, `${new URL(item).origin}/[redacted]`]; } catch { return [key, "[REDACTED]"]; }
+      }
+      return [key, redactToolData(item)];
+    }));
+  }
+  return value;
+}
+
 function toolOk(data: unknown, message?: string): ToolResult {
+  const safeData = redactToolData(data);
   return {
     content: [
       {
         type: "text",
-        text: message ?? JSON.stringify(data, null, 2),
+        text: message ? redactToolData(message) : JSON.stringify(safeData, null, 2),
       },
     ],
-    structuredContent: { data },
+    structuredContent: { data: safeData },
   };
 }
 
@@ -58,8 +84,8 @@ function toolError(message: string, details?: unknown): ToolResult {
       {
         type: "text",
         text: details
-          ? `${message}\n${JSON.stringify(details, null, 2)}`
-          : message,
+          ? `${redactToolData(message)}\n${JSON.stringify(redactToolData(details), null, 2)}`
+          : redactToolData(message),
       },
     ],
     isError: true,
@@ -82,7 +108,11 @@ function acuityAuthHeader() {
 
 function addParam(search: URLSearchParams, key: string, value: unknown) {
   if (value === undefined || value === null || value === "") return;
-  search.set(key, String(value));
+  if (Array.isArray(value)) {
+    for (const item of value) search.append(key, String(item));
+  } else {
+    search.set(key, String(value));
+  }
 }
 
 async function acuityGet(path: string, params: Record<string, unknown> = {}) {
@@ -299,6 +329,8 @@ const writeAnnotations = {
 };
 
 const tools = [
+  ...extraReadTools,
+  ...extraWriteTools,
   {
     name: "acuity_status",
     description:
@@ -308,7 +340,7 @@ const tools = [
       readOnlyHint: true,
       destructiveHint: false,
       idempotentHint: true,
-      openWorldHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -320,7 +352,7 @@ const tools = [
       readOnlyHint: true,
       destructiveHint: false,
       idempotentHint: true,
-      openWorldHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -332,7 +364,7 @@ const tools = [
       readOnlyHint: true,
       destructiveHint: false,
       idempotentHint: true,
-      openWorldHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -357,7 +389,7 @@ const tools = [
       readOnlyHint: true,
       destructiveHint: false,
       idempotentHint: true,
-      openWorldHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -395,7 +427,7 @@ const tools = [
       readOnlyHint: true,
       destructiveHint: false,
       idempotentHint: true,
-      openWorldHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -414,7 +446,7 @@ const tools = [
       readOnlyHint: true,
       destructiveHint: false,
       idempotentHint: true,
-      openWorldHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -433,7 +465,7 @@ const tools = [
       readOnlyHint: true,
       destructiveHint: false,
       idempotentHint: true,
-      openWorldHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -452,7 +484,7 @@ const tools = [
       readOnlyHint: true,
       destructiveHint: false,
       idempotentHint: true,
-      openWorldHint: false,
+      openWorldHint: true,
     },
   },
   {
@@ -561,6 +593,9 @@ const tools = [
 
 async function runTool(name: string, args: Record<string, any>): Promise<ToolResult> {
   try {
+    const extra = await runExtraReadTool(name, args, acuityGet, acuityWrite)
+      ?? await runExtraWriteTool(name, args, acuityWrite);
+    if (extra) return toolOk(extra.data);
     switch (name) {
       case "acuity_status": {
         const calendars = await acuityGet("calendars");
@@ -760,6 +795,8 @@ export async function GET(
       name: "CCF Acuity MCP",
       ok: true,
       mode: "read-write",
+      version: "1.2.0",
+      toolCount: tools.length,
     },
     { headers: { "Cache-Control": "no-store" } }
   );
@@ -797,10 +834,10 @@ export async function POST(
         },
         serverInfo: {
           name: "ccf-acuity",
-          version: "1.1.0",
+          version: "1.2.0",
         },
         instructions:
-          "This server can read and modify Color Cocktail Factory's Acuity Scheduling account. Use calendar and appointment-type IDs from the listing tools before filtering or writing. Write tools change live data and may trigger Acuity notifications or integrations; call them only for changes the user has authorized. Cancellations and block deletions cannot be undone through this API. Intake forms may contain customer data; request them only when relevant.",
+          "This server can read and modify Color Cocktail Factory's Acuity Scheduling account: appointments, calendar blocks, client profiles, package/coupon certificate codes, and webhook subscriptions. It can read availability, forms, add-ons, labels, products, orders, account details, and service metadata. Use listing tools to obtain existing IDs and availability tools to check dates/times before booking; time validation does not reserve a slot. Use bounded date ranges for class and block listings. Write tools change live data and may trigger notifications or integrations; call them only for changes the user has authorized. Match client names and phone carefully before updating or deleting a profile. Creating certificate codes requires an existing product or coupon definition. Creating a webhook sends future event notifications to its target URL; use only a destination explicitly authorized by the user. Cancellations and deletions have no undo operation in this connector. Intake forms, clients, orders, and appointments may contain customer data; request them only when relevant. Appointment-type/class-definition creation, payment charging/refunds, and package/product-definition creation are not supported by this connector.",
       });
     }
     case "ping":
@@ -809,10 +846,11 @@ export async function POST(
       return jsonRpc(id, { tools });
     case "tools/call": {
       const name = String(rpc.params?.name || "");
-      const args =
-        rpc.params?.arguments && typeof rpc.params.arguments === "object"
-          ? rpc.params.arguments
-          : {};
+      const supplied = rpc.params?.arguments;
+      if (supplied !== undefined && (
+        !supplied || typeof supplied !== "object" || Array.isArray(supplied)
+      )) return jsonRpc(id, toolError("Tool arguments must be an object."));
+      const args = supplied ?? {};
       return jsonRpc(id, await runTool(name, args));
     }
     case "resources/list":
