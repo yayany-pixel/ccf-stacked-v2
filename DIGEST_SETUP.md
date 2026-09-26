@@ -10,10 +10,10 @@ Click **Add a variable** and add each of these:
 
 | Variable | Value | Notes |
 |----------|-------|-------|
-| `EVENTBRITE_TOKEN` | `3UWP6A57LFGGGCI23VQA` | Already configured |
+| `EVENTBRITE_TOKEN` | `YOUR_EVENTBRITE_TOKEN` | Already configured |
 | `EVENTBRITE_ORG_ID` | `213181179995` | Already configured |
 | `ACUITY_USER_ID` | `35932879` | Already configured |
-| `ACUITY_API_KEY` | `09fce6787fa7467207fb557c1652d72a` | Already configured |
+| `ACUITY_API_KEY` | `YOUR_ACUITY_API_KEY` | Already configured |
 | `EMAIL_PROVIDER` | `resend` | Choose: resend, postmark, or sendgrid |
 | `EMAIL_API_KEY` | `YOUR_API_KEY_HERE` | Get from your email provider |
 | `DIGEST_TO` | `support@colorcocktailfactory.com` | Recipient email |
