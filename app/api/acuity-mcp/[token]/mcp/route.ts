@@ -117,6 +117,45 @@ async function acuityGet(path: string, params: Record<string, unknown> = {}) {
   return body;
 }
 
+async function acuityWrite(
+  method: "POST" | "PUT" | "DELETE",
+  path: string,
+  body?: unknown,
+  params: Record<string, unknown> = {}
+) {
+  const search = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) addParam(search, key, value);
+  const url = `${ACUITY_API}/${path}${search.size ? `?${search.toString()}` : ""}`;
+  const response = await fetch(url, {
+    method,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: acuityAuthHeader(),
+    },
+    body: body === undefined ? undefined : JSON.stringify(body),
+    cache: "no-store",
+  });
+
+  const text = await response.text();
+  let data: any = text;
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    // Keep text body for diagnostics.
+  }
+
+  if (!response.ok) {
+    const error = new Error(
+      `Acuity API error ${response.status}: ${response.statusText}`
+    ) as Error & { status?: number; body?: unknown };
+    error.status = response.status;
+    error.body = data;
+    throw error;
+  }
+  return data;
+}
+
 function clampMax(value: unknown, fallback = 100) {
   const parsed = Number(value);
   if (!Number.isFinite(parsed)) return fallback;
