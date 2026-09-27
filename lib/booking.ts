@@ -49,9 +49,11 @@ export function catalogBookingUrl(catalog: CatalogClass[], city: string, activit
 }
 
 export function eventBookingUrl(typeId: string | number, startISO: string, calendarID: number): string {
-  const url = new URL(ACUITY_BOOKING_URL);
-  url.searchParams.set("appointmentType", String(typeId));
-  url.searchParams.set("calendarID", String(calendarID));
-  url.searchParams.set("datetime", startISO);
+  // The current Acuity scheduler drops legacy `datetime` query parameters on
+  // redirect. Use its verified session URL so checkout retains the chosen time.
+  const time = startISO.replace(/([+-]\d{2})(\d{2})$/, "$1:$2");
+  const url = new URL(`schedule/a8dfb300/appointment/${typeId}/calendar/${calendarID}/datetime/${encodeURIComponent(time)}`, ACUITY_BOOKING_URL);
+  url.searchParams.set("appointmentTypeIds[]", String(typeId));
+  url.searchParams.set("calendarIds", String(calendarID));
   return url.toString();
 }

@@ -38,9 +38,10 @@ async function main() {
   assert.doesNotMatch(eugene.description, /Lorella|97401/);
   assert.equal(eventTimeZone(eugene.city), "America/Los_Angeles");
   const url = new URL(eugene.bookingUrl);
-  assert.equal(url.searchParams.get("appointmentType"), "1");
-  assert.equal(url.searchParams.get("calendarID"), "13582962");
-  assert.equal(url.searchParams.get("datetime"), future);
+  assert.equal(url.searchParams.get("appointmentTypeIds[]"), "1");
+  assert.equal(url.searchParams.get("calendarIds"), "13582962");
+  assert.equal(decodeURIComponent(url.pathname.split("/datetime/")[1]), future);
+  assert.ok(url.pathname.includes("/appointment/1/calendar/13582962/"));
   const online = events.find(event => event.city === "Virtual")!;
   assert.equal(online.streetAddress, "");
   assert.equal(online.category, "Handbuilding");
