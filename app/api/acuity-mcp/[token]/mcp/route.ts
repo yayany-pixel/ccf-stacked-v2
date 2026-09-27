@@ -1,5 +1,6 @@
 import { extraReadTools, runExtraReadTool } from "@/lib/acuity-mcp-extra-reads";
 import { extraWriteTools, runExtraWriteTool } from "@/lib/acuity-mcp-extra-writes";
+import { eventbriteTools, runEventbriteTool } from "@/lib/eventbrite-mcp";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -44,7 +45,7 @@ function jsonRpcError(
 }
 
 function redactToolData(value: unknown): any {
-  const secrets = [process.env.CCF_MCP_TOKEN, process.env.ACUITY_API_KEY, process.env.ACUITY_USER_ID]
+  const secrets = [process.env.CCF_MCP_TOKEN, process.env.ACUITY_API_KEY, process.env.ACUITY_USER_ID, process.env.EVENTBRITE_PRIVATE_TOKEN, process.env.EVENTBRITE_TOKEN]
     .filter((item): item is string => Boolean(item));
   if (typeof value === "string") {
     return secrets.reduce((safe, secret) => safe.split(secret).join("[REDACTED]"), value);
@@ -331,6 +332,7 @@ const writeAnnotations = {
 const tools = [
   ...extraReadTools,
   ...extraWriteTools,
+  ...eventbriteTools,
   {
     name: "acuity_status",
     description:
@@ -593,6 +595,8 @@ const tools = [
 
 async function runTool(name: string, args: Record<string, any>): Promise<ToolResult> {
   try {
+    const eventbrite = await runEventbriteTool(name, args, { acuityGet });
+    if (eventbrite) return toolOk(eventbrite.data);
     const extra = await runExtraReadTool(name, args, acuityGet, acuityWrite)
       ?? await runExtraWriteTool(name, args, acuityWrite);
     if (extra) return toolOk(extra.data);
@@ -792,10 +796,10 @@ export async function GET(
   if (!authorized(params.token)) return new Response("Not Found", { status: 404 });
   return Response.json(
     {
-      name: "CCF Acuity MCP",
+      name: "CCF Acuity + Eventbrite MCP",
       ok: true,
       mode: "read-write",
-      version: "1.2.0",
+      version: "1.3.0",
       toolCount: tools.length,
     },
     { headers: { "Cache-Control": "no-store" } }
@@ -834,7 +838,7 @@ export async function POST(
         },
         serverInfo: {
           name: "ccf-acuity",
-          version: "1.2.0",
+          version: "1.3.0",
         },
         instructions:
           "This server can read and modify Color Cocktail Factory's Acuity Scheduling account: appointments, calendar blocks, client profiles, package/coupon certificate codes, and webhook subscriptions. It can read availability, forms, add-ons, labels, products, orders, account details, and service metadata. Use listing tools to obtain existing IDs and availability tools to check dates/times before booking; time validation does not reserve a slot. Use bounded date ranges for class and block listings. Write tools change live data and may trigger notifications or integrations; call them only for changes the user has authorized. Match client names and phone carefully before updating or deleting a profile. Creating certificate codes requires an existing product or coupon definition. Creating a webhook sends future event notifications to its target URL; use only a destination explicitly authorized by the user. Cancellations and deletions have no undo operation in this connector. Intake forms, clients, orders, and appointments may contain customer data; request them only when relevant. Appointment-type/class-definition creation, payment charging/refunds, and package/product-definition creation are not supported by this connector.",
