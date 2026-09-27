@@ -32,12 +32,10 @@ export default function HeroVideoBackground() {
         loop
         playsInline
         preload="metadata"
-        poster="/videos/ccf-header-poster.jpg"
+        poster="/og-image.jpg"
         className="absolute inset-0 h-full w-full object-contain sm:object-cover object-center"
         aria-hidden="true"
       >
-        {/* Prefer WebM for better compression, fallback to MP4 */}
-        <source src="/videos/ccf-header.webm" type="video/webm" />
         <source src="/videos/ccf-header.mp4" type="video/mp4" />
       </video>
 

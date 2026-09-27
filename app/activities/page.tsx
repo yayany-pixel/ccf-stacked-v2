@@ -32,7 +32,7 @@ export default function ActivitiesIndexPage() {
     <main className="min-h-screen">
       {/* Hero Section */}
       <div className="gradient-breathing relative overflow-hidden bg-gradient-to-br from-purple-900/40 via-slate-900/60 to-pink-900/40">
-        <div className="sparkle-noise absolute inset-0 bg-[url('/noise.png')] opacity-20" />
+        <div className="sparkle-noise absolute inset-0  opacity-20" />
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-6xl">

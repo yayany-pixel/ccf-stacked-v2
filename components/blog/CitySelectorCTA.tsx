@@ -1,5 +1,6 @@
 "use client";
 
+import { activityBookingUrl } from "@/lib/booking";
 import { useState } from "react";
 import Link from "next/link";
 import ButtonPill from "@/components/ui/ButtonPill";
@@ -11,25 +12,12 @@ type City = "chicago" | "eugene";
 export default function CitySelectorCTA() {
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
 
-  const getCityBookingLinks = (city: City) => {
-    if (city === "chicago") {
-      const base = "https://www.rezclick.com/colorcocktailfactory/index.php?page=calendar&term=";
-      return {
-        pottery: `${base}pottery`,
-        mosaic: `${base}mosaic`,
-        bonsai: `${base}bonsai`,
-        cityPage: "/chicago"
-      };
-    }
-    // Eugene uses Acuity — all class links go to the same booking page
-    const acuityUrl = "https://colorcocktailfactory.as.me/schedule/a8dfb300";
-    return {
-      pottery: acuityUrl,
-      mosaic: acuityUrl,
-      bonsai: acuityUrl,
-      cityPage: "/eugene"
-    };
-  };
+  const getCityBookingLinks = (city: City) => ({
+    pottery: activityBookingUrl(city, "beginner-wheel"),
+    mosaic: activityBookingUrl(city, "mosaic"),
+    bonsai: activityBookingUrl(city, "bonsai"),
+    cityPage: `/${city}`,
+  });
 
   const links = selectedCity ? getCityBookingLinks(selectedCity) : null;
 

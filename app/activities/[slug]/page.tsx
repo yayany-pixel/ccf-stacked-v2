@@ -90,15 +90,15 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
           "address": [
             {
               "@type": "PostalAddress",
-              "streetAddress": "1657 W Chicago Ave",
+              "streetAddress": "1142 W. 18th Street",
               "addressLocality": "Chicago",
               "addressRegion": "IL",
-              "postalCode": "60622",
+              "postalCode": "60608",
               "addressCountry": "US"
             },
             {
               "@type": "PostalAddress",
-              "streetAddress": "780 Blair Blvd",
+              "streetAddress": "3295 Cross Street",
               "addressLocality": "Eugene",
               "addressRegion": "OR",
               "postalCode": "97402",
@@ -178,7 +178,7 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
 
         {/* Hero Section */}
         <div className={`relative overflow-hidden ${activity.overlayClass}`}>
-          <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20" />
+          <div className="absolute inset-0  opacity-20" />
           <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-24">
             <div className="mx-auto max-w-3xl">
               <div className="flex flex-wrap items-center gap-2">

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { trackRezClickBooking } from "@/lib/metaPixel";
+import { trackInitiateCheckout } from "@/lib/metaPixel";
 
 type Variant = "primary" | "secondary" | "ghost" | "romanceCta";
 
@@ -37,13 +37,13 @@ export default function ButtonPill({
   // Check if external link (starts with http)
   const isExternal = href.startsWith('http');
   
-  // Check if this is a RezClick booking link
-  const isRezClickBooking = href.includes('rezclick.com') && trackingData;
+  // Check if this is an Acuity booking link
+  const isAcuityBooking = /as\.me|acuityscheduling\.com|^\/book\//.test(href) && trackingData;
 
   // Handle click for tracking
   const handleClick = () => {
-    if (isRezClickBooking && trackingData) {
-      trackRezClickBooking(href, trackingData.activityName, trackingData.city);
+    if (isAcuityBooking && trackingData) {
+      trackInitiateCheckout({ content_name: trackingData.activityName, content_category: trackingData.city });
     }
   };
 

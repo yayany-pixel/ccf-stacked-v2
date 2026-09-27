@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getAllEvents } from "@/lib/eventsAPI";
+import { getAllEvents, eventLocationSchema } from "@/lib/eventsAPI";
 import { ACUITY_EVENTS_HREF } from "@/lib/constants";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * Server component that displays upcoming events from both Eventbrite and Acuity
+ * Server component that displays upcoming events from the public Acuity schedule
  * With proper JSON-LD structured data for SEO
  * Automatically revalidates every 60 seconds
  */
@@ -43,7 +43,7 @@ export default async function EventsPage() {
   try {
     events = await getAllEvents(60);
   } catch (e) {
-    error = e instanceof Error ? e.message : "Unable to load events";
+    error = "The schedule is temporarily unavailable. You can still view dates and book directly in Acuity.";
     console.error("Error fetching events:", e);
   }
 
@@ -56,19 +56,8 @@ export default async function EventsPage() {
     "startDate": event.startDate,
     "endDate": event.endDate,
     "eventStatus": "https://schema.org/EventScheduled",
-    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "location": {
-      "@type": "Place",
-      "name": event.venueName,
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": event.streetAddress,
-        "addressLocality": event.addressLocality,
-        "addressRegion": event.addressRegion,
-        "postalCode": event.postalCode,
-        "addressCountry": event.addressCountry
-      }
-    },
+    "eventAttendanceMode": event.city === "Virtual" ? "https://schema.org/OnlineEventAttendanceMode" : "https://schema.org/OfflineEventAttendanceMode",
+    "location": eventLocationSchema(event),
     "image": event.imageUrl || "https://colorcocktailfactory.com/apple-touch-icon.png",
     "organizer": {
       "@type": "Organization",
@@ -106,7 +95,7 @@ export default async function EventsPage() {
         <script
           key={index}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }}
         />
       ))}
 
@@ -118,7 +107,7 @@ export default async function EventsPage() {
               Upcoming Events
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-white/70">
-              Discover our upcoming pottery, glass, painting, and creative workshops in Chicago & Eugene. 
+              Discover our upcoming pottery, glass, painting, and creative workshops in Chicago, Eugene, and online.
               All skill levels welcome!
             </p>
           </div>
@@ -131,13 +120,13 @@ export default async function EventsPage() {
               <div className="text-xl font-semibold text-red-400">Unable to Load Events</div>
               <p className="mt-3 text-white/70">{error}</p>
               <p className="mt-4 text-sm text-white/60">
-                Please check your environment configuration or try again later.
+                Availability and booking remain available on our scheduling page.
               </p>
               <Link
-                href="/"
+                href="https://colorcocktailfactory.as.me/"
                 className="mt-6 inline-block rounded-full border border-white/15 bg-white/5 px-6 py-2 text-sm font-semibold transition hover:bg-white/10"
               >
-                ← Back to Home
+                View Dates in Acuity
               </Link>
             </GlassCard>
           </Reveal>

@@ -1,5 +1,7 @@
 'use client';
 
+import { eventTimeZone } from "@/lib/locations";
+import { useSearchParams } from "next/navigation";
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import NextImage from "next/image";
@@ -14,7 +16,9 @@ interface EventsGridProps {
 }
 
 export default function EventsGrid({ events }: EventsGridProps) {
-  const [selectedCity, setSelectedCity] = useState<string>("all");
+  const query = useSearchParams();
+  const [selectedCity, setSelectedCity] = useState<string>(query.get("city") ?? "all");
+  const [visibleCount, setVisibleCount] = useState(48);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"grid" | "timeline">("timeline");
 
@@ -38,11 +42,13 @@ export default function EventsGrid({ events }: EventsGridProps) {
     });
   }, [events, selectedCity, selectedCategory]);
 
+  const visibleEvents = useMemo(() => filteredEvents.slice(0, visibleCount), [filteredEvents, visibleCount]);
+
   // Group events by date for timeline view
   const groupedEvents = useMemo(() => {
     const groups: { [key: string]: NormalizedEvent[] } = {};
     
-    filteredEvents.forEach(event => {
+    visibleEvents.forEach(event => {
       const date = new Date(event.startDate);
       const today = new Date();
       const tomorrow = new Date(today);
@@ -52,16 +58,17 @@ export default function EventsGrid({ events }: EventsGridProps) {
       
       let groupKey: string;
       
-      if (date.toDateString() === today.toDateString()) {
+      const localDay = (d: Date) => d.toLocaleDateString("en-CA", { timeZone: eventTimeZone(event.city) });
+      if (localDay(date) === localDay(today)) {
         groupKey = "Today";
-      } else if (date.toDateString() === tomorrow.toDateString()) {
+      } else if (localDay(date) === localDay(tomorrow)) {
         groupKey = "Tomorrow";
       } else if (date < nextWeek) {
         groupKey = "This Week";
       } else {
         const monthNames = ["January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"];
-        groupKey = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+        groupKey = date.toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: eventTimeZone(event.city) });
       }
       
       if (!groups[groupKey]) {
@@ -71,10 +78,10 @@ export default function EventsGrid({ events }: EventsGridProps) {
     });
     
     return groups;
-  }, [filteredEvents]);
+  }, [visibleEvents]);
 
   // Format date for display in Central Time
-  function formatEventDate(isoDate: string): string {
+  function formatEventDate(isoDate: string, city: string): string {
     const date = new Date(isoDate);
     return date.toLocaleDateString('en-US', {
       weekday: 'short',
@@ -82,27 +89,28 @@ export default function EventsGrid({ events }: EventsGridProps) {
       day: 'numeric',
       hour: 'numeric',
       minute: '2-digit',
-      timeZone: 'America/Chicago',
+      timeZone: eventTimeZone(city),
       timeZoneName: 'short'
     });
   }
 
-  function formatEventTime(isoDate: string): string {
+  function formatEventTime(isoDate: string, city: string): string {
     const date = new Date(isoDate);
     return date.toLocaleTimeString('en-US', {
       hour: 'numeric',
       minute: '2-digit',
-      timeZone: 'America/Chicago'
+      timeZoneName: 'short',
+      timeZone: eventTimeZone(city)
     });
   }
 
-  function formatEventDay(isoDate: string): string {
+  function formatEventDay(isoDate: string, city: string): string {
     const date = new Date(isoDate);
     return date.toLocaleDateString('en-US', {
       weekday: 'short',
       month: 'short',
       day: 'numeric',
-      timeZone: 'America/Chicago'
+      timeZone: eventTimeZone(city)
     });
   }
 
@@ -114,7 +122,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
           {/* View Toggle */}
           <div className="flex items-center justify-between flex-wrap gap-4">
             <p className="text-sm text-white/60">
-              Showing {filteredEvents.length} of {events.length} events
+              Showing {visibleEvents.length} of {filteredEvents.length} matching events
             </p>
             <div className="flex gap-2">
               <button
@@ -149,7 +157,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
                 {cities.map(city => (
                   <button
                     key={city}
-                    onClick={() => setSelectedCity(city)}
+                    onClick={() => { setSelectedCity(city); setVisibleCount(48); }}
                     className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                       selectedCity === city
                         ? "bg-cyan-500/30 text-cyan-200 ring-1 ring-cyan-400/50"
@@ -169,7 +177,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
                 {categories.map(category => (
                   <button
                     key={category}
-                    onClick={() => setSelectedCategory(category)}
+                    onClick={() => { setSelectedCategory(category); setVisibleCount(48); }}
                     className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                       selectedCategory === category
                         ? "bg-purple-500/30 text-purple-200 ring-1 ring-purple-400/50"
@@ -249,7 +257,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
                                 <div className="mb-3 space-y-1 text-sm text-white/70">
                                   <div className="flex items-center gap-2">
                                     <span className="text-purple-400">🕒</span>
-                                    <time dateTime={event.startDate}>{formatEventDate(event.startDate)}</time>
+                                    <time dateTime={event.startDate}>{formatEventDate(event.startDate, event.city)}</time>
                                   </div>
                                   <div className="flex items-center gap-2">
                                     <span className="text-cyan-400">📍</span>
@@ -292,7 +300,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
                                 </span>
                               )}
                               <span className="ml-auto text-xs text-white/40">
-                                via {event.source === 'eventbrite' ? 'Eventbrite' : 'Acuity'}
+                                via Acuity
                               </span>
                             </div>
                           </div>
@@ -310,7 +318,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
       {/* Grid View */}
       {viewMode === "grid" && (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {filteredEvents.map((event, index) => (
+          {visibleEvents.map((event, index) => (
             <Reveal key={event.id} variant="fade-up" delay={index * 50}>
               <GlassCard className="flex h-full flex-col">
                 <div className="p-6">
@@ -346,7 +354,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
                   <div className="mb-4 space-y-2 text-sm text-white/70">
                     <div className="flex items-start gap-2">
                       <span className="text-purple-400">📅</span>
-                      <time dateTime={event.startDate}>{formatEventDay(event.startDate)} at {formatEventTime(event.startDate)}</time>
+                      <time dateTime={event.startDate}>{formatEventDay(event.startDate, event.city)} at {formatEventTime(event.startDate, event.city)}</time>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="text-cyan-400">📍</span>
@@ -386,12 +394,20 @@ export default function EventsGrid({ events }: EventsGridProps) {
 
                   {/* Source Badge */}
                   <div className="mt-3 text-xs text-white/40">
-                    via {event.source === 'eventbrite' ? 'Eventbrite' : 'Acuity'}
+                    via Acuity
                   </div>
                 </div>
               </GlassCard>
             </Reveal>
           ))}
+        </div>
+      )}
+
+      {visibleCount < filteredEvents.length && (
+        <div className="mt-8 text-center">
+          <button onClick={() => setVisibleCount(count => count + 48)} className="rounded-full border border-purple-300/40 bg-purple-500/20 px-6 py-3 font-semibold">
+            Show More Dates
+          </button>
         </div>
       )}
 

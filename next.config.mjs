@@ -38,20 +38,27 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
-  // Redirects for old/expired event URLs
+  // Preserve links from the former site with permanent, relevant destinations.
   async redirects() {
     return [
-      {
-        source: '/events/eventbrite-1981076370754-eugene-date-night-pottery',
-        destination: 'https://colorcocktailfactory.as.me/',
-        permanent: true,
-      },
-      // Catch-all for other old eventbrite event URLs
-      {
-        source: '/events/eventbrite-:id(\\d+)-:slug*',
-        destination: 'https://colorcocktailfactory.as.me/',
-        permanent: false,
-      },
+      { source: '/wheel-throwing', destination: '/activities/beginner-wheel', permanent: true },
+      { source: '/datenight', destination: '/activities/date-night-wheel', permanent: true },
+      { source: '/mosaics', destination: '/activities/mosaic', permanent: true },
+      { source: '/bonsai-workshop', destination: '/activities/bonsai', permanent: true },
+      { source: '/terrarium', destination: '/activities/terrarium', permanent: true },
+      { source: '/candles', destination: '/activities/candle-making', permanent: true },
+      { source: '/glass-blowing', destination: '/activities/glass-blowing', permanent: true },
+      { source: '/general-1-4', destination: '/activities/glass-fusion', permanent: true },
+      { source: '/general-clean-2', destination: '/book/chicago/paint-pottery', permanent: true },
+      { source: '/general-1-2', destination: '/activities/handbuilding', permanent: true },
+      { source: '/general-1-3', destination: '/activities', permanent: true },
+      { source: '/general-8-1', destination: '/activities', permanent: true },
+      { source: '/services-1', destination: '/activities', permanent: true },
+      { source: '/blank', destination: '/activities', permanent: true },
+      { source: '/blank-1', destination: '/activities', permanent: true },
+      { source: '/contact-us', destination: '/private-events', permanent: true },
+      { source: '/testimonials', destination: '/birthday-parties', permanent: true },
+      { source: '/general-clean-3', destination: '/activities', permanent: true },
     ];
   },
   // Security headers

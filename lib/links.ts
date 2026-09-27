@@ -1,3 +1,5 @@
+import { activityBookingUrl, cityBookingUrl } from "@/lib/booking";
+import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { type City, type CityParam, type SectionConfig } from "@/lib/config";
 
 // Export all cities for use in activity pages
@@ -5,15 +7,15 @@ export const cities: City[] = [
   {
     param: "chicago",
     label: "Chicago",
-    rezclickBase: "https://www.rezclick.com/colorcocktailfactory/index.php?page=calendar&term=",
-    address: "1142 W. 18th Street, Chicago, IL",
+    bookingBase: cityBookingUrl("chicago"),
+    address: STUDIO_LOCATIONS.chicago.address,
     locationName: "Color Cocktail Factory (Chicago)"
   },
   {
     param: "eugene",
     label: "Eugene",
-    rezclickBase: "https://colorcocktailfactory.as.me/schedule/a8dfb300",
-    address: "Eugene, OR",
+    bookingBase: cityBookingUrl("eugene"),
+    address: STUDIO_LOCATIONS.eugene.address,
     locationName: "Color Cocktail Factory (Eugene)"
   }
 ];
@@ -30,17 +32,12 @@ export function getCityByParam(param: string): City {
 
 export function buildBookingLink(city: City, section: SectionConfig) {
   if (section.booking?.customUrl) return section.booking.customUrl;
-  // Only append term for RezClick-style URLs (which include &term= in the base)
-  if (city.rezclickBase.includes("term=")) {
-    const term = section.booking?.term ?? "";
-    return `${city.rezclickBase}${term}`;
-  }
-  // Acuity-style URLs are used as-is (e.g. Eugene)
-  return city.rezclickBase;
+  if (section.id === "private") return "/private-events";
+  return activityBookingUrl(city.param, section.slug);
 }
 
 export function buildHomeBookLink(city: City) {
-  return city.rezclickBase;
+  return city.bookingBase;
 }
 
 export function swapCityInPath(pathname: string, city: CityParam) {

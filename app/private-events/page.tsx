@@ -291,7 +291,7 @@ export default function PrivateEventsPage() {
       <main className="min-h-screen">
         {/* Hero + Form */}
         <section className="gradient-breathing relative overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40">
-          <div className="sparkle-noise absolute inset-0 bg-[url('/noise.png')] opacity-20" />
+          <div className="sparkle-noise absolute inset-0  opacity-20" />
 
           <div className="relative z-10 mx-auto max-w-4xl px-6 py-16 sm:py-24">
             {/* Heading */}

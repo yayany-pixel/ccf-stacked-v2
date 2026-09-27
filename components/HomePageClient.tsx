@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ONLINE_CAULDRON_URL } from "@/lib/booking";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
 import HeroVideoBackground from "@/components/HeroVideoBackground";
@@ -83,13 +84,13 @@ const CTAS: HomeCta[] = [
   {
     Icon: IconWheel,
     eyebrow: "LIVE ONLINE",
-    title: "Pottery at Home",
+    title: "Online Cauldron Classes",
     description:
-      "Six live Saturday sessions with a beginner tabletop pottery wheel kit delivered to you and yours to keep.",
-    schedule: ["Starts September 26", "Saturdays at noon Central"],
-    price: "$150",
-    label: "Reserve Your Spot",
-    href: "https://colorcocktailfactory.as.me/onlinewheelthrowing",
+      "Hand-build your own decorative Halloween cauldron in a live online workshop. Beginner-friendly; no wheel or kiln needed.",
+    schedule: ["90-minute live class", "Optional clay delivery +$20; order 10+ days ahead"],
+    price: "$29",
+    label: "Book Online Cauldrons",
+    href: ONLINE_CAULDRON_URL,
     gradientBg: "from-amber-500/20 to-orange-500/20",
     hoverBorder: "hover:border-amber-400/60",
     buttonClass: "bg-gradient-to-r from-amber-500 to-orange-500",
@@ -117,7 +118,7 @@ export default function HomePageClient() {
       <section className="gradient-breathing relative min-h-screen overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40 flex flex-col items-center justify-center px-6 py-24">
         {/* Video background */}
         <HeroVideoBackground />
-        <div className="sparkle-noise absolute inset-0 bg-[url('/noise.png')] opacity-20" />
+        <div className="sparkle-noise absolute inset-0  opacity-20" />
 
         <div className="relative z-10 mx-auto max-w-6xl w-full">
           {/* Brand Header */}
@@ -197,7 +198,7 @@ export default function HomePageClient() {
               >
                 Beginner wheel throwing
               </Link>{" "}
-              starts at $35 per person.
+              starts at $30 per person.
             </p>
           </Reveal>
         </div>

@@ -1,23 +1,21 @@
+import { eventTimeZone } from "@/lib/locations";
+import { getCatalog, getClassById } from "@/lib/askccf/catalog";
+import { catalogBookingUrl } from "@/lib/booking";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import NextImage from "next/image";
-import { getAllEvents, getEventBySlug, type NormalizedEvent } from "@/lib/eventsAPI";
+import { getEventBySlug, eventLocationSchema, type NormalizedEvent } from "@/lib/eventsAPI";
 import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
 import BookingLink from "@/components/BookingLink";
 import Reveal from "@/components/motion/Reveal";
 
-// Generate static params for all upcoming events
-export async function generateStaticParams() {
-  const events = await getAllEvents(60);
-  return events.map(event => ({
-    slug: event.slug
-  }));
-}
+export const dynamic = 'force-dynamic';
 
 // Generate metadata for each event
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  if (params.slug.startsWith("eventbrite-")) return { title: "Find Current Class Dates" };
   const event = await getEventBySlug(params.slug);
   
   if (!event) {
@@ -52,19 +50,8 @@ function generateEventSchema(event: NormalizedEvent) {
     "startDate": event.startDate,
     "endDate": event.endDate,
     "eventStatus": event.status === 'scheduled' ? "https://schema.org/EventScheduled" : "https://schema.org/EventCancelled",
-    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "location": {
-      "@type": "Place",
-      "name": event.venueName,
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": event.streetAddress,
-        "addressLocality": event.addressLocality,
-        "addressRegion": event.addressRegion,
-        "postalCode": event.postalCode,
-        "addressCountry": event.addressCountry
-      }
-    },
+    "eventAttendanceMode": event.city === "Virtual" ? "https://schema.org/OnlineEventAttendanceMode" : "https://schema.org/OfflineEventAttendanceMode",
+    "location": eventLocationSchema(event),
     "image": event.imageUrl || "https://colorcocktailfactory.com/apple-touch-icon.png",
     "organizer": {
       "@type": "Organization",
@@ -87,11 +74,12 @@ function generateEventSchema(event: NormalizedEvent) {
 }
 
 // Format date range for display
-function formatEventDateRange(startDate: string, endDate: string): string {
+function formatEventDateRange(startDate: string, endDate: string, city: string): string {
   const start = new Date(startDate);
   const end = new Date(endDate);
   
   const dateOptions: Intl.DateTimeFormatOptions = {
+    timeZone: eventTimeZone(city),
     weekday: 'long',
     year: 'numeric',
     month: 'long',
@@ -99,6 +87,7 @@ function formatEventDateRange(startDate: string, endDate: string): string {
   };
   
   const timeOptions: Intl.DateTimeFormatOptions = {
+    timeZone: eventTimeZone(city),
     hour: 'numeric',
     minute: '2-digit',
     timeZoneName: 'short'
@@ -108,9 +97,15 @@ function formatEventDateRange(startDate: string, endDate: string): string {
 }
 
 export default async function EventDetailPage({ params }: { params: { slug: string } }) {
+  if (params.slug.startsWith("eventbrite-")) {
+    const city = params.slug.includes("eugene") ? "eugene" : params.slug.includes("online") ? "online" : "chicago";
+    redirect(catalogBookingUrl(await getCatalog(), city, params.slug));
+  }
   const event = await getEventBySlug(params.slug);
-
   if (!event) {
+    const match = params.slug.match(/^acuity-(\d+)-/);
+    const item = match ? await getClassById(match[1]) : null;
+    if (item) redirect(item.bookingUrl);
     notFound();
   }
 
@@ -121,7 +116,7 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema).replace(/</g, "\\u003c") }}
       />
 
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
@@ -179,7 +174,7 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
                   <span className="text-2xl">📅</span>
                   <div>
                     <div className="font-semibold text-white">Date & Time</div>
-                    <div className="text-white/70">{formatEventDateRange(event.startDate, event.endDate)}</div>
+                    <div className="text-white/70">{formatEventDateRange(event.startDate, event.endDate, event.city)}</div>
                   </div>
                 </div>
 
@@ -228,7 +223,7 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
                   Book This Event →
                 </BookingLink>
                 <ButtonPill 
-                  href={`/${event.city.toLowerCase()}`}
+                  href={event.city === "Virtual" ? "/events?city=Virtual" : `/${event.city.toLowerCase()}`}
                   variant="secondary"
                 >
                   More {event.city} Classes
@@ -237,7 +232,7 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
 
               {/* Source Info */}
               <div className="mt-6 text-sm text-white/40">
-                Booking powered by {event.source === 'eventbrite' ? 'Eventbrite' : 'Acuity Scheduling'}
+                Booking powered by Acuity Scheduling
               </div>
             </div>
           </GlassCard>

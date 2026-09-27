@@ -1,9 +1,9 @@
-﻿export type CityParam = "chicago" | "eugene";
+export type CityParam = "chicago" | "eugene";
 
 export type City = {
   param: CityParam;
   label: string;
-  rezclickBase: string;
+  bookingBase: string;
   address: string;
   locationName: string;
 };
@@ -49,7 +49,7 @@ export type SectionConfig = {
   valueCards: ValueCard[];
 
   booking?: {
-    term?: string;       // percent-encoded term keyword for RezClick
+    term?: string;       // legacy activity keyword
     customUrl?: string;  // override (gift cards, waitlist, etc.)
   };
 
@@ -124,7 +124,7 @@ export const sections: SectionConfig[] = [
     badge: "PRIVATE · TEAM · CELEBRATE",
     heroTitle: "Request a Private Event",
     heroDescription:
-      "Tell us what you're planning and we'll reply with options. No backend needed — the form opens a ready-to-send email with your details.",
+      "Tell us what you're planning and we'll reply with workshop options, pricing, and available dates.",
     primaryCta: { label: "Open request form", kind: "detail" },
     secondaryCta: { label: "See group options", kind: "detail" },
     tags: ["Team-building", "Birthdays", "Bachelorettes", "Custom formats", "Easy planning"],
@@ -180,16 +180,6 @@ export const sections: SectionConfig[] = [
       { label: "VIBE", title: "Instant chemistry", body: "Clay is teamwork training." }
     ],
     booking: { term: "date%20night" },
-    bookingLinks: {
-      rezclick: "https://www.rezclick.com/color-cocktail-factory/date-night-pottery",
-      eventbrite: "https://www.eventbrite.com/e/date-night-on-the-wheel-tickets",
-      acuity: "https://colorcocktailfactory.as.me/"
-    },
-    upcomingTimes: [
-      { label: "Fri Dec 27 · 5:30 PM", url: "https://www.rezclick.com/color-cocktail-factory/date-night-pottery" },
-      { label: "Sat Dec 28 · 7:30 PM", url: "https://www.rezclick.com/color-cocktail-factory/date-night-pottery" },
-      { label: "Sun Dec 29 · 5:30 PM", url: "https://www.rezclick.com/color-cocktail-factory/date-night-pottery" }
-    ],
     faqs: [
       { q: "Do we need experience?", a: "Nope. We teach from zero and keep it fun." },
       { q: "Do we keep what we make?", a: "Same day pickup decorative only; fired & glazed finishing starts at $5/item." },
@@ -236,10 +226,6 @@ export const sections: SectionConfig[] = [
       { label: "VIBE", title: "Supportive", body: "Friendly coaching, zero judgment." }
     ],
     booking: { term: "pottery" },
-    bookingLinks: {
-      rezclick: "https://www.rezclick.com/color-cocktail-factory/beginner-wheel-throwing",
-      eventbrite: "https://www.eventbrite.com/e/beginner-pottery-wheel-class-tickets",
-    },
     faqs: [
       { q: "Do I need experience?", a: "No. This is designed for first-timers." },
       { q: "Do I keep my piece?", a: "Same day decorative, or fired & glazed from $5/item." },

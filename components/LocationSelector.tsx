@@ -121,7 +121,7 @@ export default function LocationSelector() {
         <div id="city-content" role="tabpanel" aria-live="polite">
           {/* Header Banner */}
           <div className={`relative h-48 overflow-hidden bg-gradient-to-br ${currentCity.gradient}`}>
-            <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20" />
+            <div className="absolute inset-0  opacity-20" />
             <div className="relative z-10 flex h-full flex-col items-center justify-center p-8 text-center">
               <div className="text-5xl">{currentCity.emoji}</div>
               <h2 className="mt-3 font-serif text-3xl font-bold">{currentCity.name}</h2>

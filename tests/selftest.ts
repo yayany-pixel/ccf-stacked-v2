@@ -15,7 +15,8 @@ assert.equal(buildBookingLink(chicago, gift!), giftCardUrl, "gift uses custom gi
 
 const mosaic = sections.find((s) => s.slug === "mosaic");
 assert.ok(mosaic, "mosaic section exists");
-assert.ok(buildBookingLink(chicago, mosaic!).includes("term="), "booking links include term=");
+assert.equal(buildBookingLink(chicago, mosaic!), "/book/chicago/mosaic", "booking retains the selected city and activity");
+assert.equal(buildBookingLink(eugene, mosaic!), "/book/eugene/mosaic");
 assert.ok(swapCityInPath("/chicago/mosaic", "eugene") === "/eugene/mosaic", "swap city preserves path");
 
 const privateSection = sections.find((s) => s.slug === "private-parties");

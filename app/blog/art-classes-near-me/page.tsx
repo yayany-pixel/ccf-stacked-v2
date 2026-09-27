@@ -234,21 +234,21 @@ export default function ArtClassesNearMePage() {
                       <p className="mb-3 text-center font-semibold">Ready to book an adult-friendly class?</p>
                       <div className="grid gap-3 sm:grid-cols-3">
                         <ButtonPill 
-                          href="https://www.rezclick.com/colorcocktailfactory/index.php?page=calendar&term=pottery"
+                          href="/book/chicago/beginner-wheel"
                           variant="romanceCta"
                           className="w-full text-center"
                         >
                           Book Pottery
                         </ButtonPill>
                         <ButtonPill 
-                          href="https://www.rezclick.com/colorcocktailfactory/index.php?page=calendar&term=mosaic"
+                          href="/book/chicago/mosaic"
                           variant="romanceCta"
                           className="w-full text-center"
                         >
                           Book Mosaic
                         </ButtonPill>
                         <ButtonPill 
-                          href="https://www.rezclick.com/colorcocktailfactory/index.php?page=calendar&term=bonsai"
+                          href="/book/chicago/bonsai"
                           variant="romanceCta"
                           className="w-full text-center"
                         >

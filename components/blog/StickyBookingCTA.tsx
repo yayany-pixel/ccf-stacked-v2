@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { cityBookingUrl } from "@/lib/booking";
 
 export default function StickyBookingCTA() {
   const [isVisible, setIsVisible] = useState(false);
@@ -19,9 +20,7 @@ export default function StickyBookingCTA() {
 
   if (!isVisible) return null;
 
-  const bookingUrl = selectedCity === "chicago"
-    ? "https://www.rezclick.com/colorcocktailfactory/index.php?page=calendar"
-    : "https://colorcocktailfactory.as.me/schedule/a8dfb300";
+  const bookingUrl = cityBookingUrl(selectedCity);
 
   return (
     <div className="fixed bottom-4 right-4 z-40 hidden md:block">

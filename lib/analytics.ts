@@ -157,7 +157,7 @@ export function detectBookingProvider(url: string): BookingProvider {
   const lowerUrl = url.toLowerCase();
   if (lowerUrl.includes('rezclick.com')) return 'rezclick';
   if (lowerUrl.includes('eventbrite.com')) return 'eventbrite';
-  if (lowerUrl.includes('acuityscheduling.com')) return 'acuity';
+  if (lowerUrl.includes('acuityscheduling.com') || lowerUrl.includes('colorcocktailfactory.as.me') || lowerUrl.startsWith('/book/')) return 'acuity';
   return 'unknown';
 }
 

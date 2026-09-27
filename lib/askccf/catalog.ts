@@ -10,6 +10,7 @@
  * Server-only: never import this from a client component.
  */
 
+import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { formatClassTime, localDateAndTime, studioTimeZone } from "./schedule";
 export type CatalogLocation = "chicago" | "eugene" | "online" | "unknown";
 
@@ -78,9 +79,8 @@ export const LOCATION_LABELS: Record<CatalogLocation, string> = {
 };
 
 export const LOCATION_ADDRESSES: Record<CatalogLocation, string | null> = {
-  chicago: "1142 W. 18th Street, Chicago, IL 60608",
-  // Eugene listings currently disagree. Do not send every customer to one address.
-  eugene: null,
+  chicago: STUDIO_LOCATIONS.chicago.address,
+  eugene: STUDIO_LOCATIONS.eugene.address,
   online: null,
   unknown: null,
 };
@@ -238,6 +238,7 @@ export function derivePricing(name: string, description: string, price: string |
 
 function inferCraft(name: string, description: string): string {
   const text = `${name} ${description}`.toLowerCase();
+  if (/hand[- ]?build/.test(text)) return "Handbuilding pottery";
   if (/(wheel|throwing|cauldron)/.test(text) && /pott|clay|ceramic/.test(text)) return "Wheel pottery";
   if (/handbuilding|hand building|kurinuki|sculpt/.test(text)) return "Handbuilding pottery";
   if (/pott|clay|ceramic|porcelain|matcha bowl|mug|vase/.test(text)) return "Pottery";
@@ -262,7 +263,7 @@ function pickupNotesFrom(description: string): string[] {
 
 function locationFor(type: AcuityType): CatalogLocation {
   const category = (type.category ?? "").toLowerCase();
-  if (category.includes("online")) return "online";
+  if (/online|virtual/.test(`${category} ${type.name.toLowerCase()}`)) return "online";
 
   // The studio's own customer-facing wording wins: some Eugene sessions are
   // still filed against the Chicago calendar, and the title is what the
@@ -279,8 +280,12 @@ function locationFor(type: AcuityType): CatalogLocation {
 }
 
 export function normalize(type: AcuityType): CatalogClass {
-  const description = (type.description ?? "").replace(/<br\s*\/?\s*>/gi, "\n").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\r\n/g, "\n").trim();
   const location = locationFor(type);
+  const description = (type.description ?? "").replace(/<br\s*\/?\s*>/gi, "\n").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\r\n/g, "\n").trim()
+    .replace(/1162\s+Lorella\s+(?:Avenue|Ave)\.?/gi, STUDIO_LOCATIONS.eugene.streetAddress)
+    .replace(/780\s+Blair\s+(?:Boulevard|Blvd)\.?/gi, STUDIO_LOCATIONS.eugene.streetAddress)
+    .replace(/1657\s+W\.?\s+Chicago\s+(?:Avenue|Ave)\.?/gi, STUDIO_LOCATIONS.chicago.streetAddress)
+    .replace(/Eugene,?\s+OR\s+97401/gi, "Eugene, OR 97402");
   const isPrivateSession = (type.category ?? "").toLowerCase().includes("private session");
 
   return {
@@ -290,7 +295,7 @@ export function normalize(type: AcuityType): CatalogClass {
     shortDescription: sentences(description).slice(0, 2).join(" ").slice(0, 320),
     location,
     locationLabel: LOCATION_LABELS[location],
-    address: description.match(/\b(?:3295\s+Cross\s+(?:Street|St\.?|St)|1162\s+Lorella\s+(?:Avenue|Ave\.?|Ave))\b/i)?.[0] ?? LOCATION_ADDRESSES[location],
+    address: LOCATION_ADDRESSES[location],
     category: type.category ?? "Uncategorised",
     craft: inferCraft(type.name, description),
     durationMinutes: typeof type.duration === "number" ? type.duration : null,
@@ -535,4 +540,26 @@ export function toCardShape(c: CatalogClass) {
     imageUrl: c.imageUrl,
     bookingUrl: c.bookingUrl,
   };
+}
+
+
+export type PublicClassSlot = {
+  appointmentTypeID: number;
+  calendarID: number;
+  time: string;
+  duration: number;
+  slotsAvailable: number;
+};
+
+/** One bounded request covers the full date range and all public class types. */
+export async function getPublicClassSchedule(daysAhead = 60): Promise<PublicClassSlot[]> {
+  const start = new Date();
+  const end = new Date(start.getTime() + Math.min(Math.max(daysAhead, 1), 90) * 86400000);
+  const query = new URLSearchParams({
+    minDate: start.toISOString().slice(0, 10), maxDate: end.toISOString().slice(0, 10),
+    includeUnavailable: "false", includePrivate: "false",
+  });
+  const slots = await acuityFetch(`availability/classes?${query}`, 120);
+  if (!Array.isArray(slots)) throw new Error("acuity_unexpected_response");
+  return slots as PublicClassSlot[];
 }

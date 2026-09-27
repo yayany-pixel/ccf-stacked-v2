@@ -23,8 +23,8 @@ async function main() {
   assert.equal(matchesActivity(hand, "wheel"), false, "description cross-selling must not satisfy a wheel constraint");
   assert.equal(matchesActivity(wheel, "wheel"), true);
   assert.doesNotMatch(derivePricing("Unknown", "Coverage not given.", "50").summary, /one ticket per participant/);
-  assert.equal(normalize({id:3,name:"Eugene Pottery",active:true}).address, null);
-  assert.equal(normalize({id:3,name:"Eugene Pottery",active:true,description:"Location: 3295 Cross Street, Eugene."}).address, "3295 Cross Street");
+  assert.equal(normalize({id:3,name:"Eugene Pottery",active:true}).address, "3295 Cross Street, Eugene, OR 97402");
+  assert.equal(normalize({id:3,name:"Eugene Pottery",active:true,description:"Location: 3295 Cross Street, Eugene."}).address, "3295 Cross Street, Eugene, OR 97402");
   const series = normalize({id:4,name:"6-Week Live Online Pottery Course",active:true,type:"series",category:"Online",duration:540,description:"Register by Sept 12 for kit delivery. Late enrollment begins after kit arrival."});
   assert.equal(toCardShape(series).isSeries, true);
   assert.equal(toCardShape(series).enrollmentNotes.length, 2);

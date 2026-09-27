@@ -215,7 +215,7 @@ const faqs: { q: string; a: string }[] = [
   },
   {
     q: "Is there parking? Are the studios accessible?",
-    a: "Free street parking is available at both our Chicago (Pilsen, 18th St) and Eugene (Lorella Ave) locations. Both studios are wheelchair accessible for pottery classes. Let us know about any accessibility needs in your inquiry and we'll prepare accordingly.",
+    a: "Free street parking is available at both our Chicago (Pilsen, 18th St) and Eugene (Cross Street) locations. Both studios are wheelchair accessible for pottery classes. Let us know about any accessibility needs in your inquiry and we'll prepare accordingly.",
   },
   {
     q: "Can we pick a theme or customize the experience?",
@@ -257,10 +257,10 @@ const localBusinessSchema = {
     },
     {
       "@type": "PostalAddress",
-      streetAddress: "1162 Lorella Ave",
+      streetAddress: "3295 Cross Street",
       addressLocality: "Eugene",
       addressRegion: "OR",
-      postalCode: "97401",
+      postalCode: "97402",
       addressCountry: "US",
     },
   ],
@@ -349,7 +349,7 @@ export default function BirthdayPartiesPage() {
             <circle cx="320" cy="320" r="170" stroke="currentColor" strokeWidth="1.5" strokeDasharray="12 8" opacity="0.4" />
           </svg>
         </div>
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-10" />
+        <div className="absolute inset-0  opacity-10" />
 
         <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
           <Reveal variant="scale">
@@ -763,7 +763,7 @@ export default function BirthdayPartiesPage() {
               {
                 city: "Eugene",
                 neighborhood: "Eugene, OR",
-                address: "1162 Lorella Ave, Eugene, OR 97401",
+                address: "3295 Cross Street, Eugene, OR 97402",
                 parking: "Free street parking",
                 access: "Wheelchair accessible (pottery classes)",
                 emoji: "🌲",
@@ -804,7 +804,7 @@ export default function BirthdayPartiesPage() {
           11. FINAL CTA
       ────────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-gradient-to-br from-pink-950 via-purple-950 to-indigo-950 py-28 text-center">
-        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-8" />
+        <div className="absolute inset-0  opacity-8" />
         <div className="relative z-10 mx-auto max-w-2xl px-6">
           <Reveal variant="scale">
             <div className="mb-5 text-5xl">🎂</div>

@@ -43,11 +43,6 @@ export function generateOrganizationSchema() {
           "postalCode": "60608",
           "addressCountry": "US"
         },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 41.8577,
-          "longitude": -87.6698
-        },
         "telephone": "+1-312-881-9929",
         "url": "https://colorcocktailfactory.com/chicago",
         "openingHoursSpecification": [
@@ -62,16 +57,11 @@ export function generateOrganizationSchema() {
         "name": "Color Cocktail Factory - Eugene",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "1162 Lorella Ave",
+          "streetAddress": "3295 Cross Street",
           "addressLocality": "Eugene",
           "addressRegion": "OR",
-          "postalCode": "97401",
+          "postalCode": "97402",
           "addressCountry": "US"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 44.0390,
-          "longitude": -123.0840
         },
         "telephone": "+1-312-881-9929",
         "url": "https://colorcocktailfactory.com/eugene",
@@ -96,18 +86,14 @@ export function generateLocalBusinessSchema(city: City) {
     addressLocality: "Chicago",
     addressRegion: "IL",
     postalCode: "60608",
-    latitude: 41.8577,
-    longitude: -87.6698,
     telephone: "+1-312-881-9929",
   };
   
   const eugeneData = {
-    streetAddress: "1162 Lorella Ave",
+    streetAddress: "3295 Cross Street",
     addressLocality: "Eugene",
     addressRegion: "OR",
-    postalCode: "97401",
-    latitude: 44.0390,
-    longitude: -123.0840,
+    postalCode: "97402",
     telephone: undefined,
   };
   
@@ -128,13 +114,6 @@ export function generateLocalBusinessSchema(city: City) {
       ...(locationData.postalCode && { "postalCode": locationData.postalCode }),
       "addressCountry": "US"
     },
-    ...(locationData.latitude && locationData.longitude && {
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": locationData.latitude,
-        "longitude": locationData.longitude
-      }
-    }),
     "url": `https://colorcocktailfactory.com/${city.param}`,
     ...(locationData.telephone && { "telephone": locationData.telephone }),
     "email": "support@colorcocktailfactory.com",
