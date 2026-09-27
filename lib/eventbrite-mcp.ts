@@ -198,13 +198,12 @@ async function createClassEvent(args: Record<string, any>) {
   const eventBody: any = {
     event: {
       name: { html: title },
-      description: { html: description },
+      summary: description.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 140),
       start: { timezone, utc: startUtc },
       end: { timezone, utc: endUtc },
       currency: "USD",
       organizer_id: organizerID,
       listed: true,
-      shareable: true,
       online_event: false,
       capacity: quantity,
       source,
@@ -225,8 +224,7 @@ async function createClassEvent(args: Record<string, any>) {
       ticket_class: {
         name: "General Admission",
         quantity_total: quantity,
-        cost: money(priceCents),
-        free: priceCents === 0,
+        ...(priceCents === 0 ? { free: true } : { free: false, cost: money(priceCents) }),
         minimum_quantity: 1,
         maximum_quantity: Math.max(1, Math.min(quantity || 1, 10)),
       },
