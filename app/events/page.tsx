@@ -36,7 +36,7 @@ export const metadata: Metadata = {
  * With proper JSON-LD structured data for SEO
  * Automatically revalidates every 60 seconds
  */
-export default async function EventsPage() {
+export default async function EventsPage({ searchParams }: { searchParams: { city?: string; category?: string; page?: string } }) {
   let events;
   let error: string | null = null;
 
@@ -47,8 +47,21 @@ export default async function EventsPage() {
     console.error("Error fetching events:", e);
   }
 
+  const cityOptions = Array.from(new Set((events ?? []).map(event => event.city))).sort();
+  const categoryOptions = Array.from(new Set((events ?? []).map(event => event.category))).sort();
+  const selectedCity = cityOptions.find(city => city === searchParams.city) ?? "all";
+  const selectedCategory = categoryOptions.find(category => category === searchParams.category) ?? "all";
+  const matchingEvents = (events ?? []).filter(event =>
+    (selectedCity === "all" || event.city === selectedCity) &&
+    (selectedCategory === "all" || event.category === selectedCategory));
+  const pageSize = 48;
+  const pageCount = Math.max(1, Math.ceil(matchingEvents.length / pageSize));
+  const requestedPage = Number.parseInt(searchParams.page ?? "1", 10) || 1;
+  const currentPage = Math.min(pageCount, Math.max(1, requestedPage));
+  const pageEvents = matchingEvents.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+
   // Generate JSON-LD for event list
-  const eventSchemas = events && events.length > 0 ? events.map(event => ({
+  const eventSchemas = pageEvents.map(event => ({
     "@context": "https://schema.org",
     "@type": "Event",
     "name": event.title,
@@ -72,7 +85,7 @@ export default async function EventsPage() {
       "availability": "https://schema.org/InStock",
       "validFrom": new Date().toISOString()
     } : undefined
-  })) : [];
+  }));
 
   // Format date for display in Central Time
   function formatEventDate(isoDate: string): string {
@@ -149,7 +162,7 @@ export default async function EventsPage() {
 
         {/* Events Grid with Filters */}
         {!error && events && events.length > 0 && (
-          <EventsGrid events={events} />
+          <EventsGrid events={pageEvents} totalEvents={matchingEvents.length} cityOptions={cityOptions} categoryOptions={categoryOptions} selectedCity={selectedCity} selectedCategory={selectedCategory} currentPage={currentPage} pageSize={pageSize} />
         )}
 
         {/* Call to Action */}

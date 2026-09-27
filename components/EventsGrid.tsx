@@ -1,7 +1,7 @@
 'use client';
 
 import { eventTimeZone } from "@/lib/locations";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import NextImage from "next/image";
@@ -13,36 +13,28 @@ import type { NormalizedEvent } from "@/lib/eventsAPI";
 
 interface EventsGridProps {
   events: NormalizedEvent[];
+  totalEvents: number;
+  cityOptions: string[];
+  categoryOptions: string[];
+  selectedCity: string;
+  selectedCategory: string;
+  currentPage: number;
+  pageSize: number;
 }
 
-export default function EventsGrid({ events }: EventsGridProps) {
+export default function EventsGrid({ events, totalEvents, cityOptions, categoryOptions, selectedCity, selectedCategory, currentPage, pageSize }: EventsGridProps) {
   const query = useSearchParams();
-  const [selectedCity, setSelectedCity] = useState<string>(query.get("city") ?? "all");
-  const [visibleCount, setVisibleCount] = useState(48);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const router = useRouter();
   const [viewMode, setViewMode] = useState<"grid" | "timeline">("timeline");
-
-  // Extract unique cities and categories
-  const cities = useMemo(() => {
-    const uniqueCities = Array.from(new Set(events.map(e => e.city)));
-    return ["all", ...uniqueCities.sort()];
-  }, [events]);
-
-  const categories = useMemo(() => {
-    const uniqueCategories = Array.from(new Set(events.map(e => e.category)));
-    return ["all", ...uniqueCategories.sort()];
-  }, [events]);
-
-  // Filter events
-  const filteredEvents = useMemo(() => {
-    return events.filter(event => {
-      const cityMatch = selectedCity === "all" || event.city === selectedCity;
-      const categoryMatch = selectedCategory === "all" || event.category === selectedCategory;
-      return cityMatch && categoryMatch;
-    });
-  }, [events, selectedCity, selectedCategory]);
-
-  const visibleEvents = useMemo(() => filteredEvents.slice(0, visibleCount), [filteredEvents, visibleCount]);
+  const cities = ["all", ...cityOptions];
+  const categories = ["all", ...categoryOptions];
+  const visibleEvents = events;
+  const updateFilter = (key: string, value: string) => {
+    const next = new URLSearchParams(query.toString());
+    if (value === "all") next.delete(key); else next.set(key, value);
+    if (key !== "page") next.delete("page");
+    router.push(`/events${next.size ? `?${next}` : ""}`, { scroll: false });
+  };
 
   // Group events by date for timeline view
   const groupedEvents = useMemo(() => {
@@ -122,7 +114,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
           {/* View Toggle */}
           <div className="flex items-center justify-between flex-wrap gap-4">
             <p className="text-sm text-white/60">
-              Showing {visibleEvents.length} of {filteredEvents.length} matching events
+              Showing {totalEvents ? (currentPage - 1) * pageSize + 1 : 0}–{(currentPage - 1) * pageSize + events.length} of {totalEvents} matching events
             </p>
             <div className="flex gap-2">
               <button
@@ -157,7 +149,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
                 {cities.map(city => (
                   <button
                     key={city}
-                    onClick={() => { setSelectedCity(city); setVisibleCount(48); }}
+                    onClick={() => updateFilter("city", city)}
                     className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                       selectedCity === city
                         ? "bg-cyan-500/30 text-cyan-200 ring-1 ring-cyan-400/50"
@@ -177,7 +169,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
                 {categories.map(category => (
                   <button
                     key={category}
-                    onClick={() => { setSelectedCategory(category); setVisibleCount(48); }}
+                    onClick={() => updateFilter("category", category)}
                     className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                       selectedCategory === category
                         ? "bg-purple-500/30 text-purple-200 ring-1 ring-purple-400/50"
@@ -403,16 +395,16 @@ export default function EventsGrid({ events }: EventsGridProps) {
         </div>
       )}
 
-      {visibleCount < filteredEvents.length && (
-        <div className="mt-8 text-center">
-          <button onClick={() => setVisibleCount(count => count + 48)} className="rounded-full border border-purple-300/40 bg-purple-500/20 px-6 py-3 font-semibold">
-            Show More Dates
-          </button>
-        </div>
+      {totalEvents > pageSize && (
+        <nav aria-label="Event pages" className="mt-8 flex items-center justify-center gap-4">
+          <button disabled={currentPage === 1} onClick={() => updateFilter("page", String(currentPage - 1))} className="rounded-full border border-purple-300/40 px-5 py-3 font-semibold disabled:opacity-30">Previous</button>
+          <span className="text-sm text-white/70">Page {currentPage} of {Math.ceil(totalEvents / pageSize)}</span>
+          <button disabled={currentPage * pageSize >= totalEvents} onClick={() => updateFilter("page", String(currentPage + 1))} className="rounded-full border border-purple-300/40 bg-purple-500/20 px-5 py-3 font-semibold disabled:opacity-30">Next Dates</button>
+        </nav>
       )}
 
       {/* Empty Filtered State */}
-      {filteredEvents.length === 0 && (
+      {events.length === 0 && (
         <Reveal variant="fade-up">
           <GlassCard className="p-12 text-center">
             <p className="text-white/70">
@@ -420,8 +412,7 @@ export default function EventsGrid({ events }: EventsGridProps) {
             </p>
             <button
               onClick={() => {
-                setSelectedCity("all");
-                setSelectedCategory("all");
+                router.push("/events", { scroll: false });
               }}
               className="mt-4 text-purple-400 hover:text-purple-300 underline"
             >

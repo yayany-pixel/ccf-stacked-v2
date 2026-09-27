@@ -29,6 +29,7 @@ export type NormalizedEvent = {
 
 export function eventCategory(title: string): string {
   const text = title.toLowerCase();
+  if (/soap holder|candle holder|lantern|chess set/.test(text)) return "Handbuilding";
   if (/paint pottery/.test(text)) return "Pottery Painting";
   if (/water ?color/.test(text)) return "Watercolor";
   if (/turkish.*lamp/.test(text)) return "Turkish Lamps";

@@ -46,6 +46,7 @@ async function main() {
   assert.equal(online.category, "Handbuilding");
   assert.equal(eventLocationSchema(online)["@type"], "VirtualLocation");
   assert.equal(eventCategory("Paint Pottery - Chicago"), "Pottery Painting");
+  assert.equal(eventCategory("Eugene Duck Soap holder"), "Handbuilding");
   const catalog = await getCatalog();
   const booking = new URL(catalogBookingUrl(catalog, "eugene", "date-night-wheel"));
   assert.equal(booking.searchParams.get("appointmentType"), "1");
