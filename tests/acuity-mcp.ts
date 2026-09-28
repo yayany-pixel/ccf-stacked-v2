@@ -119,6 +119,8 @@ async function main() {
       "acuity_list_webhooks",
       "acuity_get_account",
       "acuity_get_service_metadata",
+      "printful_list_stores", "printful_list_catalog_products", "printful_get_catalog_product",
+      "printful_list_products", "printful_get_product", "printful_list_orders", "printful_get_order",
       "eventbrite_status",
       "eventbrite_list_events",
       "eventbrite_list_venues",
@@ -138,6 +140,8 @@ async function main() {
       "acuity_delete_certificate",
       "acuity_create_webhook",
       "acuity_delete_webhook",
+      "printful_create_product", "printful_update_variant", "printful_create_draft_order",
+      "printful_update_order", "printful_confirm_order",
       "eventbrite_create_class_event",
       "eventbrite_publish_event",
       "eventbrite_sync_acuity_classes",
@@ -162,13 +166,13 @@ async function main() {
     assert.equal(status.status, 200);
     const metadata = await status.json();
     assert.equal(metadata.mode, "read-write");
-    assert.equal(metadata.version, "1.3.0");
-    assert.equal(metadata.toolCount, 43);
+    assert.equal(metadata.version, "1.4.0");
+    assert.equal(metadata.toolCount, 55);
     const initialized = await rpc("initialize", { protocolVersion: "2025-03-26" });
     assert.match(initialized.result?.instructions ?? "", /read.*write|write.*read/i);
     assert.doesNotMatch(initialized.result?.instructions ?? "", /read-only/i);
     assert.equal(initialized.result?.serverInfo?.name, "ccf-acuity");
-    assert.equal(initialized.result?.serverInfo?.version, "1.3.0");
+    assert.equal(initialized.result?.serverInfo?.version, "1.4.0");
 
     // These concrete transport expectations are independent of tool definitions.
     await expectAcuityRequest(
