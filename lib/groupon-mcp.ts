@@ -1,4 +1,5 @@
-// Groupon preparation tools. No Groupon API transport is implemented here yet.
+// Groupon preparation tools. The separately tested API adapter is not activated:
+// Groupon's signing contract, scoped credentials, and certification are required.
 // A code recorded in Acuity is not evidence of voucher validity or redemption.
 type Args = Record<string, unknown>;
 type AcuityGet = (path: string, params?: Record<string, unknown>) => Promise<unknown>;
@@ -37,7 +38,7 @@ export const grouponTools = [
       required: ["voucherCode", "minDate", "maxDate"],
       additionalProperties: false,
     },
-    annotations,
+    annotations: { ...annotations, openWorldHint: true },
   },
 ];
 
@@ -75,9 +76,12 @@ export async function runGrouponTool(
 
   if (name === "groupon_connection_status") {
     return { data: {
-      stage: "booking_matching_only",
+      stage: "api_adapter_awaiting_authentication",
       grouponApiConnected: false,
       grouponApiChecked: false,
+      posSpecificationReviewed: true,
+      apiAdapterImplemented: true,
+      productionAuthenticationImplemented: false,
       capabilities: {
         acuityVoucherCodeMatching: true,
         liveVoucherLookup: false,
@@ -85,12 +89,12 @@ export async function runGrouponTool(
         attendanceRecording: false,
       },
       nextSteps: [
-        "Obtain Groupon Point of Sale Redemptions API approval and merchant-scoped credentials.",
-        "Verify the current official API specification and implement its authenticated transport.",
-        "Test voucher lookup and redemption confirmation in Groupon's approved test environment.",
+        "Obtain Groupon POS approval, partner and client IDs, merchant-scoped credentials, and approved deal IDs.",
+        "Obtain the separate GrouponConnect Request Signing guide and implement its verified authentication scheme.",
+        "Complete durable approval and audit handling, test in Groupon's approved environment, and pass certification before enabling live API tools.",
       ],
       developerSignupUrl: "https://www.groupon.com/developers/signup",
-      note: "Merchant Center browser sign-in does not provide server API credentials. No Groupon API calls are made by this version.",
+      note: "The documented GET/PATCH adapter exists but is not connected to MCP. Merchant Center browser sign-in does not provide server API credentials. These MCP tools make no Groupon API calls.",
     } };
   }
 

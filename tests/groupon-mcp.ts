@@ -42,6 +42,10 @@ async function main() {
     const status = (await (await call("groupon_connection_status")).json()).result.structuredContent.data;
     assert.equal(status.grouponApiConnected, false);
     assert.equal(status.grouponApiChecked, false);
+    assert.equal(status.posSpecificationReviewed, true);
+    assert.equal(status.apiAdapterImplemented, true);
+    assert.equal(status.productionAuthenticationImplemented, false);
+    assert.equal(status.capabilities.liveVoucherLookup, false);
     assert.equal(status.capabilities.redemption, false);
     assert.equal(requests.length, 0, "Status must not pretend to test the provider");
 

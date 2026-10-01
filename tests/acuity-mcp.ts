@@ -156,7 +156,7 @@ async function main() {
         readNames.includes(tool.name),
         `${tool.name} should advertise the correct read/write capability`
       );
-      assert.equal(tool.annotations?.openWorldHint, !tool.name.startsWith("groupon_"), `${tool.name} should advertise its access scope`);
+      assert.equal(tool.annotations?.openWorldHint, tool.name !== "groupon_connection_status", `${tool.name} should advertise its access scope`);
     }
 
     for (const name of ["acuity_delete_calendar_block", "acuity_delete_client", "acuity_delete_certificate", "acuity_delete_webhook", "acuity_cancel_appointment"]) {
