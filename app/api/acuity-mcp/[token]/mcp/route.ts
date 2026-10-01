@@ -2,6 +2,7 @@ import { printfulTools, runPrintfulTool } from "@/lib/printful-mcp";
 import { extraReadTools, runExtraReadTool } from "@/lib/acuity-mcp-extra-reads";
 import { extraWriteTools, runExtraWriteTool } from "@/lib/acuity-mcp-extra-writes";
 import { eventbriteTools, runEventbriteTool } from "@/lib/eventbrite-mcp";
+import { grouponTools, runGrouponTool } from "@/lib/groupon-mcp";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -331,6 +332,7 @@ const writeAnnotations = {
 };
 
 const tools = [
+  ...grouponTools,
   ...extraReadTools,
   ...extraWriteTools,
   ...eventbriteTools,
@@ -597,6 +599,8 @@ const tools = [
 
 async function runTool(name: string, args: Record<string, any>): Promise<ToolResult> {
   try {
+    const groupon = await runGrouponTool(name, args, acuityGet);
+    if (groupon) return toolOk(groupon.data);
     const printful = await runPrintfulTool(name, args);
     if (printful) return toolOk(printful.data);
     const eventbrite = await runEventbriteTool(name, args, { acuityGet });
@@ -803,7 +807,7 @@ export async function GET(
       name: "CCF Acuity + Eventbrite MCP",
       ok: true,
       mode: "read-write",
-      version: "1.4.0",
+      version: "1.5.0",
       toolCount: tools.length,
     },
     { headers: { "Cache-Control": "no-store" } }
@@ -842,9 +846,10 @@ export async function POST(
         },
         serverInfo: {
           name: "ccf-acuity",
-          version: "1.4.0",
+          version: "1.5.0",
         },
         instructions:
+          "Groupon tools currently report setup readiness and match voucher codes recorded in Acuity only. They do not call Groupon, verify voucher validity or attendance, or redeem vouchers. Never describe an Acuity match as a Groupon redemption. " +
           "Printful tools support store and catalog reads, sync product creation and variant updates, draft orders and separately approved paid order confirmation. Eventbrite tools support event management and Acuity class sync. This server can read and modify Color Cocktail Factory's Acuity Scheduling account: appointments, calendar blocks, client profiles, package/coupon certificate codes, and webhook subscriptions. It can read availability, forms, add-ons, labels, products, orders, account details, and service metadata. Use listing tools to obtain existing IDs and availability tools to check dates/times before booking; time validation does not reserve a slot. Use bounded date ranges for class and block listings. Write tools change live data and may trigger notifications or integrations; call them only for changes the user has authorized. Match client names and phone carefully before updating or deleting a profile. Creating certificate codes requires an existing product or coupon definition. Creating a webhook sends future event notifications to its target URL; use only a destination explicitly authorized by the user. Cancellations and deletions have no undo operation in this connector. Intake forms, clients, orders, and appointments may contain customer data; request them only when relevant. For Acuity, appointment-type/class-definition creation, payment charging/refunds, and package/product-definition creation are not supported.",
       });
     }

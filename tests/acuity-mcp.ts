@@ -96,6 +96,8 @@ async function main() {
     const listed = await rpc("tools/list");
     const tools = listed.result?.tools ?? [];
     const readNames = [
+      "groupon_connection_status",
+      "groupon_find_acuity_bookings",
       "acuity_status",
       "acuity_list_calendars",
       "acuity_list_appointment_types",
@@ -154,7 +156,7 @@ async function main() {
         readNames.includes(tool.name),
         `${tool.name} should advertise the correct read/write capability`
       );
-      assert.equal(tool.annotations?.openWorldHint, true, `${tool.name} calls an external API`);
+      assert.equal(tool.annotations?.openWorldHint, tool.name !== "groupon_connection_status", `${tool.name} should advertise its access scope`);
     }
 
     for (const name of ["acuity_delete_calendar_block", "acuity_delete_client", "acuity_delete_certificate", "acuity_delete_webhook", "acuity_cancel_appointment"]) {
@@ -166,13 +168,13 @@ async function main() {
     assert.equal(status.status, 200);
     const metadata = await status.json();
     assert.equal(metadata.mode, "read-write");
-    assert.equal(metadata.version, "1.4.0");
-    assert.equal(metadata.toolCount, 55);
+    assert.equal(metadata.version, "1.5.0");
+    assert.equal(metadata.toolCount, 57);
     const initialized = await rpc("initialize", { protocolVersion: "2025-03-26" });
     assert.match(initialized.result?.instructions ?? "", /read.*write|write.*read/i);
     assert.doesNotMatch(initialized.result?.instructions ?? "", /read-only/i);
     assert.equal(initialized.result?.serverInfo?.name, "ccf-acuity");
-    assert.equal(initialized.result?.serverInfo?.version, "1.4.0");
+    assert.equal(initialized.result?.serverInfo?.version, "1.5.0");
 
     // These concrete transport expectations are independent of tool definitions.
     await expectAcuityRequest(
