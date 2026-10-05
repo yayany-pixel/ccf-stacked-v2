@@ -1,0 +1,854 @@
+[
+  {
+    "check": "viewport",
+    "city": "chicago",
+    "width": 390,
+    "height": 650,
+    "passed": true,
+    "geometry": {
+      "overflow": false,
+      "header": 65,
+      "cards": [
+        {
+          "key": "chicago-cauldron",
+          "height": 504.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-date-night-wheel",
+          "height": 534.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-beginner-wheel",
+          "height": 534.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-turkish-lamp",
+          "height": 504.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-mug-and-bowl",
+          "height": 534.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-terrarium",
+          "height": 504.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-mosaic",
+          "height": 504.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-candle",
+          "height": 504.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-vip-paint-night",
+          "height": 504.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-cat-vase",
+          "height": 504.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        }
+      ],
+      "opening": [
+        "chicago-cauldron",
+        "chicago-date-night-wheel",
+        "private-party",
+        "chicago-beginner-wheel"
+      ]
+    }
+  },
+  {
+    "check": "viewport",
+    "city": "chicago",
+    "width": 390,
+    "height": 568,
+    "passed": true,
+    "geometry": {
+      "overflow": false,
+      "header": 65,
+      "cards": [
+        {
+          "key": "chicago-cauldron",
+          "height": 439.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-date-night-wheel",
+          "height": 469.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-beginner-wheel",
+          "height": 469.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-turkish-lamp",
+          "height": 439.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-mug-and-bowl",
+          "height": 469.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-terrarium",
+          "height": 439.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-mosaic",
+          "height": 439.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-candle",
+          "height": 439.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-vip-paint-night",
+          "height": 439.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-cat-vase",
+          "height": 439.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        }
+      ],
+      "opening": [
+        "chicago-cauldron",
+        "chicago-date-night-wheel",
+        "private-party",
+        "chicago-beginner-wheel"
+      ]
+    }
+  },
+  {
+    "check": "viewport",
+    "city": "chicago",
+    "width": 375,
+    "height": 667,
+    "passed": true,
+    "geometry": {
+      "overflow": false,
+      "header": 65,
+      "cards": [
+        {
+          "key": "chicago-cauldron",
+          "height": 492.953125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-date-night-wheel",
+          "height": 523.1875,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-beginner-wheel",
+          "height": 523.1875,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-turkish-lamp",
+          "height": 492.953125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-mug-and-bowl",
+          "height": 523.1875,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-terrarium",
+          "height": 492.953125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-mosaic",
+          "height": 492.953125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-candle",
+          "height": 492.953125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-vip-paint-night",
+          "height": 545.578125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-cat-vase",
+          "height": 492.953125,
+          "buttonHeight": 48,
+          "clipped": false
+        }
+      ],
+      "opening": [
+        "chicago-cauldron",
+        "chicago-date-night-wheel",
+        "private-party",
+        "chicago-beginner-wheel"
+      ]
+    }
+  },
+  {
+    "check": "viewport",
+    "city": "chicago",
+    "width": 430,
+    "height": 932,
+    "passed": true,
+    "geometry": {
+      "overflow": false,
+      "header": 65,
+      "cards": [
+        {
+          "key": "chicago-cauldron",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-date-night-wheel",
+          "height": 542.046875,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-beginner-wheel",
+          "height": 564.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-turkish-lamp",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-mug-and-bowl",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-terrarium",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-mosaic",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-candle",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-vip-paint-night",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "chicago-cat-vase",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        }
+      ],
+      "opening": [
+        "chicago-cauldron",
+        "chicago-date-night-wheel",
+        "private-party",
+        "chicago-beginner-wheel"
+      ]
+    }
+  },
+  {
+    "check": "viewport",
+    "city": "chicago",
+    "width": 1440,
+    "height": 900,
+    "passed": true,
+    "geometry": {
+      "overflow": false,
+      "header": 79,
+      "cards": [
+        {
+          "key": "chicago-cauldron",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "chicago-date-night-wheel",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "chicago-beginner-wheel",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "chicago-turkish-lamp",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "chicago-mug-and-bowl",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "chicago-terrarium",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "chicago-mosaic",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "chicago-candle",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "chicago-vip-paint-night",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "chicago-cat-vase",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        }
+      ],
+      "opening": [
+        "chicago-cauldron",
+        "chicago-date-night-wheel",
+        "private-party",
+        "chicago-beginner-wheel"
+      ]
+    }
+  },
+  {
+    "check": "viewport",
+    "city": "eugene",
+    "width": 390,
+    "height": 650,
+    "passed": true,
+    "geometry": {
+      "overflow": false,
+      "header": 65,
+      "cards": [
+        {
+          "key": "eugene-cauldron",
+          "height": 504.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-date-night-wheel",
+          "height": 534.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-cup-creations",
+          "height": 534.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-mug-and-bowl",
+          "height": 534.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-date-night-terrarium",
+          "height": 504.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-vip-paint-night",
+          "height": 504.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-wine-glass-painting",
+          "height": 481.8125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-mushroom",
+          "height": 504.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-matcha-bowl",
+          "height": 534.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-oogie-boogie",
+          "height": 534.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        }
+      ],
+      "opening": [
+        "eugene-cauldron",
+        "eugene-date-night-wheel",
+        "private-party",
+        "eugene-cup-creations"
+      ]
+    }
+  },
+  {
+    "check": "viewport",
+    "city": "eugene",
+    "width": 390,
+    "height": 568,
+    "passed": true,
+    "geometry": {
+      "overflow": false,
+      "header": 65,
+      "cards": [
+        {
+          "key": "eugene-cauldron",
+          "height": 439.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-date-night-wheel",
+          "height": 469.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-cup-creations",
+          "height": 469.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-mug-and-bowl",
+          "height": 469.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-date-night-terrarium",
+          "height": 439.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-vip-paint-night",
+          "height": 439.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-wine-glass-painting",
+          "height": 416.8125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-mushroom",
+          "height": 439.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-matcha-bowl",
+          "height": 469.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-oogie-boogie",
+          "height": 469.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        }
+      ],
+      "opening": [
+        "eugene-cauldron",
+        "eugene-date-night-wheel",
+        "private-party",
+        "eugene-cup-creations"
+      ]
+    }
+  },
+  {
+    "check": "viewport",
+    "city": "eugene",
+    "width": 375,
+    "height": 667,
+    "passed": true,
+    "geometry": {
+      "overflow": false,
+      "header": 65,
+      "cards": [
+        {
+          "key": "eugene-cauldron",
+          "height": 492.953125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-date-night-wheel",
+          "height": 523.1875,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-cup-creations",
+          "height": 523.1875,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-mug-and-bowl",
+          "height": 523.1875,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-date-night-terrarium",
+          "height": 492.953125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-vip-paint-night",
+          "height": 545.578125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-wine-glass-painting",
+          "height": 492.953125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-mushroom",
+          "height": 492.953125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-matcha-bowl",
+          "height": 523.1875,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-oogie-boogie",
+          "height": 523.1875,
+          "buttonHeight": 48,
+          "clipped": false
+        }
+      ],
+      "opening": [
+        "eugene-cauldron",
+        "eugene-date-night-wheel",
+        "private-party",
+        "eugene-cup-creations"
+      ]
+    }
+  },
+  {
+    "check": "viewport",
+    "city": "eugene",
+    "width": 430,
+    "height": 932,
+    "passed": true,
+    "geometry": {
+      "overflow": false,
+      "header": 65,
+      "cards": [
+        {
+          "key": "eugene-cauldron",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-date-night-wheel",
+          "height": 542.046875,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-cup-creations",
+          "height": 564.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-mug-and-bowl",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-date-night-terrarium",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-vip-paint-night",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-wine-glass-painting",
+          "height": 511.8125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-mushroom",
+          "height": 534.203125,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-matcha-bowl",
+          "height": 564.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        },
+        {
+          "key": "eugene-oogie-boogie",
+          "height": 564.4375,
+          "buttonHeight": 48,
+          "clipped": false
+        }
+      ],
+      "opening": [
+        "eugene-cauldron",
+        "eugene-date-night-wheel",
+        "private-party",
+        "eugene-cup-creations"
+      ]
+    }
+  },
+  {
+    "check": "viewport",
+    "city": "eugene",
+    "width": 1440,
+    "height": 900,
+    "passed": true,
+    "geometry": {
+      "overflow": false,
+      "header": 79,
+      "cards": [
+        {
+          "key": "eugene-cauldron",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "eugene-date-night-wheel",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "eugene-cup-creations",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "eugene-mug-and-bowl",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "eugene-date-night-terrarium",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "eugene-vip-paint-night",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "eugene-wine-glass-painting",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "eugene-mushroom",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "eugene-matcha-bowl",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        },
+        {
+          "key": "eugene-oogie-boogie",
+          "height": 425.21875,
+          "buttonHeight": 50,
+          "clipped": false
+        }
+      ],
+      "opening": [
+        "eugene-cauldron",
+        "eugene-date-night-wheel",
+        "private-party",
+        "eugene-cup-creations"
+      ]
+    }
+  },
+  {
+    "check": "all batches and city switching",
+    "city": "chicago",
+    "cards": 38,
+    "passed": true
+  },
+  {
+    "check": "all batches and city switching",
+    "city": "eugene",
+    "cards": 17,
+    "passed": true
+  },
+  {
+    "check": "all batches and city switching",
+    "city": "chicago",
+    "cards": 38,
+    "passed": true
+  },
+  {
+    "check": "city preference, URL precedence, and existing chat",
+    "passed": true
+  },
+  {
+    "check": "outage",
+    "passed": true
+  },
+  {
+    "check": "empty",
+    "passed": true
+  },
+  {
+    "check": "missing-image",
+    "passed": true
+  },
+  {
+    "check": "missing-url",
+    "passed": true
+  },
+  {
+    "check": "slow-switch",
+    "passed": true
+  },
+  {
+    "check": "isolated form validation, error, retry, honeypot, selected city, success redirect",
+    "passed": true
+  },
+  {
+    "check": "200 percent zoom equivalent, 195 CSS pixel reflow",
+    "passed": true
+  },
+  {
+    "check": "200 percent text enlargement: readable reflow and natural card growth",
+    "passed": true
+  },
+  {
+    "check": "every card: image, price, ticket unit, local time, appointment, booking URL and studio update atomically across both city directions",
+    "passed": true
+  },
+  {
+    "check": "chat uses explicit URL city ahead of a stale saved preference; mocked request only",
+    "passed": true
+  }
+]

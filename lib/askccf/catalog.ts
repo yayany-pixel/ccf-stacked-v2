@@ -30,6 +30,7 @@ export type PricingInfo = {
 
 export type CatalogClass = {
   id: string;
+  calendarIds?: number[];
   title: string;
   description: string;
   shortDescription: string;
@@ -290,6 +291,7 @@ export function normalize(type: AcuityType): CatalogClass {
 
   return {
     id: String(type.id),
+    calendarIds: type.calendarIDs ?? [],
     title: type.name.trim(),
     description,
     shortDescription: sentences(description).slice(0, 2).join(" ").slice(0, 320),

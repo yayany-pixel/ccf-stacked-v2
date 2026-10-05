@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import HomePageClient from "@/components/HomePageClient";
+import { getHomepageData } from "@/lib/homepage/server";
+
+export const revalidate = 120;
 
 export const metadata: Metadata = {
   title: { absolute: "Color Cocktail Factory | Pottery & Creative Workshops in Chicago & Eugene" },
@@ -21,12 +24,6 @@ export const metadata: Metadata = {
   }
 };
 
-export default function HomePage() {
-  return (
-    <>
-      {/* Week 2: Use client component for A/B testing + analytics */}
-      <HomePageClient />
-    </>
-  );
+export default async function HomePage({ searchParams }: { searchParams: { location?: string } }) {
+  return <HomePageClient initialData={await getHomepageData()} initialCity={searchParams.location === "eugene" ? "eugene" : "chicago"} />;
 }
-

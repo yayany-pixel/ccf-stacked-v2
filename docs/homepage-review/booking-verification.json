@@ -1,0 +1,868 @@
+[
+  {
+    "key": "chicago-cauldron",
+    "title": "Spin A Spell- Make your Own Clay Cauldron",
+    "appointmentTypeId": 95588506,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=95588506",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=95588506",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-cauldron",
+    "title": "Spin A Spell- Make your Own Clay Cauldron",
+    "appointmentTypeId": 96657402,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=96657402",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=96657402",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-date-night-wheel",
+    "title": "Date Night on the Pottery Wheel - Chicago",
+    "appointmentTypeId": 79006071,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79006071",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79006071",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-date-night-wheel",
+    "title": "Eugene Date Night On The Wheel",
+    "appointmentTypeId": 91935746,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=91935746",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=91935746",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-cup-creations",
+    "title": "Eugene Wheel Throwing for Beginners: Cup creations",
+    "appointmentTypeId": 93539343,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=93539343",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=93539343",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-beginner-wheel",
+    "title": "Wheel Throwing for Beginners - Chicago",
+    "appointmentTypeId": 79006616,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79006616",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79006616",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-turkish-lamp",
+    "title": "Turkish Mosaic Lamp - Chicago",
+    "appointmentTypeId": 95416771,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=95416771",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=95416771",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-mug-and-bowl",
+    "title": "Eugene: Ceramic Mug and a Bowl",
+    "appointmentTypeId": 90210750,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=90210750",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=90210750",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-mug-and-bowl",
+    "title": "Ceramic Mug and a Bowl - Chicago",
+    "appointmentTypeId": 79186725,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79186725",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79186725",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-terrarium",
+    "title": "Terrarium Workshop - Chicago",
+    "appointmentTypeId": 79189013,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79189013",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79189013",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-date-night-terrarium",
+    "title": "Eugene 🌿 Date Night Terrarium Workshop",
+    "appointmentTypeId": 89290193,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=89290193",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=89290193",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-mosaic",
+    "title": "Mosaic Creations - Chicago",
+    "appointmentTypeId": 79182319,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79182319",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79182319",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-candle",
+    "title": "Candle Making - Chicago",
+    "appointmentTypeId": 79185767,
+    "city": "chicago",
+    "calendarIds": [
+      12216179,
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79185767",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79185767",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-vip-paint-night",
+    "title": "VIP Date Night Paint Night",
+    "appointmentTypeId": 94058109,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=94058109",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=94058109",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-vip-paint-night",
+    "title": "VIP DATE NIGHT PAINT NIGHT",
+    "appointmentTypeId": 97020385,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=97020385",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=97020385",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-clay-pumpkin",
+    "title": "Halloween Pottery: Carve Your Own Clay Pumpkin",
+    "appointmentTypeId": 96889121,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=96889121",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=96889121",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-bonsai",
+    "title": "Bonsai for Beginners: Hands-On Workshop - Chicago",
+    "appointmentTypeId": 79188910,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79188910",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79188910",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-cat-vase",
+    "title": "Cat Vase Making - Chicago",
+    "appointmentTypeId": 79181599,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79181599",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79181599",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-date-night-on-fire",
+    "title": "Date Night On Fire - VIP EXPERIENCE",
+    "appointmentTypeId": 95023345,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=95023345",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=95023345",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-paint-pottery",
+    "title": "Paint Pottery - Chicago",
+    "appointmentTypeId": 79183668,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79183668",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79183668",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-wine-glass-painting",
+    "title": "Wine Glass Painting - Chicago",
+    "appointmentTypeId": 79374003,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79374003",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79374003",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-mushroom",
+    "title": "Mushroom Pottery - Chicago",
+    "appointmentTypeId": 79188019,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79188019",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79188019",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-mushroom",
+    "title": "Eugene Mushroom Pottery",
+    "appointmentTypeId": 90532757,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=90532757",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=90532757",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-wine-glass-painting",
+    "title": "Wine Glass Painting",
+    "appointmentTypeId": 95909935,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=95909935",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=95909935",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-watercolor",
+    "title": "Water Color For Beginners",
+    "appointmentTypeId": 95947521,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=95947521",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=95947521",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-matcha-bowl",
+    "title": "Eugene Wheel Throwing for Beginners: Matcha Bowl",
+    "appointmentTypeId": 89287658,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=89287658",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=89287658",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-matcha-bowl",
+    "title": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl",
+    "appointmentTypeId": 94782793,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782793",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=94782793",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-ghost",
+    "title": "Halloween Ghost Pottey!",
+    "appointmentTypeId": 98180179,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=98180179",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=98180179",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-oogie-boogie",
+    "title": "OOGIE BOOGIE INSPIRED CANDLE HOLDER | HALLOWEEN POTTERY",
+    "appointmentTypeId": 97524789,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=97524789",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=97524789",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-date-night-candle",
+    "title": "Date Night Candle Making",
+    "appointmentTypeId": 95415406,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=95415406",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=95415406",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-monster-lantern",
+    "title": "MONSTER POTTERY! HALLOWEEN LANTERN CLASS",
+    "appointmentTypeId": 97573448,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=97573448",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=97573448",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-hanging-turkish-lamp",
+    "title": "Hanging Turkish Mosaic Lamp - Chicago",
+    "appointmentTypeId": 79374537,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79374537",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79374537",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-oogie-boogie",
+    "title": "OOGIE BOOGIE INSPIRED CANDLE HOLDER | HALLOWEEN POTTERY",
+    "appointmentTypeId": 98908868,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=98908868",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=98908868",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-handbuilt-vase",
+    "title": "Handbuilding For Beginners - Vase Making",
+    "appointmentTypeId": 96491249,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=96491249",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=96491249",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-charcuterie-board",
+    "title": "Eugene : Make Your Own Charcuterie Board",
+    "appointmentTypeId": 98845998,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=98845998",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=98845998",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-charcuterie-board",
+    "title": "Charcuterie Board Make And Paint",
+    "appointmentTypeId": 96649100,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=96649100",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=96649100",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-duck-soap-holder",
+    "title": "Eugene Duck Soap holder",
+    "appointmentTypeId": 98334198,
+    "city": "eugene",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=98334198",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=98334198",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-open-studio",
+    "title": "Open Studio Wheel throwing",
+    "appointmentTypeId": 95911163,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=95911163",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=95911163",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-soap",
+    "title": "Soap Making - Chicago",
+    "appointmentTypeId": 79274876,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79274876",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79274876",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-cup-creations",
+    "title": "Wheel Throwing for Beginners -Cup Creations",
+    "appointmentTypeId": 94782668,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782668",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=94782668",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-ceramic-chess",
+    "title": "Date Night: Make Your Own Ceramic Chess Set ♟️",
+    "appointmentTypeId": 97861588,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=97861588",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=97861588",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-wheel-pumpkin",
+    "title": "Throw A Pumpkin On The Wheel",
+    "appointmentTypeId": 98548612,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=98548612",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=98548612",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-date-night-watercolor",
+    "title": "Date Night Watercolor Painting for Two - Chicago",
+    "appointmentTypeId": 94935292,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=94935292",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=94935292",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-date-night-bonsai",
+    "title": "Date Night Bonsai VIP",
+    "appointmentTypeId": 94058299,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=94058299",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=94058299",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-date-night-watercolor",
+    "title": "Date Night Watercolor Painting for Two - Eugene",
+    "appointmentTypeId": 94932997,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=94932997",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=94932997",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-date-night-turkish-lamp",
+    "title": "Date Night Turkish Mosaic Lamp - Chicago",
+    "appointmentTypeId": 95894050,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=95894050",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=95894050",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-make-and-paint-wheel",
+    "title": "Make And Paint - Wheel throwing",
+    "appointmentTypeId": 95806344,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=95806344",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=95806344",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-wheel-vase",
+    "title": "Wheel Throwing for Beginners -Vase Making",
+    "appointmentTypeId": 94782880,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782880",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=94782880",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-boobs-mug",
+    "title": "Boobs Coffee Mug - Chicago",
+    "appointmentTypeId": 79187550,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79187550",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79187550",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "eugene-pipe-and-ashtray",
+    "title": "Eugene Pipe and Ashtray Making Class",
+    "appointmentTypeId": 90211026,
+    "city": "eugene",
+    "calendarIds": [
+      13582962
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=90211026",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=90211026",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-pipe-and-ashtray",
+    "title": "Pipe and Ashtray Making Class - Chicago",
+    "appointmentTypeId": 79188421,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79188421",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79188421",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "online-online-cauldron",
+    "title": "Make a Clay Cauldron — Live Online Halloween Workshop",
+    "appointmentTypeId": 98770334,
+    "city": "online",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=98770334",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=98770334",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-dildos-and-bottles",
+    "title": "Dildos and Bottles - Chicago",
+    "appointmentTypeId": 79186927,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79186927",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79186927",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  },
+  {
+    "key": "chicago-pussy-pottery",
+    "title": "Pussy Pottery - Chicago",
+    "appointmentTypeId": 79188691,
+    "city": "chicago",
+    "calendarIds": [
+      12216179
+    ],
+    "requestedUrl": "https://colorcocktailfactory.as.me/?appointmentType=79188691",
+    "finalUrl": "https://colorcocktailfactory.as.me/schedule/a8dfb300/?appointmentTypeIds[]=79188691",
+    "titleVisible": true,
+    "idRetained": true,
+    "noPreselection": true,
+    "notScheduling": false,
+    "passed": true
+  }
+]
+

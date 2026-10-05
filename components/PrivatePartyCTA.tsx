@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 interface PrivatePartyCTAProps {
   variant?: "header" | "footer" | "sticky";
@@ -13,6 +14,8 @@ interface PrivatePartyCTAProps {
  * Tracks clicks via Google Analytics if available
  */
 export default function PrivatePartyCTA({ variant = "header", className = "" }: PrivatePartyCTAProps) {
+  const pathname = usePathname();
+  const destination = pathname === "/" ? "#private-party" : "/private-events";
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -38,13 +41,13 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
     }
   };
 
-  if (!isVisible) return null;
+  if (!isVisible || (pathname === "/" && variant === "sticky")) return null;
 
   // Header variant (compact)
   if (variant === "header") {
     return (
       <Link
-        href="/private-events"
+        href={destination}
         onClick={handleClick}
         className={`inline-flex items-center gap-2 rounded-full border border-purple-400/30 bg-purple-500/10 px-4 py-2 text-sm font-semibold text-purple-300 transition hover:bg-purple-500/20 ${className}`}
         aria-label="Request a private party"
@@ -60,7 +63,7 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
     return (
       <div className={`text-center ${className}`}>
         <Link
-          href="/private-events"
+          href={destination}
           onClick={handleClick}
           className="inline-flex items-center gap-3 rounded-2xl border border-purple-400/30 bg-gradient-to-r from-purple-500/20 to-pink-500/20 px-8 py-4 text-lg font-bold transition hover:scale-105 hover:border-purple-400/50"
           aria-label="Request a private party quote"
@@ -83,7 +86,7 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
         style={{ animation: "bounce 2s infinite" }}
       >
         <Link
-          href="/private-events"
+          href={destination}
           onClick={handleClick}
           className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-purple-400/50 bg-gradient-to-br from-purple-600 to-pink-600 text-2xl shadow-2xl transition hover:scale-110 sm:h-auto sm:w-auto sm:gap-2 sm:px-6 sm:py-3"
           aria-label="Request a private party"
