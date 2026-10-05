@@ -51,3 +51,18 @@ Update the destination inbox in:
 ```bash
 npm run test
 ```
+
+## Database migrations and failed deploys
+
+Database migrations live in `netlify/database/migrations/` and are applied by
+Netlify during deployment. Never edit, rename, or remove an applied migration.
+Generate a new migration for schema changes and keep its generated snapshot with
+the SQL so future deployments have an accurate schema baseline.
+
+The deployment error `column "notify_started_at" ... already exists` came from a
+manually applied inquiry-delivery migration that had no matching Drizzle snapshot.
+The forward reconciliation migration records that column in a new snapshot and
+uses `ADD COLUMN IF NOT EXISTS`, preserving existing inquiries and applied history.
+The migration regression checks in `npm run test` verify that the current schema
+has no unrecorded changes. Netlify applies the reconciliation on the next deploy;
+do not run migration SQL manually.
