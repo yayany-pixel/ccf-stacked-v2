@@ -8,6 +8,7 @@ import {
   updateMetaConsent,
 } from "./metaPixel";
 import type { MetaParameters } from "./metaEvents";
+import { currentPrivacyPreferences } from "./privacy";
 /** Central, PII-free analytics. Never pass form or chat objects to this module. */
 export type BookingProvider = "rezclick" | "eventbrite" | "acuity" | "unknown";
 const allowed = new Set(
@@ -93,7 +94,7 @@ export function currentCity(): string {
   }
 }
 export function isGtagAvailable() {
-  return typeof window !== "undefined" && typeof window.gtag === "function";
+  return typeof window !== "undefined" && typeof window.gtag === "function" && currentPrivacyPreferences().analytics;
 }
 export function trackEvent(
   name: string,

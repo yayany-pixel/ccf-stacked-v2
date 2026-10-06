@@ -69,7 +69,7 @@ export default function TeachLayout({
                   variant="ghost"
                   className="hidden md:inline-flex text-xs"
                 >
-                  Instructors Login
+                  Instructor Portal
                 </ButtonPill>
                 <ButtonPill 
                   href="/teach/apply" 
@@ -100,7 +100,7 @@ export default function TeachLayout({
       </header>
 
       {/* Main Content */}
-      <main className="pt-24">
+      <main id="main-content" tabIndex={-1} className="pt-24">
         {children}
       </main>
 
@@ -119,7 +119,7 @@ export default function TeachLayout({
               <ul className="space-y-2 text-sm text-white/60">
                 <li><Link href="/teach/apply" className="hover:text-white">Apply Now</Link></li>
                 <li><Link href="/teach/faq" className="hover:text-white">FAQ</Link></li>
-                <li><Link href="/teach/instructors/login" className="hover:text-white">Instructor Login</Link></li>
+                <li><Link href="/teach/instructors/login" className="hover:text-white">Instructor Portal — Coming Soon</Link></li>
               </ul>
             </div>
             <div>

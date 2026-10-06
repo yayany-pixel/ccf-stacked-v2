@@ -40,7 +40,7 @@ export default async function PotteryMembershipPage() {
     hasCourseInstance: { "@type": "CourseInstance", courseMode: "Online", courseWorkload: "PT9H" },
   };
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 px-6 py-16">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 px-6 py-16">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <div className="mx-auto max-w-4xl">
         <Reveal variant="fade-up">

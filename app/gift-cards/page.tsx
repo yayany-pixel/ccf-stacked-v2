@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function GiftCardsPage() {
   return (
-    <main className="min-h-screen px-6">
+    <main id="main-content" tabIndex={-1} className="min-h-screen px-6">
       <div className="h-24" />
       <div className="mx-auto max-w-4xl">
         <GlassCard className="p-8">

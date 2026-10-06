@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function InstructorApplicationThankYou() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
+    <main id="main-content" tabIndex={-1} className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
       {/* Background effects */}
       <div className="sparkle-noise absolute inset-0 opacity-20" />
       
@@ -108,6 +108,6 @@ export default function InstructorApplicationThankYou() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

@@ -113,7 +113,7 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
   const eventSchema = generateEventSchema(event);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
       <MetaActivityView id={event.slug} name={event.title} city={event.city === "Virtual" ? "online" : event.city.toLowerCase()} url={event.bookingUrl} price={event.currency === "USD" ? event.price ?? undefined : undefined} />
       {/* JSON-LD Structured Data */}
       <script

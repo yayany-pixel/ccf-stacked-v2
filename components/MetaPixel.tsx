@@ -14,7 +14,7 @@ export default function MetaPixel() {
   useEffect(() => {
     initializeMetaPixel();
     const sync = () => {
-      setLoad(metaConsent() !== "denied");
+      setLoad(metaConsent() === "granted");
       trackMetaPageView();
     };
     sync();

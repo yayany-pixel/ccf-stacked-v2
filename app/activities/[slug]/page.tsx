@@ -159,7 +159,7 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <main className="min-h-screen">
+      <main id="main-content" tabIndex={-1} className="min-h-screen">
         <MetaActivityView id={`activity:${activity.slug}`} name={activity.heroTitle} />
         {/* Breadcrumb Navigation */}
         <nav className="border-b border-white/10 bg-black/20 px-6 py-3">

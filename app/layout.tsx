@@ -7,6 +7,7 @@ import MetaPixel from "@/components/MetaPixel";
 import Footer from "@/components/Footer";
 import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 import AskCCFWidget from "@/components/askccf/AskCCFWidget";
+import PrivacyPreferences from "@/components/PrivacyPreferences";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -89,6 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <PrivatePartyCTA variant="sticky" />
         <AskCCFWidget />
+        <PrivacyPreferences />
       </body>
     </html>
   );

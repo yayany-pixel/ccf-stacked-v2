@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function NewsletterThanksPage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-purple-900 via-pink-800 to-orange-700 px-4 py-16">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-purple-900 via-pink-800 to-orange-700 px-4 py-16">
       <div className="mx-auto max-w-4xl">
         {/* Success Message */}
         <div className="mb-12 text-center">

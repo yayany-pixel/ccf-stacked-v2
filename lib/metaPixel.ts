@@ -36,13 +36,13 @@ export function metaConsent(): MetaConsent {
     navigator.doNotTrack === "1"
   )
     return "denied";
-  return window.ccfMetaConsent || "unknown";
+  return window.ccfMetaConsent || "denied";
 }
 export function isPixelAvailable() {
   return (
     typeof window !== "undefined" &&
     typeof window.fbq === "function" &&
-    metaConsent() !== "denied"
+    metaConsent() === "granted"
   );
 }
 export function initializeMetaPixel() {

@@ -7,13 +7,11 @@ import { getAllAuthors } from "@/lib/authors";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://colorcocktailfactory.com";
   const cities = ["chicago", "eugene"] as const;
-  const now = new Date();
 
   // Homepage - highest priority
   const homepage: MetadataRoute.Sitemap = [
     {
       url: base,
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 1.0
     }
@@ -22,7 +20,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // City pages - high priority
   const cityHomes: MetadataRoute.Sitemap = cities.map((c) => ({
     url: `${base}/${c}`,
-    lastModified: now,
     changeFrequency: "weekly",
     priority: 0.9
   }));
@@ -31,7 +28,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const giftCards: MetadataRoute.Sitemap = [
     {
       url: `${base}/gift-cards`,
-      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9
     }
@@ -41,7 +37,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const privateEvents: MetadataRoute.Sitemap = [
     {
       url: `${base}/private-events`,
-      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.95
     }
@@ -51,7 +46,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const eventsPage: MetadataRoute.Sitemap = [
     {
       url: `${base}/events`,
-      lastModified: now,
       changeFrequency: "daily", // Events change frequently
       priority: 0.95
     }
@@ -65,7 +59,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const activitiesIndex: MetadataRoute.Sitemap = [
     {
       url: `${base}/activities`,
-      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.95
     }
@@ -75,7 +68,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const activitySlugs = getAllActivitySlugs();
   const activityPages: MetadataRoute.Sitemap = activitySlugs.map((slug) => ({
     url: `${base}/activities/${slug}`,
-    lastModified: now,
     changeFrequency: "weekly",
     priority: 0.85
   }));
@@ -84,7 +76,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const cityActivityPages: MetadataRoute.Sitemap = cities.flatMap((c) =>
     sections.map((s) => ({
       url: `${base}/${c}/${s.slug}`,
-      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8
     }))
@@ -94,7 +85,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogIndex: MetadataRoute.Sitemap = [
     {
       url: `${base}/blog`,
-      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.8
     }
@@ -110,7 +100,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Author profile pages
   const authorPages: MetadataRoute.Sitemap = getAllAuthors().map((author) => ({
     url: `${base}/author/${author.slug}`,
-    lastModified: now,
     changeFrequency: "monthly" as const,
     priority: 0.5
   }));
@@ -119,19 +108,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const audiencePages: MetadataRoute.Sitemap = [
     {
       url: `${base}/team-building`,
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9
     },
     {
       url: `${base}/birthday-parties`,
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9
     },
     {
       url: `${base}/bachelorette-parties`,
-      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9
     }

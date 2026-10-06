@@ -111,7 +111,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
   // Pottery 101 content
   if (slug === "pottery-101-beginners-guide") {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
         <div className="sparkle-noise absolute inset-0 opacity-20" />
         
         <div className="relative mx-auto max-w-4xl px-6 py-20">
@@ -249,7 +249,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
   // Date Night Ideas content
   if (slug === "chicago-date-night-ideas") {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-pink-900/40 to-slate-900">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-pink-900/40 to-slate-900">
         <div className="sparkle-noise absolute inset-0 opacity-20" />
         
         <div className="relative mx-auto max-w-4xl px-6 py-20">
@@ -429,7 +429,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
   // Eugene Date Night Ideas content
   if (slug === "eugene-date-night-ideas") {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-green-900/40 to-slate-900">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-green-900/40 to-slate-900">
         <div className="sparkle-noise absolute inset-0 opacity-20" />
         
         <div className="relative mx-auto max-w-4xl px-6 py-20">
@@ -610,7 +610,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
   // Pilsen Student Guide
   if (slug === "pilsen-student-guide") {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-orange-900/30 to-slate-900">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-orange-900/30 to-slate-900">
         <div className="sparkle-noise absolute inset-0 opacity-20" />
         
         <div className="relative mx-auto max-w-4xl px-6 py-20">
@@ -1131,7 +1131,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
   if (slug === "pottery-classes-chicago-guide") {
     const author = getAuthorBySlug(post.authorSlug);
     return (
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
         <div className="sparkle-noise absolute inset-0 opacity-20" />
 
         <div className="relative mx-auto max-w-4xl px-6 py-20">
@@ -1508,7 +1508,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
   if (slug === "chicago-pottery-classes-beginners-guide") {
     const author = getAuthorBySlug(post.authorSlug);
     return (
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
         <div className="sparkle-noise absolute inset-0 opacity-20" />
 
         <div className="relative mx-auto max-w-4xl px-6 py-20">

@@ -122,3 +122,11 @@ export const metaEventDeliveries = pgTable('meta_event_deliveries', {
   status: text('status').notNull(),
   updatedAt: timestamp('updated_at', {withTimezone:true}).notNull().defaultNow(),
 });
+
+export const privacyPreferences = pgTable("privacy_preferences", {
+  id: text().primaryKey(),
+  analytics: boolean().notNull().default(false),
+  marketing: boolean().notNull().default(false),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+}, table => [index("privacy_preferences_expires_at_idx").on(table.expiresAt)]);

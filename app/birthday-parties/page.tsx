@@ -272,7 +272,7 @@ const localBusinessSchema = {
 
 export default function BirthdayPartiesPage() {
   return (
-    <main className="min-h-screen">
+    <main id="main-content" tabIndex={-1} className="min-h-screen">
       {/* Structured Data */}
       <script
         type="application/ld+json"

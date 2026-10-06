@@ -28,6 +28,7 @@ const base = process.env.CCF_BASE_URL || "http://localhost:8889";
       };
     });
     const page = await context.newPage();
+    await page.route("**/api/privacy", route => route.fulfill({ json: { preferences: { analytics: true, marketing: true } } }));
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto(base + "/?location=chicago&utm_source=analytics_test");

@@ -24,6 +24,7 @@ const base = process.env.CCF_BASE_URL || "http://localhost:8889";
       window.gtag = () => {};
     });
     const page = await context.newPage();
+    await page.route("**/api/privacy", route => route.fulfill({ json: { preferences: { analytics: true, marketing: true } } }));
     await page.goto(base);
     await page.waitForSelector("script#meta-pixel-library", {
       state: "attached",
@@ -167,6 +168,7 @@ const base = process.env.CCF_BASE_URL || "http://localhost:8889";
     window.gtag = () => {};
   });
   const page = await denied.newPage();
+  await page.route("**/api/privacy", route => route.fulfill({ json: { preferences: null } }));
   await page.goto(base);
   await page.waitForSelector("[data-activity]");
   await page.waitForTimeout(400);

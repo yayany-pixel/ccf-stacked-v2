@@ -1,6 +1,6 @@
 export default function CityLoading() {
   return (
-    <main className="min-h-screen">
+    <main id="main-content" tabIndex={-1} className="min-h-screen">
       {/* Hero skeleton */}
       <section className="relative flex min-h-[90vh] items-center overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40 pt-24">
         <div className="relative z-20 mx-auto w-full max-w-7xl px-6 py-20">

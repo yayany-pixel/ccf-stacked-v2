@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test:homepage": "node --import tsx tests/homepage.ts",
+    "test:audit": "node --import tsx tests/audit-fixes.ts",
+    "test:audit:browser": "node tests/audit-fixes-browser.cjs",
     "test:homepage:browser": "node tests/homepage-browser.cjs",
     "test:homepage:booking": "node tests/homepage-booking.cjs",
     "test": "node --import tsx tests/selftest.ts && node --import tsx tests/askccf-regression.ts && node --import tsx tests/acuity-mcp.ts && node --import tsx tests/site-repairs.ts",

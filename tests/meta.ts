@@ -24,6 +24,9 @@ async function main() {
   pixel.initializeMetaPixel();
   assert.equal(commands.filter((x) => x[0] === "init").length, 1);
   pixel.trackMetaPageView();
+  assert.equal(commands.filter((command) => command[0] === "track").length, 0);
+  pixel.updateMetaConsent("granted");
+  pixel.trackMetaPageView();
   pixel.trackMetaPageView();
   assert.equal(commands.filter((x) => x[1] === "PageView").length, 1);
   const card = {
