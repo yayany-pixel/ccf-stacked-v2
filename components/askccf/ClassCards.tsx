@@ -1,13 +1,15 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
+import { classImageLoader } from "@/lib/classImageLoader";
 import { trackBeginCheckout, trackEvent } from "@/lib/analytics";
 import type { ClassCard } from "./types";
 
 /**
  * Booking cards for classes the assistant recommended. Every value here comes
- * from the live booking system via the chat API — the model never supplies
- * prices, links or images.
+ * from the live booking system or the reviewed photo assignments via the
+ * chat API — the model never supplies prices, links or images.
  */
 export default function ClassCards({ cards }: { cards: ClassCard[] }) {
   if (cards.length === 0) return null;
@@ -19,12 +21,24 @@ export default function ClassCards({ cards }: { cards: ClassCard[] }) {
           key={card.id}
           className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-glass backdrop-blur-xl"
         >
-          {card.imageUrl && /^https:\/\//.test(card.imageUrl) ? (
+          {card.imageUrl?.startsWith("/images/classes/") ? (
+            <Image
+              src={card.imageUrl}
+              loader={classImageLoader}
+              alt={card.title}
+              width={480}
+              height={360}
+              sizes="(max-width: 480px) calc(100vw - 64px), 360px"
+              loading="lazy"
+              className="h-28 w-full object-cover"
+            />
+          ) : card.imageUrl && /^https:\/\//.test(card.imageUrl) ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={card.imageUrl}
               alt={card.title}
               loading="lazy"
+              decoding="async"
               className="h-28 w-full object-cover"
             />
           ) : null}

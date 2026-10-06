@@ -77,7 +77,7 @@ graph TB
 ```mermaid
 graph TB
     subgraph HERO["🏠 HERO SECTION - Above the Fold"]
-        TAGLINE["Tagline: 'Creativity is shareable.'"]
+        TAGLINE["Tagline: 'The future is handmade...'"]
         H1["H1: Choose Your Location"]
         DESC["Description: Expert-guided pottery, glass fusion,<br/>mosaics in Chicago & Eugene"]
         VIDEO["📹 2-VIDEO SWITCHER<br/>Default: Studio Short (9:16)<br/>Option: Full Video (16:9)<br/>Next button overlay"]

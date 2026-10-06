@@ -15,7 +15,7 @@ export function localBusinessJsonLd(city: City) {
       "https://www.instagram.com/colorcocktailfactory",
       "https://www.facebook.com/colorcocktailfactory"
     ],
-    slogan: "Creativity is shareable.",
+    slogan: "The future is handmade...",
     priceRange: "$$",
     currenciesAccepted: "USD",
     paymentAccepted: "Cash, Credit Card, Debit Card",
@@ -105,7 +105,7 @@ export function activityJsonLd(city: City, section: SectionConfig) {
       "@type": "Organization",
       name: "Color Cocktail Factory",
       url: `https://colorcocktailfactory.com/${city.param}`,
-      logo: "https://colorcocktailfactory.com/apple-touch-icon.png",
+      logo: "https://colorcocktailfactory.com/images/brand/color-cocktail-factory-logo.jpg",
       sameAs: ["https://www.instagram.com/colorcocktailfactory"]
     },
     url: `https://colorcocktailfactory.com/${city.param}/${section.slug}`,

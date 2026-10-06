@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandLogo from "@/components/BrandLogo";
 import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 import NewsletterSignup from "@/components/NewsletterSignup";
 
@@ -20,12 +21,10 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <div className="flex items-center gap-3">
-              <div className="grid h-10 w-10 place-items-center rounded-2xl border border-white/15 bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-cyan-500/20">
-                <span className="bg-gradient-to-br from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-sm font-semibold text-transparent">CCF</span>
-              </div>
+              <BrandLogo />
               <div>
                 <div className="text-sm font-semibold">Color Cocktail Factory</div>
-                <div className="text-xs text-white/60">Creativity is shareable.</div>
+                <div className="text-xs text-white/60">The future is handmade...</div>
               </div>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-white/70">

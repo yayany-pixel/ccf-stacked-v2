@@ -11,6 +11,7 @@
  */
 
 import { STUDIO_LOCATIONS } from "@/lib/locations";
+import { getClassPhoto } from "@/lib/classPhotos";
 import { formatClassTime, localDateAndTime, studioTimeZone } from "./schedule";
 export type CatalogLocation = "chicago" | "eugene" | "online" | "unknown";
 
@@ -302,7 +303,7 @@ export function normalize(type: AcuityType): CatalogClass {
     craft: inferCraft(type.name, description),
     durationMinutes: typeof type.duration === "number" ? type.duration : null,
     maxGroupSize: typeof type.classSize === "number" ? type.classSize : null,
-    imageUrl: type.image ?? null,
+    imageUrl: getClassPhoto(type.id)?.path ?? type.image ?? null,
     bookingUrl:
       type.schedulingUrl ??
       `https://colorcocktailfactory.as.me/?appointmentType=${type.id}`,

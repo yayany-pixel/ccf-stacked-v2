@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import BrandLogo from "@/components/BrandLogo";
+import { classImageLoader } from "@/lib/classImageLoader";
 import Link from "next/link";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
 import { useScrollDepth } from "@/lib/analyticsHooks";
@@ -21,7 +23,7 @@ function ActivityCard({ activity, first = false }: { activity: HomepageActivity;
       <div className={styles.photo}>
         {imageFailed ? <p className={styles.imageError}>This photograph is temporarily unavailable.</p> : (
           <Image src={photo.path} alt={photo.alt} width={photo.width} height={photo.height}
-            loader={({ src, width }) => `/.netlify/images?url=${encodeURIComponent(src)}&w=${Math.min(width, photo.width)}&q=85`}
+            loader={props => classImageLoader({ ...props, width: Math.min(props.width, photo.width) })}
             sizes="(min-width: 900px) 560px, (min-width: 680px) 640px, calc(100vw - 32px)"
             priority={first} loading={first ? "eager" : "lazy"}
             style={{ objectPosition: photo.focalPosition }} onError={() => setImageFailed(true)} />
@@ -146,7 +148,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <Link href="/" className={styles.brand} aria-label="Color Cocktail Factory home">
-            <svg className={styles.brandMark} viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 14c-1 10 3 17 11 17s12-7 11-17M8 13c5-3 19-3 24 0-4 4-20 4-24 0ZM14 7l-2-4m9 3 1-4m7 5 3-3M8 34c7 2 18 2 24-1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+            <BrandLogo className={styles.brandMark} />
             <span>Color Cocktail<span>Factory</span></span>
           </Link>
           <nav className={styles.desktopNav} aria-label="Main navigation"><a href="#classes">Classes</a><a href="#private-party">Private parties</a><Link href="/gift-cards">Gift cards</Link></nav>
@@ -167,7 +169,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
         </div>
       </header>
       <main id="main-content" className={styles.main}>
-        <div className={styles.intro}><h1>Creativity is <em>shareable.</em></h1><p>Come make something together.</p></div>
+        <div className={styles.intro}><h1>The future is <em>handmade...</em></h1><p>Come make something together.</p></div>
         <div className={styles.feed} id="classes" aria-label={`${studio.label} creative workshops`}>
           {visible.slice(0, 2).map((activity, index) => <ActivityCard key={activity.key} activity={activity} first={index === 0} />)}
           <section id="private-party" className={styles.party} aria-labelledby="private-party-title">

@@ -6,7 +6,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Bonsai for Beginners: Hands-On Workshop - Chicago.webp",
     "driveFileId": "1313Zo8PU-B93TPrRK2BtgSa1PoHsW-Hv",
-    "path": "/images/classes/approved-01-HsW-Hv.webp",
+    "path": "/images/classes/approved-01-HsW-Hv-48dba9a4f983.webp",
     "width": 1200,
     "height": 900,
     "alt": "Two workshop guests holding their finished bonsai trees",
@@ -15,7 +15,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Boobs Coffee Mug - Chicago.webp",
     "driveFileId": "1doXJBmxsZonqysNYO4wPZdV8lFOxXCRA",
-    "path": "/images/classes/approved-02-OxXCRA.webp",
+    "path": "/images/classes/approved-02-OxXCRA-483d78af789f.webp",
     "width": 1080,
     "height": 810,
     "alt": "A participant shaping a body-inspired clay mug",
@@ -24,7 +24,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Candle Making - Chicago.webp",
     "driveFileId": "1ItqqGer2N5dAJOOwWlhejDm0Ew3xOd0G",
-    "path": "/images/classes/approved-03-3xOd0G.webp",
+    "path": "/images/classes/approved-03-3xOd0G-3b868ddea3a9.webp",
     "width": 1200,
     "height": 900,
     "alt": "A candle-making instructor helping guests at a studio worktable",
@@ -33,7 +33,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Cat Vase Making - Chicago.webp",
     "driveFileId": "1nmmfhUOfn-Xg7N37pWpo1coU7Nbvze7K",
-    "path": "/images/classes/approved-04-bvze7K.webp",
+    "path": "/images/classes/approved-04-bvze7K-ec006f49f9b6.webp",
     "width": 1200,
     "height": 900,
     "alt": "Two guests showing their handbuilt cat vases",
@@ -42,7 +42,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Ceramic Mug and a Bowl - Chicago.webp",
     "driveFileId": "1WtKmP1ivyyj2SBnF1N1FlXOfKB9-c5wW",
-    "path": "/images/classes/approved-05-9-c5wW.webp",
+    "path": "/images/classes/approved-05-9-c5wW-833640afcace.webp",
     "width": 1084,
     "height": 813,
     "alt": "A participant handbuilding pottery at a clay-covered studio table",
@@ -51,7 +51,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Charcuterie Board Make And Paint.webp",
     "driveFileId": "1v0FlW6PrKA5r_dok6WSSXmLVyUJv3ZHw",
-    "path": "/images/classes/approved-06-Jv3ZHw.webp",
+    "path": "/images/classes/approved-06-Jv3ZHw-c93bf2f3ff95.webp",
     "width": 984,
     "height": 738,
     "alt": "A decorated ceramic serving board arranged with food",
@@ -60,7 +60,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Chicago Date Night Pottery.webp",
     "driveFileId": "194clPBzrJEB4A7mrJkYSNlPfzmGo6xn9",
-    "path": "/images/classes/approved-07-Go6xn9.webp",
+    "path": "/images/classes/approved-07-Go6xn9-08daf172fdf1.webp",
     "width": 680,
     "height": 510,
     "alt": "A couple working together on clay at a pottery wheel",
@@ -69,7 +69,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Date Night Bonsai VIP.webp",
     "driveFileId": "1ipWUtg4iAI2BYOHlTPv-ozBkePjaP3Wk",
-    "path": "/images/classes/approved-08-jaP3Wk.webp",
+    "path": "/images/classes/approved-08-jaP3Wk-48dba9a4f983.webp",
     "width": 1200,
     "height": 900,
     "alt": "A couple holding bonsai trees made in their workshop",
@@ -78,7 +78,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Date Night Candle Making.webp",
     "driveFileId": "1RmziT-exXIMkDpnckW4ByH2RtfpGZ8Xc",
-    "path": "/images/classes/approved-09-pGZ8Xc.webp",
+    "path": "/images/classes/approved-09-pGZ8Xc-f80ab73cab4c.webp",
     "width": 1200,
     "height": 900,
     "alt": "Two guests smiling at a candle-making workshop table",
@@ -87,7 +87,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Date Night On Fire - VIP EXPERIENCE.webp",
     "driveFileId": "1r7cdx8xM97TKHY7yrmIM4W3bRM0WVDdt",
-    "path": "/images/classes/approved-10-0WVDdt.webp",
+    "path": "/images/classes/approved-10-0WVDdt-8552826d25e5.webp",
     "width": 1200,
     "height": 900,
     "alt": "Hands shaping a tall clay vessel on a pottery wheel",
@@ -96,7 +96,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Date Night Watercolor Painting for Two - Chicago.webp",
     "driveFileId": "1pG8c-BNS5LsGxlAILx-fZZgM4rPKrRG-",
-    "path": "/images/classes/approved-11-PKrRG-.webp",
+    "path": "/images/classes/approved-11-PKrRG--1250486ab1dc.webp",
     "width": 940,
     "height": 705,
     "alt": "Watercolor flowers beside a watercolor palette and brushes",
@@ -105,7 +105,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Date Night Watercolor Painting for Two - Eugene.webp",
     "driveFileId": "1JPYwvGbQTLtgs53G-8xmIxa-tcFB2XmA",
-    "path": "/images/classes/approved-12-FB2XmA.webp",
+    "path": "/images/classes/approved-12-FB2XmA-1250486ab1dc.webp",
     "width": 940,
     "height": 705,
     "alt": "Watercolor flowers beside a watercolor palette and brushes",
@@ -114,7 +114,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Date Night: Make Your Own Ceramic Chess Set ♟️.webp",
     "driveFileId": "1tH32y2VynWe1KrhuygbBMcARm7zfKHQr",
-    "path": "/images/classes/approved-13-zfKHQr.webp",
+    "path": "/images/classes/approved-13-zfKHQr-b484e7f234e3.webp",
     "width": 1200,
     "height": 900,
     "alt": "Handmade blue and gold ceramic chess pieces",
@@ -123,7 +123,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Dildos and Bottles - Chicago.webp",
     "driveFileId": "1A0z3iSQIrVgzc0GDYG9UurcYUaO6jPqj",
-    "path": "/images/classes/approved-14-O6jPqj.webp",
+    "path": "/images/classes/approved-14-O6jPqj-44b6e46c35f2.webp",
     "width": 1200,
     "height": 900,
     "alt": "A group working on adult-themed clay projects in the studio",
@@ -132,7 +132,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Eugene : Make Your Own Charcuterie Board.webp",
     "driveFileId": "1n4kaRbWpiTajJmNi1f-vK3KYFfGUmXbp",
-    "path": "/images/classes/approved-15-GUmXbp.webp",
+    "path": "/images/classes/approved-15-GUmXbp-c93bf2f3ff95.webp",
     "width": 984,
     "height": 738,
     "alt": "A ceramic serving board arranged with fruit and cheese",
@@ -141,7 +141,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Eugene 🌿 Date Night Terrarium Workshop.webp",
     "driveFileId": "1-TTFdz3-dOIFw7_KSVjMP6mfxSbe3SrC",
-    "path": "/images/classes/approved-16-be3SrC.webp",
+    "path": "/images/classes/approved-16-be3SrC-424e14c07efd.webp",
     "width": 1200,
     "height": 900,
     "alt": "Two guests arranging plants in terrarium containers",
@@ -150,7 +150,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Eugene Date Night On The Wheel.webp",
     "driveFileId": "1iQ4dV0SfOR30yj6_-5IUKkfq8ih_HdFG",
-    "path": "/images/classes/approved-17-h_HdFG.webp",
+    "path": "/images/classes/approved-17-h_HdFG-66253a9801df.webp",
     "width": 1200,
     "height": 900,
     "alt": "Two guests shaping clay together at a pottery wheel",
@@ -159,7 +159,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Eugene Duck Soap holder.webp",
     "driveFileId": "1F6_m5BS08ufMK-lkDrUvOPMCU7iHzJZB",
-    "path": "/images/classes/approved-18-iHzJZB.webp",
+    "path": "/images/classes/approved-18-iHzJZB-062e8f625073.webp",
     "width": 1200,
     "height": 900,
     "alt": "A white ceramic duck-shaped soap holder",
@@ -168,7 +168,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Eugene Mushroom Pottery.webp",
     "driveFileId": "1_05XYf1Ttn-mFsrVPOozD6GhnxLiMP2x",
-    "path": "/images/classes/approved-19-LiMP2x.webp",
+    "path": "/images/classes/approved-19-LiMP2x-4c03060fd117.webp",
     "width": 1200,
     "height": 900,
     "alt": "A handmade clay bowl decorated with little mushrooms",
@@ -177,7 +177,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Eugene Pipe and Ashtray Making Class.webp",
     "driveFileId": "1A_Uc_Pcuvzlit2-czndlYINfa5bxE6AT",
-    "path": "/images/classes/approved-20-bxE6AT.webp",
+    "path": "/images/classes/approved-20-bxE6AT-5987c695c8b3.webp",
     "width": 1200,
     "height": 900,
     "alt": "Guests sculpting clay at a shared studio table",
@@ -186,7 +186,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Eugene Wheel Throwing for Beginners: Cup creations.webp",
     "driveFileId": "1GPlEk3mPWnLxi_mUfgrXocT4eNe-GdkT",
-    "path": "/images/classes/approved-21-e-GdkT.webp",
+    "path": "/images/classes/approved-21-e-GdkT-20ed285cc994.webp",
     "width": 1200,
     "height": 900,
     "alt": "A smiling workshop guest holding a freshly made clay cup",
@@ -195,7 +195,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Eugene Wheel Throwing for Beginners: Matcha Bowl.webp",
     "driveFileId": "1X5DfJL0Sy3ohFrMsh5YpXMv6s8jhPcfu",
-    "path": "/images/classes/approved-22-jhPcfu.webp",
+    "path": "/images/classes/approved-22-jhPcfu-9847496ddb3a.webp",
     "width": 1152,
     "height": 864,
     "alt": "A handmade ceramic matcha bowl with a pouring lip",
@@ -204,7 +204,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Eugene: Ceramic Mug and a Bowl.webp",
     "driveFileId": "1SPxv3rAsMNN-AQPI_PHvkIauuPoFSphW",
-    "path": "/images/classes/approved-23-oFSphW.webp",
+    "path": "/images/classes/approved-23-oFSphW-833640afcace.webp",
     "width": 1084,
     "height": 813,
     "alt": "A participant handbuilding pottery at a clay-covered studio table",
@@ -213,7 +213,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "FLASH SALE BEGINNERS WHEEL THROWING.webp",
     "driveFileId": "1us6KmXl90xq-GVC7Ik5dWGjA511Xe4O7",
-    "path": "/images/classes/approved-24-1Xe4O7.webp",
+    "path": "/images/classes/approved-24-1Xe4O7-1333c1ca8af3.webp",
     "width": 1124,
     "height": 843,
     "alt": "A guest shaping clay at a pottery wheel",
@@ -222,7 +222,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Halloween Ghost Pottey!.webp",
     "driveFileId": "1YMDM6UHHdSUwyX-x1plX-S3jWFXp8VJh",
-    "path": "/images/classes/approved-25-Xp8VJh.webp",
+    "path": "/images/classes/approved-25-Xp8VJh-a3cc50ff33d0.webp",
     "width": 1200,
     "height": 900,
     "alt": "Three studio guests holding handmade clay ghosts",
@@ -231,7 +231,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Halloween Pottery: Carve Your Own Clay Pumpkin.webp",
     "driveFileId": "10AJ_Mn1-NZrWPUDPixT_VsunIflimpFo",
-    "path": "/images/classes/approved-26-limpFo.webp",
+    "path": "/images/classes/approved-26-limpFo-fc92c5a6a49d.webp",
     "width": 1084,
     "height": 813,
     "alt": "A participant carving a face into a clay pumpkin",
@@ -240,7 +240,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Handbuilding For Beginners - Vase Making.webp",
     "driveFileId": "1bIBAAXJhbKNQdOGTT48BtbybBvOd_yaM",
-    "path": "/images/classes/approved-27-Od_yaM.webp",
+    "path": "/images/classes/approved-27-Od_yaM-db5f47ec152e.webp",
     "width": 1120,
     "height": 840,
     "alt": "Two guests holding their handbuilt pottery vases",
@@ -249,7 +249,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Hanging Turkish Mosaic Lamp - Chicago.webp",
     "driveFileId": "1B5ASopfJkDaFOKzxCzNnTrGsp6k53Mrx",
-    "path": "/images/classes/approved-28-k53Mrx.webp",
+    "path": "/images/classes/approved-28-k53Mrx-cda788618ed1.webp",
     "width": 1200,
     "height": 900,
     "alt": "Two workshop guests with colorful mosaic lamps",
@@ -258,7 +258,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Make a Clay Cauldron — Live Online Halloween Workshop.webp",
     "driveFileId": "1GrTH8xrgkUTKM98nw0XjfIn6TBmzv-ST",
-    "path": "/images/classes/approved-29-mzv-ST.webp",
+    "path": "/images/classes/approved-29-mzv-ST-49bec5c931b2.webp",
     "width": 1200,
     "height": 900,
     "alt": "A black clay cauldron with small handles",
@@ -267,7 +267,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Make And Paint - Wheel throwing.webp",
     "driveFileId": "1ZmRBxXpBVYiOVsHyJy-k2T4DDoMWLugH",
-    "path": "/images/classes/approved-30-MWLugH.webp",
+    "path": "/images/classes/approved-30-MWLugH-4fd2082da220.webp",
     "width": 1044,
     "height": 783,
     "alt": "Participants painting pottery on wheels in the studio",
@@ -276,7 +276,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "MONSTER POTTERY! HALLOWEEN LANTERN CLASS.webp",
     "driveFileId": "1m8h0_RuVEIusnYBoRCVjTLVdSu-C-m2D",
-    "path": "/images/classes/approved-31--C-m2D.webp",
+    "path": "/images/classes/approved-31--C-m2D-9bb1c21ffb08.webp",
     "width": 1120,
     "height": 840,
     "alt": "Hands sculpting a clay monster lantern",
@@ -285,7 +285,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Mosaic Creations - Chicago.webp",
     "driveFileId": "1Ie2yRdR3PyUJq5UYwFI9adlehgrW3n0V",
-    "path": "/images/classes/approved-32-rW3n0V.webp",
+    "path": "/images/classes/approved-32-rW3n0V-cadbf04e7dff.webp",
     "width": 1200,
     "height": 900,
     "alt": "Two guests showing their colorful mosaic creations",
@@ -294,7 +294,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Mushroom Pottery - Chicago.webp",
     "driveFileId": "1ASVnYO-DEJjWKu2IV5_54cuI6TcnT_gx",
-    "path": "/images/classes/approved-33-cnT_gx.webp",
+    "path": "/images/classes/approved-33-cnT_gx-4c03060fd117.webp",
     "width": 1200,
     "height": 900,
     "alt": "A handmade clay bowl decorated with little mushrooms",
@@ -303,7 +303,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "OOGIE BOOGIE INSPIRED CANDLE HOLDER | HALLOWEEN POTTERY.webp",
     "driveFileId": "1Dk1vbnkzI5CVqE5sqrNzI28vJFB1jIP2",
-    "path": "/images/classes/approved-34-B1jIP2.webp",
+    "path": "/images/classes/approved-34-B1jIP2-7da4f1254f0e.webp",
     "width": 1080,
     "height": 810,
     "alt": "Two sculpted Oogie Boogie-inspired clay candle holders",
@@ -312,7 +312,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Open Studio Wheel throwing.webp",
     "driveFileId": "1aMKNGVj2QaG3s8qol35P5JcEUoa5mSV-",
-    "path": "/images/classes/approved-35-a5mSV-.webp",
+    "path": "/images/classes/approved-35-a5mSV--31ce8e8ba7af.webp",
     "width": 1120,
     "height": 840,
     "alt": "A potter shaping a bowl at an open studio wheel",
@@ -321,7 +321,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Paint Pottery - Chicago.webp",
     "driveFileId": "1N4Smjtmki9ib-oTL2xL8ipQCL4hnfruv",
-    "path": "/images/classes/approved-36-hnfruv.webp",
+    "path": "/images/classes/approved-36-hnfruv-c1631ba91192.webp",
     "width": 816,
     "height": 612,
     "alt": "Pottery painting at the studio and examples of painted plates",
@@ -330,7 +330,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Pipe and Ashtray Making Class - Chicago.webp",
     "driveFileId": "1Gf3pMDTNEgJgY20r4Twg1MvYODZmbGc9",
-    "path": "/images/classes/approved-37-ZmbGc9.webp",
+    "path": "/images/classes/approved-37-ZmbGc9-5987c695c8b3.webp",
     "width": 1200,
     "height": 900,
     "alt": "Guests sculpting clay at a shared studio table",
@@ -339,7 +339,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Pussy Pottery - Chicago.webp",
     "driveFileId": "1EubdimRySRYd_IYvDKPlbPZXE9qZICjD",
-    "path": "/images/classes/approved-38-qZICjD.webp",
+    "path": "/images/classes/approved-38-qZICjD-8bdf861bfae5.webp",
     "width": 1200,
     "height": 900,
     "alt": "An arrangement of body-inspired ceramic vessels",
@@ -348,7 +348,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Soap Making - Chicago.webp",
     "driveFileId": "1WgojxuIVC4kZfpAQoHeHda08iU6pd03D",
-    "path": "/images/classes/approved-39-6pd03D.webp",
+    "path": "/images/classes/approved-39-6pd03D-aa5367dfe912.webp",
     "width": 1180,
     "height": 885,
     "alt": "Handmade soap bars beside flowers and oils",
@@ -357,7 +357,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Spin A Spell- Make your Own Clay Cauldron.webp",
     "driveFileId": "1TQ1ahWNZted7uwQrvDmiM8IcFZmk2QuD",
-    "path": "/images/classes/approved-40-mk2QuD.webp",
+    "path": "/images/classes/approved-40-mk2QuD-49bec5c931b2.webp",
     "width": 1200,
     "height": 900,
     "alt": "A black clay cauldron with small handles",
@@ -366,7 +366,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Throw A Pumpkin On The Wheel.webp",
     "driveFileId": "1QcgtqkhqZ-bmRZLel8UTmDdU40Z5t289",
-    "path": "/images/classes/approved-41-Z5t289.webp",
+    "path": "/images/classes/approved-41-Z5t289-fa4591214677.webp",
     "width": 1200,
     "height": 900,
     "alt": "Two unglazed wheel-thrown clay pumpkins",
@@ -375,7 +375,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Turkish Mosaic Lamp - Chicago.webp",
     "driveFileId": "1WFd8fUpeTML-DZSu8gQ4-ViDpW9vzaFl",
-    "path": "/images/classes/approved-42-9vzaFl.webp",
+    "path": "/images/classes/approved-42-9vzaFl-cda788618ed1.webp",
     "width": 1200,
     "height": 900,
     "alt": "Two workshop guests with colorful mosaic lamps",
@@ -384,7 +384,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "VIP DATE NIGHT PAINT NIGHT.webp",
     "driveFileId": "1Dd_VIg9xcKuRc17_F0kHIT1Gq068dhl8",
-    "path": "/images/classes/approved-43-68dhl8.webp",
+    "path": "/images/classes/approved-43-68dhl8-f05d61fb4af0.webp",
     "width": 1200,
     "height": 900,
     "alt": "A finished painting of colorful birds on tree branches",
@@ -393,7 +393,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Water Color For Beginners.webp",
     "driveFileId": "1GujlQ9QUHvUdMFJJoh_ajjyWdg-Yj9yC",
-    "path": "/images/classes/approved-44--Yj9yC.webp",
+    "path": "/images/classes/approved-44--Yj9yC-1250486ab1dc.webp",
     "width": 940,
     "height": 705,
     "alt": "Watercolor flowers beside a watercolor palette and brushes",
@@ -402,7 +402,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Wheel Throwing for Beginners - Chicago.webp",
     "driveFileId": "1rUWLJ1sUh8iFBVU5xwI0CCmlO5e58mRd",
-    "path": "/images/classes/approved-45-e58mRd.webp",
+    "path": "/images/classes/approved-45-e58mRd-1333c1ca8af3.webp",
     "width": 1124,
     "height": 843,
     "alt": "A guest shaping clay at a pottery wheel",
@@ -411,7 +411,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Wheel Throwing for Beginners -Cup Creations.webp",
     "driveFileId": "1jqsoqPsiLbjt0OKDsiEHxlArlXZzjDrH",
-    "path": "/images/classes/approved-46-ZzjDrH.webp",
+    "path": "/images/classes/approved-46-ZzjDrH-20ed285cc994.webp",
     "width": 1200,
     "height": 900,
     "alt": "A smiling workshop guest holding a freshly made clay cup",
@@ -420,7 +420,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl.webp",
     "driveFileId": "1eK1meuDixOc_lZWYmGh78TTphwljxCA2",
-    "path": "/images/classes/approved-47-ljxCA2.webp",
+    "path": "/images/classes/approved-47-ljxCA2-9847496ddb3a.webp",
     "width": 1152,
     "height": 864,
     "alt": "A handmade ceramic matcha bowl with a pouring lip",
@@ -429,7 +429,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Wheel Throwing for Beginners -Vase Making.webp",
     "driveFileId": "1ZxDIPV80lLYE8-YVvJ-rRNkPK7fzOd_M",
-    "path": "/images/classes/approved-48-fzOd_M.webp",
+    "path": "/images/classes/approved-48-fzOd_M-78335159bcd7.webp",
     "width": 1200,
     "height": 900,
     "alt": "A participant shaping a clay vessel at a pottery wheel",
@@ -438,7 +438,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Wine Glass Painting - Chicago.webp",
     "driveFileId": "1GxySoZHJuUstkXWjY6Z8t2DE9hltrBKB",
-    "path": "/images/classes/approved-49-ltrBKB.webp",
+    "path": "/images/classes/approved-49-ltrBKB-622409207453.webp",
     "width": 1200,
     "height": 900,
     "alt": "Colorfully painted wine glasses",
@@ -447,7 +447,7 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Wine Glass Painting.webp",
     "driveFileId": "1n0pbgfFdzGJsshozmSmAUZKedDDEuF4h",
-    "path": "/images/classes/approved-50-DEuF4h.webp",
+    "path": "/images/classes/approved-50-DEuF4h-622409207453.webp",
     "width": 1200,
     "height": 900,
     "alt": "Colorfully painted wine glasses",

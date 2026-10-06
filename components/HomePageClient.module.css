@@ -17,7 +17,7 @@
 .headerInner { max-width: 1200px; margin: auto; min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 16px; }
 .brand { display: flex; align-items: center; gap: 8px; line-height: 1.05; font-family: Georgia, serif; font-size: 16px; letter-spacing: -.5px; flex-shrink: 0; }
 .brand > span > span { display: block; }
-.brandMark { width: 32px; height: 36px; color: var(--clay); }
+.brandMark { width: 36px; height: 36px; flex-shrink: 0; object-fit: contain; border-radius: 6px; }
 .desktopNav { display: none; }
 .headerActions { display: flex; align-items: center; gap: 8px; }
 .citySelector { display: flex; padding: 3px; border: 1px solid var(--line); border-radius: 30px; }
@@ -74,7 +74,7 @@
 .studioInfo > p { margin-top: 8px; }
 .studioInfo > a { display: inline-block; padding: 14px 8px; margin-top: 12px; text-decoration: underline; text-underline-offset: 5px; }
 .dataStatus { color: var(--muted); font-size: 13px; line-height: 1.5; max-width: 470px; margin-inline: auto; }
-@media (max-width: 380px) { .brand { font-size: 14px; gap: 5px; }.brandMark { width: 26px; }.headerActions { gap: 3px; }.citySelector button { padding-inline: 8px; }.intro h1 { font-size: 25px; } }
+@media (max-width: 380px) { .brand { font-size: 14px; gap: 5px; }.brandMark { width: 30px; height: 30px; }.headerActions { gap: 3px; }.citySelector button { padding-inline: 8px; }.intro h1 { font-size: 25px; } }
 @media (max-width: 340px) { .headerInner { flex-wrap: wrap; }.headerActions { width: 100%; flex-wrap: wrap; justify-content: space-between; }.cardBody { padding-inline: 15px; }.intro h1 { font-size: 25px; }.party { padding-inline: 12px; }.more button { padding-inline: 16px; } }
 @media (max-height: 620px) and (max-width: 679px) { .photo { aspect-ratio: auto; height: 205px; }.photo img { object-fit: contain; }.cardBody { padding-top: 14px; }.intro { padding-block: 12px; } }
 @media (min-width: 680px) { .main { max-width: 680px; }.headerInner { padding-inline: 24px; }.brand { font-size: 18px; }.brand > span > span { display: inline; margin-left: 4px; }.intro p { display: block; }.intro { padding-block: 27px; }.party { padding: 32px; }.partyIntro h2 em { display: inline; }.feed { gap: 32px; } }

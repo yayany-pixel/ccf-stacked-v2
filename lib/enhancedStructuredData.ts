@@ -16,9 +16,9 @@ export function generateOrganizationSchema() {
     "name": "Color Cocktail Factory",
     "alternateName": "CCF",
     "url": "https://colorcocktailfactory.com",
-    "logo": "https://colorcocktailfactory.com/apple-touch-icon.png",
+    "logo": "https://colorcocktailfactory.com/images/brand/color-cocktail-factory-logo.jpg",
     "description": "Premium creative workshops and pottery classes in Chicago & Eugene. Expert-led hands-on experiences including pottery, glass art, mosaics, and more.",
-    "slogan": "Creativity is shareable.",
+    "slogan": "The future is handmade...",
     "sameAs": [
       "https://www.instagram.com/colorcocktailfactory",
       "https://www.facebook.com/colorcocktailfactory"

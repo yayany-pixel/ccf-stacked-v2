@@ -66,7 +66,7 @@ graph TB
 HOMEPAGE_MERMAID = """
 graph TB
     subgraph HERO[" HERO SECTION - Above the Fold "]
-        TAGLINE["Tagline: Creativity is shareable"]
+        TAGLINE["Tagline: The future is handmade..."]
         H1["H1: Choose Your Location"]
         DESC["Expert-guided pottery, glass fusion,<br/>mosaics in Chicago & Eugene"]
         VIDEO["VIDEO SWITCHER<br/>Default: Studio Short 9:16<br/>Option: Full Video 16:9<br/>Next button overlay"]
