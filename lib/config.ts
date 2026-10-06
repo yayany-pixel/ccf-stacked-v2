@@ -199,9 +199,7 @@ export const sections: SectionConfig[] = [
     videoSrc: placeholderVideo,
     overlayClass: "bg-gradient-to-br from-sky-900/55 via-slate-900/25 to-emerald-900/45",
     backgroundImages: [
-      "https://images.unsplash.com/photo-1493106819196-8e0f12b76b60?w=1920&q=80", // Pottery wheel in action
-      "https://images.unsplash.com/photo-1615670222804-c0dabd8801cc?w=1920&q=80", // Clay being centered
-      "https://images.unsplash.com/photo-1582735689346-18664ee6b881?w=1920&q=80"  // Pottery studio
+      "/images/classes/wheel-throwing-for-beginners-color-cocktail-factory-acuity-600x600.jpg"
     ],
 
     scheduleLabel: "POPULAR",

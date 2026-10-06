@@ -33,7 +33,9 @@ export const categoryImages: CategoryImageMap = {
 export const appointmentImages: CategoryImageMap = {
   // Pottery
   "date night on the wheel": "https://placehold.co/800x450/8b4513/fff?text=Date+Night+Pottery",
-  "beginner wheel throwing": "https://placehold.co/800x450/8b4513/fff?text=Beginner+Wheel",
+  "wheel throwing for beginners": "/images/classes/wheel-throwing-for-beginners-color-cocktail-factory-acuity-600x600.jpg",
+  "beginners wheel throwing": "/images/classes/wheel-throwing-for-beginners-color-cocktail-factory-acuity-600x600.jpg",
+  "beginner wheel throwing": "/images/classes/wheel-throwing-for-beginners-color-cocktail-factory-acuity-600x600.jpg",
   "pottery wheel": "https://placehold.co/800x450/8b4513/fff?text=Pottery+Wheel",
   "handbuilding": "https://placehold.co/800x450/a0522d/fff?text=Hand+Building",
   "clay workshop": "https://placehold.co/800x450/8b4513/fff?text=Clay+Workshop",
