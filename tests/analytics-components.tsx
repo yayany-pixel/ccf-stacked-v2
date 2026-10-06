@@ -10,6 +10,7 @@ delete process.env.NEXT_PUBLIC_GA_ID_1;
 assert.doesNotThrow(() => renderToString(<GoogleAnalytics />));
 process.env.NEXT_PUBLIC_GA_ID_1 = "G-TESTONLY";
 assert.doesNotThrow(() => renderToString(<GoogleAnalytics />));
+assert.doesNotMatch(renderToString(<GoogleAnalytics />), /google-tag|googletagmanager/);
 if (old) process.env.NEXT_PUBLIC_GA_ID_1 = old;
 else delete process.env.NEXT_PUBLIC_GA_ID_1;
 if (oldAds) process.env.NEXT_PUBLIC_GOOGLE_ADS_ID = oldAds;

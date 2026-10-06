@@ -7,7 +7,7 @@ import { classImageLoader } from "@/lib/classImageLoader";
 import Link from "next/link";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
 import { useScrollDepth } from "@/lib/analyticsHooks";
-import { trackEvent, trackBeginCheckout, trackCardView, trackCardSelect, trackShowMore, trackCitySelection, metaContent } from "@/lib/analytics";
+import { trackEvent, trackBeginCheckout, trackCardView, trackCardSelect, trackShowMore, trackCitySelection, metaContent, isGtagAvailable } from "@/lib/analytics";
 import { trackMetaViewContent } from "@/lib/metaPixel";
 import { getCityByParam } from "@/lib/links";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
@@ -15,6 +15,7 @@ import { activitiesForCity, formatNextSession, priceLabel, HOMEPAGE_FILTERS, mat
 import type { HomepageActivity, HomepageCity, HomepageData } from "@/lib/homepage/types";
 import styles from "./HomePageClient.module.css";
 import { HOMEPAGE_REVIEWS } from "@/lib/homepage/reviews";
+import { PRIVACY_EVENT } from "@/lib/privacy";
 
 function ActivityCard({ activity, position, listCity, first = false }: { activity: HomepageActivity; position: number; listCity: HomepageCity; first?: boolean }) {
   const [imageFailed, setImageFailed] = useState(false);
@@ -25,18 +26,28 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
   useEffect(() => {
     const node=ref.current; if(!node)return;
     const key=listCity + ':' + activity.key;
-    const observer=new IntersectionObserver(entries=>{
-      if(entries.some(e=>e.isIntersecting && e.intersectionRatio>=0.25) && !seen.current.has(key)) {
-        seen.current.add(key); trackCardView(tracking); observer.disconnect();
+    const recordView = () => {
+      if (isGtagAvailable() && !seen.current.has(key)) {
+        seen.current.add(key);
+        trackCardView(tracking);
+      } else {
+        trackMetaViewContent(metaContent(tracking));
       }
+    };
+    const observer=new IntersectionObserver(entries=>{
+      if(entries.some(e=>e.isIntersecting && e.intersectionRatio>=0.25)) recordView();
     },{threshold:0.25});
-    const consentChanged = () => {
+    const consentChanged = (event: Event) => {
       const box=node.getBoundingClientRect();
       const visibleHeight=Math.max(0,Math.min(box.bottom,window.innerHeight)-Math.max(box.top,0));
-      if(box.height>0 && visibleHeight/box.height>=0.25)trackMetaViewContent(metaContent(tracking));
+      if(box.height>0 && visibleHeight/box.height>=0.25) {
+        if (event.type === PRIVACY_EVENT) recordView();
+        else trackMetaViewContent(metaContent(tracking));
+      }
     };
     window.addEventListener('ccf-meta-consent',consentChanged);
-    observer.observe(node); return ()=>{observer.disconnect();window.removeEventListener('ccf-meta-consent',consentChanged);};
+    window.addEventListener(PRIVACY_EVENT,consentChanged);
+    observer.observe(node); return ()=>{observer.disconnect();window.removeEventListener('ccf-meta-consent',consentChanged);window.removeEventListener(PRIVACY_EVENT,consentChanged);};
   },[listCity,activity.key,activity.currentPrice,position]);
   if (!photo || !activity.bookingUrl) return null;
   return (
@@ -222,7 +233,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
           </div>
         </div>
       </header>
-      <main id="main-content" className={styles.main}>
+      <main tabIndex={-1} id="main-content" className={styles.main}>
         <div className={styles.intro}><h1>The future is <em>handmade...</em></h1><p>Come make something together.</p></div>
         <div className={styles.filters} role="group" aria-label="Filter workshops">
           {HOMEPAGE_FILTERS.map(option => <button key={option} type="button" aria-pressed={filter === option} onClick={() => {

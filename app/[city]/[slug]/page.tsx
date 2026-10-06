@@ -68,7 +68,7 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
   ]);
 
   return (
-    <main className="min-h-screen">
+    <main id="main-content" tabIndex={-1} className="min-h-screen">
       <MetaActivityView id={`activity:${section.slug}`} name={section.heroTitle} city={city.param} />
       {/* JSON-LD Structured Data */}
       {faqSchema && (

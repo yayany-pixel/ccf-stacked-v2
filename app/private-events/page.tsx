@@ -288,7 +288,7 @@ export default function PrivateEventsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <main className="min-h-screen">
+      <main id="main-content" tabIndex={-1} className="min-h-screen">
         {/* Hero + Form */}
         <section className="gradient-breathing relative overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40">
           <div className="sparkle-noise absolute inset-0  opacity-20" />

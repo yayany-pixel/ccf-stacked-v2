@@ -29,7 +29,7 @@ export default function ActivitiesIndexPage() {
   const activitiesByCategory = getActivitiesByCategory();
 
   return (
-    <main className="min-h-screen">
+    <main id="main-content" tabIndex={-1} className="min-h-screen">
       {/* Hero Section */}
       <div className="gradient-breathing relative overflow-hidden bg-gradient-to-br from-purple-900/40 via-slate-900/60 to-pink-900/40">
         <div className="sparkle-noise absolute inset-0  opacity-20" />

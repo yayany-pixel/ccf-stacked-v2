@@ -38,7 +38,7 @@ export default function BachelorettePartiesPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* FAQ Schema */}
       <script
         type="application/ld+json"

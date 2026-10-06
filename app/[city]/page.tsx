@@ -42,7 +42,7 @@ export default function CityHome({ params }: { params: { city: string } }) {
   ]);
 
   return (
-    <main className="min-h-screen">
+    <main id="main-content" tabIndex={-1} className="min-h-screen">
       {/* JSON-LD Structured Data for SEO */}
       <script
         type="application/ld+json"

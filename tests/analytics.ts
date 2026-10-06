@@ -19,6 +19,7 @@ Object.assign(globalThis, {
   document: { referrer: "https://example.com/?email=private@example.com" },
   localStorage: { getItem: () => null },
   window: {
+    ccfPrivacyPreferences: { analytics: true, marketing: true },
     location: new URL("https://colorcocktailfactory.com/"),
     gtag: (...args: any[]) => calls.push(args),
   },

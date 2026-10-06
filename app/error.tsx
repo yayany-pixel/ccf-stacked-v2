@@ -17,7 +17,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40">
+    <main id="main-content" tabIndex={-1} className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40">
       <div className="sparkle-noise absolute inset-0 opacity-20" />
       
       <div className="relative z-10 mx-auto max-w-2xl px-6 text-center">
@@ -73,6 +73,6 @@ export default function Error({
           </p>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

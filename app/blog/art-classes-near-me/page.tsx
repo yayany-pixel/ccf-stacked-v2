@@ -69,7 +69,7 @@ export default function ArtClassesNearMePage() {
     <>
       {post ? <BlogPostSchema post={post} /> : null}
 
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
         <div className="sparkle-noise absolute inset-0 opacity-20" />
         
         <div className="relative mx-auto max-w-4xl px-6 py-20">

@@ -1,6 +1,6 @@
 export default function EventSlugLoading() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
       <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Back link skeleton */}
         <div className="mb-6 h-5 w-32 animate-pulse rounded bg-white/10" />
