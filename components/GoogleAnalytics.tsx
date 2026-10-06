@@ -1,98 +1,64 @@
 "use client";
-
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, Suspense } from "react";
-import { reportWebVitals } from "@/lib/analytics";
-
+import { Suspense, useEffect } from "react";
+import { reportWebVitals, trackPageView, safeUrl } from "@/lib/analytics";
+let initialized = false;
+let vitals = false;
 function GoogleAnalyticsInner() {
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  
-  // GA4 measurement ID
-  const GA_ID = process.env.NEXT_PUBLIC_GA_ID_1;
-  // Google Ads conversion tag
-  const GADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
-
-  // If GA ID is not configured, don't render anything
-  if (!GA_ID) {
-    return null;
-  }
-
-  // Track route changes for App Router SPA navigation
+  const path = usePathname();
+  const search = useSearchParams();
+  const ga = process.env.NEXT_PUBLIC_GA_ID_1;
+  const ads = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
+  const id = ga || ads;
   useEffect(() => {
-    if (!GA_ID) return;
-
-    const url = pathname + (searchParams?.toString() ? `?${searchParams.toString()}` : '');
-    
-    // Fire page_view event on route change
-    if (typeof window !== 'undefined' && window.gtag) {
-      window.gtag('event', 'page_view', {
-        page_path: url,
-        page_location: window.location.href,
-        page_title: document.title
+    if (!id) return;
+    window.dataLayer ||= [];
+    window.gtag ||= function () {
+      window.dataLayer!.push(arguments);
+    };
+    if (!initialized) {
+      initialized = true;
+      // Fail closed until the site's consent manager explicitly updates these signals.
+      window.gtag("consent", "default", {
+        analytics_storage: "denied",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        wait_for_update: 500,
       });
-
-      if (process.env.NODE_ENV === 'development') {
-        console.log('[GA] Page view tracked:', url);
-      }
+      window.gtag("js", new Date());
+      if (ga)
+        window.gtag("config", ga, {
+          send_page_view: false,
+          page_location: safeUrl(window.location.href, true),
+          page_referrer: safeUrl(document.referrer),
+          allow_google_signals: false,
+        });
+      if (ads) window.gtag("config", ads, { send_page_view: false });
     }
-  }, [pathname, searchParams, GA_ID]);
-
-  // Week 2: Report Web Vitals
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    // Dynamically import web-vitals only on client
-    // Note: FID is deprecated in web-vitals v4, replaced by INP
-    import('web-vitals').then(({ onCLS, onFCP, onLCP, onTTFB, onINP }) => {
-      onCLS(reportWebVitals);
-      onFCP(reportWebVitals);
-      onLCP(reportWebVitals);
-      onTTFB(reportWebVitals);
-      onINP(reportWebVitals);
-    }).catch((err) => {
-      console.error('[Web Vitals] Failed to load:', err);
-    });
-  }, []);
-
-  return (
-    <>
-      {/* Load gtag.js — shared by GA4 + Google Ads (one script, two configs) */}
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-      />
-      
-      {/* Initialize GA4 and Google Ads conversion tag */}
-      <Script
-        id="google-analytics-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            // GA4 — page tracking + web vitals
-            gtag('config', '${GA_ID}', {
-              page_path: window.location.pathname + window.location.search
-            });
-
-            // Google Ads — conversion measurement
-            ${GADS_ID ? `gtag('config', '${GADS_ID}');` : '// NEXT_PUBLIC_GOOGLE_ADS_ID not set'}
-            
-            ${process.env.NODE_ENV === 'development' ? `
-            console.log('[GA] Initialized: ${GA_ID}');
-            ${GADS_ID ? `console.log('[Google Ads] Initialized: ${GADS_ID}');` : ''}
-            ` : ''}
-          `,
-        }}
-      />
-    </>
-  );
+    if (ga) trackPageView(window.location.href);
+    if (ga && !vitals) {
+      vitals = true;
+      import("web-vitals")
+        .then((v) => {
+          v.onCLS(reportWebVitals);
+          v.onLCP(reportWebVitals);
+          v.onINP(reportWebVitals);
+          v.onFCP(reportWebVitals);
+          v.onTTFB(reportWebVitals);
+        })
+        .catch(() => {});
+    }
+  }, [id, ga, ads, path, search]);
+  return id ? (
+    <Script
+      id="google-tag"
+      src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`}
+      strategy="afterInteractive"
+    />
+  ) : null;
 }
-
 export default function GoogleAnalytics() {
   return (
     <Suspense fallback={null}>

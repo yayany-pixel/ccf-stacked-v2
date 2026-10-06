@@ -55,6 +55,7 @@ export type ChatResponse = {
 };
 
 export type InquiryResponse = {
+  metaEventId?: string;
   status: "received" | "duplicate" | "notify_failed" | "rate_limited" | "invalid" | "error" | "pending";
   message?: string;
   persisted?: boolean;

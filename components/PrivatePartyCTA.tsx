@@ -1,5 +1,6 @@
 "use client";
 
+import { trackEvent } from "@/lib/analytics";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -32,13 +33,7 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
   }, [variant]);
 
   const handleClick = () => {
-    // Track with GA4 if available
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "private_party_cta_click", {
-        page_path: window.location.pathname,
-        placement: variant,
-      });
-    }
+    trackEvent("private_party_cta_click", {placement:variant});
   };
 
   if (!isVisible || (pathname === "/" && variant === "sticky")) return null;
@@ -49,6 +44,7 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
       <Link
         href={destination}
         onClick={handleClick}
+        data-analytics-private-party="true"
         className={`inline-flex items-center gap-2 rounded-full border border-purple-400/30 bg-purple-500/10 px-4 py-2 text-sm font-semibold text-purple-300 transition hover:bg-purple-500/20 ${className}`}
         aria-label="Request a private party"
       >
@@ -65,6 +61,7 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
         <Link
           href={destination}
           onClick={handleClick}
+        data-analytics-private-party="true"
           className="inline-flex items-center gap-3 rounded-2xl border border-purple-400/30 bg-gradient-to-r from-purple-500/20 to-pink-500/20 px-8 py-4 text-lg font-bold transition hover:scale-105 hover:border-purple-400/50"
           aria-label="Request a private party quote"
         >
@@ -88,6 +85,7 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
         <Link
           href={destination}
           onClick={handleClick}
+        data-analytics-private-party="true"
           className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-purple-400/50 bg-gradient-to-br from-purple-600 to-pink-600 text-2xl shadow-2xl transition hover:scale-110 sm:h-auto sm:w-auto sm:gap-2 sm:px-6 sm:py-3"
           aria-label="Request a private party"
         >

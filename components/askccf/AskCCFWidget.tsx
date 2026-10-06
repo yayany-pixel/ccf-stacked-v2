@@ -3,7 +3,8 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
-import { trackEvent } from "@/lib/analytics";
+import { metaMatchContext } from "@/lib/metaPixel";
+import { trackEvent, trackLead } from "@/lib/analytics";
 import ClassCards from "./ClassCards";
 import InquiryCard from "./InquiryCard";
 import ReplyText from "./ReplyText";
@@ -307,7 +308,7 @@ export default function AskCCFWidget() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
-        body: JSON.stringify({ sessionId, ...target.draft, website: "" }),
+        body: JSON.stringify({ sessionId, ...target.draft, website: "", metaContext: metaMatchContext() }),
       });
       const data = (await response.json().catch(() => ({}))) as InquiryResponse;
       if (generation !== generationRef.current) return;
@@ -325,7 +326,7 @@ export default function AskCCFWidget() {
           duplicate: data.status === "duplicate",
         });
         if (data.status === "received") {
-          trackEvent("generate_lead", { event_category: "private_party_inquiry" });
+          trackLead({city:target.draft.city,form_name:"ask_ccf_private_party",lead_type:"private_party",placement:"ask_ccf"}, data.metaEventId);
         }
       } else {
         update({

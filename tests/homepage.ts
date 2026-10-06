@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
 import { normalize, type PublicClassSlot } from "../lib/askccf/catalog";
 import { ACTIVITY_MANIFEST, APPROVED_PHOTOS } from "../lib/homepage/manifest";
-import { activitiesForCity, buildHomepageData, formatNextSession, priceLabel } from "../lib/homepage/data";
+import { activitiesForCity, buildHomepageData, formatNextSession, priceLabel, matchesHomepageFilter } from "../lib/homepage/data";
 
 const now = new Date("2026-10-05T12:00:00Z");
 const catalog = ACTIVITY_MANIFEST.map(activity => normalize({
@@ -40,8 +40,12 @@ for (const photo of APPROVED_PHOTOS) {
 for (const activity of [...chicago, ...eugene]) {
   const destination = new URL(activity.bookingUrl!);
   assert.equal(destination.hostname, "colorcocktailfactory.as.me");
-  assert.equal(destination.searchParams.get("appointmentType"), String(activity.appointmentTypeId));
-  assert.equal(destination.searchParams.size, 1);
+  if (activity.bookingVariantIds && activity.bookingVariantIds.length > 1) {
+    assert.deepEqual(destination.searchParams.getAll("appointmentType[]"), activity.bookingVariantIds.map(String));
+  } else {
+    assert.equal(destination.searchParams.get("appointmentType"), String(activity.appointmentTypeId));
+    assert.equal(destination.searchParams.size, 1);
+  }
   assert.ok(activity.calendarIds.length > 0);
   assert.equal(activity.formerPrice, null);
 }
@@ -71,3 +75,29 @@ assert.notEqual(ACTIVITY_MANIFEST.find(activity => activity.key === "chicago-dat
 assert.equal(ACTIVITY_MANIFEST.find(activity => activity.appointmentTypeId === 97020385)?.title, "VIP Date Night Painting");
 assert.equal(chicago.find(activity => activity.mode === "online")?.appointmentTypeId, 98770334);
 console.log("Homepage checks passed: complete image inventory, exact mappings, city isolation, ticket units, timezone/DST, inactive offerings, outages, and empty availability.");
+
+const lamp = chicago.filter(activity => /Turkish.*Lamp/i.test(activity.title));
+assert.equal(lamp.length, 1);
+assert.deepEqual(lamp[0].bookingVariantIds, [95416771, 79374537, 95894050]);
+assert.equal(lamp[0].analyticsContentId, "activity:turkish-lamp");
+const varied = data.activities.map(activity => activity.appointmentTypeId === 95894050 ? { ...activity, currentPrice: 110, priceUnit: "for two" as const } : activity);
+assert.equal(priceLabel(activitiesForCity(varied, "chicago").find(activity => activity.key === "chicago-turkish-lamp")!), "See price at checkout");
+const remainingLamp = activitiesForCity(data.activities.map(activity => [95416771, 79374537].includes(activity.appointmentTypeId) ? { ...activity, offeringState: "inactive" as const } : activity), "chicago").find(activity => activity.key === "chicago-turkish-lamp")!;
+assert.equal(new URL(remainingLamp.bookingUrl!).searchParams.get("appointmentType"), "95894050");
+assert.equal(remainingLamp.analyticsContentId, "95894050");
+assert.equal(activitiesForCity(offline.activities, "chicago").filter(activity => /Turkish.*Lamp/i.test(activity.title)).length, 1);
+
+// Enrichment uses verified catalog fields, keeps all-order intact, and filters groups.
+const enriched = buildHomepageData(catalog.map(item => ({...item, durationMinutes: 90, description: 'Materials for this workshop are included.', pickupNotes: ['Collect fired pieces later.']})), slots, now);
+assert.equal(enriched.activities[0].durationMinutes, 90);
+assert.equal(enriched.activities[0].listingDescription, 'Materials for this workshop are included.');
+assert.equal(offline.activities[0].listingDescription, null);
+assert.deepEqual(offline.activities[0].upcomingSessions, []);
+assert.deepEqual(enriched.activities[0].upcomingSessions, ['2026-10-06T18:00:00-0500']);
+assert.equal(lamp[0].bookingVariants?.length, 3);
+assert.equal(lamp[0].listingDescription, null);
+assert.ok(matchesHomepageFilter(lamp[0], 'Date night'));
+assert.ok(matchesHomepageFilter(lamp[0], 'Glass & lamps'));
+assert.ok(!matchesHomepageFilter(lamp[0], 'Pottery'));
+assert.ok(chicago.filter(activity => matchesHomepageFilter(activity, 'Online')).every(activity => activity.mode === 'online'));
+assert.deepEqual(chicago.filter(activity => matchesHomepageFilter(activity, 'All workshops')), chicago);

@@ -1,304 +1,371 @@
-/**
- * Google Analytics 4 Tracking Helpers
- * Safe wrappers for gtag() calls with TypeScript support
- */
-
-// TypeScript declarations for gtag
-declare global {
-  interface Window {
-    gtag?: (
-      command: 'config' | 'event' | 'set',
-      targetId: string,
-      config?: Record<string, any>
-    ) => void;
-    dataLayer?: any[];
-  }
-}
-
-/**
- * Check if Google Analytics is available
- */
-export function isGtagAvailable(): boolean {
-  return typeof window !== 'undefined' && typeof window.gtag === 'function';
-}
-
-/**
- * Track a custom event
- * @param eventName - GA4 event name (e.g., 'button_click', 'form_submit')
- * @param params - Event parameters
- */
-export function trackEvent(eventName: string, params?: Record<string, any>): void {
-  if (!isGtagAvailable()) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[GA] trackEvent (gtag not available):', eventName, params);
-    }
-    return;
-  }
-
+import { contentIdentity, classCategory } from "./analyticsIdentity";
+import {
+  trackMetaViewContent,
+  trackMetaInitiateCheckout,
+  trackMetaLead,
+  trackMetaCompleteRegistration,
+  trackMetaCustom,
+  updateMetaConsent,
+} from "./metaPixel";
+import type { MetaParameters } from "./metaEvents";
+/** Central, PII-free analytics. Never pass form or chat objects to this module. */
+export type BookingProvider = "rezclick" | "eventbrite" | "acuity" | "unknown";
+const allowed = new Set(
+  "city previous_city placement selection_source class_category class_name class_id appointment_type_id booking_provider link_url card_position item_list_name displayed_price mode batch_number click_target previous_visible_count new_visible_count total_available_classes page_path page_location page_referrer page_title currency items item_id item_name item_category index price quantity form_name lead_type activity group_size_range method scroll_depth metric_value metric_id metric_rating device_type connection_type non_interaction event_category section_name cta_location cta_text cta_type test_name variant duplicate".split(
+    " ",
+  ),
+);
+export function safeUrl(value: string, marketing = false): string {
+  if (!value) return "";
   try {
-    window.gtag!('event', eventName, params);
-    
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[GA] Event tracked:', eventName, params);
+    const url = new URL(
+      value,
+      typeof location === "undefined"
+        ? "https://colorcocktailfactory.com"
+        : location.origin,
+    );
+    const query = new URLSearchParams();
+    for (const key of marketing
+      ? [
+          "utm_source",
+          "utm_medium",
+          "utm_campaign",
+          "utm_content",
+          "utm_term",
+          "gclid",
+          "location",
+        ]
+      : ["appointmentType", "calendarID", "owner"]) {
+      const v = url.searchParams.get(key);
+      if (v && !/@|%40/i.test(v)) query.set(key, v.slice(0, 150));
     }
-  } catch (error) {
-    console.error('[GA] Error tracking event:', error);
+    return url.origin + url.pathname + (query.size ? "?" + query : "");
+  } catch {
+    return "";
   }
 }
-
-/**
- * Track a page view manually
- * @param pagePath - Path of the page (e.g., '/about')
- * @param pageTitle - Optional page title
- */
-export function trackPageView(pagePath: string, pageTitle?: string): void {
-  if (!isGtagAvailable()) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[GA] trackPageView (gtag not available):', pagePath);
-    }
-    return;
-  }
-
+export function sanitize(params: Record<string, any>): Record<string, any> {
+  return Object.fromEntries(
+    Object.entries(params)
+      .filter(
+        ([k, v]) =>
+          allowed.has(k) &&
+          v !== undefined &&
+          v !== null &&
+          (k === "items" || ["string", "number", "boolean"].includes(typeof v)),
+      )
+      .map(([k, v]) => [
+        k,
+        k === "city" || k === "previous_city"
+          ? ["chicago", "eugene", "online", "unknown", "global"].includes(
+              String(v).toLowerCase(),
+            )
+            ? String(v).toLowerCase()
+            : "unknown"
+          : k === "items"
+            ? Array.isArray(v)
+              ? v.map(sanitize)
+              : []
+            : /^(link_url|page_location|page_referrer)$/.test(k)
+              ? safeUrl(String(v), k === "page_location")
+              : k === "page_path"
+                ? String(v).split(/[?#]/)[0]
+                : typeof v === "string"
+                  ? v.replace(/[^\s@]+@[^\s@]+/g, "[redacted]").slice(0, 150)
+                  : v,
+      ]),
+  );
+}
+export function currentCity(): string {
+  if (typeof window === "undefined") return "unknown";
+  const city =
+    window.location.pathname.match(/^\/(chicago|eugene)/)?.[1] ||
+    new URLSearchParams(window.location.search).get("location");
+  if (city === "chicago" || city === "eugene") return city;
   try {
-    window.gtag!('event', 'page_view', {
-      page_path: pagePath,
-      page_location: window.location.href,
-      page_title: pageTitle || document.title
+    return (
+      localStorage.getItem("preferredCity") ||
+      localStorage.getItem("ccf-city") ||
+      "unknown"
+    );
+  } catch {
+    return "unknown";
+  }
+}
+export function isGtagAvailable() {
+  return typeof window !== "undefined" && typeof window.gtag === "function";
+}
+export function trackEvent(
+  name: string,
+  params: Record<string, any> = {},
+): void {
+  const clean = sanitize({
+    page_path: typeof location === "undefined" ? "" : location.pathname,
+    city: currentCity(),
+    ...params,
+  });
+  if (name === "ask_ccf_open")
+    trackMetaCustom("CCF_AskCCFOpen", {
+      city: clean.city,
+      placement: "ask_ccf",
+      page_path: clean.page_path,
     });
-    
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[GA] Page view tracked:', pagePath);
-    }
-  } catch (error) {
-    console.error('[GA] Error tracking page view:', error);
-  }
-}
-
-/**
- * Set user properties
- * @param properties - User properties to set
- */
-export function setUserProperties(properties: Record<string, any>): void {
-  if (!isGtagAvailable()) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[GA] setUserProperties (gtag not available):', properties);
-    }
-    return;
-  }
-
+  if (name === "private_party_cta_click")
+    trackMetaCustom("CCF_PrivatePartyCTA", {
+      city: clean.city,
+      placement: clean.placement,
+      page_path: clean.page_path,
+    });
+  if (process.env.NODE_ENV === "development")
+    console.debug("[Analytics]", name, clean);
+  if (!isGtagAvailable() || !process.env.NEXT_PUBLIC_GA_ID_1) return;
   try {
-    window.gtag!('set', 'user_properties', properties);
-    
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[GA] User properties set:', properties);
-    }
-  } catch (error) {
-    console.error('[GA] Error setting user properties:', error);
+    window.gtag!("event", name, {
+      ...clean,
+      ...(process.env.NEXT_PUBLIC_GA_ID_1
+        ? { send_to: process.env.NEXT_PUBLIC_GA_ID_1 }
+        : {}),
+    });
+  } catch {
+    /* Analytics must never interrupt booking. */
   }
 }
-
-/**
- * Track outbound link click
- * @param url - Destination URL
- * @param label - Optional label for the link
- */
-export function trackOutboundLink(url: string, label?: string): void {
-  trackEvent('click', {
-    event_category: 'outbound',
-    event_label: label || url,
-    link_url: url
+let lastPage = "";
+export function trackPageView(path: string) {
+  const clean = safeUrl(path, true);
+  const cycle = clean.split("?")[0];
+  if (!isGtagAvailable() || lastPage === cycle) return;
+  lastPage = cycle;
+  trackEvent("page_view", {
+    page_location: clean,
+    page_path: path,
+    page_referrer: safeUrl(document.referrer),
   });
 }
-
-/**
- * Track form submission
- * @param formName - Name/ID of the form
- * @param formDestination - Optional destination after submission
- */
-export function trackFormSubmit(formName: string, formDestination?: string): void {
-  trackEvent('form_submit', {
-    form_name: formName,
-    form_destination: formDestination
-  });
-}
-
-/**
- * Track search query
- * @param searchTerm - The search term used
- */
-export function trackSearch(searchTerm: string): void {
-  trackEvent('search', {
-    search_term: searchTerm
-  });
-}
-
-/**
- * Track video interaction
- * @param action - Video action (play, pause, complete, etc.)
- * @param videoTitle - Title of the video
- * @param videoUrl - URL of the video
- */
-export function trackVideo(action: string, videoTitle: string, videoUrl?: string): void {
-  trackEvent('video_' + action, {
-    video_title: videoTitle,
-    video_url: videoUrl
-  });
-}
-
-/**
- * Booking provider types
- */
-export type BookingProvider = 'rezclick' | 'eventbrite' | 'acuity' | 'unknown';
-
-/**
- * Detect booking provider from URL
- */
 export function detectBookingProvider(url: string): BookingProvider {
-  const lowerUrl = url.toLowerCase();
-  if (lowerUrl.includes('rezclick.com')) return 'rezclick';
-  if (lowerUrl.includes('eventbrite.com')) return 'eventbrite';
-  if (lowerUrl.includes('acuityscheduling.com') || lowerUrl.includes('colorcocktailfactory.as.me') || lowerUrl.startsWith('/book/')) return 'acuity';
-  return 'unknown';
-}
-
-/**
- * Track booking click as begin_checkout event (GA4 e-commerce event)
- */
-export interface BookingTrackingParams {
-  city: string;
-  class_category?: string;
-  class_name: string;
-  class_id: string; // slug
-  booking_provider?: BookingProvider;
-  link_url: string;
-}
-
-export function trackBeginCheckout(params: BookingTrackingParams): void {
-  if (!isGtagAvailable()) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[GA] trackBeginCheckout (gtag not available):', params);
-    }
-    return;
-  }
-
-  const provider = params.booking_provider || detectBookingProvider(params.link_url);
-
   try {
-    window.gtag!('event', 'begin_checkout', {
-      city: params.city,
-      class_category: params.class_category || 'workshop',
-      class_name: params.class_name,
-      class_id: params.class_id,
-      booking_provider: provider,
-      link_url: params.link_url,
+    const u = new URL(url, "https://colorcocktailfactory.com");
+    if (
+      u.hostname.endsWith(".acuityscheduling.com") ||
+      u.hostname === "acuityscheduling.com" ||
+      u.hostname === "colorcocktailfactory.as.me" ||
+      u.pathname.startsWith("/book/")
+    )
+      return "acuity";
+    if (/(^|\.)eventbrite\.com$/.test(u.hostname)) return "eventbrite";
+    if (/(^|\.)rezclick\.com$/.test(u.hostname)) return "rezclick";
+  } catch {}
+  return "unknown";
+}
+export interface CardTrackingParams {
+  city: string;
+  class_name: string;
+  class_id: string;
+  class_category?: string;
+  appointment_type_id?: string;
+  card_position?: number;
+  item_list_name?: string;
+  displayed_price?: number;
+  mode?: string;
+  batch_number?: number;
+  click_target?: string;
+  placement?: string;
+}
+export interface BookingTrackingParams extends CardTrackingParams {
+  link_url: string;
+  booking_provider?: BookingProvider;
+}
+function item(p: CardTrackingParams) {
+  return {
+    item_id: p.appointment_type_id || p.class_id,
+    item_name: p.class_name,
+    item_category: p.class_category || "workshop",
+    item_list_name: p.item_list_name,
+    index: p.card_position,
+    price: p.displayed_price,
+    quantity: 1,
+    city: p.city,
+  };
+}
+export function metaContent(
+  p: CardTrackingParams,
+  url?: string,
+): MetaParameters {
+  const identity = contentIdentity(p.appointment_type_id || p.class_id, url);
+  return {
+    content_name: p.class_name,
+    content_ids: [identity.id],
+    content_type: identity.type,
+    content_category:
+      p.class_category && p.class_category !== "workshop"
+        ? p.class_category
+        : classCategory(p.class_name),
+    value: p.displayed_price,
+    currency: "USD",
+    city: p.mode === "online" ? "online" : p.city,
+    card_position: p.card_position,
+    placement:
+      p.placement || (p.card_position ? "homepage_card" : "booking_cta"),
+    class_mode: p.mode,
+    appointment_type_id: identity.appointmentTypeId,
+  };
+}
+export function trackCardView(p: CardTrackingParams) {
+  trackMetaViewContent(metaContent(p));
+  trackEvent("view_item_list", { ...p, items: [item(p)] });
+}
+export function trackCardSelect(p: CardTrackingParams) {
+  // Booking actions already have InitiateCheckout; count other card interest only.
+  if (p.click_target !== "choose_date")
+    trackMetaCustom("CCF_ClassSelected", {
+      ...metaContent(p),
+      click_target: p.click_target,
     });
-
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[GA4] begin_checkout:', { ...params, booking_provider: provider });
-    }
-  } catch (error) {
-    console.error('[GA] Error tracking begin_checkout:', error);
-  }
+  trackEvent("select_item", { ...p, items: [item(p)] });
 }
-
-/**
- * WEEK 2: PERFORMANCE MONITORING
- * Core Web Vitals tracking with Next.js web-vitals
- */
-
-/**
- * Detect device type from user agent
- */
-function getDeviceType(): 'mobile' | 'tablet' | 'desktop' {
-  if (typeof navigator === 'undefined') return 'desktop';
-  
-  const ua = navigator.userAgent.toLowerCase();
-  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-    return 'tablet';
-  }
-  if (/mobile|iphone|ipod|android|blackberry|opera mini|opera mobi|iemobile/i.test(ua)) {
-    return 'mobile';
-  }
-  return 'desktop';
+export function trackBeginCheckout(p: BookingTrackingParams) {
+  const identity = contentIdentity(
+    p.appointment_type_id || p.class_id,
+    p.link_url,
+  );
+  const id = identity.appointmentTypeId;
+  trackMetaInitiateCheckout({
+    ...metaContent(p, p.link_url),
+    booking_provider: p.booking_provider || detectBookingProvider(p.link_url),
+  });
+  trackEvent("begin_checkout", {
+    ...p,
+    class_id: identity.id,
+    appointment_type_id: id,
+    booking_provider: p.booking_provider || detectBookingProvider(p.link_url),
+    currency: "USD",
+    items: [item({ ...p, class_id: identity.id, appointment_type_id: id })],
+  });
 }
-
-/**
- * Detect connection type from Network Information API
- */
-function getConnectionType(): string {
-  if (typeof navigator === 'undefined' || !('connection' in navigator)) {
-    return 'unknown';
-  }
-  
-  const connection = (navigator as any).connection;
-  return connection?.effectiveType || 'unknown';
+export function trackLead(
+  p: {
+    city?: string;
+    form_name: string;
+    lead_type: string;
+    placement?: string;
+    activity?: string;
+    group_size_range?: string;
+  },
+  eventId?: string,
+) {
+  trackMetaLead(
+    {
+      content_name:
+        p.lead_type === "birthday"
+          ? "Birthday Party Inquiry"
+          : "Private Party Inquiry",
+      content_category: "private_event",
+      city: p.city,
+      lead_type:
+        p.placement === "ask_ccf" ? "ask_ccf_private_party" : p.lead_type,
+      group_size_range: p.group_size_range,
+      placement: p.placement || p.form_name,
+    },
+    eventId,
+  );
+  trackEvent("generate_lead", p);
 }
-
-/**
- * Extract city from pathname (e.g., /chicago → chicago)
- */
-function getCityFromPath(): string {
-  if (typeof window === 'undefined') return 'unknown';
-  
-  const path = window.location.pathname;
-  const cityMatch = path.match(/^\/(chicago|eugene)/);
-  return cityMatch ? cityMatch[1] : 'global';
+export function trackSignup(placement: string) {
+  trackMetaCompleteRegistration({ placement, city: currentCity() });
+  trackEvent("sign_up", { method: "newsletter", placement });
 }
-
-/**
- * Report Web Vitals to GA4
- * Compatible with web-vitals v4
- * Note: FID is deprecated in web-vitals v4, replaced by INP
- */
+export function trackShowMore(p: {
+  city: string;
+  previous_visible_count: number;
+  new_visible_count: number;
+  batch_number: number;
+  total_available_classes: number;
+}) {
+  trackMetaCustom("CCF_ShowMore", {
+    city: p.city,
+    previous_visible_count: p.previous_visible_count,
+    new_visible_count: p.new_visible_count,
+    total_classes: p.total_available_classes,
+    batch_number: p.batch_number,
+  });
+  trackEvent("homepage_show_more", p);
+}
+export function trackCitySelection(p: {
+  city: string;
+  previous_city?: string;
+  placement: string;
+  selection_source: string;
+}) {
+  if (
+    ["homepage_toggle", "city_toggle"].includes(p.selection_source) &&
+    p.city !== p.previous_city
+  )
+    trackMetaCustom("CCF_CitySelected", p);
+  trackEvent("city_selected", p);
+}
+export function trackOutboundLink(url: string) {
+  trackEvent("click", { link_url: url });
+}
+export function trackFormSubmit(form_name: string) {
+  trackEvent("form_submit", { form_name });
+}
+export function trackSearch(_term: string) {
+  trackEvent("search");
+}
+export function trackVideo(action: string, _title: string, _url?: string) {
+  trackEvent("video_" + action);
+}
+export function setUserProperties(_properties: Record<string, any>) {
+  /* No arbitrary user data sent. */
+}
 export function reportWebVitals(metric: {
   id: string;
   name: string;
   value: number;
-  rating?: 'good' | 'needs-improvement' | 'poor';
-  delta?: number;
-  navigationType?: string;
-}): void {
-  if (!isGtagAvailable()) {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[Web Vitals] gtag not available:', metric);
-    }
-    return;
-  }
-
-  // Only track actual web vitals (not custom metrics)
-  const validMetrics = ['CLS', 'FCP', 'LCP', 'TTFB', 'INP'];
-  if (!validMetrics.includes(metric.name)) {
-    return;
-  }
-
-  try {
-    // Round value for cleaner reporting
-    const value = Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value);
-    
-    window.gtag!('event', metric.name, {
-      event_category: 'Web Vitals',
-      event_label: metric.id,
-      value: value,
-      metric_value: value,
-      metric_id: metric.id,
-      metric_rating: metric.rating || 'unknown',
-      page_path: window.location.pathname,
-      city: getCityFromPath(),
-      device_type: getDeviceType(),
-      connection_type: getConnectionType(),
-      non_interaction: true,
-    });
-
-    if (process.env.NODE_ENV === 'development') {
-      console.log('[Web Vitals]', metric.name, {
-        value,
-        rating: metric.rating,
-        city: getCityFromPath(),
-        device: getDeviceType(),
-      });
-    }
-  } catch (error) {
-    console.error('[GA] Error reporting web vital:', error);
+  rating?: string;
+}) {
+  if (!["LCP", "CLS", "INP", "FCP", "TTFB"].includes(metric.name)) return;
+  trackEvent(metric.name, {
+    metric_value: metric.value,
+    metric_id: metric.id,
+    metric_rating: metric.rating,
+    device_type: /Mobi|Android/i.test(navigator.userAgent)
+      ? "mobile"
+      : /iPad|Tablet/i.test(navigator.userAgent)
+        ? "tablet"
+        : "desktop",
+    connection_type: (navigator as any).connection?.effectiveType || "unknown",
+    non_interaction: true,
+  });
+}
+export type ConsentState = Record<
+  "analytics_storage" | "ad_storage" | "ad_user_data" | "ad_personalization",
+  "granted" | "denied"
+>;
+export function updateAnalyticsConsent(state: ConsentState) {
+  if (typeof window !== "undefined") {
+    window.gtag?.("consent", "update", state);
+    updateMetaConsent(
+      state.ad_storage === "granted" &&
+        state.ad_user_data === "granted" &&
+        state.ad_personalization === "granted"
+        ? "granted"
+        : "denied",
+    );
   }
 }
 
+/** Coarse ranges only; free-form group-size text never leaves the form. */
+export function groupSizeRange(input: string): string | undefined {
+  if (!/^\d{1,3}(?:\s*[-–]\s*\d{1,3})?$/.test(input.trim())) return undefined;
+  const n = Number(input.trim().split(/[-–]/).at(-1));
+  return n <= 10
+    ? "1-10"
+    : n <= 20
+      ? "11-20"
+      : n <= 35
+        ? "21-35"
+        : n <= 60
+          ? "36-60"
+          : "61+";
+}

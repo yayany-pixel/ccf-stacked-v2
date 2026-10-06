@@ -1,5 +1,6 @@
 "use client";
 
+import { trackSignup } from "@/lib/analytics";
 import { useState } from "react";
 import GlassCard from "@/components/ui/GlassCard";
 import ButtonPill from "@/components/ui/ButtonPill";
@@ -26,6 +27,7 @@ export default function NewsletterSignup() {
       });
 
       if (response.ok) {
+        trackSignup("newsletter_section");
         // Redirect to thank you page
         window.location.href = "/thanks/newsletter";
       } else {

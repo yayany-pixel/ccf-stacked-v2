@@ -1,3 +1,5 @@
+> **Historical configuration:** The live implementation now uses signed Acuity verification and an opt-in purchase ledger. Follow [analytics operations](docs/analytics-operations.md) instead. The JSON relay examples below and old webhook test scripts are obsolete; do not send sample purchases to production.
+
 # 🎯 GA4 + GTM + Server-Side + Webhook Implementation Plan
 ## Color Cocktail Factory — Complete Analytics Blueprint
 

@@ -10,7 +10,11 @@
     "test:homepage": "node --import tsx tests/homepage.ts",
     "test:homepage:browser": "node tests/homepage-browser.cjs",
     "test:homepage:booking": "node tests/homepage-booking.cjs",
-    "test": "node --import tsx tests/selftest.ts && node --import tsx tests/askccf-regression.ts && node --import tsx tests/acuity-mcp.ts && node --import tsx tests/site-repairs.ts"
+    "test": "node --import tsx tests/selftest.ts && node --import tsx tests/askccf-regression.ts && node --import tsx tests/acuity-mcp.ts && node --import tsx tests/site-repairs.ts",
+    "test:analytics": "node --import tsx tests/analytics.ts && node --import tsx tests/analytics-components.tsx && node --import tsx tests/analytics-webhook.ts",
+    "test:analytics:browser": "node tests/analytics-browser.cjs",
+    "test:meta": "node --import tsx tests/meta.ts",
+    "test:meta:browser": "node tests/analytics-browser.cjs && node tests/meta-navigation.cjs"
   },
   "dependencies": {
     "@netlify/database": "^2.0.1",

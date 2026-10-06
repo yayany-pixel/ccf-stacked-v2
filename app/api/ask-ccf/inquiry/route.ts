@@ -1,3 +1,5 @@
+import { sendMetaConversion, capiDependencies } from "@/lib/metaCapi.server";
+import { parseMetaMatch } from "@/lib/metaEvents";
 /**
  * Ask CCF — private-party inquiry submission.
  *
@@ -177,7 +179,30 @@ export async function POST(request: Request) {
     );
   }
 
+  const metaEventId = saved.outcome === "saved" ? `askccf:lead:${saved.id}` : undefined;
+  if (metaEventId) {
+    // This is an accepted inquiry, not an arbitrary browser conversion request.
+    // The browser receives exactly this event ID for Meta deduplication.
+    await sendMetaConversion({
+      name: "Lead",
+      eventId: metaEventId,
+      eventTime: Math.floor(Date.now() / 1000),
+      sourceUrl: "https://colorcocktailfactory.com/",
+      match: {
+        ...parseMetaMatch(payload.metaContext),
+        client_user_agent: request.headers.get("user-agent"),
+      },
+      data: {
+        content_name: "Private Party Inquiry",
+        content_category: "private_event",
+        city: normalisedCity.toLowerCase(),
+        lead_type: "ask_ccf_private_party",
+        placement: "ask_ccf",
+      },
+    }, capiDependencies(key => process.env[key]));
+  }
   return NextResponse.json({
+    metaEventId,
     status: "received",
     persisted: saved.outcome === "saved",
     message:

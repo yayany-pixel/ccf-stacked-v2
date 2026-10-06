@@ -26,6 +26,10 @@ export function buildHomepageData(
     const price = matches ? live.pricing.price : null;
     return {
       ...definition,
+      durationMinutes: matches && live.durationMinutes && live.durationMinutes > 0 ? live.durationMinutes : null,
+      listingDescription: matches ? live.description : null,
+      pickupNotes: matches ? live.pickupNotes : [],
+      upcomingSessions: matches ? [...new Set(upcoming.map(slot => slot.time))].slice(0, 3) : [],
       currentPrice: typeof price === "number" && Number.isFinite(price) && price >= 0 ? price : null,
       priceUnit: matches && live.pricing.covers === 2 ? "for two" :
         matches && live.pricing.covers === 1 ? "per person" : "per ticket",
@@ -48,11 +52,46 @@ export function buildHomepageData(
 }
 
 export function activitiesForCity(activities: HomepageActivity[], city: HomepageCity): HomepageActivity[] {
-  return activities.filter(activity =>
+  const visible = activities.filter(activity =>
     (activity.city === city || activity.city === "online") &&
     activity.eligibility === "ready" && activity.image && activity.bookingUrl &&
     activity.offeringState !== "inactive",
-  ).sort((left, right) => left.priority - right.priority || left.key.localeCompare(right.key));
+  );
+  const lampKeys = new Set(["chicago-turkish-lamp", "chicago-hanging-turkish-lamp", "chicago-date-night-turkish-lamp"]);
+  const lamps = visible.filter(activity => lampKeys.has(activity.key));
+  if (lamps.length) {
+    const primary = lamps.find(activity => activity.key === "chicago-turkish-lamp") ?? lamps[0];
+    const booking = new URL("https://colorcocktailfactory.as.me/");
+    for (const lamp of lamps) booking.searchParams.append(lamps.length === 1 ? "appointmentType" : "appointmentType[]", String(lamp.appointmentTypeId));
+    const nextAvailability = lamps.map(lamp => lamp.nextAvailability).filter((time): time is string => Boolean(time))
+      .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())[0] ?? null;
+    // Different ticket units (including date-night tickets for two) are not comparable.
+    const samePrice = lamps.every(lamp => lamp.currentPrice === primary.currentPrice && lamp.priceUnit === primary.priceUnit);
+    const combined: HomepageActivity = {
+      ...primary,
+      key: "chicago-turkish-lamp",
+      title: "Turkish Mosaic Lamp",
+      description: "Create a colorful glass mosaic lamp. Explore available standard, hanging, and date-night workshops at booking.",
+      priority: ACTIVITY_MANIFEST.find(activity => activity.key === "chicago-turkish-lamp")!.priority,
+      detailUrl: "/activities/turkish-lamp",
+      bookingUrl: booking.toString(),
+      bookingVariantIds: lamps.map(lamp => lamp.appointmentTypeId),
+      bookingVariants: lamps,
+      durationMinutes: lamps.every(lamp => lamp.durationMinutes === primary.durationMinutes) ? primary.durationMinutes : null,
+      listingDescription: null,
+      pickupNotes: [],
+      beginnerFriendly: lamps.every(lamp => lamp.beginnerFriendly) || null,
+      byob: lamps.every(lamp => lamp.byob) || null,
+      upcomingSessions: [...new Set(lamps.flatMap(lamp => lamp.upcomingSessions ?? []))].sort((a, b) => new Date(a).getTime() - new Date(b).getTime()).slice(0, 3),
+      analyticsContentId: lamps.length > 1 ? "activity:turkish-lamp" : String(primary.appointmentTypeId),
+      currentPrice: samePrice ? primary.currentPrice : null,
+      nextAvailability,
+      availabilityState: nextAvailability ? "available" : lamps.every(lamp => lamp.availabilityState === "empty-window") ? "empty-window" : "unavailable",
+    };
+    return [...visible.filter(activity => !lampKeys.has(activity.key)), combined]
+      .sort((left, right) => left.priority - right.priority || left.key.localeCompare(right.key));
+  }
+  return visible.sort((left, right) => left.priority - right.priority || left.key.localeCompare(right.key));
 }
 
 export function formatNextSession(activity: HomepageActivity, now = new Date()): string {
@@ -68,4 +107,17 @@ export function priceLabel(activity: HomepageActivity): string {
   if (activity.currentPrice === null) return "See price at checkout";
   const amount = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(activity.currentPrice).replace(/\.00$/, "");
   return `${amount} ${activity.priceUnit}`;
+}
+
+export const HOMEPAGE_FILTERS = ["All workshops", "Date night", "Pottery", "Glass & lamps", "Online"] as const;
+export type HomepageFilter = typeof HOMEPAGE_FILTERS[number];
+export function matchesHomepageFilter(activity: HomepageActivity, filter: HomepageFilter): boolean {
+  const title = [activity.title, ...(activity.bookingVariants ?? []).map(variant => variant.title)].join(" ");
+  switch (filter) {
+    case "Date night": return /date night/i.test(title);
+    case "Pottery": return /pottery|ceramic|clay|wheel|handbuild|mug|vase/i.test(title);
+    case "Glass & lamps": return /glass|mosaic|lamp/i.test(title);
+    case "Online": return activity.mode === "online";
+    default: return true;
+  }
 }
