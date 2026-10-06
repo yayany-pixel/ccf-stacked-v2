@@ -213,11 +213,11 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "FLASH SALE BEGINNERS WHEEL THROWING.webp",
     "driveFileId": "1us6KmXl90xq-GVC7Ik5dWGjA511Xe4O7",
-    "path": "/images/classes/approved-24-1Xe4O7-1333c1ca8af3.webp",
-    "width": 1124,
-    "height": 843,
-    "alt": "A guest shaping clay at a pottery wheel",
-    "focalPosition": "50% 62%"
+    "path": "/images/classes/wheel-throwing-for-beginners-color-cocktail-factory-acuity-600x600.jpg",
+    "width": 600,
+    "height": 600,
+    "alt": "Students shaping clay on pottery wheels during a beginner workshop",
+    "focalPosition": "50% 50%"
   },
   {
     "filename": "Halloween Ghost Pottey!.webp",
@@ -402,11 +402,11 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Wheel Throwing for Beginners - Chicago.webp",
     "driveFileId": "1rUWLJ1sUh8iFBVU5xwI0CCmlO5e58mRd",
-    "path": "/images/classes/approved-45-e58mRd-1333c1ca8af3.webp",
-    "width": 1124,
-    "height": 843,
-    "alt": "A guest shaping clay at a pottery wheel",
-    "focalPosition": "50% 62%"
+    "path": "/images/classes/wheel-throwing-for-beginners-color-cocktail-factory-acuity-600x600.jpg",
+    "width": 600,
+    "height": 600,
+    "alt": "Students shaping clay on pottery wheels during a beginner workshop",
+    "focalPosition": "50% 50%"
   },
   {
     "filename": "Wheel Throwing for Beginners -Cup Creations.webp",
