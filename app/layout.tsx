@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { generateOrganizationSchema } from "@/lib/enhancedStructuredData";
+import BookingAnalytics from "@/components/BookingAnalytics";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import MetaPixel from "@/components/MetaPixel";
 import Footer from "@/components/Footer";
@@ -75,6 +76,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <GoogleAnalytics />
+        <BookingAnalytics />
         <MetaPixel />
         {/* Skip to main content link for keyboard navigation */}
         <a 

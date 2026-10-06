@@ -4,7 +4,6 @@ import { type ReactNode } from 'react';
 import Link from 'next/link';
 import { trackBeginCheckout } from '@/lib/analytics';
 import { useCTATracking } from '@/lib/analyticsHooks';
-import { trackInitiateCheckout } from '@/lib/metaPixel';
 
 export interface BookingLinkProps {
   href: string;
@@ -60,13 +59,6 @@ export default function BookingLink({
   const trackCTA = useCTATracking();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Meta Pixel: InitiateCheckout fires on every booking click
-    trackInitiateCheckout({
-      content_name: classNameText,
-      content_category: classCategory || 'Booking',
-      city,
-    });
-
     // Track begin_checkout event (existing)
     trackBeginCheckout({
       city,
@@ -74,6 +66,7 @@ export default function BookingLink({
       class_id: classId,
       class_category: classCategory,
       link_url: href,
+      placement: ctaLocation || "booking_cta",
     });
 
     // Week 2: Track CTA click with enhanced taxonomy
@@ -98,7 +91,7 @@ export default function BookingLink({
 
   return (
     <Link
-      href={href}
+      href={href} data-analytics-booking="true"
       className={className}
       onClick={handleClick}
       target={linkTarget}

@@ -1,5 +1,6 @@
 "use client";
 
+import { trackCitySelection } from "@/lib/analytics";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import GlassCard from "@/components/ui/GlassCard";
@@ -76,6 +77,7 @@ export default function LocationSelector() {
 
   // Update localStorage when selection changes
   const handleCityChange = (city: City) => {
+    trackCitySelection({city,previous_city:selectedCity,placement:"location_selector",selection_source:"city_toggle"});
     setSelectedCity(city);
     if (isClient) {
       localStorage.setItem("preferredCity", city);

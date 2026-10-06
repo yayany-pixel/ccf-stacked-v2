@@ -108,3 +108,17 @@ export const askCcfUsage = pgTable(
   },
   (t) => [uniqueIndex("ask_ccf_usage_day_model_idx").on(t.day, t.model)],
 );
+
+/** Durable purchase delivery ledger. Contains no customer data. */
+export const analyticsPurchases = pgTable('analytics_purchases', {
+  transactionId: text('transaction_id').primaryKey(),
+  status: text('status').notNull(),
+  updatedAt: timestamp('updated_at', {withTimezone:true}).notNull().defaultNow(),
+});
+
+/** Separate Meta delivery state keeps Google and Meta retries independent. */
+export const metaEventDeliveries = pgTable('meta_event_deliveries', {
+  eventKey: text('event_key').primaryKey(),
+  status: text('status').notNull(),
+  updatedAt: timestamp('updated_at', {withTimezone:true}).notNull().defaultNow(),
+});

@@ -1,3 +1,4 @@
+import MetaActivityView from "@/components/MetaActivityView";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -159,6 +160,7 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
       />
 
       <main className="min-h-screen">
+        <MetaActivityView id={`activity:${activity.slug}`} name={activity.heroTitle} />
         {/* Breadcrumb Navigation */}
         <nav className="border-b border-white/10 bg-black/20 px-6 py-3">
           <div className="mx-auto max-w-7xl">

@@ -1,3 +1,4 @@
+import MetaActivityView from "@/components/MetaActivityView";
 import { eventTimeZone } from "@/lib/locations";
 import { getCatalog, getClassById } from "@/lib/askccf/catalog";
 import { catalogBookingUrl } from "@/lib/booking";
@@ -113,6 +114,7 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900">
+      <MetaActivityView id={event.slug} name={event.title} city={event.city === "Virtual" ? "online" : event.city.toLowerCase()} url={event.bookingUrl} price={event.currency === "USD" ? event.price ?? undefined : undefined} />
       {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"

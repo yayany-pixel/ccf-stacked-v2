@@ -1,3 +1,4 @@
+import MetaActivityView from "@/components/MetaActivityView";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -68,6 +69,7 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
 
   return (
     <main className="min-h-screen">
+      <MetaActivityView id={`activity:${section.slug}`} name={section.heroTitle} city={city.param} />
       {/* JSON-LD Structured Data */}
       {faqSchema && (
         <script

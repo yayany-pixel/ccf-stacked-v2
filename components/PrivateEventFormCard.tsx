@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import type { City } from "@/lib/config";
-import { trackLead } from "@/lib/metaPixel";
+import { trackLead as trackGALead, groupSizeRange } from "@/lib/analytics";
 
 type FormState = {
   name: string;
@@ -78,13 +78,7 @@ export default function PrivateEventFormCard({
 
       if (response.ok) {
         // Fire GA4 conversion event — imported into Google Ads as a conversion action
-        if (typeof window !== 'undefined' && window.gtag) {
-          window.gtag('event', 'generate_lead', {
-            event_category: 'private_party_inquiry',
-          });
-        }
-        // Meta Pixel: Lead fires only on successful form submission
-        trackLead({ content_name: 'Private Party Inquiry' });
+        trackGALead({city:s.city.toLowerCase(),form_name:'private-party',lead_type:'private_party',placement:variant,activity:s.preferredProject,group_size_range:groupSizeRange(s.groupSize)});
         // Redirect to thank you page
         window.location.href = "/thanks/private-party";
       } else {

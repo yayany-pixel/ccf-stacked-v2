@@ -25,6 +25,7 @@ export function useScrollDepth() {
 
     const handleScroll = () => {
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollHeight <= 0) return;
       const scrolled = window.scrollY;
       const percentScrolled = Math.round((scrolled / scrollHeight) * 100);
 
@@ -79,6 +80,7 @@ export function useScrollDepth() {
 export function useSectionVisibility(sectionName: string) {
   const ref = useRef<HTMLElement>(null);
   const [hasTracked, setHasTracked] = useState(false);
+  const tracked = useRef(false);
 
   useEffect(() => {
     if (!ref.current || hasTracked || typeof window === 'undefined') return;
@@ -87,8 +89,10 @@ export function useSectionVisibility(sectionName: string) {
       (entries) => {
         entries.forEach((entry) => {
           // Fire event when section becomes 50% visible
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !hasTracked) {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !tracked.current) {
+            tracked.current = true;
             setHasTracked(true);
+            observer.disconnect();
             
             trackEvent('section_view', {
               event_category: 'Engagement',

@@ -1,5 +1,6 @@
 "use client";
 
+import { trackLead } from "@/lib/analytics";
 import { useState } from "react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -76,12 +77,7 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
       });
       if (!res.ok) throw new Error("Network response not ok");
       // Fire GA4 conversion event — imported into Google Ads as a conversion action
-      if (typeof window !== 'undefined' && window.gtag) {
-        window.gtag('event', 'generate_lead', {
-          event_category: 'birthday_inquiry',
-          event_label: form.experience || 'unspecified',
-        });
-      }
+      trackLead({city:form.city.toLowerCase(),form_name:'birthday-party',lead_type:'birthday',activity:form.experience,group_size_range:form.guestCount});
       setStatus("success");
       setForm(INITIAL);
     } catch {

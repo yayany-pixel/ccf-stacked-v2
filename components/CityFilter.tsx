@@ -1,5 +1,6 @@
 "use client";
 
+import { trackCitySelection } from "@/lib/analytics";
 import { useState, useEffect } from "react";
 
 type City = "chicago" | "eugene";
@@ -22,6 +23,7 @@ export default function CityFilter({ onCityChange, defaultCity = "chicago" }: Ci
   }, [onCityChange]);
 
   const handleCityChange = (city: City) => {
+    trackCitySelection({city,previous_city:selectedCity,placement:"city_filter",selection_source:"city_toggle"});
     setSelectedCity(city);
     localStorage.setItem("ccf-city", city);
     onCityChange(city);

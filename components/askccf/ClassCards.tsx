@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import { classImageLoader } from "@/lib/classImageLoader";
-import { trackBeginCheckout, trackEvent } from "@/lib/analytics";
+import { trackBeginCheckout, trackEvent, detectBookingProvider } from "@/lib/analytics";
 import type { ClassCard } from "./types";
 
 /**
@@ -52,12 +52,15 @@ export default function ClassCards({ cards }: { cards: ClassCard[] }) {
             <div className="mt-2 text-xs text-white/80">{card.pricingSummary}</div>
             {card.enrollmentNotes?.map((note, i) => <p key={i} className="mt-2 text-xs text-amber-200">{note}</p>)}
             <a
-              href={card.bookingUrl}
+              href={card.bookingUrl} data-analytics-booking="true"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
                 trackEvent("ask_ccf_recommendation_click", {
                   class_id: card.id,
+                  class_name: card.title,
+                  placement: "ask_ccf",
+                  booking_provider: detectBookingProvider(card.bookingUrl),
                   city: card.location,
                 });
                 trackBeginCheckout({
@@ -66,6 +69,9 @@ export default function ClassCards({ cards }: { cards: ClassCard[] }) {
                   class_name: card.title,
                   class_id: card.id,
                   link_url: card.bookingUrl,
+                  placement: "ask_ccf",
+                  displayed_price: card.priceUsd ?? undefined,
+                  mode: card.location === "online" ? "online" : "in_studio",
                 });
               }}
               className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"

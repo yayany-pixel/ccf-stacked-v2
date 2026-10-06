@@ -37,7 +37,7 @@
 .intro p { display: none; color: var(--muted); font-size: 14px; }
 .feed { display: flex; flex-direction: column; gap: 24px; scroll-margin-top: 12px; }
 .card { background: #fffefa; border: 1px solid var(--line); border-radius: 13px; overflow: clip; scroll-margin-top: 16px; }
-.photo { aspect-ratio: 4 / 3; position: relative; background: #eee8db; }
+.photo { min-width: 0; width: 100%; overflow: hidden; aspect-ratio: 4 / 3; position: relative; background: #eee8db; }
 .photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .imageError { height: 100%; display: grid; place-content: center; text-align: center; padding: 24px; color: var(--muted); }
 .cardBody { min-width: 0; padding: 17px 18px 18px; display: flex; flex-direction: column; align-items: stretch; }
@@ -84,3 +84,30 @@
   .card { display: grid; grid-template-columns: 55% 45%; }.photo { aspect-ratio: 4 / 3; height: 100%; min-height: 370px; }.photo img { position: absolute; inset: 0; }.cardBody { padding: 32px; justify-content: center; }.card h2 { font-size: 37px; line-height: 1.08; letter-spacing: -1px; }.description { margin-top: 15px; line-height: 1.6; }.facts { margin: 24px 0 20px; gap: 5px; }.price { font-size: 18px; }.nextDate { font-size: 14px; }.bookButton { min-height: 50px; }
   .party { display: grid; grid-template-columns: 36% 1fr; gap: 48px; padding: 38px; }.partyIntro { padding-top: 15px; }.partyIntro h2 { font-size: 43px; }.partyIntro h2 em { display: block; }.partyIntro > p:last-child { margin-top: 20px; }.party :global(.homepage-party-form) form > div:first-of-type { margin-top: 0; }
 }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.filters button { border: 1px solid var(--line); border-radius: 24px; padding: 10px 16px; min-height: 44px; font-size: 14px; }
+.filters button[aria-pressed="true"] { background: #393d31; color: #fffaf0; border-color: #393d31; }
+.filters button:hover { border-color: var(--ink); }
+.filterCount { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+.empty { border: 1px solid var(--line); padding: 24px; margin-bottom: 24px; }
+.classDetails { margin: 0 0 14px; font-size: 14px; line-height: 1.6; border-top: 1px solid var(--line); }
+.classDetails summary { padding: 12px 0; min-height: 44px; font-weight: 700; }
+.classDetails p { margin-bottom: 10px; }
+.classDetails h3 { font-weight: 700; margin-top: 12px; }
+.listing { white-space: pre-line; }
+.variant { border-top: 1px solid var(--line); padding: 8px 0; }
+.variant a { display: block; padding: 12px 0; min-height: 48px; text-decoration: underline; text-underline-offset: 4px; color: var(--clay); }
+.partyIntro > p { color: #5a5147; font-size: 15px; line-height: 1.5; margin-top: 14px; }
+.enrichment { border-top: 1px solid var(--line); margin-top: 40px; padding-top: 28px; }
+.enrichment h2 { font: 28px/1.2 Georgia, serif; margin-bottom: 20px; }
+.enrichment > details { border-bottom: 1px solid var(--line); padding: 8px 0; }
+.enrichment summary { min-height: 44px; padding: 12px 0; font-weight: 700; }
+.enrichment details p { color: var(--muted); line-height: 1.6; padding-bottom: 12px; max-width: 720px; }
+.enrichment a { text-decoration: underline; text-underline-offset: 4px; display: inline-block; padding-block: 8px; }
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 10px; }
+.gallery figcaption { padding: 10px 0; font: 18px/1.4 Georgia, serif; }
+@media (max-width: 679px) { .gallery { grid-template-columns: 1fr; }.gallery figure { max-width: 100%; } }
+.review { border-left: 3px solid var(--clay); padding: 8px 20px; margin-block: 20px; }
+.review blockquote { font: 22px/1.5 Georgia, serif; }
+.review figcaption { margin-top: 12px; color: var(--muted); font-size: 14px; }

@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { trackInitiateCheckout } from "@/lib/metaPixel";
 
 type Variant = "primary" | "secondary" | "ghost" | "romanceCta";
 
@@ -37,21 +36,13 @@ export default function ButtonPill({
   // Check if external link (starts with http)
   const isExternal = href.startsWith('http');
   
-  // Check if this is an Acuity booking link
-  const isAcuityBooking = /as\.me|acuityscheduling\.com|^\/book\//.test(href) && trackingData;
-
-  // Handle click for tracking
-  const handleClick = () => {
-    if (isAcuityBooking && trackingData) {
-      trackInitiateCheckout({ content_name: trackingData.activityName, content_category: trackingData.city });
-    }
-  };
 
   return (
     <Link 
       href={href} 
       className={cn(base, styles[variant], full ? "w-full" : "", className)}
-      onClick={handleClick}
+      data-class-name={trackingData?.activityName}
+      data-city={trackingData?.city}
       {...(isExternal && { target: "_blank", rel: "noopener noreferrer" })}
     >
       {children}

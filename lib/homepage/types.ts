@@ -37,6 +37,14 @@ export type ActivityDefinition = {
 };
 
 export type HomepageActivity = ActivityDefinition & {
+  /** Exact bookable variants represented by a consolidated homepage card. */
+  bookingVariantIds?: number[];
+  bookingVariants?: HomepageActivity[];
+  durationMinutes?: number | null;
+  listingDescription?: string | null;
+  pickupNotes?: string[];
+  upcomingSessions?: string[];
+  analyticsContentId?: string;
   currentPrice: number | null;
   priceUnit: TicketUnit;
   priceEvidence: string | null;
