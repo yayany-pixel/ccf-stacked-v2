@@ -64,9 +64,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <meta name="theme-color" content="#1a1a2e" />
-        <link rel="icon" href="/favicon.png" type="image/png" />
-        <link rel="icon" href="/favicon.ico" sizes="32x32" />
-        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="icon" href="/favicon.ico?v=20261006" sizes="16x16 32x32 48x48" />
+        <link rel="icon" href="/favicon.png?v=20261006" type="image/png" sizes="64x64" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20261006" sizes="180x180" />
         <link rel="describedby" href="/llms.txt" />
         <script
           type="application/ld+json"
