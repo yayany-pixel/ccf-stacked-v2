@@ -17,6 +17,16 @@
 }
 
 html, body { height: 100%; }
+body:has(.studio-home) > footer { background: #34372d; background-image: none; }
+body:has(.studio-home) > footer .sparkle-noise { display: none; }
+@media (max-width: 679px) {
+  body:has(.studio-home) > footer { overflow-wrap: anywhere; }
+  body:has(.studio-home) > footer .grid { grid-template-columns: minmax(0, 1fr); }
+  body:has(.studio-home) > footer :is(.grid, .flex) > * { min-width: 0; }
+  body:has(.studio-home) > footer input { min-width: 0; width: 100%; }
+  body:has(.studio-home) > footer button { white-space: normal; overflow-wrap: anywhere; padding-inline: 8px; }
+  body:has(.studio-home) > footer a[aria-label="Request a private party quote"] { padding-inline: 12px; }
+}
 html { scroll-behavior: smooth; }
 
 body { 

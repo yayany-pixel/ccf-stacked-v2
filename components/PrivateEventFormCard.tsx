@@ -37,10 +37,14 @@ const initial: FormState = {
 
 export default function PrivateEventFormCard({
   city,
-  timeWindows
+  timeWindows,
+  variant = "default",
+  onCityChange,
 }: {
   city: City;
   timeWindows: string[];
+  variant?: "default" | "homepage";
+  onCityChange?: (city: "chicago" | "eugene") => void;
 }) {
   const minDate = getDateString(7); // Minimum selectable date is 7 days from today
   
@@ -52,6 +56,10 @@ export default function PrivateEventFormCard({
 
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [error, setError] = React.useState("");
+
+  React.useEffect(() => {
+    setS(previous => ({ ...previous, city: city.label }));
+  }, [city.label]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -89,15 +97,15 @@ export default function PrivateEventFormCard({
   };
 
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-glass backdrop-blur-xl">
-      <div className="flex flex-wrap items-center justify-between gap-2">
+    <div className={variant === "homepage" ? "homepage-party-form" : "rounded-3xl border border-white/10 bg-white/5 p-6 shadow-glass backdrop-blur-xl"}>
+      {variant !== "homepage" && <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
           <div className="text-xs font-semibold tracking-wide text-white/70">PRIVATE PARTY INQUIRY FORM</div>
           <div className="mt-1 text-sm text-white/75">
-            Send us a few quick details and we'll follow up with available dates, project ideas, and a custom quote for your group.
+            Send us a few quick details and we&apos;ll follow up with available dates, project ideas, and a custom quote for your group.
           </div>
         </div>
-      </div>
+      </div>}
 
       <form 
         name="private-party" 
@@ -114,6 +122,7 @@ export default function PrivateEventFormCard({
             <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Name</span>
             <input
               name="name"
+              autoComplete="name"
               className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20"
               value={s.name}
               onChange={(e) => setS((p) => ({ ...p, name: e.target.value }))}
@@ -129,6 +138,7 @@ export default function PrivateEventFormCard({
             <input
               type="email"
               name="email"
+              autoComplete="email"
               className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20"
               value={s.email}
               onChange={(e) => setS((p) => ({ ...p, email: e.target.value }))}
@@ -144,8 +154,12 @@ export default function PrivateEventFormCard({
             <select
               name="city"
               className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20 [&>option]:bg-slate-800 [&>option]:text-white"
-              value={s.city}
-              onChange={(e) => setS((p) => ({ ...p, city: e.target.value }))}
+              value={variant === "homepage" ? city.label : s.city}
+              onChange={(e) => {
+                const nextCity = e.target.value;
+                setS(previous => ({ ...previous, city: nextCity }));
+                onCityChange?.(nextCity === "Eugene" ? "eugene" : "chicago");
+              }}
               disabled={isSubmitting}
               aria-label="Preferred city location"
             >
@@ -199,6 +213,9 @@ export default function PrivateEventFormCard({
             />
           </label>
 
+          <details open={variant !== "homepage"} className="md:col-span-2">
+          <summary className={variant === "homepage" ? undefined : "hidden"}>Project, budget & other details (optional)</summary>
+          <div className="grid gap-3 md:grid-cols-2">
           <label className="grid gap-1">
             <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Budget Per Person</span>
             <select
@@ -251,11 +268,13 @@ export default function PrivateEventFormCard({
               aria-label="Additional details"
             />
           </label>
+          </div>
+          </details>
         </div>
 
-        <p className="mt-4 text-xs text-white/55">
+        {variant !== "homepage" && <p className="mt-4 text-xs text-white/55">
           We typically reply within 24 hours with dates/options, project ideas, and a commitment.
-        </p>
+        </p>}
 
         {error && (
           <div role="alert" className="mt-4 rounded-lg border border-red-400/30 bg-red-500/10 px-4 py-2 text-sm text-red-300">
@@ -269,7 +288,7 @@ export default function PrivateEventFormCard({
             className="inline-flex w-full items-center justify-center rounded-full border border-white/15 bg-pink-600 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white hover:bg-pink-700 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isSubmitting}
           >
-            {isSubmitting ? "Sending..." : "Send Private Event Inquiry"}
+            {isSubmitting ? "Sending..." : variant === "homepage" ? "Request My Private Event Quote" : "Send Private Event Inquiry"}
           </button>
         </div>
       </form>

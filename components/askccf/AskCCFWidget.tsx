@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 import { trackEvent } from "@/lib/analytics";
 import ClassCards from "./ClassCards";
@@ -65,6 +66,8 @@ function detectCity(pathname: string): "chicago" | "eugene" | null {
   const segment = pathname.split("/").filter(Boolean)[0];
   if (segment === "chicago" || segment === "eugene") return segment;
   try {
+    const selected = new URLSearchParams(window.location.search).get("location");
+    if (selected === "chicago" || selected === "eugene") return selected;
     const stored = localStorage.getItem("preferredCity") ?? localStorage.getItem("ccf-city");
     if (stored === "chicago" || stored === "eugene") return stored;
   } catch {
@@ -78,6 +81,10 @@ export default function AskCCFWidget() {
   const hidden = HIDDEN_PREFIXES.some((prefix) => pathname.startsWith(prefix));
 
   const [open, setOpen] = React.useState(false);
+  const [homeHelpTarget, setHomeHelpTarget] = React.useState<HTMLElement | null>(null);
+  React.useEffect(() => {
+    setHomeHelpTarget(pathname === "/" ? document.getElementById("home-help") : null);
+  }, [pathname]);
   const [messages, setMessages] = React.useState<ChatMessage[]>([]);
   const [input, setInput] = React.useState("");
   const [sending, setSending] = React.useState(false);
@@ -169,6 +176,7 @@ export default function AskCCFWidget() {
   }
 
   function openPanel() {
+    if (pathname === "/") launcherRef.current?.closest("details")?.removeAttribute("open");
     setOpen(true);
     persistOpen(true);
     trackEvent("ask_ccf_open", { page_path: pathname });
@@ -178,6 +186,8 @@ export default function AskCCFWidget() {
   function closePanel() {
     setOpen(false);
     persistOpen(false);
+    const homeMenu = pathname === "/" ? launcherRef.current?.closest("details") : null;
+    if (homeMenu) homeMenu.open = true;
     launcherRef.current?.focus();
   }
 
@@ -344,21 +354,26 @@ export default function AskCCFWidget() {
 
   const showSuggestions = messages.length === 0;
 
+  const launcher = (
+    <button
+      ref={launcherRef}
+      type="button"
+      onClick={() => (open ? closePanel() : openPanel())}
+      aria-expanded={open}
+      aria-controls="ask-ccf-panel"
+      aria-label={open ? "Close studio help" : "Open studio help, the CCF AI assistant"}
+      className={pathname === "/"
+        ? "inline-flex min-h-11 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-semibold text-stone-800 hover:bg-stone-100 focus-visible:outline focus-visible:outline-2"
+        : "fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-4 z-40 inline-flex items-center gap-2 rounded-full border border-white/15 bg-gradient-to-br from-purple-600 to-cyan-600 px-4 py-3 text-sm font-semibold text-white shadow-2xl backdrop-blur-xl transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:left-6"}
+    >
+      <span aria-hidden="true">💬</span>
+      <span>{open ? "Close" : "Need a hand?"}</span>
+    </button>
+  );
+
   return (
     <>
-      {/* Launcher sits bottom-left so the booking CTAs bottom-right stay clear. */}
-      <button
-        ref={launcherRef}
-        type="button"
-        onClick={() => (open ? closePanel() : openPanel())}
-        aria-expanded={open}
-        aria-controls="ask-ccf-panel"
-        aria-label={open ? "Close studio help" : "Open studio help, the CCF AI assistant"}
-        className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-4 z-40 inline-flex items-center gap-2 rounded-full border border-white/15 bg-gradient-to-br from-purple-600 to-cyan-600 px-4 py-3 text-sm font-semibold text-white shadow-2xl backdrop-blur-xl transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:left-6"
-      >
-        <span aria-hidden="true">💬</span>
-        <span>{open ? "Close" : "Need a hand?"}</span>
-      </button>
+      {pathname === "/" ? homeHelpTarget && createPortal(launcher, homeHelpTarget) : launcher}
 
       {open ? (
         <div

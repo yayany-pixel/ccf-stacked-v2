@@ -1,208 +1,189 @@
 "use client";
 
+import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { ONLINE_CAULDRON_URL } from "@/lib/booking";
-import GlassCard from "@/components/ui/GlassCard";
-import Reveal from "@/components/motion/Reveal";
-import HeroVideoBackground from "@/components/HeroVideoBackground";
+import PrivateEventFormCard from "@/components/PrivateEventFormCard";
 import { useScrollDepth } from "@/lib/analyticsHooks";
+import { trackBeginCheckout, trackEvent } from "@/lib/analytics";
+import { getCityByParam } from "@/lib/links";
+import { STUDIO_LOCATIONS } from "@/lib/locations";
+import { activitiesForCity, formatNextSession, priceLabel } from "@/lib/homepage/data";
+import type { HomepageActivity, HomepageCity, HomepageData } from "@/lib/homepage/types";
+import styles from "./HomePageClient.module.css";
 
-// TODO: Replace with your actual Etsy URL when ready
-const ETSY_URL = "https://www.etsy.com/shop/ColorCocktailFactory";
+function ActivityCard({ activity, first = false }: { activity: HomepageActivity; first?: boolean }) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const photo = activity.image;
+  if (!photo || !activity.bookingUrl) return null;
+  return (
+    <article className={styles.card} data-activity={activity.key} data-appointment-id={activity.appointmentTypeId}>
+      <div className={styles.photo}>
+        {imageFailed ? <p className={styles.imageError}>This photograph is temporarily unavailable.</p> : (
+          <Image src={photo.path} alt={photo.alt} width={photo.width} height={photo.height}
+            loader={({ src, width }) => `/.netlify/images?url=${encodeURIComponent(src)}&w=${Math.min(width, photo.width)}&q=85`}
+            sizes="(min-width: 900px) 560px, (min-width: 680px) 640px, calc(100vw - 32px)"
+            priority={first} loading={first ? "eager" : "lazy"}
+            style={{ objectPosition: photo.focalPosition }} onError={() => setImageFailed(true)} />
+        )}
+      </div>
+      <div className={styles.cardBody}>
+        {activity.mode === "online" && <p className={styles.eyebrow}>Live Online · Join from home</p>}
+        {activity.adultThemed && <p className={styles.eyebrow}>Adult-themed · {activity.ageRestriction ?? "Check age policy at booking"}</p>}
+        <h2>{activity.title}</h2>
+        <p className={styles.description}>{activity.description}</p>
+        <div className={styles.facts} aria-live="polite">
+          <p className={styles.price}>
+            {activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice && activity.formerPrice.evidence && <del aria-label="Verified former price">${activity.formerPrice.amount} </del>}
+            {priceLabel(activity)}
+          </p>
+          <p className={styles.nextDate}>{formatNextSession(activity)}</p>
+        </div>
+        <a href={activity.bookingUrl} className={styles.bookButton}
+          aria-label={`Choose a date for ${activity.title} — ${activity.city === "online" ? "Live Online" : STUDIO_LOCATIONS[activity.city === "eugene" ? "eugene" : "chicago"].label}`}
+          onClick={() => trackBeginCheckout({ city: activity.city, class_name: activity.title, class_id: String(activity.appointmentTypeId), booking_provider: "acuity", link_url: activity.bookingUrl! })}
+        >Choose a date <span aria-hidden="true">→</span></a>
+      </div>
+    </article>
+  );
+}
 
-const IconClass = () => (
-  <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
-  </svg>
-);
-
-const IconEvent = () => (
-  <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
-  </svg>
-);
-
-const IconStore = () => (
-  <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-  </svg>
-);
-
-const IconContact = () => (
-  <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 0 1 .778-.332 48.294 48.294 0 0 0 5.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
-  </svg>
-);
-
-// Pottery wheel: vessel rising from a spinning wheel head.
-// TODO: swap for a real studio pottery-wheel photo when one is added to
-// /public/images — no real (non-stock) pottery photos exist in the repo yet.
-const IconWheel = () => (
-  <svg className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9 3h6M9.75 3c0 3-1.5 4.5-1.5 7.5a3.75 3 0 0 0 7.5 0c0-3-1.5-4.5-1.5-7.5M4.5 16.5h15M6.75 16.5 5.25 21m12-4.5 1.5 4.5" />
-  </svg>
-);
-
-type HomeCta = {
-  Icon: () => JSX.Element;
-  eyebrow?: string;
-  title: string;
-  description: string;
-  schedule?: string[];
-  price?: string;
-  label: string;
-  href: string;
-  gradientBg: string;
-  hoverBorder: string;
-  buttonClass: string;
-  shadow: string;
-};
-
-const CTAS: HomeCta[] = [
-  {
-    Icon: IconClass,
-    title: "Book a Class",
-    description: "Pottery, glass fusion, mosaics & more. Pick your date and reserve your spot.",
-    label: "See All Classes",
-    href: "https://colorcocktailfactory.as.me/",
-    gradientBg: "from-purple-500/20 to-indigo-500/20",
-    hoverBorder: "hover:border-purple-400/60",
-    buttonClass: "bg-gradient-to-r from-purple-500 to-indigo-500",
-    shadow: "group-hover:shadow-purple-500/30",
-  },
-  {
-    Icon: IconEvent,
-    title: "Book a Private Event",
-    description: "Birthdays, bachelorettes, corporate team-building — exclusive studio time for your group.",
-    label: "Get a Quote",
-    href: "/private-events",
-    gradientBg: "from-pink-500/20 to-rose-500/20",
-    hoverBorder: "hover:border-pink-400/60",
-    buttonClass: "bg-gradient-to-r from-pink-500 to-rose-500",
-    shadow: "group-hover:shadow-pink-500/30",
-  },
-  {
-    Icon: IconWheel,
-    eyebrow: "LIVE ONLINE",
-    title: "Online Cauldron Classes",
-    description:
-      "Hand-build your own decorative Halloween cauldron in a live online workshop. Beginner-friendly; no wheel or kiln needed.",
-    schedule: ["90-minute live class", "Optional clay delivery +$20; order 10+ days ahead"],
-    price: "$29",
-    label: "Book Online Cauldrons",
-    href: ONLINE_CAULDRON_URL,
-    gradientBg: "from-amber-500/20 to-orange-500/20",
-    hoverBorder: "hover:border-amber-400/60",
-    buttonClass: "bg-gradient-to-r from-amber-500 to-orange-500",
-    shadow: "group-hover:shadow-amber-500/30",
-  },
-  {
-    Icon: IconContact,
-    title: "Contact Us",
-    description: "Questions? Ideas? Slide into our DMs — we're always happy to help.",
-    label: "DM Us on Instagram",
-    href: "https://www.instagram.com/colorcocktailfactory",
-    gradientBg: "from-cyan-500/20 to-teal-500/20",
-    hoverBorder: "hover:border-cyan-400/60",
-    buttonClass: "bg-gradient-to-r from-cyan-500 to-teal-500",
-    shadow: "group-hover:shadow-cyan-500/30",
-  },
-];
-
-export default function HomePageClient() {
+export default function HomePageClient({ initialData, initialCity = "chicago" }: { initialData: HomepageData; initialCity?: HomepageCity }) {
   useScrollDepth();
+  const [city, setCity] = useState<HomepageCity>(initialCity);
+  const [data, setData] = useState(initialData);
+  const [visibleCount, setVisibleCount] = useState(10);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshFailed, setRefreshFailed] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
+  const [hydrated, setHydrated] = useState(false);
+  const revealAnchor = useRef<string | null>(null);
+
+  const selectCity = useCallback((nextCity: HomepageCity, remember = true) => {
+    setCity(nextCity);
+    setVisibleCount(10);
+    setAnnouncement(`Showing ${STUDIO_LOCATIONS[nextCity].label} workshops.`);
+    if (remember) {
+      try { localStorage.setItem("preferredCity", nextCity); localStorage.setItem("ccf-city", nextCity); } catch {}
+      const url = new URL(window.location.href);
+      url.searchParams.set("location", nextCity);
+      window.history.replaceState(window.history.state, "", url);
+      window.dispatchEvent(new Event("ccf-city-change"));
+      trackEvent("city_selected", { city: nextCity, placement: "homepage" });
+    }
+  }, []);
+
+  useEffect(() => {
+    const restoreCity = () => {
+      const query = new URLSearchParams(window.location.search).get("location");
+      if (query === "chicago" || query === "eugene") { selectCity(query); return; }
+      try {
+        const stored = localStorage.getItem("preferredCity") ?? localStorage.getItem("ccf-city");
+        if (stored === "chicago" || stored === "eugene") selectCity(stored, false);
+      } catch {}
+    };
+    restoreCity();
+    setHydrated(true);
+    window.addEventListener("popstate", restoreCity);
+    return () => window.removeEventListener("popstate", restoreCity);
+  }, [selectCity]);
+
+  useEffect(() => {
+    let controller: AbortController | null = null;
+    let active = true;
+    const refresh = async () => {
+      if (document.hidden) return;
+      controller?.abort();
+      controller = new AbortController();
+      const requestController = controller;
+      const timeout = window.setTimeout(() => requestController.abort(), 20000);
+      setRefreshing(true);
+      try {
+        const response = await fetch("/api/homepage", { signal: requestController.signal });
+        if (!response.ok) throw new Error("Homepage data unavailable");
+        const nextData: HomepageData = await response.json();
+        if (!Array.isArray(nextData.activities)) throw new Error("Invalid homepage data");
+        if (active && controller === requestController) {
+          setData(nextData);
+          setRefreshFailed(nextData.catalogState === "unavailable" || nextData.availabilityState === "unavailable");
+        }
+      } catch {
+        if (active && controller === requestController) {
+          setRefreshFailed(true);
+          setData(previous => ({ ...previous, activities: previous.activities.map(activity => ({ ...activity, currentPrice: null, nextAvailability: null, availabilityState: "unavailable" })) }));
+        }
+      } finally {
+        window.clearTimeout(timeout);
+        if (active && controller === requestController) setRefreshing(false);
+      }
+    };
+    void refresh();
+    const interval = window.setInterval(refresh, 120000);
+    document.addEventListener("visibilitychange", refresh);
+    return () => { active = false; controller?.abort(); window.clearInterval(interval); document.removeEventListener("visibilitychange", refresh); };
+  }, []);
+
+  const activities = activitiesForCity(data.activities, city);
+  const visible = activities.slice(0, visibleCount);
+  const studio = STUDIO_LOCATIONS[city];
+
+  useEffect(() => {
+    if (!revealAnchor.current) return;
+    document.querySelector<HTMLElement>(`[data-activity="${revealAnchor.current}"]`)?.querySelector<HTMLAnchorElement>("a")?.focus({ preventScroll: true });
+    revealAnchor.current = null;
+  }, [visibleCount]);
+
+  const showMore = () => {
+    const count = Math.min(10, activities.length - visibleCount);
+    revealAnchor.current = activities[visibleCount]?.key ?? null;
+    setVisibleCount(previous => previous + count);
+    setAnnouncement(`${count} more workshops added. ${Math.min(visibleCount + count, activities.length)} workshops shown.`);
+    trackEvent("homepage_show_more", { city, visible_count: visibleCount + count });
+  };
 
   return (
-    <main id="main-content">
-      {/* Full-screen CTA Hero */}
-      <section className="gradient-breathing relative min-h-screen overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40 flex flex-col items-center justify-center px-6 py-24">
-        {/* Video background */}
-        <HeroVideoBackground />
-        <div className="sparkle-noise absolute inset-0  opacity-20" />
-
-        <div className="relative z-10 mx-auto max-w-6xl w-full">
-          {/* Brand Header */}
-          <div className="text-center mb-16">
-            <Reveal variant="scale">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-xl pulse-glow mb-6">
-                Creativity is shareable.
-              </div>
-            </Reveal>
-
-            <Reveal delay={100} variant="fade-up">
-              <h1 className="font-serif text-5xl font-light leading-tight tracking-wide sm:text-7xl">
-                Color Cocktail Factory
-              </h1>
-            </Reveal>
-
-            <Reveal delay={200} variant="fade-up">
-              <p className="mt-4 text-lg text-white/70 max-w-xl mx-auto">
-                Expert-led pottery, glass art & mosaics in Chicago & Eugene. What are you here for?
-              </p>
-            </Reveal>
+    <div className={`studio-home ${styles.home}`}>
+      <header className={styles.header}>
+        <div className={styles.headerInner}>
+          <Link href="/" className={styles.brand} aria-label="Color Cocktail Factory home">
+            <svg className={styles.brandMark} viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 14c-1 10 3 17 11 17s12-7 11-17M8 13c5-3 19-3 24 0-4 4-20 4-24 0ZM14 7l-2-4m9 3 1-4m7 5 3-3M8 34c7 2 18 2 24-1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+            <span>Color Cocktail<span>Factory</span></span>
+          </Link>
+          <nav className={styles.desktopNav} aria-label="Main navigation"><a href="#classes">Classes</a><a href="#private-party">Private parties</a><Link href="/gift-cards">Gift cards</Link></nav>
+          <div className={styles.headerActions}>
+            <div className={styles.citySelector} role="group" aria-label="Choose your studio">
+              {(["chicago", "eugene"] as const).map(option => <button key={option} type="button" disabled={!hydrated} aria-pressed={city === option} onClick={() => selectCity(option)}>{STUDIO_LOCATIONS[option].label}</button>)}
+            </div>
+            <details className={styles.menu}>
+              <summary aria-label="Open navigation menu"><span aria-hidden="true">☰</span><span className={styles.menuLabel}>Menu</span></summary>
+              <nav aria-label="More navigation" onClick={event => { if ((event.target as HTMLElement).closest("a")) event.currentTarget.closest("details")?.removeAttribute("open"); }}>
+                <a href="#classes">All classes</a><a href="#private-party">Private parties</a><Link href="/gift-cards">Gift cards</Link>
+                <Link href="/blog">Studio journal</Link><Link href="/teach">Teach with us</Link><Link href={`/${city}`}>{studio.label} studio</Link>
+                <Link href={`/${city}/paper-pigment`}>Pigment Lab</Link><Link href="/activities/date-night-wheel">Date night pottery</Link><Link href="/activities/mosaic">Mosaics & glass</Link><Link href="/activities/bonsai">Bonsai</Link>
+                <div id="home-help" />
+              </nav>
+            </details>
           </div>
-
-          {/* 4 CTA Cards — 1 col mobile, 2 cols medium, 4 cols wide */}
-          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
-            {CTAS.map((cta, i) => (
-              <Reveal key={cta.title} variant="fade-up" delay={i * 80}>
-                <Link
-                  href={cta.href}
-                  {...(cta.href.startsWith("http")
-                    ? { target: "_blank", rel: "noopener noreferrer" }
-                    : {})}
-                  className="group block h-full"
-                >
-                  <GlassCard
-                    interactive
-                    className={`flex h-full flex-col p-8 text-center transition-all duration-300 bg-gradient-to-br ${cta.gradientBg} ${cta.hoverBorder}`}
-                  >
-                    <div className="flex justify-center mb-5 text-white/80">
-                      <cta.Icon />
-                    </div>
-                    {cta.eyebrow ? (
-                      <div className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-amber-300">
-                        {cta.eyebrow}
-                      </div>
-                    ) : null}
-                    <h2 className="text-xl font-bold mb-3 text-white">{cta.title}</h2>
-                    <p className="text-sm text-white/70 mb-6 leading-relaxed">{cta.description}</p>
-                    {cta.schedule ? (
-                      <div className="mb-3 space-y-0.5 text-sm font-medium text-white/80">
-                        {cta.schedule.map((line) => (
-                          <div key={line}>{line}</div>
-                        ))}
-                      </div>
-                    ) : null}
-                    {cta.price ? (
-                      <div className="mb-6 text-lg font-bold text-white">{cta.price}</div>
-                    ) : null}
-                    <span
-                      className={`mt-auto inline-block self-center ${cta.buttonClass} text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-lg ${cta.shadow} transition-all duration-300 group-hover:shadow-xl group-hover:scale-105`}
-                    >
-                      {cta.label} →
-                    </span>
-                  </GlassCard>
-                </Link>
-              </Reveal>
-            ))}
-          </div>
-
-          {/* Understated in-person alternative */}
-          <Reveal variant="fade-up" delay={340}>
-            <p className="mt-8 text-center text-sm text-white/60">
-              Try pottery in person.{" "}
-              <Link
-                href="/activities/beginner-wheel"
-                className="font-medium text-white/80 underline underline-offset-2 hover:text-white"
-              >
-                Beginner wheel throwing
-              </Link>{" "}
-              starts at $30 per person.
-            </p>
-          </Reveal>
         </div>
-      </section>
-    </main>
+      </header>
+      <main id="main-content" className={styles.main}>
+        <div className={styles.intro}><h1>Creativity is <em>shareable.</em></h1><p>Come make something together.</p></div>
+        <div className={styles.feed} id="classes" aria-label={`${studio.label} creative workshops`}>
+          {visible.slice(0, 2).map((activity, index) => <ActivityCard key={activity.key} activity={activity} first={index === 0} />)}
+          <section id="private-party" className={styles.party} aria-labelledby="private-party-title">
+            <div className={styles.partyIntro}><p className={styles.eyebrow}>Your people. Your kind of party.</p><h2 id="private-party-title">Make it a <em>private party.</em></h2><p>Birthdays, team-building, bachelorettes, and creative get-togethers.</p></div>
+            <PrivateEventFormCard city={getCityByParam(city)} timeWindows={[]} variant="homepage" onCityChange={selectCity} />
+          </section>
+          {visible.slice(2).map(activity => <ActivityCard key={activity.key} activity={activity} />)}
+        </div>
+        {visibleCount < activities.length && <div className={styles.more}><button type="button" disabled={!hydrated} onClick={showMore}>Show me more</button><p>{visible.length} of {activities.length} workshops</p></div>}
+        <p role="status" className="sr-only">{announcement}</p>
+        <section className={styles.studioInfo} aria-label="Selected studio">
+          <p className={styles.eyebrow}>Meet us at the studio</p><h2>{studio.label}{city === "chicago" ? ", Pilsen" : ", Oregon"}</h2><p>{studio.address}</p>
+          <p className={styles.dataStatus}>{refreshing ? "Checking current class details…" : refreshFailed || data.catalogState === "unavailable" || data.availabilityState === "unavailable" ? "Some live details are temporarily unavailable. Choose a date to check the studio’s current schedule." : "Prices and upcoming sessions come from the studio’s booking calendar. Your studio’s local time is shown."}</p>
+          <Link href="/gift-cards">Give a little creative time <span aria-hidden="true">↗</span></Link>
+        </section>
+      </main>
+    </div>
   );
 }
