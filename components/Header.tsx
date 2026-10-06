@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandLogo from "@/components/BrandLogo";
 import CityToggle from "@/components/CityToggle";
 import PillNav from "@/components/PillNav";
 import MobileMenu from "@/components/MobileMenu";
@@ -26,9 +27,7 @@ export default function Header({ city }: { city: City }) {
           <div className="flex items-center justify-between gap-3 px-4 py-3">
             {/* Logo as Home Link */}
             <Link href={`/${city.param}`} className="flex items-center gap-3">
-              <div className="grid h-10 w-10 place-items-center rounded-2xl border border-white/15 bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-cyan-500/20 shadow-lg shadow-purple-500/20">
-                <span className="bg-gradient-to-br from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-sm font-semibold text-transparent">CCF</span>
-              </div>
+              <BrandLogo />
               <div className="hidden sm:block">
                 <div className="text-sm font-semibold leading-none">Color Cocktail Factory</div>
                 <div className="mt-1 text-xs text-white/60">The future is handmade...</div>

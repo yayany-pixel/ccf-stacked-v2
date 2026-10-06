@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import BrandLogo from "@/components/BrandLogo";
 import { classImageLoader } from "@/lib/classImageLoader";
 import Link from "next/link";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
@@ -147,7 +148,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <Link href="/" className={styles.brand} aria-label="Color Cocktail Factory home">
-            <svg className={styles.brandMark} viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 14c-1 10 3 17 11 17s12-7 11-17M8 13c5-3 19-3 24 0-4 4-20 4-24 0ZM14 7l-2-4m9 3 1-4m7 5 3-3M8 34c7 2 18 2 24-1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" /></svg>
+            <BrandLogo className={styles.brandMark} />
             <span>Color Cocktail<span>Factory</span></span>
           </Link>
           <nav className={styles.desktopNav} aria-label="Main navigation"><a href="#classes">Classes</a><a href="#private-party">Private parties</a><Link href="/gift-cards">Gift cards</Link></nav>
