@@ -1,5 +1,15 @@
 import type { ActivityDefinition, ApprovedPhoto } from "./types";
 
+const VIP_DATE_NIGHT_PHOTO: ApprovedPhoto = {
+  filename: "vip-date-night-painting.png",
+  driveFileId: "",
+  path: "/images/classes/vip-date-night-painting.png",
+  width: 1448,
+  height: 1086,
+  alt: "Two guests painting winter birds on snowy branches at studio easels",
+  focalPosition: "50% 50%",
+};
+
 export const APPROVED_IMAGE_FOLDER = "https://drive.google.com/drive/folders/17HDWG2QYM_POUbF61Gm_mk0OSn5Y9kxL";
 
 export const APPROVED_PHOTOS: ApprovedPhoto[] = [
@@ -777,7 +787,7 @@ export const ACTIVITY_MANIFEST: ActivityDefinition[] = [
     "eligibility": "ready",
     "reviewNote": null,
     "verifiedAt": "2026-10-05",
-    "image": APPROVED_PHOTOS[42]
+    "image": VIP_DATE_NIGHT_PHOTO
   },
   {
     "key": "eugene-vip-paint-night",
@@ -800,7 +810,7 @@ export const ACTIVITY_MANIFEST: ActivityDefinition[] = [
     "eligibility": "ready",
     "reviewNote": null,
     "verifiedAt": "2026-10-05",
-    "image": APPROVED_PHOTOS[42]
+    "image": VIP_DATE_NIGHT_PHOTO
   },
   {
     "key": "chicago-cat-vase",
