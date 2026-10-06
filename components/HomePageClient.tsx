@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { classImageLoader } from "@/lib/classImageLoader";
 import Link from "next/link";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
 import { useScrollDepth } from "@/lib/analyticsHooks";
@@ -21,7 +22,7 @@ function ActivityCard({ activity, first = false }: { activity: HomepageActivity;
       <div className={styles.photo}>
         {imageFailed ? <p className={styles.imageError}>This photograph is temporarily unavailable.</p> : (
           <Image src={photo.path} alt={photo.alt} width={photo.width} height={photo.height}
-            loader={({ src, width }) => `/.netlify/images?url=${encodeURIComponent(src)}&w=${Math.min(width, photo.width)}&q=85`}
+            loader={props => classImageLoader({ ...props, width: Math.min(props.width, photo.width) })}
             sizes="(min-width: 900px) 560px, (min-width: 680px) 640px, calc(100vw - 32px)"
             priority={first} loading={first ? "eager" : "lazy"}
             style={{ objectPosition: photo.focalPosition }} onError={() => setImageFailed(true)} />
@@ -167,7 +168,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
         </div>
       </header>
       <main id="main-content" className={styles.main}>
-        <div className={styles.intro}><h1>Creativity is <em>shareable.</em></h1><p>Come make something together.</p></div>
+        <div className={styles.intro}><h1>The future is <em>handmade...</em></h1><p>Come make something together.</p></div>
         <div className={styles.feed} id="classes" aria-label={`${studio.label} creative workshops`}>
           {visible.slice(0, 2).map((activity, index) => <ActivityCard key={activity.key} activity={activity} first={index === 0} />)}
           <section id="private-party" className={styles.party} aria-labelledby="private-party-title">

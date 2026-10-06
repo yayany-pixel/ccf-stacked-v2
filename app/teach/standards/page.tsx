@@ -18,7 +18,7 @@ export default function StandardsPage() {
       description: "Most of our students have zero experience. We break down complex techniques into achievable steps and celebrate small wins."
     },
     {
-      title: "Creativity is Shareable",
+      title: "The future is handmade...",
       description: "Our tagline is our mission. Every class should inspire students to see themselves as creative and capable."
     },
     {

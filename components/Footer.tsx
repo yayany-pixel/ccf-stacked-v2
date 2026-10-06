@@ -25,7 +25,7 @@ export default function Footer() {
               </div>
               <div>
                 <div className="text-sm font-semibold">Color Cocktail Factory</div>
-                <div className="text-xs text-white/60">Creativity is shareable.</div>
+                <div className="text-xs text-white/60">The future is handmade...</div>
               </div>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-white/70">

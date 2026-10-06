@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import NextImage from "next/image";
+import { classImageLoader } from "@/lib/classImageLoader";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
 import ButtonPill from "@/components/ui/ButtonPill";
@@ -213,6 +214,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                             <div className="md:w-48 h-48 md:h-auto flex-shrink-0 relative">
                               <NextImage 
                                 src={event.imageUrl} 
+                                loader={classImageLoader}
                                 alt={event.title}
                                 fill
                                 sizes="(max-width: 768px) 100vw, 192px"
@@ -319,6 +321,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                     <div className="mb-4 overflow-hidden rounded-lg relative h-48">
                       <NextImage 
                         src={event.imageUrl} 
+                        loader={classImageLoader}
                         alt={event.title}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

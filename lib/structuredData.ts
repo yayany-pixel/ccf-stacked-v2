@@ -15,7 +15,7 @@ export function localBusinessJsonLd(city: City) {
       "https://www.instagram.com/colorcocktailfactory",
       "https://www.facebook.com/colorcocktailfactory"
     ],
-    slogan: "Creativity is shareable.",
+    slogan: "The future is handmade...",
     priceRange: "$$",
     currenciesAccepted: "USD",
     paymentAccepted: "Cash, Credit Card, Debit Card",

@@ -18,7 +18,7 @@ export function generateOrganizationSchema() {
     "url": "https://colorcocktailfactory.com",
     "logo": "https://colorcocktailfactory.com/apple-touch-icon.png",
     "description": "Premium creative workshops and pottery classes in Chicago & Eugene. Expert-led hands-on experiences including pottery, glass art, mosaics, and more.",
-    "slogan": "Creativity is shareable.",
+    "slogan": "The future is handmade...",
     "sameAs": [
       "https://www.instagram.com/colorcocktailfactory",
       "https://www.facebook.com/colorcocktailfactory"

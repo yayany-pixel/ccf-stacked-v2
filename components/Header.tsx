@@ -31,7 +31,7 @@ export default function Header({ city }: { city: City }) {
               </div>
               <div className="hidden sm:block">
                 <div className="text-sm font-semibold leading-none">Color Cocktail Factory</div>
-                <div className="mt-1 text-xs text-white/60">Creativity is shareable.</div>
+                <div className="mt-1 text-xs text-white/60">The future is handmade...</div>
               </div>
             </Link>
 

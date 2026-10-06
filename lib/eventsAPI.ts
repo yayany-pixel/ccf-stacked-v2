@@ -2,6 +2,7 @@
 import { getCatalog, getPublicClassSchedule } from "@/lib/askccf/catalog";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { eventBookingUrl } from "@/lib/booking";
+import { getClassPhoto } from "@/lib/classPhotos";
 
 export type NormalizedEvent = {
   id: string;
@@ -70,8 +71,7 @@ export async function getAllEvents(daysAhead = 60): Promise<NormalizedEvent[]> {
       city, venueName: studio ? `Color Cocktail Factory — ${city}` : "Live online workshop",
       streetAddress: studio?.streetAddress ?? "", addressLocality: studio?.addressLocality ?? "",
       addressRegion: studio?.addressRegion ?? "", postalCode: studio?.postalCode ?? "", addressCountry: studio?.addressCountry ?? "",
-      // Catalog image hosts vary; the text cards remain reliable without unapproved image hosts.
-      imageUrl: null, price: item.pricing.price, currency: "USD",
+      imageUrl: getClassPhoto(item.id)?.path ?? null, price: item.pricing.price, currency: "USD",
       bookingUrl: eventBookingUrl(item.id, slot.time, slot.calendarID),
       category: eventCategory(item.title), status: "scheduled", lastUpdated: now.toISOString(),
     });

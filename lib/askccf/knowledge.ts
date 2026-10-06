@@ -42,7 +42,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
     topics: ["about", "ccf", "who", "studio", "company", "motto", "what is"],
     cities: ["all"],
     content:
-      'Color Cocktail Factory (CCF) is an expert-led creative workshop studio with locations in Chicago\'s Pilsen neighborhood and in Eugene, Oregon, plus a small number of live online classes. The motto is "Creativity is shareable." Classes cover pottery and wheel throwing, handbuilding, mosaics and Turkish lamps, glass fusion, painting and watercolor, candles and soap, terrariums and bonsai. CCF is a workshop business — not a pottery-supply store and not an open-access membership studio.',
+      'Color Cocktail Factory (CCF) is an expert-led creative workshop studio with locations in Chicago\'s Pilsen neighborhood and in Eugene, Oregon, plus a small number of live online classes. The motto is "The future is handmade..." Classes cover pottery and wheel throwing, handbuilding, mosaics and Turkish lamps, glass fusion, painting and watercolor, candles and soap, terrariums and bonsai. CCF is a workshop business — not a pottery-supply store and not an open-access membership studio.',
     source: "https://colorcocktailfactory.com/ (and /public/llms.txt)",
     verifiedOn: "2026-09-04",
   },
