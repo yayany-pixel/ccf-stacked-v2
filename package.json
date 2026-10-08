@@ -19,6 +19,7 @@
     "test:meta:browser": "node tests/analytics-browser.cjs && node tests/meta-navigation.cjs"
   },
   "dependencies": {
+    "@google-analytics/data": "^4.12.1",
     "@netlify/database": "^2.0.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",

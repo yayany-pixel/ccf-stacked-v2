@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
+import RealTimeUsers from "@/components/RealTimeUsers";
 
 export const metadata: Metadata = {
   title: "Analytics Dashboard",
@@ -31,6 +32,13 @@ export default function AnalyticsPage() {
             </p>
           </div>
         </Reveal>
+
+        {/* Real-time Widget */}
+        <section className="mt-12">
+          <Reveal>
+            <RealTimeUsers />
+          </Reveal>
+        </section>
 
         {/* Quick Links */}
         <section className="mt-12 grid gap-6 md:grid-cols-3">
