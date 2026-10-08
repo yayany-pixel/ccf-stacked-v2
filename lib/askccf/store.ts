@@ -14,6 +14,7 @@ import {
   askCcfPickupOrders,
   askCcfRateLimits,
   askCcfUsage,
+  askCcfConversations,
 } from "../../db/schema";
 
 export function hashId(value: string): string {
@@ -375,4 +376,22 @@ export async function lookupPickup(
 
 function describe(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
+}
+export async function logConversation(
+  sessionId: string,
+  userMessage: string,
+  aiReply: string,
+): Promise<void> {
+  if (!databaseConfigured()) return;
+  try {
+    await getDb()
+      .insert(askCcfConversations)
+      .values({
+        sessionId,
+        userMessage,
+        aiReply,
+      });
+  } catch (error) {
+    console.error("[AskCCF] conversation log failed:", describe(error));
+  }
 }

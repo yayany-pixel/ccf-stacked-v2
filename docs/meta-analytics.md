@@ -85,7 +85,7 @@ To finish purchase activation:
 5. Validate provider-signed replay with a separate dataset or approved Test Events setup and inspect Events Manager receipt/deduplication. Do not create fake production purchases or a paid booking merely to test tracking.
 6. Enable only after validation; monitor dataset diagnostics and the delivery ledger.
 
-Eventbrite CAPI is not implemented: a provider-authenticated webhook plus server order lookup, payment/currency/total verification, city/class mapping, consented attribution, and stable provider-prefixed order IDs are still required. No Eventbrite revenue is inferred from checkout clicks.
+Eventbrite server purchases: The webhook endpoint (`https://colorcocktailfactory.com/.netlify/functions/ga4-webhook`) includes verified Eventbrite adapter handling. When an Eventbrite purchase is verified and Meta CAPI is enabled, the webhook dispatches a server-side Purchase event (`purchase:eventbrite:{order_id}`) with the verified gross revenue in USD, class category, and city mapping. Event deduplication is maintained through the atomic delivery ledger. Checkout link clicks remain cleanly separated from actual completed revenue.
 
 ## Deduplication and reconciliation
 

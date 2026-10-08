@@ -19,6 +19,7 @@ import {
   hashId,
   recordUsage,
   reserveDailyRequest,
+  logConversation,
 } from "@/lib/askccf/store";
 
 export const dynamic = "force-dynamic";
@@ -231,9 +232,14 @@ export async function POST(request: Request) {
         viaGateway: provider.viaGateway,
       });
 
+      const finalReply = text.length > 0 ? text : FALLBACK_TEXT;
+      if (text.length > 0) {
+        await logConversation(sessionId, rawMessage, finalReply);
+      }
+
       return NextResponse.json({
         state: "ok",
-        reply: text.length > 0 ? text : FALLBACK_TEXT,
+        reply: finalReply,
         cards,
         draft,
         degraded:

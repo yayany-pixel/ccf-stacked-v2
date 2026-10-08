@@ -1,4 +1,4 @@
-> **Historical configuration:** The live implementation now uses signed Acuity verification and an opt-in purchase ledger. Follow [analytics operations](docs/analytics-operations.md) instead. The JSON relay examples below and old webhook test scripts are obsolete; do not send sample purchases to production.
+> **Authentication & Verification Note:** The live webhook endpoint (`https://colorcocktailfactory.com/.netlify/functions/ga4-webhook`) supports native signed Acuity webhooks, native Eventbrite webhooks, and authenticated Zapier relays. All requests must either provide the authentic Acuity HMAC signature (`X-Acuity-Signature`) or the configured secret (`X-Webhook-Secret: <WEBHOOK_SECRET>`). Order amounts and statuses are verified directly against the booking provider's API (Acuity/Eventbrite) before forwarding to GA4 and Meta CAPI, and all purchases are deduplicated via the PostgreSQL delivery ledger. See [analytics operations](docs/analytics-operations.md) for full operational guidance.
 
 # GA4 Webhook Integration Guide
 

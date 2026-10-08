@@ -130,3 +130,19 @@ export const privacyPreferences = pgTable("privacy_preferences", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
 }, table => [index("privacy_preferences_expires_at_idx").on(table.expiresAt)]);
+
+/**
+ * Logged AI conversations.
+ * Stores full prompts and replies to understand customer behavior.
+ */
+export const askCcfConversations = pgTable(
+  "ask_ccf_conversations",
+  {
+    id: serial().primaryKey(),
+    sessionId: text("session_id").notNull(),
+    userMessage: text("user_message").notNull(),
+    aiReply: text("ai_reply").notNull(),
+    createdAt: timestamp("created_at").defaultNow(),
+  },
+  (t) => [index("ask_ccf_conversations_session_idx").on(t.sessionId)],
+);
