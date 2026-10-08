@@ -167,26 +167,43 @@ const etcGroup: SectionConfig = {
   videoSrc: placeholderVideo,
   overlayClass: "bg-gradient-to-br from-lime-900/40 via-emerald-900/20 to-sky-900/45",
 
-  scheduleLabel: "MORE CRAFTS",
-  scheduleTitle: "Etc",
-  schedulePill: "VARIETY",
+  scheduleLabel: "SATURDAY WORKSHOP",
+  scheduleTitle: "Terrarium & Crafts",
+  schedulePill: "NATURE",
   scheduleRows: [
-    { time: "Various specialty classes", note: "Unique creative experiences" }
+    { time: "Sat · 3:30–5:00 PM", note: "$35 / person" }
   ],
 
   badge: "CREATE · EXPLORE · UNIQUE",
-  heroTitle: "Etc",
+  heroTitle: "Terrarium & Specialty Crafts",
   heroDescription:
-    "Unique creative experiences beyond the usual: terrariums, glass fusion, and glass blowing. Explore something new!",
-  primaryCta: { label: "Browse Classes", kind: "booking" },
+    "Build a living miniature garden inside glass! Learn how ecosystems work, layer plants and decorative stones, and take home your living creation.",
+  primaryCta: { label: "Book Terrarium", kind: "booking" },
   secondaryCta: { label: "Details + FAQs", kind: "detail" },
-  tags: ["Glass", "Nature", "Specialty", "Unique"],
+  tags: ["Nature", "Plants", "Beginner-friendly", "Home decor"],
   valueCards: [
-    { label: "STYLE", title: "Diverse crafts", body: "Unique projects you won't find everywhere." },
-    { label: "RESULT", title: "One-of-a-kind", body: "Special pieces to treasure." },
-    { label: "VIBE", title: "Adventure", body: "Try something completely different." }
+    { label: "STYLE", title: "Living garden", body: "Design your miniature ecosystem inside glass." },
+    { label: "RESULT", title: "Same-day take home", body: "Low-maintenance plants that thrive with ease." },
+    { label: "VIBE", title: "Relaxing zen", body: "Soothing, social, and creative." }
   ],
-  booking: { term: "specialty" },
+  booking: { term: "terrarium" },
+  bookingLinks: {
+    eventbrite: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161151929",
+    acuity: "https://colorcocktailfactory.as.me/terrarium",
+  },
+  upcomingTimes: [
+    { label: "Sat Oct 10 · 3:30 PM", url: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161151929" },
+    { label: "Sat Oct 17 · 3:30 PM", url: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161155941" },
+    { label: "Sat Oct 24 · 3:30 PM", url: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161165971" },
+    { label: "Sat Oct 31 · 3:30 PM", url: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161170986" },
+    { label: "Sat Nov 7 · 3:30 PM", url: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161176001" },
+    { label: "Sat Nov 14 · 3:30 PM", url: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161183022" },
+    { label: "Sat Nov 21 · 3:30 PM", url: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161186031" },
+    { label: "Sat Nov 28 · 3:30 PM", url: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161192049" },
+    { label: "Sat Dec 5 · 3:30 PM", url: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161198067" },
+    { label: "Sat Dec 12 · 3:30 PM", url: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161208097" },
+    { label: "Sat Dec 19 · 3:30 PM", url: "https://www.eventbrite.com/e/terrarium-workshop-eugene-tickets-2003161214115" },
+  ],
   faqs: [
     { q: "Are these beginner-friendly?", a: "Yes - we guide you through each technique." },
     { q: "What's included?", a: "All materials and instruction provided." },
@@ -202,13 +219,37 @@ const etcGroup: SectionConfig = {
   ]
 };
 
+const getEugeneBonsaiSection = (): SectionConfig => {
+  const baseBonsai = getBaseSection("bonsai")!;
+  return {
+    ...baseBonsai,
+    scheduleRows: [
+      { time: "Sat · 4:30–6:30 PM", note: "$75 / person · $150 / couple" },
+    ],
+    bookingLinks: {
+      eventbrite: "https://www.eventbrite.com/e/bonsai-for-beginners-hands-on-workshop-eugene-tickets-2003159600288",
+      acuity: "https://colorcocktailfactory.as.me/?appointmentType=94058299",
+    },
+    upcomingTimes: [
+      { label: "Sat Oct 10 · 4:30 PM", url: "https://www.eventbrite.com/e/bonsai-for-beginners-hands-on-workshop-eugene-tickets-2003159600288" },
+      { label: "Sat Oct 17 · 4:30 PM", url: "https://www.eventbrite.com/e/bonsai-for-beginners-hands-on-workshop-eugene-tickets-2003159555153" },
+      { label: "Sat Oct 24 · 4:30 PM", url: "https://www.eventbrite.com/e/bonsai-for-beginners-hands-on-workshop-eugene-tickets-2003159607309" },
+      { label: "Sat Oct 31 · 4:30 PM", url: "https://www.eventbrite.com/e/bonsai-for-beginners-hands-on-workshop-eugene-tickets-2003159613327" },
+      { label: "Sat Nov 7 · 4:30 PM", url: "https://www.eventbrite.com/e/bonsai-for-beginners-hands-on-workshop-eugene-tickets-2003159619345" },
+      { label: "Sat Nov 14 · 4:30 PM", url: "https://www.eventbrite.com/e/bonsai-for-beginners-hands-on-workshop-eugene-tickets-2003159625363" },
+      { label: "Sat Nov 21 · 4:30 PM", url: "https://www.eventbrite.com/e/bonsai-for-beginners-hands-on-workshop-eugene-tickets-2003159630378" },
+      { label: "Sat Nov 28 · 4:30 PM", url: "https://www.eventbrite.com/e/bonsai-for-beginners-hands-on-workshop-eugene-tickets-2003159638402" },
+    ],
+  };
+};
+
 /**
  * Eugene-specific section order
  */
 export const eugeneSections: SectionConfig[] = [
   getBaseSection("private")!,       // 1. Private Party
   getBaseSection("date-night")!,    // 2. Date Night
-  getBaseSection("bonsai")!,        // 3. Bonsai
+  getEugeneBonsaiSection(),         // 3. Bonsai
   getBaseSection("turkish")!,       // 4. Turkish Mosaic Lamp
   handbuildingGroup,                // 5. Handbuilding Pottery (with sub-classes)
   pigmentLabGroup,                  // 6. Pigment Lab (with sub-classes)
