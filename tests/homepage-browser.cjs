@@ -190,7 +190,7 @@ const results = process.env.CCF_BROWSER_SKIP_VIEWPORTS
     }
     if (failure === 'missing-url') assert.equal(await page.locator('[data-appointment-id="95588506"]').count(), 0);
     if (failure === 'slow-switch') {
-      assert.equal(await page.locator('[data-activity]').first().getAttribute('data-activity'), 'eugene-cauldron');
+      assert.equal(await page.locator('[data-activity]').first().getAttribute('data-activity'), 'eugene-cup-creations');
       assert.equal(await page.locator('[data-activity]').first().locator('a').getAttribute('href'), expected('eugene')[0].bookingUrl);
       assert.equal(await page.locator('[data-activity]').count(), expected('eugene').length);
     }
