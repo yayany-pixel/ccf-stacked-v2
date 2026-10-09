@@ -63,7 +63,7 @@ const results = process.env.CCF_BROWSER_SKIP_VIEWPORTS
       assert.equal(geometry.overflow, false, `${city} ${width} overflow`);
       assert.ok(geometry.cards.every(card => !card.clipped && card.buttonHeight >= 48), 'Complete touch targets');
       if (width < 900) assert.ok(geometry.cards.every(card => card.height <= height - geometry.header + 2), `${city} ${width}x${height} compact cards: ${JSON.stringify(geometry.cards)}`);
-      assert.deepEqual(geometry.opening, [expected(city)[0].key, expected(city)[1].key, 'private-party', expected(city)[2].key]);
+      assert.deepEqual(geometry.opening, [expected(city)[0].key, expected(city)[1].key, expected(city)[2].key, 'private-party']);
       assert.equal(await page.locator('form[name="private-party"]').count(), 1);
       const initialPhotos = new Set(expected(city).slice(0,10).map(activity => activity.image.path));
       assert.ok([...photos].every(photo => initialPhotos.has(photo)), 'Only rendered activity images downloaded');

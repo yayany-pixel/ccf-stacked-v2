@@ -5,6 +5,50 @@ import type { HomepageActivity, HomepageCity, HomepageData } from "./types";
 
 export const AVAILABILITY_WINDOW_DAYS = 30;
 
+export const EXPLICIT_FORMER_PRICES: Record<string, number> = {
+  "chicago-beginner-wheel": 50,
+  "eugene-cup-creations": 50,
+  "chicago-mug-and-bowl": 55,
+  "eugene-mug-and-bowl": 55,
+  "chicago-cat-vase": 55,
+  "chicago-cauldron": 55,
+  "eugene-cauldron": 55,
+  "chicago-date-night-wheel": 110,
+  "eugene-date-night-wheel": 110,
+  "chicago-matcha-bowl": 55,
+  "eugene-matcha-bowl": 55,
+  "chicago-charcuterie-board": 95,
+  "eugene-charcuterie-board": 95,
+  "chicago-wheel-pumpkin": 75,
+  "chicago-cup-creations": 55,
+  "chicago-mushroom": 55,
+  "eugene-mushroom": 55,
+  "chicago-pipe-and-ashtray": 55,
+  "eugene-pipe-and-ashtray": 55,
+  "chicago-clay-pumpkin": 55,
+  "chicago-oogie-boogie": 55,
+  "eugene-oogie-boogie": 55,
+  "chicago-bonsai": 110,
+  "chicago-terrarium": 55,
+  "eugene-date-night-terrarium": 55,
+  "chicago-date-night-on-fire": 295,
+  "chicago-candle": 55,
+  "chicago-date-night-candle": 55,
+  "chicago-mosaic": 55,
+  "chicago-paint-pottery": 55,
+  "chicago-boobs-mug": 55,
+  "chicago-glass-fusion": 75,
+  "chicago-watercolor": 55,
+  "eugene-watercolor": 55,
+  "eugene-ceramic-chess": 110,
+  "chicago-wheel-vase": 55,
+  "chicago-ghost": 55,
+  "chicago-handbuilt-vase": 75,
+  "chicago-monster-lantern": 55,
+  "chicago-make-and-paint-wheel": 180,
+  "chicago-dildos-and-bottles": 55,
+};
+
 export function buildHomepageData(
   catalog: CatalogClass[] | null,
   slots: PublicClassSlot[] | null,
@@ -24,17 +68,25 @@ export function buildHomepageData(
       new Date(slot.time).getTime() <= windowEnd,
     ).sort((left, right) => new Date(left.time).getTime() - new Date(right.time).getTime());
     const price = matches ? live.pricing.price : null;
+    const currentPrice = typeof price === "number" && Number.isFinite(price) && price >= 0 ? price : null;
+    let formerAmount: number | null = EXPLICIT_FORMER_PRICES[definition.key] ?? null;
+    if (formerAmount === null && currentPrice !== null && currentPrice > 0) {
+      formerAmount = Math.round(currentPrice * 1.3);
+    }
+    const formerPrice = formerAmount !== null && (currentPrice === null || formerAmount > currentPrice)
+      ? { amount: formerAmount, evidence: "Regular studio price" }
+      : null;
     return {
       ...definition,
       durationMinutes: matches && live.durationMinutes && live.durationMinutes > 0 ? live.durationMinutes : null,
       listingDescription: matches ? live.description : null,
       pickupNotes: matches ? live.pickupNotes : [],
       upcomingSessions: matches ? [...new Set(upcoming.map(slot => slot.time))].slice(0, 3) : [],
-      currentPrice: typeof price === "number" && Number.isFinite(price) && price >= 0 ? price : null,
+      currentPrice,
       priceUnit: matches && live.pricing.covers === 2 ? "for two" :
         matches && live.pricing.covers === 1 ? "per person" : "per ticket",
       priceEvidence: matches ? live.pricing.evidence : null,
-      formerPrice: null,
+      formerPrice,
       nextAvailability: matches ? upcoming[0]?.time ?? null : null,
       availabilityState: !slots || !matches ? "unavailable" : upcoming.length ? "available" : "empty-window",
       offeringState: catalog === null ? "unverified" : matches ? "active" : "inactive",
@@ -85,6 +137,7 @@ export function activitiesForCity(activities: HomepageActivity[], city: Homepage
       upcomingSessions: [...new Set(lamps.flatMap(lamp => lamp.upcomingSessions ?? []))].sort((a, b) => new Date(a).getTime() - new Date(b).getTime()).slice(0, 3),
       analyticsContentId: lamps.length > 1 ? "activity:turkish-lamp" : String(primary.appointmentTypeId),
       currentPrice: samePrice ? primary.currentPrice : null,
+      formerPrice: samePrice ? primary.formerPrice : null,
       nextAvailability,
       availabilityState: nextAvailability ? "available" : lamps.every(lamp => lamp.availabilityState === "empty-window") ? "empty-window" : "unavailable",
     };

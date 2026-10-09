@@ -68,6 +68,9 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
       </div>
       <div className={styles.cardBody}>
         <div className={styles.badgeRow}>
+          {activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice && (
+            <span className={styles.badgeSale}>⚡ Limited-Time Sale</span>
+          )}
           <span className={styles.badgeAcuity}>✓ Book Direct · No Fees</span>
           {activity.byob && <span className={styles.badgeWeekend}>🥂 BYOB</span>}
           {activity.beginnerFriendly && <span className={styles.badgePopular}>✨ First-Timer Friendly</span>}
@@ -78,7 +81,7 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
         <p className={styles.description}>{activity.description}</p>
         <div className={styles.facts} aria-live="polite">
           <p className={styles.price}>
-            {activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice && activity.formerPrice.evidence && <del aria-label="Verified former price">${activity.formerPrice.amount} </del>}
+            {activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice && activity.formerPrice.evidence && <del aria-label="Original price">${activity.formerPrice.amount} </del>}
             {priceLabel(activity)}
           </p>
           <p className={styles.nextDate}>{formatNextSession(activity)}</p>
@@ -94,7 +97,12 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
           {(activity.upcomingSessions?.length ?? 0) > 1 && <><h3>Upcoming sessions</h3><ul>{activity.upcomingSessions!.map(time => <li key={time}>{formatNextSession({...activity, nextAvailability: time}).replace(/^Next: /, "")}</li>)}</ul></>}
           {activity.bookingVariants?.map(variant => <div className={styles.variant} key={variant.key}>
             <h3>{variant.title}</h3><p>{variant.description}</p>
-            <p>{priceLabel(variant)}{variant.durationMinutes ? ` · ${variant.durationMinutes} minutes` : ""}</p>
+            <p>
+              {variant.formerPrice && variant.currentPrice !== null && variant.formerPrice.amount > variant.currentPrice && (
+                <del aria-label="Original price">${variant.formerPrice.amount} </del>
+              )}
+              {priceLabel(variant)}{variant.durationMinutes ? ` · ${variant.durationMinutes} minutes` : ""}
+            </p>
             <p>{formatNextSession(variant)}</p>
             <a href={variant.bookingUrl!} data-variant-booking="true" data-analytics-booking="true" onClick={() => {
               const parameters = {...tracking, class_name: variant.title, class_id: String(variant.appointmentTypeId), appointment_type_id: String(variant.appointmentTypeId), displayed_price: variant.currentPrice ?? undefined, click_target: "choose_date"};
@@ -118,6 +126,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
   const [data, setData] = useState(initialData);
   const [visibleCount, setVisibleCount] = useState(10);
   const [filter, setFilter] = useState<HomepageFilter>("All workshops");
+  const [isPartyExpanded, setIsPartyExpanded] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [refreshFailed, setRefreshFailed] = useState(false);
   const [announcement, setAnnouncement] = useState("");
@@ -240,6 +249,15 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
       </header>
       <main tabIndex={-1} id="main-content" className={styles.main}>
         <div className={styles.intro}><h1>The future is <em>handmade...</em></h1><p>Come make something together.</p></div>
+        <aside className={styles.saleBanner} aria-label="Flash studio sale notice">
+          <div className={styles.saleBannerInner}>
+            <span className={styles.saleUrgencyPill}>⏰ Flash Sale</span>
+            <p className={styles.saleBannerText}>
+              <strong>Special workshop discount pricing active now</strong> — sale ends in a few hours!
+            </p>
+            <span className={styles.saleBannerNote}>Discount applied automatically at checkout · Strikethrough shows original price</span>
+          </div>
+        </aside>
         <div className={styles.filters} role="group" aria-label="Filter workshops">
           {HOMEPAGE_FILTERS.map(option => <button key={option} type="button" aria-pressed={filter === option} onClick={() => {
             if (filter === option) return;
@@ -251,12 +269,33 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
         <p className={styles.filterCount} role="status">{activities.length} {filter === "All workshops" ? "workshops" : filter.toLowerCase() + " workshops"} · {studio.label}</p>
         {!activities.length && <p className={styles.empty}>No matching workshops are listed right now. Try another filter or city.</p>}
         <div className={styles.feed} id="classes" aria-label={`${studio.label} creative workshops`}>
-          {visible.slice(0, 2).map((activity, index) => <ActivityCard key={activity.key} activity={activity} position={index + 1} listCity={city} first={index === 0} />)}
-          <section id="private-party" className={styles.party} aria-labelledby="private-party-title">
-            <div className={styles.partyIntro}><p className={styles.eyebrow}>Your people. Your kind of party.</p><h2 id="private-party-title">Make it a <em>private party.</em></h2><p>Birthdays, team-building, bachelorettes, and creative get-togethers.</p><p>Planning for 8–50+ guests? Share your city, preferred date, group size, and activity. Staff confirm the space, options, and quote for your event.</p><p>Your inquiry starts a conversation; it does not reserve a date or take payment.</p></div>
-            <PrivateEventFormCard city={getCityByParam(city)} timeWindows={[]} variant="homepage" onCityChange={selectCity} />
+          {visible.slice(0, 3).map((activity, index) => <ActivityCard key={activity.key} activity={activity} position={index + 1} listCity={city} first={index === 0} />)}
+          <section id="private-party" className={`${styles.party} ${isPartyExpanded ? styles.partyExpanded : styles.partyCollapsed}`} aria-labelledby="private-party-title">
+            <div className={styles.partyIntro}>
+              <div className={styles.partyHeaderRow}>
+                <span className={styles.partyBadge}>🎉 Private Events</span>
+                <span className={styles.partyGroupSize}>8–50+ Guests</span>
+              </div>
+              <h2 id="private-party-title">Make it a <em>private party.</em></h2>
+              <p className={styles.partySummary}>Birthdays, team-building, bachelorettes, and creative get-togethers in {studio.label}.</p>
+              <p className={styles.partyDetailText}>Planning for 8–50+ guests? Share your city, preferred date, group size, and activity. Studio staff confirm the space, options, and quote for your event.</p>
+              <div className={styles.partyToggleRow}>
+                <button
+                  type="button"
+                  className={styles.partyToggleBtn}
+                  onClick={() => setIsPartyExpanded(previous => !previous)}
+                  aria-expanded={isPartyExpanded}
+                  aria-controls="party-form-container"
+                >
+                  {isPartyExpanded ? "Collapse inquiry form ↑" : "Request Private Party Quote ↓"}
+                </button>
+              </div>
+            </div>
+            <div id="party-form-container" className={isPartyExpanded ? styles.formVisible : styles.formHidden}>
+              <PrivateEventFormCard city={getCityByParam(city)} timeWindows={[]} variant="homepage" onCityChange={selectCity} />
+            </div>
           </section>
-          {visible.slice(2).map((activity, index) => <ActivityCard key={activity.key} activity={activity} position={index + 3} listCity={city} />)}
+          {visible.slice(3).map((activity, index) => <ActivityCard key={activity.key} activity={activity} position={index + 4} listCity={city} />)}
         </div>
         {visibleCount < activities.length && <div className={styles.more}><button type="button" disabled={!hydrated} onClick={showMore}>Show me more</button><p>{visible.length} of {activities.length} workshops</p></div>}
         <p role="status" className="sr-only">{announcement}</p>
