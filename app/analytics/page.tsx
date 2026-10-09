@@ -2,17 +2,24 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
+import VisitorComparisonCard from "@/components/analytics/VisitorComparisonCard";
+import { getVisitorComparisonData } from "@/lib/analyticsVisitorMetrics";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export const metadata: Metadata = {
   title: "Analytics Dashboard",
-  description: "Internal analytics and performance dashboard",
+  description: "Internal analytics, visitor comparison, and performance dashboard",
   robots: {
     index: false,
-    follow: false
-  }
+    follow: false,
+  },
 };
 
-export default function AnalyticsPage() {
+export default async function AnalyticsPage() {
+  const visitorData = await getVisitorComparisonData("America/Chicago");
+
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
       <div className="sparkle-noise absolute inset-0 opacity-20" />
@@ -23,7 +30,7 @@ export default function AnalyticsPage() {
             <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-xl">
               📊 Analytics Hub
             </div>
-            <h1 className="mt-6 font-serif text-5xl font-bold">
+            <h1 className="mt-6 font-serif text-5xl font-bold text-white">
               Performance Dashboard
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-white/75">
@@ -43,8 +50,8 @@ export default function AnalyticsPage() {
             >
               <GlassCard interactive className="h-full p-6 text-center transition-all hover:scale-105">
                 <div className="text-4xl">📈</div>
-                <h2 className="mt-3 text-xl font-bold">Google Analytics</h2>
-                <p className="mt-2 text-sm text-white/70">Real-time traffic & conversions</p>
+                <h2 className="mt-3 text-xl font-bold text-white">Google Analytics</h2>
+                <p className="mt-2 text-sm text-white/70">Real-time traffic &amp; conversions</p>
                 <div className="mt-4 text-xs font-mono text-purple-300">G-CPKCDF56W2</div>
               </GlassCard>
             </a>
@@ -59,7 +66,7 @@ export default function AnalyticsPage() {
             >
               <GlassCard interactive className="h-full p-6 text-center transition-all hover:scale-105">
                 <div className="text-4xl">📱</div>
-                <h2 className="mt-3 text-xl font-bold">Meta Pixel</h2>
+                <h2 className="mt-3 text-xl font-bold text-white">Meta Pixel</h2>
                 <p className="mt-2 text-sm text-white/70">Facebook/Instagram insights</p>
                 <div className="mt-4 text-xs font-mono text-cyan-300">1554498828184467</div>
               </GlassCard>
@@ -75,18 +82,25 @@ export default function AnalyticsPage() {
             >
               <GlassCard interactive className="h-full p-6 text-center transition-all hover:scale-105">
                 <div className="text-4xl">🚀</div>
-                <h2 className="mt-3 text-xl font-bold">Netlify Analytics</h2>
-                <p className="mt-2 text-sm text-white/70">Deployment & bandwidth</p>
+                <h2 className="mt-3 text-xl font-bold text-white">Netlify Analytics</h2>
+                <p className="mt-2 text-sm text-white/70">Deployment &amp; bandwidth</p>
                 <div className="mt-4 text-xs text-green-300">Production stats</div>
               </GlassCard>
             </a>
           </Reveal>
         </section>
 
+        {/* Live Visitor Comparison Section */}
+        <section className="mt-14">
+          <Reveal variant="fade-up" delay={150}>
+            <VisitorComparisonCard initialData={visitorData} />
+          </Reveal>
+        </section>
+
         {/* Key Metrics to Track */}
         <section className="mt-16">
           <Reveal>
-            <h2 className="mb-8 text-center font-serif text-3xl font-bold">Daily Metrics Checklist</h2>
+            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-white">Daily Metrics Checklist</h2>
           </Reveal>
 
           <div className="grid gap-8 md:grid-cols-2">
@@ -96,7 +110,7 @@ export default function AnalyticsPage() {
                 <div className="p-6">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">👥</span>
-                    <h3 className="text-xl font-bold">Traffic Metrics</h3>
+                    <h3 className="text-xl font-bold text-white">Traffic Metrics</h3>
                   </div>
                   <ul className="mt-4 space-y-2 text-sm text-white/75">
                     <li className="flex items-center gap-2">
@@ -130,7 +144,7 @@ export default function AnalyticsPage() {
                 <div className="p-6">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">🎯</span>
-                    <h3 className="text-xl font-bold">Engagement Metrics</h3>
+                    <h3 className="text-xl font-bold text-white">Engagement Metrics</h3>
                   </div>
                   <ul className="mt-4 space-y-2 text-sm text-white/75">
                     <li className="flex items-center gap-2">
@@ -164,7 +178,7 @@ export default function AnalyticsPage() {
                 <div className="p-6">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">💰</span>
-                    <h3 className="text-xl font-bold">Conversion Events</h3>
+                    <h3 className="text-xl font-bold text-white">Conversion Events</h3>
                   </div>
                   <ul className="mt-4 space-y-2 text-sm text-white/75">
                     <li className="flex items-center gap-2">
@@ -198,7 +212,7 @@ export default function AnalyticsPage() {
                 <div className="p-6">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">⚡</span>
-                    <h3 className="text-xl font-bold">Performance Metrics</h3>
+                    <h3 className="text-xl font-bold text-white">Performance Metrics</h3>
                   </div>
                   <ul className="mt-4 space-y-2 text-sm text-white/75">
                     <li className="flex items-center gap-2">
@@ -231,7 +245,7 @@ export default function AnalyticsPage() {
         {/* Custom Reports Setup */}
         <section className="mt-16">
           <Reveal>
-            <h2 className="mb-8 text-center font-serif text-3xl font-bold">Recommended Custom Reports</h2>
+            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-white">Recommended Custom Reports</h2>
           </Reveal>
 
           <div className="space-y-6">
@@ -314,14 +328,14 @@ export default function AnalyticsPage() {
           <Reveal>
             <GlassCard>
               <div className="p-8 text-center">
-                <h3 className="font-serif text-2xl font-bold">Need Help?</h3>
+                <h3 className="font-serif text-2xl font-bold text-white">Need Help?</h3>
                 <p className="mx-auto mt-2 max-w-2xl text-white/75">
                   Access detailed setup guides and documentation
                 </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                   <Link 
                     href="/" 
-                    className="rounded-full border border-white/20 bg-white/10 px-6 py-2 text-sm font-semibold transition hover:bg-white/20"
+                    className="rounded-full border border-white/20 bg-white/10 px-6 py-2 text-sm font-semibold text-white transition hover:bg-white/20"
                   >
                     ← Back to Site
                   </Link>
