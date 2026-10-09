@@ -1,5 +1,8 @@
 # Analytics operation and production handoff
 
+Current policy (9 October 2026): the automatic privacy banner has been removed. After a successful saved-preference lookup, visitors without a saved choice get Google Analytics enabled and advertising disabled. Saved choices and browser Global Privacy Control / Do Not Track signals take precedence. Failed lookups keep optional tracking off. Visitors can change choices in the footer’s Privacy preferences dialog; choices continue to use the existing Netlify Database storage. Google Ads and Meta still require advertising permission. This policy supersedes the historical consent/default notes below.
+
+
 The subsequent [Meta implementation guide](meta-analytics.md) documents the expanded Pixel events, consent controls, independent CAPI ledger, and additional purchase-verification requirements. Its Meta-specific details supersede the earlier baseline notes below.
 
 ## Audit (6 October 2026)

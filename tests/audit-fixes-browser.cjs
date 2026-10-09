@@ -40,13 +40,15 @@ const base = process.env.CCF_BASE_URL || "http://localhost:8889";
       });
       const page = await context.newPage();
       await page.goto(base);
-      await page.getByRole("heading", { name: "A little about privacy." }).waitFor();
-      assert.equal(await page.locator("script#google-tag, script#meta-pixel-library").count(), 0);
-      assert.equal(await page.evaluate(() => window.__google.filter(command => command[0] === "event").length), 0);
+      await page.waitForFunction(() => window.ccfPrivacyPreferences?.analytics === true);
+      assert.equal(await page.getByRole("heading", { name: "A little about privacy." }).count(), 0);
+      await page.locator("script#google-tag").waitFor({ state: "attached" });
+      assert.equal(await page.locator("script#meta-pixel-library").count(), 0);
       assert.equal(await page.evaluate(() => window.__meta.filter(command => command[0] === "track").length), 0);
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
-      await page.getByRole("button", { name: "Reject optional", exact: true }).first().click();
-      await page.getByRole("heading", { name: "A little about privacy." }).waitFor({ state: "hidden" });
+      await page.getByRole("button", { name: "Privacy preferences", exact: true }).click();
+      await page.getByRole("dialog").getByRole("button", { name: "Reject optional", exact: true }).click();
+      await page.getByRole("dialog").waitFor({ state: "hidden" });
       assert.deepEqual(preferences, { analytics: false, marketing: false });
       await page.reload();
       await page.waitForFunction(() => window.ccfPrivacyPreferences?.analytics === false);
@@ -98,7 +100,7 @@ const base = process.env.CCF_BASE_URL || "http://localhost:8889";
         assert.equal(await page.getByRole("button", { name: "Sign In", exact: true }).count(), 0);
       }
       await context.close();
-      console.log(`Audit browser checks passed at ${width}px: default denial, explicit choices, reload persistence, revocation, save failure, keyboard skip, and safe portal.`);
+      console.log(`Audit browser checks passed at ${width}px: default analytics without a banner, explicit choices, reload persistence, revocation, save failure, keyboard skip, and safe portal.`);
     }
 
     const context = await browser.newContext();

@@ -1,5 +1,8 @@
 # Meta measurement and operating guide
 
+Current policy (9 October 2026): the automatic privacy banner has been removed. After a successful saved-preference lookup, visitors without a saved choice get Google Analytics enabled and advertising disabled. Saved choices and browser Global Privacy Control / Do Not Track signals take precedence. Failed lookups keep optional tracking off. Visitors can change choices in the footer’s Privacy preferences dialog; choices continue to use the existing Netlify Database storage. Google Ads and Meta still require advertising permission. This policy supersedes the historical consent/default notes below.
+
+
 ## Production audit and deployment status
 
 On 6 October 2026, real Chromium visits to https://colorcocktailfactory.com at mobile and desktop widths found `window.fbq`, the library from connect.facebook.net, and the documented Pixel. The previous missing-Pixel finding was not reproducible. Both visits observed two initial PageView requests, including the old noscript image request. The production Netlify variable NEXT_PUBLIC_META_PIXEL_ID already matched the documented ID, was populated in the all context, and included build scope. No value was changed or copied into source. Account ownership and Events Manager settings were not accessible. No CAPI credentials or consent settings were present in the project environment audit.

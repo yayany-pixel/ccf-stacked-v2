@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { updateAnalyticsConsent } from "@/lib/analytics";
 import {
-  DENIED_PREFERENCES, OPEN_PRIVACY_EVENT, PRIVACY_EVENT,
+  DEFAULT_PREFERENCES, DENIED_PREFERENCES, OPEN_PRIVACY_EVENT, PRIVACY_EVENT,
   currentPrivacyPreferences, googleConsentState, parsePrivacyPreferences, privacySignalDenied,
   type PrivacyPreferences as Preferences,
 } from "@/lib/privacy";
@@ -17,7 +17,6 @@ function applyPreferences(preferences: Preferences) {
 }
 
 export default function PrivacyPreferences() {
-  const [banner, setBanner] = useState(false);
   const [choices, setChoices] = useState<Preferences>({ ...DENIED_PREFERENCES });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -36,18 +35,14 @@ export default function PrivacyPreferences() {
         if (!response.ok) throw new Error("unavailable");
         const payload = await response.json();
         if (!active || choiceVersion.current !== 0) return;
-        const saved = parsePrivacyPreferences(payload.preferences);
-        if (saved) {
-          const effective = privacySignalDenied() ? { ...DENIED_PREFERENCES } : saved;
-          setChoices(effective);
-          applyPreferences(effective);
-        } else {
-          setBanner(true);
-        }
+        const saved = parsePrivacyPreferences(payload.preferences) ?? (payload.preferences === null ? DEFAULT_PREFERENCES : null);
+        if (!saved) throw new Error("invalid_preferences");
+        const effective = privacySignalDenied() ? { ...DENIED_PREFERENCES } : saved;
+        setChoices(effective);
+        applyPreferences(effective);
       })
       .catch(() => {
         if (active && choiceVersion.current === 0) {
-          setBanner(true);
           setError("Your saved choices could not be loaded. Optional tracking stays off.");
         }
       })
@@ -57,7 +52,6 @@ export default function PrivacyPreferences() {
 
   useEffect(() => {
     const open = () => {
-      setError("");
       setChoices(currentPrivacyPreferences());
       if (!dialog.current?.open) dialog.current?.showModal();
     };
@@ -85,7 +79,6 @@ export default function PrivacyPreferences() {
       if (!saved) throw new Error("invalid_preferences");
       applyPreferences(saved);
       setChoices(saved);
-      setBanner(false);
       dialog.current?.close();
     } catch {
       setError("Your choices could not be saved. No additional tracking was enabled. Please try again.");
@@ -94,22 +87,10 @@ export default function PrivacyPreferences() {
     }
   }
 
-  const explanation = "Essential features stay on. With your permission, Google Analytics measures visits, and Google Ads and Meta measure advertising. Your choices are saved for 180 days using an essential preference cookie and an anonymous record.";
+  const explanation = "Essential features stay on. Google Analytics measures visits by default. You can turn analytics off below. Google Ads and Meta advertising tracking stays off unless you enable it. Your choices are saved for 180 days using an essential preference cookie and an anonymous record.";
 
   return (
     <>
-      {banner && <section className={styles.banner} aria-labelledby="privacy-banner-title">
-        <p className={styles.eyebrow}>Your visit. Your choice.</p>
-        <h2 id="privacy-banner-title">A little about privacy.</h2>
-        <p>{explanation}</p>
-        {signalDenied && <p>We respect your browser’s privacy signal. Optional tracking stays off.</p>}
-        <div className={styles.actions}>
-          <button type="button" disabled={saving} onClick={() => save(DENIED_PREFERENCES)}>Reject optional</button>
-          <button type="button" disabled={saving || signalDenied} onClick={() => save({ analytics: true, marketing: true })}>Accept optional</button>
-          <button type="button" disabled={saving} onClick={() => { setChoices(currentPrivacyPreferences()); dialog.current?.showModal(); }}>Customize</button>
-        </div>
-        {error && !dialog.current?.open && <p role="alert" className={styles.error}>{error}</p>}
-      </section>}
       <dialog ref={dialog} className={styles.dialog} aria-labelledby="privacy-dialog-title" aria-describedby="privacy-dialog-description" onCancel={event => { if (saving) event.preventDefault(); }}>
         <p className={styles.eyebrow}>Your visit. Your choice.</p>
         <h2 id="privacy-dialog-title">Privacy preferences</h2>
