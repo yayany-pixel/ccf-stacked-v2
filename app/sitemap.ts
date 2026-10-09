@@ -3,6 +3,7 @@ import { sections } from "@/lib/config";
 import { getAllActivitySlugs } from "@/lib/activities";
 import { blogPosts, getPostUpdatedAt } from "@/lib/blogPosts";
 import { getAllAuthors } from "@/lib/authors";
+import { COLLECTIONS } from "@/lib/collections";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://colorcocktailfactory.com";
@@ -104,6 +105,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5
   }));
 
+  // Collections pages - high priority for search discovery
+  const collectionsIndex: MetadataRoute.Sitemap = [
+    {
+      url: `${base}/collections`,
+      changeFrequency: "weekly",
+      priority: 0.95
+    }
+  ];
+
+  const collectionPages: MetadataRoute.Sitemap = COLLECTIONS.map((c) => ({
+    url: `${base}/collections/${c.slug}`,
+    changeFrequency: "weekly",
+    priority: 0.9
+  }));
+
   // Audience/customer-type landing pages - high priority (conversion pages)
   const audiencePages: MetadataRoute.Sitemap = [
     {
@@ -129,6 +145,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...giftCards,
     ...privateEvents,
     ...eventsPage,
+    ...collectionsIndex,
+    ...collectionPages,
     ...activitiesIndex,
     ...activityPages,
     ...cityActivityPages,

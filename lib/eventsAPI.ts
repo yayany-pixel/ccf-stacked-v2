@@ -56,16 +56,36 @@ export async function getAllEvents(daysAhead = 60): Promise<NormalizedEvent[]> {
   for (const slot of slots) {
     const item = classes.get(String(slot.appointmentTypeID));
     const start = new Date(slot.time);
-    if (!item || item.location === "unknown" || !Number.isFinite(start.getTime()) ||
+    if (!item || !Number.isFinite(start.getTime()) ||
         start <= now || start.getTime() > cutoff || slot.slotsAvailable <= 0) continue;
-    const studio = item.location === "online" ? null : STUDIO_LOCATIONS[item.location];
+
+    // Determine location by slot calendar when in-person, falling back to item location
+    let locationKey: "chicago" | "eugene" | "online" | "unknown" = item.location;
+    if (item.location !== "online") {
+      if (slot.calendarID === 13582962) {
+        locationKey = "eugene";
+      } else if (slot.calendarID === 12216179) {
+        locationKey = "chicago";
+      }
+    }
+    if (locationKey === "unknown") continue;
+
+    const studio = locationKey === "online" ? null : STUDIO_LOCATIONS[locationKey];
     const city = studio?.label ?? "Virtual";
     const slug = `acuity-${item.id}-${start.toISOString().slice(0, 10)}-${slot.time.replace(/\D/g, "").slice(8, 12)}`;
     const id = `${slug}-${slot.calendarID}`;
+
+    let title = item.title;
+    if (city === "Eugene") {
+      title = title.replace(/\s*-\s*Chicago$/i, "").trim();
+    } else if (city === "Chicago") {
+      title = title.replace(/\s*-\s*Eugene$/i, "").trim();
+    }
+
     // One public event per class, location and actual start time.
     const key = `${item.id}:${city}:${start.toISOString()}`;
     events.set(key, {
-      id, slug, source: "acuity", title: item.title, description: item.description,
+      id, slug, source: "acuity", title, description: item.description,
       startDate: start.toISOString(),
       endDate: new Date(start.getTime() + (Number(slot.duration) || item.durationMinutes || 90) * 60000).toISOString(),
       city, venueName: studio ? `Color Cocktail Factory — ${city}` : "Live online workshop",
@@ -73,7 +93,7 @@ export async function getAllEvents(daysAhead = 60): Promise<NormalizedEvent[]> {
       addressRegion: studio?.addressRegion ?? "", postalCode: studio?.postalCode ?? "", addressCountry: studio?.addressCountry ?? "",
       imageUrl: getClassPhoto(item.id)?.path ?? null, price: item.pricing.price, currency: "USD",
       bookingUrl: eventBookingUrl(item.id, slot.time, slot.calendarID),
-      category: eventCategory(item.title), status: "scheduled", lastUpdated: now.toISOString(),
+      category: eventCategory(title), status: "scheduled", lastUpdated: now.toISOString(),
     });
   }
   return [...events.values()].sort((a, b) => Date.parse(a.startDate) - Date.parse(b.startDate));
