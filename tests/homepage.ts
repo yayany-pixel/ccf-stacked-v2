@@ -24,8 +24,8 @@ const slots: PublicClassSlot[] = [
 const data = buildHomepageData(catalog, slots, now);
 const chicago = activitiesForCity(data.activities, "chicago");
 const eugene = activitiesForCity(data.activities, "eugene");
-assert.deepEqual(chicago.slice(0, 10).map(activity => activity.appointmentTypeId), [95588506, 79006071, 79006616, 95416771, 79186725, 79189013, 79182319, 79185767, 97020385, 79181599]);
-assert.deepEqual(eugene.slice(0, 3).map(activity => activity.appointmentTypeId), [96657402, 91935746, 93539343]);
+assert.deepEqual(chicago.slice(0, 10).map(activity => activity.appointmentTypeId), [79006616, 79006071, 95588506, 95416771, 79186725, 79189013, 79182319, 79185767, 97020385, 79181599]);
+assert.deepEqual(eugene.slice(0, 3).map(activity => activity.appointmentTypeId), [93539343, 91935746, 96657402]);
 assert.ok(eugene.some(activity => activity.appointmentTypeId === 89287658));
 assert.ok(!eugene.some(activity => activity.appointmentTypeId === 92719951));
 assert.ok(!eugene.some(activity => activity.city === "chicago"));
@@ -51,14 +51,14 @@ for (const activity of [...chicago, ...eugene]) {
 }
 assert.equal(priceLabel(chicago[1]), "$55 for two");
 assert.equal(priceLabel(eugene[1]), "$50 for two");
-assert.equal(priceLabel(chicago[0]), "$55 per ticket");
-assert.equal(chicago[0].nextAvailability, "2026-10-06T18:00:00-0500");
-assert.equal(eugene[0].nextAvailability, "2026-10-07T18:00:00-0700");
-assert.match(formatNextSession(chicago[0], now), /Oct 6.*6:00 PM CDT/);
-assert.match(formatNextSession(eugene[0], now), /Oct 7.*6:00 PM PDT/);
-assert.match(formatNextSession({ ...chicago[0], nextAvailability: "2026-11-01T06:30:00Z" }, now), /1:30 AM CDT/);
-assert.match(formatNextSession({ ...chicago[0], nextAvailability: "2026-11-01T07:30:00Z" }, now), /1:30 AM CST/);
-assert.equal(formatNextSession(chicago[0], new Date("2026-10-20")), "View upcoming dates");
+assert.equal(priceLabel(chicago[2]), "$55 per ticket");
+assert.equal(chicago[2].nextAvailability, "2026-10-06T18:00:00-0500");
+assert.equal(eugene[2].nextAvailability, "2026-10-07T18:00:00-0700");
+assert.match(formatNextSession(chicago[2], now), /Oct 6.*6:00 PM CDT/);
+assert.match(formatNextSession(eugene[2], now), /Oct 7.*6:00 PM PDT/);
+assert.match(formatNextSession({ ...chicago[2], nextAvailability: "2026-11-01T06:30:00Z" }, now), /1:30 AM CDT/);
+assert.match(formatNextSession({ ...chicago[2], nextAvailability: "2026-11-01T07:30:00Z" }, now), /1:30 AM CST/);
+assert.equal(formatNextSession(chicago[2], new Date("2026-10-20")), "View upcoming dates");
 const offline = buildHomepageData(null, null, now);
 assert.equal(activitiesForCity(offline.activities, "chicago")[0].bookingUrl, chicago[0].bookingUrl);
 assert.ok(offline.activities.every(activity => activity.currentPrice === null && activity.nextAvailability === null));
