@@ -2,6 +2,8 @@ export type PrivacyPreferences = { analytics: boolean; marketing: boolean };
 
 export const PRIVACY_EVENT = "ccf-privacy-consent";
 export const OPEN_PRIVACY_EVENT = "ccf-open-privacy";
+// Applied only after successfully checking for an existing saved choice.
+export const DEFAULT_PREFERENCES: PrivacyPreferences = { analytics: true, marketing: false };
 export const DENIED_PREFERENCES: PrivacyPreferences = { analytics: false, marketing: false };
 
 declare global {
