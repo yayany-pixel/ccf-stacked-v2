@@ -67,6 +67,11 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
         )}
       </div>
       <div className={styles.cardBody}>
+        <div className={styles.badgeRow}>
+          <span className={styles.badgeAcuity}>✓ Book Direct · No Fees</span>
+          {activity.byob && <span className={styles.badgeWeekend}>🥂 BYOB</span>}
+          {activity.beginnerFriendly && <span className={styles.badgePopular}>✨ First-Timer Friendly</span>}
+        </div>
         {activity.mode === "online" && <p className={styles.eyebrow}>Live Online · Join from home</p>}
         {activity.adultThemed && <p className={styles.eyebrow}>Adult-themed · {activity.ageRestriction ?? "Check age policy at booking"}</p>}
         <h2>{activity.title}</h2>

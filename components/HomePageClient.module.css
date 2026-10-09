@@ -35,6 +35,46 @@
 .intro h1 { font: 27px/1.15 Georgia, serif; letter-spacing: -.8px; }
 .intro h1 em { font-weight: normal; }
 .intro p { display: none; color: var(--muted); font-size: 14px; }
+.badgeRow { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.badgePopular {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #fdf0ed;
+  color: #a5402b;
+  border: 1px solid #f4c2ba;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  letter-spacing: .2px;
+}
+.badgeAcuity {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f0f4ea;
+  color: #395228;
+  border: 1px solid #c8d9b8;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  letter-spacing: .2px;
+}
+.badgeWeekend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #fef8eb;
+  color: #8c5d14;
+  border: 1px solid #f9e2b1;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  letter-spacing: .2px;
+}
 .feed { display: flex; flex-direction: column; gap: 24px; scroll-margin-top: 12px; }
 .card { background: #fffefa; border: 1px solid var(--line); border-radius: 13px; overflow: clip; scroll-margin-top: 16px; }
 .photo { min-width: 0; width: 100%; overflow: hidden; aspect-ratio: 4 / 3; position: relative; background: #eee8db; }

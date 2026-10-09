@@ -152,7 +152,7 @@ async function acuityFetch(path: string, revalidate: number): Promise<unknown> {
   if (!auth) throw new Error("acuity_not_configured");
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8000);
+  const timeout = setTimeout(() => controller.abort(), 20000);
   try {
     const res = await fetch(`${ACUITY_API}/${path}`, {
       headers: { Authorization: auth, Accept: "application/json" },

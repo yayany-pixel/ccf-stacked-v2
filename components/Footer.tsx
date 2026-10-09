@@ -74,6 +74,11 @@ export default function Footer() {
             <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-white/90">Quick Links</h3>
             <ul className="space-y-2 text-sm text-white/70">
               <li>
+                <Link href="/collections" className="hover:text-purple-300 transition">
+                  Class Collections
+                </Link>
+              </li>
+              <li>
                 <Link href="/activities" className="hover:text-purple-300 transition">
                   All Activities
                 </Link>
