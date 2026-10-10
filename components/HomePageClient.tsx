@@ -13,9 +13,36 @@ import { getCityByParam } from "@/lib/links";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { activitiesForCity, formatNextSession, priceLabel, HOMEPAGE_FILTERS, matchesHomepageFilter, type HomepageFilter } from "@/lib/homepage/data";
 import type { HomepageActivity, HomepageCity, HomepageData } from "@/lib/homepage/types";
+import { getActivityDetailBySlug } from "@/lib/activityRegistry";
 import styles from "./HomePageClient.module.css";
 import { HOMEPAGE_REVIEWS } from "@/lib/homepage/reviews";
 import { PRIVACY_EVENT } from "@/lib/privacy";
+
+function getActivityCardMeta(activity: HomepageActivity): {
+  availabilityLabel: string;
+  displayPrice: string;
+  detailUrl: string;
+} {
+  const slug = (activity.detailUrl ? activity.detailUrl.replace(/^\/activities\//, "") : "") || activity.key.replace(/^(chicago|eugene|online)-/, "");
+  const reg = getActivityDetailBySlug(slug);
+  if (reg) {
+    return {
+      availabilityLabel: reg.locationsOffered,
+      displayPrice: reg.ticketPriceDisplay,
+      detailUrl: `/activities/${reg.slug}`
+    };
+  }
+  let availabilityLabel = "Chicago & Eugene";
+  if (activity.mode === "online") availabilityLabel = "Live online";
+  else if (activity.city === "chicago") availabilityLabel = "Chicago only";
+  else if (activity.city === "eugene") availabilityLabel = "Eugene only";
+
+  return {
+    availabilityLabel,
+    displayPrice: priceLabel(activity),
+    detailUrl: activity.detailUrl || `/activities/${slug}`
+  };
+}
 
 function ActivityCard({ activity, position, listCity, first = false }: { activity: HomepageActivity; position: number; listCity: HomepageCity; first?: boolean }) {
   const [imageFailed, setImageFailed] = useState(false);
@@ -49,40 +76,50 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
     window.addEventListener(PRIVACY_EVENT,consentChanged);
     observer.observe(node); return ()=>{observer.disconnect();window.removeEventListener('ccf-meta-consent',consentChanged);window.removeEventListener(PRIVACY_EVENT,consentChanged);};
   },[listCity,activity.key,activity.currentPrice,position]);
-  if (!photo || !activity.bookingUrl) return null;
+  if (!photo) return null;
+
+  const cardMeta = getActivityCardMeta(activity);
+  const detailHref = cardMeta.detailUrl;
+
   return (
     <article ref={ref} onClick={event => {
       const target=event.target as HTMLElement;
       if (target.closest('[data-variant-booking]')) return;
-      const click_target=target.closest('summary') ? 'details' : target.closest('a') ? 'choose_date' : target.closest('h2') ? 'title' : target.closest('img') ? 'image' : 'card';
-      trackCardSelect({...tracking,click_target});
+      const click_target=target.closest('summary') ? 'details' : target.closest('a') ? 'explore_class_dates' : target.closest('h2') ? 'title' : target.closest('img') ? 'image' : 'card';
+      trackCardSelect({...tracking,click_target, link_url: detailHref});
     }} className={styles.card} data-activity={activity.key} data-appointment-id={activity.bookingVariantIds?.length === 1 || !activity.bookingVariantIds ? activity.appointmentTypeId : undefined}>
       <div className={styles.photo}>
         {imageFailed ? <p className={styles.imageError}>This photograph is temporarily unavailable.</p> : (
-          <Image src={photo.path} alt={photo.alt} width={photo.width} height={photo.height}
-            loader={props => classImageLoader({ ...props, width: Math.min(props.width, photo.width) })}
-            sizes="(min-width: 900px) 560px, (min-width: 680px) 640px, calc(100vw - 32px)"
-            priority={first} loading={first ? "eager" : "lazy"}
-            style={{ objectPosition: photo.focalPosition }} onError={() => setImageFailed(true)} />
+          <Link href={detailHref} className={styles.photoLink} aria-label={`Explore ${activity.title}`}>
+            <Image src={photo.path} alt={photo.alt} width={photo.width} height={photo.height}
+              loader={props => classImageLoader({ ...props, width: Math.min(props.width, photo.width) })}
+              sizes="(min-width: 900px) 560px, (min-width: 680px) 640px, calc(100vw - 32px)"
+              priority={first} loading={first ? "eager" : "lazy"}
+              style={{ objectPosition: photo.focalPosition }} onError={() => setImageFailed(true)} />
+          </Link>
         )}
       </div>
       <div className={styles.cardBody}>
         <div className={styles.badgeRow}>
+          <span className={styles.badgeAvailability}>{cardMeta.availabilityLabel}</span>
           {activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice && (
             <span className={styles.badgeSale}>⚡ Limited-Time Sale</span>
           )}
-          <span className={styles.badgeAcuity}>✓ Book Direct · No Fees</span>
           {activity.byob && <span className={styles.badgeWeekend}>🥂 BYOB</span>}
           {activity.beginnerFriendly && <span className={styles.badgePopular}>✨ First-Timer Friendly</span>}
         </div>
         {activity.mode === "online" && <p className={styles.eyebrow}>Live Online · Join from home</p>}
         {activity.adultThemed && <p className={styles.eyebrow}>Adult-themed · {activity.ageRestriction ?? "Check age policy at booking"}</p>}
-        <h2>{activity.title}</h2>
+        <h2>
+          <Link href={detailHref} className={styles.titleLink}>
+            {activity.title}
+          </Link>
+        </h2>
         <p className={styles.description}>{activity.description}</p>
         <div className={styles.facts} aria-live="polite">
           <p className={styles.price}>
             {activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice && activity.formerPrice.evidence && <del aria-label="Original price">${activity.formerPrice.amount} </del>}
-            {priceLabel(activity)}
+            {cardMeta.displayPrice}
           </p>
           <p className={styles.nextDate}>{formatNextSession(activity)}</p>
         </div>
@@ -92,29 +129,20 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
           {activity.beginnerFriendly && <p>Beginner-friendly</p>}
           {activity.byob && <p>BYOB · ages 21+ for alcohol</p>}
           {activity.ageRestriction && <p>{activity.ageRestriction}</p>}
-          {activity.listingDescription ? <p className={styles.listing}>{activity.listingDescription}</p> : !activity.bookingVariants && <p>Check the booking listing for included materials, what you make, and any finishing fees.</p>}
+          {activity.listingDescription ? <p className={styles.listing}>{activity.listingDescription}</p> : !activity.bookingVariants && <p>Check the workshop detail page for included materials, what you make, and location options.</p>}
           {activity.pickupNotes?.map(note => <p key={note}>{note}</p>)}
           {(activity.upcomingSessions?.length ?? 0) > 1 && <><h3>Upcoming sessions</h3><ul>{activity.upcomingSessions!.map(time => <li key={time}>{formatNextSession({...activity, nextAvailability: time}).replace(/^Next: /, "")}</li>)}</ul></>}
-          {activity.bookingVariants?.map(variant => <div className={styles.variant} key={variant.key}>
-            <h3>{variant.title}</h3><p>{variant.description}</p>
-            <p>
-              {variant.formerPrice && variant.currentPrice !== null && variant.formerPrice.amount > variant.currentPrice && (
-                <del aria-label="Original price">${variant.formerPrice.amount} </del>
-              )}
-              {priceLabel(variant)}{variant.durationMinutes ? ` · ${variant.durationMinutes} minutes` : ""}
-            </p>
-            <p>{formatNextSession(variant)}</p>
-            <a href={variant.bookingUrl!} data-variant-booking="true" data-analytics-booking="true" onClick={() => {
-              const parameters = {...tracking, class_name: variant.title, class_id: String(variant.appointmentTypeId), appointment_type_id: String(variant.appointmentTypeId), displayed_price: variant.currentPrice ?? undefined, click_target: "choose_date"};
-              trackCardSelect(parameters);
-              trackBeginCheckout({...parameters, booking_provider: "acuity", link_url: variant.bookingUrl!});
-            }}>Choose dates for {variant.title} →</a>
-          </div>)}
         </details>
-        <a href={activity.bookingUrl} data-analytics-booking="true" className={styles.bookButton}
-          aria-label={`Choose a date for ${activity.title} — ${activity.city === "online" ? "Live Online" : STUDIO_LOCATIONS[activity.city === "eugene" ? "eugene" : "chicago"].label}`}
-          onClick={() => trackBeginCheckout({ ...tracking, click_target: "choose_date", booking_provider: "acuity", link_url: activity.bookingUrl! })}
-        >Choose a date <span aria-hidden="true">→</span></a>
+        <Link
+          href={detailHref}
+          className={styles.bookButton}
+          aria-label={`Explore class & dates for ${activity.title}`}
+          onClick={() => {
+            trackCardSelect({ ...tracking, click_target: "explore_class_dates", link_url: detailHref });
+          }}
+        >
+          Explore Class &amp; Dates <span aria-hidden="true">→</span>
+        </Link>
       </div>
     </article>
   );
@@ -157,10 +185,6 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
     const restoreCity = () => {
       const query = new URLSearchParams(window.location.search).get("location");
       if (query === "chicago" || query === "eugene") { selectCity(query, true, "url_parameter"); return; }
-      try {
-        const stored = localStorage.getItem("preferredCity") ?? localStorage.getItem("ccf-city");
-        if (stored === "chicago" || stored === "eugene") selectCity(stored, false, "saved_preference");
-      } catch {}
     };
     if (!restored.current) { restored.current = true; restoreCity(); }
     setHydrated(true);

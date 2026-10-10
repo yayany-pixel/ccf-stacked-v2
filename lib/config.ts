@@ -176,13 +176,13 @@ export const sections: SectionConfig[] = [
     tags: ["Beginner-friendly", "Romantic", "Giftable", "Great photos", "Guided"],
     valueCards: [
       { label: "STYLE", title: "Playful + premium", body: "Glassy vibes, warm lighting, real craft." },
-      { label: "RESULT", title: "Take-home options", body: "Same-day pickup decorative, or fired & glazed from $5/item." },
+      { label: "RESULT", title: "Take-home options", body: "Same-day decorative, or optional bisque firing ($10) & glazing (from $20) ready in about 3 weeks." },
       { label: "VIBE", title: "Instant chemistry", body: "Clay is teamwork training." }
     ],
     booking: { term: "date%20night" },
     faqs: [
       { q: "Do we need experience?", a: "Nope. We teach from zero and keep it fun." },
-      { q: "Do we keep what we make?", a: "Same day pickup decorative only; fired & glazed finishing starts at $5/item." },
+      { q: "Do we keep what we make?", a: "Your ticket covers instruction, clay, and tools. Optional bisque firing is $10/piece and glazing is available from $20/piece (approx. three-week turnaround)." },
       { q: "What should we wear?", a: "Something comfy you don't mind getting a little clay on." },
       { q: "Is this good for a first date?", a: "Yes — the clay does the icebreaking for you." },
       { q: "Can we book with friends?", a: "Yes — couples' groups are a favorite." }
@@ -226,7 +226,7 @@ export const sections: SectionConfig[] = [
     booking: { term: "pottery" },
     faqs: [
       { q: "Do I need experience?", a: "No. This is designed for first-timers." },
-      { q: "Do I keep my piece?", a: "Same day decorative, or fired & glazed from $5/item." },
+      { q: "Do I keep my piece?", a: "Your ticket covers all instruction, clay, and tools. Optional bisque firing is $10/piece and glazing is available from $20/piece (approx. three-week turnaround)." },
       { q: "What will I learn?", a: "Clay prep, centering, pulling, basic shaping." },
       { q: "Is it messy?", a: "Yes — the fun kind. Wear comfy clothes." },
       { q: "Can I book with friends?", a: "Absolutely." }
@@ -273,7 +273,7 @@ export const sections: SectionConfig[] = [
     faqs: [
       { q: "Do I need experience?", a: "No — we teach step-by-step." },
       { q: "What can I make?", a: "Bowls, planters, vases, and rotating themed projects." },
-      { q: "Do you fire pieces?", a: "Optional firing + glazing from $5/item." },
+      { q: "Do you fire pieces?", a: "Optional bisque firing is $10/piece and glazing starts at $20/piece with approximate three-week turnaround." },
       { q: "Is it kid-friendly?", a: "Some sessions are; see Parent & Me for the best fit." },
       { q: "Is it good for groups?", a: "Yes — extremely." }
     ],
@@ -409,7 +409,7 @@ export const sections: SectionConfig[] = [
     ],
     booking: { term: "glass%20fusion" },
     faqs: [
-      { q: "Do we fire it in class?", a: "Usually firing happens after; pickup timing varies." },
+      { q: "Do we fire it in class?", a: "Glass pieces are fired in our specialized glass kiln after your session and are typically ready for pickup in about two weeks." },
       { q: "Is it safe?", a: "Yes — we handle kiln workflow and safety rules." },
       { q: "What can I make?", a: "Small plates, art panels, ornaments, and more." },
       { q: "Can groups book?", a: "Yes — it's great for celebrations." },
@@ -779,7 +779,7 @@ export const sections: SectionConfig[] = [
       { q: "What ages work best?", a: "It depends on the project; listings usually include age guidance." },
       { q: "Do adults participate?", a: "Yes — it's collaborative by design." },
       { q: "Is it messy?", a: "A little, but manageable. Aprons recommended." },
-      { q: "Do we keep the pieces?", a: "Same day decorative, or fired & glazed from $5/item." },
+      { q: "Do we keep the pieces?", a: "Your ticket covers instruction, clay, and tools. Optional bisque firing is $10/piece and glazing starts at $20/piece (approx. three-week turnaround)." },
       { q: "Can we book for birthdays?", a: "Yes — see Private Events for group options." }
     ],
     relatedSlugs: ["handbuilding", "gift-cards", "private-parties"]

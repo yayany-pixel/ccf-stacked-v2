@@ -125,7 +125,7 @@ export default function ActivitiesIndexPage() {
                         </p>
 
                       <div className="mt-4 flex flex-wrap gap-1.5">
-                        {activity.tags.slice(0, 3).map((tag) => (
+                        {activity.tags.slice(0, 3).map((tag: string) => (
                           <span
                             key={tag}
                             className="rounded-full bg-white/5 px-2 py-1 text-xs text-white/60"
@@ -180,7 +180,7 @@ export default function ActivitiesIndexPage() {
       {/* Bottom CTA Section */}
       <div className="border-t border-white/10 bg-gradient-to-br from-indigo-900/30 via-purple-900/20 to-pink-900/30 py-16">
         <div className="mx-auto max-w-4xl px-6 text-center">
-          <h2 className="font-serif text-3xl font-bold">Can't decide? We've got you.</h2>
+          <h2 className="font-serif text-3xl font-bold">Can&apos;t decide? We&apos;ve got you.</h2>
           <p className="mt-4 text-lg text-white/75">
             Grab a gift card and let them choose their own creative adventure, or book a private event for your whole crew.
           </p>

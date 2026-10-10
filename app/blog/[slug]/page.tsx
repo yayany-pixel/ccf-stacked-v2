@@ -1951,8 +1951,8 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
                   </p>
                   <p className="mt-4 leading-relaxed">
                     At the time of publication, Color Cocktail Factory&apos;s
-                    Chicago pottery pages list same-day decorative pickup or
-                    optional firing and glazing beginning at $5 per item. Check
+                    pottery pages list same-day decorative pickup or
+                    optional bisque firing ($10) and glazing (from $20). Check
                     the live{" "}
                     <Link href="/activities/date-night-wheel" className="text-purple-300 underline">
                       class page
