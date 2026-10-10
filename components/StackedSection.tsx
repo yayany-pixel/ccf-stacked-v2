@@ -1,3 +1,4 @@
+import legacyCityRoutes from "@/lib/legacy-city-routes.json";
 import Link from "next/link";
 import SectionBand from "@/components/SectionBand";
 import GlassCard from "@/components/ui/GlassCard";
@@ -151,7 +152,7 @@ export default function StackedSection({
                           {section.subClasses.map((subClass) => (
                             <Link
                               key={subClass.slug}
-                              href={`/${city.param}/${subClass.slug}`}
+                              href={(legacyCityRoutes as Record<string, string>)[`/${city.param}/${subClass.slug}`] || `/${city.param}/${subClass.slug}`}
                               className="rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-xs transition-all hover:border-purple-400/40 hover:bg-white/10 hover:scale-105"
                             >
                               {subClass.label}

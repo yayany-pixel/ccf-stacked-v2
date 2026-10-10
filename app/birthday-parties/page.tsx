@@ -56,9 +56,9 @@ const UPGRADES = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
-  title: "Adult Birthday Party Venue Chicago & Eugene",
+  title: "Creative Adult Birthday Parties",
   description:
-    "Private, guided art birthday experiences for adults in Chicago (Pilsen) and Eugene, OR. Pottery wheel, paint, mosaics, candles & more. BYOB. 21+ friendly. Milestone-worthy. $55–$95/person.",
+    "Celebrate an adult birthday with a private art workshop in Chicago or Eugene. Explore pottery, painting and mosaics, then request a group quote.",
   alternates: { canonical: "https://colorcocktailfactory.com/birthday-parties" },
   openGraph: {
     title: "Adult Birthday Party Venue | Creative Experiences — Color Cocktail Factory",

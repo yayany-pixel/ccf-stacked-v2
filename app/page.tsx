@@ -5,7 +5,7 @@ import { getHomepageData } from "@/lib/homepage/server";
 export const revalidate = 120;
 
 export const metadata: Metadata = {
-  title: { absolute: "Color Cocktail Factory | Pottery & Creative Workshops in Chicago & Eugene" },
+  title: { absolute: "Color Cocktail Factory | Pottery & Art Classes" },
   description: "Choose your location: Expert-guided pottery, glass fusion, mosaics & more in Chicago (Pilsen) and Eugene, Oregon. BYOB, beginner-friendly creative experiences.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/"

@@ -1,3 +1,4 @@
+import { BLOG_SEARCH_TITLES, buildSearchTitle, summarizeSearchDescription } from "@/lib/seo";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -28,8 +29,8 @@ export function generateMetadata(): Metadata {
   const author = getAuthorBySlug(post.authorSlug);
 
   return {
-    title: post.title,
-    description: post.description,
+    title: { absolute: buildSearchTitle(BLOG_SEARCH_TITLES[post.slug] || post.title) },
+    description: summarizeSearchDescription(post.description, post.title),
     keywords: post.keywords,
     authors: author
       ? [{ name: author.name, url: getAuthorUrl(author.slug) }]

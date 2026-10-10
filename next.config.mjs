@@ -1,3 +1,6 @@
+import { createRequire } from "node:module";
+const legacyCityRoutes = createRequire(import.meta.url)("./lib/legacy-city-routes.json");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // Netlify deploy URLs are build-time metadata and may be absent from the
@@ -41,6 +44,7 @@ const nextConfig = {
   // Preserve links from the former site with permanent, relevant destinations.
   async redirects() {
     return [
+      ...Object.entries(legacyCityRoutes).map(([source, destination]) => ({ source, destination, permanent: true })),
       { source: '/wheel-throwing', destination: '/activities/beginner-wheel', permanent: true },
       { source: '/datenight', destination: '/activities/date-night-wheel', permanent: true },
       { source: '/mosaics', destination: '/activities/mosaic', permanent: true },

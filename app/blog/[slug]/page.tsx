@@ -1,3 +1,4 @@
+import { BLOG_SEARCH_TITLES, buildSearchTitle, summarizeSearchDescription } from "@/lib/seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -55,8 +56,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const metaTitle = post.seoTitle && post.seoTitle.length > 0 ? post.seoTitle : post.title;
 
   return {
-    title: metaTitle,
-    description: post.description,
+    title: { absolute: buildSearchTitle(BLOG_SEARCH_TITLES[post.slug] || metaTitle) },
+    description: summarizeSearchDescription(post.description, post.title),
     keywords: post.keywords,
     authors: author
       ? [{ name: author.name, url: getAuthorUrl(author.slug) }]

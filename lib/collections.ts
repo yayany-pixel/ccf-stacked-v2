@@ -38,7 +38,7 @@ export const COLLECTIONS: EventCollection[] = [
     ],
     filterPattern: /beginner|for beginners|101|first spin|cup creations|matcha bowl|candle making|terrarium|mosaic|wine glass/i,
     seo: {
-      metaTitle: "Beginner Art & Pottery Classes in Chicago & Eugene | Color Cocktail Factory",
+      metaTitle: "Beginner Art & Pottery Classes | Color Cocktail Factory",
       metaDescription: "Looking for beginner-friendly creative classes? Explore wheel throwing, handbuilding pottery, mosaic lamps, terrariums, and candle making with hands-on coaching."
     }
   },
@@ -84,7 +84,7 @@ export const COLLECTIONS: EventCollection[] = [
     ],
     filterPattern: /date night|couples|for two|vip date night|mosaicvip/i,
     seo: {
-      metaTitle: "Creative Date Night Ideas & Classes in Chicago & Eugene | Color Cocktail Factory",
+      metaTitle: "Creative Date Night Classes | Color Cocktail Factory",
       metaDescription: "Plan a romantic date night in Chicago (Pilsen) or Eugene. Pottery date night on the wheel, candlelit mosaic art, wine glass painting, and couples terrariums."
     }
   },
@@ -107,7 +107,7 @@ export const COLLECTIONS: EventCollection[] = [
     ],
     filterPattern: /pottery|wheel|ceramic|handbuild|clay|cauldron|mug|bowl|vase|ashtray|plate/i,
     seo: {
-      metaTitle: "Pottery & Wheel Throwing Classes in Chicago & Eugene | Color Cocktail Factory",
+      metaTitle: "Pottery & Wheel Throwing | Color Cocktail Factory",
       metaDescription: "Master wheel throwing and ceramic handbuilding. Beginner wheel classes, matcha bowls, ceramic mugs, charcuterie boards, and clay sculpture."
     }
   },
@@ -130,7 +130,7 @@ export const COLLECTIONS: EventCollection[] = [
     ],
     filterPattern: /mosaic|lamp|turkish|glass fusion|stained glass|fused glass/i,
     seo: {
-      metaTitle: "Turkish Lamp & Glass Mosaic Classes in Chicago & Eugene | Color Cocktail Factory",
+      metaTitle: "Turkish Lamps & Glass Mosaics | Color Cocktail Factory",
       metaDescription: "Create custom Turkish mosaic lamps, stained glass art, and glass fusion pieces. Guided craft workshops in Chicago and Eugene."
     }
   },
@@ -153,7 +153,7 @@ export const COLLECTIONS: EventCollection[] = [
     ],
     filterPattern: /bonsai|terrarium|candle|aroma|soap|bath/i,
     seo: {
-      metaTitle: "Bonsai, Terrarium & Candle Making Classes | Color Cocktail Factory",
+      metaTitle: "Bonsai, Terrariums & Candles | Color Cocktail Factory",
       metaDescription: "Hands-on botanical and aroma workshops. Style your own bonsai tree, construct a miniature glass terrarium, or pour custom scented soy candles."
     }
   }

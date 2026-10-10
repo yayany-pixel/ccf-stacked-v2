@@ -5,8 +5,8 @@ import { sections } from "@/lib/config";
 import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 
 export const metadata: Metadata = {
-  title: "Bachelorette Party Workshops | Creative Events in Chicago & Eugene",
-  description: "Make your bachelorette party unforgettable with hands-on pottery, mosaics, glass fusion & more! BYOB friendly, Instagram-worthy, and totally unique. Chicago & Eugene locations.",
+  title: "Bachelorette Party Workshops",
+  description: "Plan a creative bachelorette party in Chicago or Eugene. Explore pottery, mosaics and glass art, then request workshop options and available dates.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/bachelorette-parties"
   },

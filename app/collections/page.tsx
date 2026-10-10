@@ -7,8 +7,8 @@ import { COLLECTIONS } from "@/lib/collections";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 
 export const metadata: Metadata = {
-  title: { absolute: "Class Collections & Curated Experiences | Color Cocktail Factory" },
-  description: "Browse our curated workshop collections: Beginners, Live Online, Date Night, Pottery & Wheel Throwing, Turkish Glass Lamps, and Botanical & Scent Crafts in Chicago & Eugene.",
+  title: { absolute: "Workshop Collections | Color Cocktail Factory" },
+  description: "Browse pottery, online art, date night, glass, bonsai and candle-making collections. Find creative workshops in Chicago and Eugene.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/collections"
   },

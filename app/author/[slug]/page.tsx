@@ -1,3 +1,4 @@
+import { summarizeSearchDescription } from "@/lib/seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -30,8 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = getAuthorUrl(author.slug);
 
   return {
-    title,
-    description,
+    title: `${author.name} — Artist & Potter`,
+    description: summarizeSearchDescription(description, `Read posts by ${author.name} on the Color Cocktail Factory blog.`),
     alternates: { canonical: url },
     openGraph: {
       title,
