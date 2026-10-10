@@ -102,7 +102,7 @@ export const COLLECTIONS: EventCollection[] = [
     benefits: [
       "Individual wheel stations with dedicated instructor feedback",
       "Professional non-toxic ceramic clay, tools, and colored glazes",
-      "Kiln firing included with food-safe glaze finishes",
+      "Optional kiln firing and glazing service for durable food-safe finishes",
       "Both single-session intro workshops and open studio options"
     ],
     filterPattern: /pottery|wheel|ceramic|handbuild|clay|cauldron|mug|bowl|vase|ashtray|plate/i,

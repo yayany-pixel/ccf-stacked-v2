@@ -1,4 +1,5 @@
 import { sections, type SectionConfig } from "@/lib/config";
+import { getAllActivitySlugs as getRegistrySlugs, getActivityDetailBySlug, getAllActivityDetails, type ActivityDetail } from "@/lib/activityRegistry";
 
 /**
  * Activity categorization by department/room
@@ -110,23 +111,49 @@ export function getCategoryForSection(section: SectionConfig): CategoryKey {
  * Get all activities grouped by category
  */
 export function getActivitiesByCategory() {
-  const grouped = new Map<CategoryKey, SectionConfig[]>();
+  const grouped = new Map<CategoryKey, any[]>();
   
   // Initialize all categories
   Object.keys(ACTIVITY_CATEGORIES).forEach(key => {
     grouped.set(key as CategoryKey, []);
   });
   
+  const seenSlugs = new Set<string>();
+
   // Group sections by category
   sections.forEach(section => {
-    // Skip duplicate private events entry
-    if (section.id === "private" && grouped.get("special")?.some(s => s.id === "private")) {
-      return;
-    }
+    if (seenSlugs.has(section.slug)) return;
+    seenSlugs.add(section.slug);
     
     const category = getCategoryForSection(section);
     const existing = grouped.get(category) || [];
     grouped.set(category, [...existing, section]);
+  });
+
+  // Include active distinct workshops from registry
+  const registryActivities = getAllActivityDetails();
+  registryActivities.forEach(detail => {
+    if (seenSlugs.has(detail.slug)) return;
+    seenSlugs.add(detail.slug);
+
+    const category = (detail.category in ACTIVITY_CATEGORIES ? detail.category : "mud-room") as CategoryKey;
+    const compatibleItem = {
+      id: detail.slug,
+      anchorId: detail.slug,
+      navLabel: detail.navLabel,
+      slug: detail.slug,
+      badge: detail.categoryLabel,
+      heroTitle: detail.title,
+      heroDescription: detail.shortDescription || detail.heroDescription,
+      tags: detail.tags,
+      schedulePill: detail.locationsOffered,
+      primaryCta: { label: "Explore Class & Dates", kind: "detail" },
+      secondaryCta: { label: "Details", kind: "detail" },
+      valueCards: detail.valueCards,
+      faqs: detail.faqs,
+    };
+    const existing = grouped.get(category) || [];
+    grouped.set(category, [...existing, compatibleItem]);
   });
   
   return grouped;
@@ -181,14 +208,11 @@ export function getActivityBySlug(slug: string): SectionConfig | undefined {
  * Get all activity slugs (for static generation)
  */
 export function getAllActivitySlugs(): string[] {
-  // Remove duplicates
-  const unique = new Map<string, SectionConfig>();
-  sections.forEach(s => {
-    if (!unique.has(s.slug)) {
-      unique.set(s.slug, s);
-    }
-  });
-  return Array.from(unique.keys());
+  // Combine registry slugs and sections slugs
+  const allSlugs = new Set<string>();
+  getRegistrySlugs().forEach(slug => allSlugs.add(slug));
+  sections.forEach(s => allSlugs.add(s.slug));
+  return Array.from(allSlugs);
 }
 
 /**

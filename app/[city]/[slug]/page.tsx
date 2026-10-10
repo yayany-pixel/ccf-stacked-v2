@@ -8,6 +8,7 @@ import TagPill from "@/components/ui/TagPill";
 import ButtonPill from "@/components/ui/ButtonPill";
 import BookingLink from "@/components/BookingLink";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
+import PotteryFinishingSection from "@/components/PotteryFinishingSection";
 import { sections, type SectionConfig } from "@/lib/config";
 import { cities, getCityByParam, buildBookingLink } from "@/lib/links";
 import { buildActivityMetadata } from "@/lib/seo";
@@ -200,6 +201,12 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
           )
         }}
       />
+
+      {["beginner-wheel", "date-night-wheel", "handbuilding"].includes(section.slug) && (
+        <div className="mx-auto max-w-6xl px-6 py-6">
+          <PotteryFinishingSection />
+        </div>
+      )}
 
       <div className="px-6 pb-16">
         <div className="mx-auto max-w-6xl">

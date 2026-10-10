@@ -1,41 +1,30 @@
 import MetaActivityView from "@/components/MetaActivityView";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import GlassCard from "@/components/ui/GlassCard";
-import TagPill from "@/components/ui/TagPill";
-import ButtonPill from "@/components/ui/ButtonPill";
-import Reveal from "@/components/motion/Reveal";
-import { 
-  getActivityBySlug, 
-  getAllActivitySlugs, 
-  getRelatedActivities,
-  getCategoryForSection,
-  ACTIVITY_CATEGORIES,
-  getLinkAnchorText
-} from "@/lib/activities";
-import { cities, buildBookingLink } from "@/lib/links";
-import type { City } from "@/lib/config";
+import ActivityDetailView from "@/components/ActivityDetailView";
+import {
+  getActivityDetailBySlug,
+  getAllActivitySlugs,
+  getAllActivityDetails,
+  type ActivityDetail
+} from "@/lib/activityRegistry";
+import { STUDIO_LOCATIONS } from "@/lib/locations";
 
-// Generate static params for all activities
 export async function generateStaticParams() {
   const slugs = getAllActivitySlugs();
-  return slugs.map((slug) => ({
-    slug
-  }));
+  return slugs.map((slug) => ({ slug }));
 }
 
-// Generate metadata for SEO
 export async function generateMetadata({
   params
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const activity = getActivityBySlug(params.slug);
-  
+  const activity = getActivityDetailBySlug(params.slug);
+
   if (!activity) {
     return {
-      title: "Activity Not Found",
+      title: "Activity Not Found | Color Cocktail Factory",
       description: "This activity could not be found."
     };
   }
@@ -45,7 +34,7 @@ export async function generateMetadata({
   const url = `https://colorcocktailfactory.com/activities/${activity.slug}`;
 
   return {
-    title: activity.heroTitle,
+    title,
     description,
     alternates: {
       canonical: url
@@ -55,26 +44,30 @@ export async function generateMetadata({
       description,
       url,
       type: "website",
-      images: ["/og-image.jpg"]
+      images: [activity.image.path || "/og-image.jpg"]
     },
     twitter: {
       card: "summary_large_image",
       title,
-      description
+      description,
+      images: [activity.image.path || "/og-image.jpg"]
     }
   };
 }
 
 export default function ActivityPage({ params }: { params: { slug: string } }) {
-  const activity = getActivityBySlug(params.slug);
-  
+  const activity = getActivityDetailBySlug(params.slug);
+
   if (!activity) {
     notFound();
   }
 
-  const relatedActivities = getRelatedActivities(activity, 5);
-  const category = getCategoryForSection(activity);
-  const categoryInfo = ACTIVITY_CATEGORIES[category];
+  // Get related activities from same or other categories
+  const allActivities = getAllActivityDetails();
+  const relatedActivities = allActivities
+    .filter((a) => a.slug !== activity.slug)
+    .sort((a, b) => (a.category === activity.category ? -1 : 1))
+    .slice(0, 5);
 
   // JSON-LD structured data
   const jsonLd = {
@@ -82,7 +75,7 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
     "@graph": [
       {
         "@type": "Service",
-        "name": activity.heroTitle,
+        "name": activity.title,
         "description": activity.heroDescription,
         "provider": {
           "@type": "LocalBusiness",
@@ -91,24 +84,24 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
           "address": [
             {
               "@type": "PostalAddress",
-              "streetAddress": "1142 W. 18th Street",
-              "addressLocality": "Chicago",
-              "addressRegion": "IL",
-              "postalCode": "60608",
+              "streetAddress": STUDIO_LOCATIONS.chicago.streetAddress,
+              "addressLocality": STUDIO_LOCATIONS.chicago.addressLocality,
+              "addressRegion": STUDIO_LOCATIONS.chicago.addressRegion,
+              "postalCode": STUDIO_LOCATIONS.chicago.postalCode,
               "addressCountry": "US"
             },
             {
               "@type": "PostalAddress",
-              "streetAddress": "3295 Cross Street",
-              "addressLocality": "Eugene",
-              "addressRegion": "OR",
-              "postalCode": "97402",
+              "streetAddress": STUDIO_LOCATIONS.eugene.streetAddress,
+              "addressLocality": STUDIO_LOCATIONS.eugene.addressLocality,
+              "addressRegion": STUDIO_LOCATIONS.eugene.addressRegion,
+              "postalCode": STUDIO_LOCATIONS.eugene.postalCode,
               "addressCountry": "US"
             }
           ],
           "telephone": "+1-312-881-9929"
         },
-        "category": categoryInfo.label,
+        "category": activity.categoryLabel,
         "offers": {
           "@type": "Offer",
           "availability": "https://schema.org/InStock",
@@ -117,7 +110,7 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
       },
       {
         "@type": "FAQPage",
-        "mainEntity": activity.faqs.map(faq => ({
+        "mainEntity": activity.faqs.map((faq) => ({
           "@type": "Question",
           "name": faq.q,
           "acceptedAnswer": {
@@ -144,7 +137,7 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
           {
             "@type": "ListItem",
             "position": 3,
-            "name": activity.heroTitle,
+            "name": activity.title,
             "item": `https://colorcocktailfactory.com/activities/${activity.slug}`
           }
         ]
@@ -158,208 +151,12 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-
       <main id="main-content" tabIndex={-1} className="min-h-screen">
-        <MetaActivityView id={`activity:${activity.slug}`} name={activity.heroTitle} />
-        {/* Breadcrumb Navigation */}
-        <nav className="border-b border-white/10 bg-black/20 px-6 py-3">
-          <div className="mx-auto max-w-7xl">
-            <ol className="flex items-center gap-2 text-sm text-white/60">
-              <li>
-                <Link href="/" className="hover:text-white">Home</Link>
-              </li>
-              <li>→</li>
-              <li>
-                <Link href="/activities" className="hover:text-white">Activities</Link>
-              </li>
-              <li>→</li>
-              <li className="text-white/90">{activity.navLabel}</li>
-            </ol>
-          </div>
-        </nav>
-
-        {/* Hero Section */}
-        <div className={`relative overflow-hidden ${activity.overlayClass}`}>
-          <div className="absolute inset-0  opacity-20" />
-          <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-24">
-            <div className="mx-auto max-w-3xl">
-              <div className="flex flex-wrap items-center gap-2">
-                <TagPill>{categoryInfo.icon} {categoryInfo.label}</TagPill>
-                {activity.schedulePill && <TagPill>{activity.schedulePill}</TagPill>}
-              </div>
-              
-              <h1 className="mt-4 font-serif text-4xl font-bold tracking-tight sm:text-5xl">
-                {activity.heroTitle}
-              </h1>
-              
-              <p className="mt-6 text-lg leading-8 text-white/90">
-                {activity.heroDescription}
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {activity.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-white/80"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* City-specific booking CTAs */}
-              <div className="mt-10 flex flex-wrap gap-4">
-                {cities.map((city: City) => {
-                  const bookingUrl = activity.booking?.customUrl || buildBookingLink(city, activity);
-                  return (
-                    <ButtonPill key={city.param} href={bookingUrl} variant="primary">
-                      Book in {city.label}
-                    </ButtonPill>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="mx-auto max-w-7xl px-6 py-16">
-          <div className="grid gap-12 lg:grid-cols-3">
-            {/* Left Column - Main Content */}
-            <div className="lg:col-span-2">
-              {/* What You'll Do / Value Cards */}
-              <section className="mb-12">
-                <h2 className="font-serif text-2xl font-bold">What Makes It Great</h2>
-                <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                  {activity.valueCards.map((card, idx) => (
-                    <GlassCard key={idx} className="p-4">
-                      <div className="text-xs font-semibold uppercase tracking-wide text-white/50">
-                        {card.label}
-                      </div>
-                      <h3 className="mt-2 font-serif text-lg font-semibold">{card.title}</h3>
-                      <p className="mt-1 text-sm text-white/70">{card.body}</p>
-                    </GlassCard>
-                  ))}
-                </div>
-              </section>
-
-              {/* Schedule */}
-              {activity.scheduleRows.length > 0 && (
-                <section className="mb-12">
-                  <h2 className="font-serif text-2xl font-bold">{activity.scheduleTitle}</h2>
-                  <p className="mt-1 text-sm text-white/60">{activity.scheduleLabel}</p>
-                  <GlassCard className="mt-4 overflow-hidden">
-                    <div className="divide-y divide-white/10">
-                      {activity.scheduleRows.map((row, idx) => (
-                        <div key={idx} className="flex items-center justify-between p-4">
-                          <div>
-                            <div className="font-semibold">{row.time}</div>
-                            {row.note && (
-                              <div className="mt-0.5 text-sm text-white/60">{row.note}</div>
-                            )}
-                          </div>
-                          {row.href && (
-                            <ButtonPill href={row.href} variant="secondary">
-                              Book
-                            </ButtonPill>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </GlassCard>
-                  <p className="mt-3 text-sm text-white/60">
-                    Check the calendar for current dates and times.
-                  </p>
-                </section>
-              )}
-
-              {/* FAQs */}
-              <section className="mb-12">
-                <h2 className="font-serif text-2xl font-bold">Frequently Asked Questions</h2>
-                <div className="mt-6 space-y-4">
-                  {activity.faqs.map((faq, idx) => (
-                    <GlassCard key={idx} className="p-5">
-                      <h3 className="font-semibold text-white">{faq.q}</h3>
-                      <p className="mt-2 text-sm leading-relaxed text-white/75">{faq.a}</p>
-                    </GlassCard>
-                  ))}
-                </div>
-              </section>
-
-              {/* Internal Links - Contextual */}
-              <section className="mb-12">
-                <GlassCard className="p-6">
-                  <h3 className="font-semibold">More Ways to Create</h3>
-                  <p className="mt-2 text-sm text-white/70">
-                    Looking for something different? Check out our{" "}
-                    <Link href="/gift-cards" className="font-semibold text-white underline decoration-white/30 underline-offset-2 hover:decoration-white">
-                      gift cards
-                    </Link>{" "}
-                    (perfect for any occasion) or plan a{" "}
-                    <Link href="/activities/private-parties" className="font-semibold text-white underline decoration-white/30 underline-offset-2 hover:decoration-white">
-                      private event
-                    </Link>{" "}
-                    for your team or celebration.
-                  </p>
-                  <p className="mt-3 text-sm text-white/70">
-                    Browse all our{" "}
-                    <Link href="/activities" className="font-semibold text-white underline decoration-white/30 underline-offset-2 hover:decoration-white">
-                      classes and workshops
-                    </Link>{" "}
-                    to explore pottery, glass, nature crafts, and more.
-                  </p>
-                </GlassCard>
-              </section>
-            </div>
-
-            {/* Right Column - Related Activities */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-24">
-                <h3 className="font-serif text-xl font-bold">Related Activities</h3>
-                <p className="mt-1 text-sm text-white/60">You might also enjoy</p>
-                
-                <div className="mt-6 space-y-3">
-                  {relatedActivities.map((related) => (
-                    <Link
-                      key={related.slug}
-                      href={`/activities/${related.slug}`}
-                      className="group block"
-                    >
-                      <GlassCard className="p-4 transition-all hover:border-white/25 hover:bg-white/10">
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1">
-                            <div className="text-xs font-semibold uppercase tracking-wide text-white/50">
-                              {related.badge.split(" · ")[0]}
-                            </div>
-                            <h4 className="mt-1 text-sm font-semibold leading-tight group-hover:text-white">
-                              {related.navLabel}
-                            </h4>
-                            <p className="mt-1 text-xs text-white/60 line-clamp-2">
-                              {related.heroDescription}
-                            </p>
-                          </div>
-                          <span className="text-lg opacity-0 transition-opacity group-hover:opacity-100">
-                            →
-                          </span>
-                        </div>
-                      </GlassCard>
-                    </Link>
-                  ))}
-                </div>
-
-                {/* Category Link */}
-                <div className="mt-6">
-                  <Link
-                    href={`/activities#${category}`}
-                    className="block rounded-2xl border border-white/15 bg-white/5 p-4 text-center text-sm font-semibold hover:bg-white/10"
-                  >
-                    View all {categoryInfo.label} →
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <MetaActivityView id={`activity:${activity.slug}`} name={activity.title} />
+        <ActivityDetailView
+          activity={activity}
+          relatedActivities={relatedActivities}
+        />
       </main>
     </>
   );

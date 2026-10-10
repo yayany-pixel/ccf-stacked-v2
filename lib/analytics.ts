@@ -171,6 +171,7 @@ export interface CardTrackingParams {
   batch_number?: number;
   click_target?: string;
   placement?: string;
+  link_url?: string;
 }
 export interface BookingTrackingParams extends CardTrackingParams {
   link_url: string;

@@ -117,7 +117,10 @@ const results = process.env.CCF_BROWSER_SKIP_VIEWPORTS
     const rendered = await page.locator('[data-activity]').evaluateAll(cards => cards.map(card => ({ key: card.dataset.activity, href: card.querySelector('a').href, image: card.querySelector('img')?.getAttribute('alt') })));
     assert.equal(new Set(rendered.map(card => card.key)).size, rendered.length);
     assert.deepEqual(rendered.map(card => card.key), expected(city).map(activity => activity.key));
-    for (const card of rendered) assert.equal(card.href, manifest.find(activity => activity.key === card.key).bookingUrl);
+    for (const card of rendered) {
+      const act = manifest.find(activity => activity.key === card.key);
+      assert.equal(new URL(card.href).pathname, act.detailUrl);
+    }
     results.push({ check: 'all batches and city switching', city, cards: rendered.length, passed: true });
   }
   await page.getByRole('button', { name: 'Eugene', exact: true }).click();
