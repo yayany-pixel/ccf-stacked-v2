@@ -74,8 +74,9 @@ const getEugeneBeginnerWheelSection = (): SectionConfig => {
       { label: "Sat Oct 17 · 7:00 PM · Matcha Bowl", url: "https://colorcocktailfactory.as.me/eugenewheelthrowing" },
     ],
     subClasses: [
-      { label: "Matcha Bowl", slug: "beginner-wheel" },
-      { label: "Cup Creations", slug: "beginner-wheel" },
+      { label: "Cup Creations", slug: "cup-creations" },
+      { label: "Matcha Bowl", slug: "matcha-bowl" },
+      { label: "Wheel Throwing", slug: "beginner-wheel" },
     ],
   };
 };

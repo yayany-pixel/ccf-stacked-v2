@@ -202,16 +202,50 @@ const etcGroup: SectionConfig = {
   ]
 };
 
+// Beginner Wheel Throwing (Cup Creations, Matcha Bowl, Vase Making)
+const getChicagoBeginnerWheelSection = (): SectionConfig => {
+  const base = getBaseSection("beginner-wheel")!;
+  return {
+    ...base,
+    scheduleLabel: "BEGINNER WORKSHOP",
+    scheduleTitle: "Wheel Throwing for Beginners",
+    schedulePill: "POTTERY",
+    scheduleRows: [
+      { time: "Evenings & weekends · Daily slots", note: "$25 / ticket · Cup Creations & Matcha Bowls" },
+    ],
+    heroTitle: "Wheel Throwing for Beginners",
+    heroDescription:
+      "Your first spin on the wheel. Learn centering, pulling, and shaping with hands-on coaching in Chicago. Create functional cups, bowls, and vases.",
+    bookingLinks: {
+      acuity: "https://colorcocktailfactory.as.me/?appointmentType=79006616",
+    },
+    upcomingTimes: [
+      { label: "Sat · 2:30 PM · Wheel Throwing for Beginners", url: "https://colorcocktailfactory.as.me/?appointmentType=79006616" },
+      { label: "Wed · 5:30 PM · Wheel Throwing for Beginners", url: "https://colorcocktailfactory.as.me/?appointmentType=79006616" },
+      { label: "Fri · 7:30 PM · Wheel Throwing for Beginners", url: "https://colorcocktailfactory.as.me/?appointmentType=79006616" },
+      { label: "Thu · 6:00 PM · Cup Creations", url: "https://colorcocktailfactory.as.me/?appointmentType=94782668" },
+      { label: "Sun · 2:00 PM · Matcha Bowl", url: "https://colorcocktailfactory.as.me/?appointmentType=94782793" },
+    ],
+    subClasses: [
+      { label: "Cup Creations", slug: "cup-creations" },
+      { label: "Matcha Bowl", slug: "matcha-bowl" },
+      { label: "Vase Making", slug: "wheel-vase" },
+      { label: "Wheel Throwing", slug: "beginner-wheel" },
+    ],
+  };
+};
+
 /**
  * Chicago-specific section order
  */
 export const chicagoSections: SectionConfig[] = [
-  getBaseSection("private")!,       // 1. Private Party
-  getBaseSection("date-night")!,    // 2. Date Night
-  getBaseSection("bonsai")!,        // 3. Bonsai
-  getBaseSection("turkish")!,       // 4. Turkish Mosaic Lamp
-  handbuildingGroup,                // 5. Handbuilding Pottery (with sub-classes)
-  pigmentLabGroup,                  // 6. Pigment Lab (with sub-classes)
-  aromaGroup,                       // 7. Aroma (with sub-classes)
-  etcGroup                          // 8. Etc (with sub-classes)
+  getBaseSection("private")!,          // 1. Private Party
+  getBaseSection("date-night")!,       // 2. Date Night
+  getChicagoBeginnerWheelSection(),    // 3. Beginner Wheel Throwing
+  getBaseSection("bonsai")!,           // 4. Bonsai
+  getBaseSection("turkish")!,          // 5. Turkish Mosaic Lamp
+  handbuildingGroup,                   // 6. Handbuilding Pottery (with sub-classes)
+  pigmentLabGroup,                     // 7. Pigment Lab (with sub-classes)
+  aromaGroup,                          // 8. Aroma (with sub-classes)
+  etcGroup                             // 9. Etc (with sub-classes)
 ].filter(Boolean); // Filter out any undefined sections
