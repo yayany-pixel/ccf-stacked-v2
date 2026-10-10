@@ -13,7 +13,6 @@ import { getCityByParam } from "@/lib/links";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { activitiesForCity, formatNextSession, priceLabel, HOMEPAGE_FILTERS, matchesHomepageFilter, type HomepageFilter } from "@/lib/homepage/data";
 import type { HomepageActivity, HomepageCity, HomepageData } from "@/lib/homepage/types";
-import { getActivityDetailBySlug } from "@/lib/activityRegistry";
 import styles from "./HomePageClient.module.css";
 import { HOMEPAGE_REVIEWS } from "@/lib/homepage/reviews";
 import { PRIVACY_EVENT } from "@/lib/privacy";
@@ -23,13 +22,9 @@ function getActivityCardMeta(activity: HomepageActivity): {
   detailUrl: string;
 } {
   const slug = (activity.detailUrl ? activity.detailUrl.replace(/^\/activities\//, "") : "") || activity.key.replace(/^(chicago|eugene|online)-/, "");
-  const reg = getActivityDetailBySlug(slug);
-
-  // Authoritative customer-facing price must match verified booking ticket
-  const displayPrice = activity.currentPrice !== null ? priceLabel(activity) : (reg?.ticketPriceDisplay ?? "See price at checkout");
 
   return {
-    displayPrice,
+    displayPrice: priceLabel(activity),
     detailUrl: activity.detailUrl || `/activities/${slug}`
   };
 }
@@ -121,6 +116,54 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
           {activity.listingDescription ? <p className={styles.listing}>{activity.listingDescription}</p> : !activity.bookingVariants && <p>Check the workshop detail page for included materials, what you make, and location options.</p>}
           {activity.pickupNotes?.map(note => <p key={note}>{note}</p>)}
           {(activity.upcomingSessions?.length ?? 0) > 1 && <><h3>Upcoming sessions</h3><ul>{activity.upcomingSessions!.map(time => <li key={time}>{formatNextSession({...activity, nextAvailability: time}).replace(/^Next: /, "")}</li>)}</ul></>}
+          {activity.bookingVariants && activity.bookingVariants.length > 1 && (
+            <div>
+              <h3>Available styles &amp; pricing</h3>
+              {activity.bookingVariants.map(variant => {
+                const variantLabel =
+                  variant.appointmentTypeId === 95416771
+                    ? "Table Lamp"
+                    : variant.appointmentTypeId === 79374537
+                    ? "Hanging Lamp"
+                    : variant.appointmentTypeId === 95894050
+                    ? "Date Night for Two"
+                    : variant.title.replace(/^chicago\s*-\s*/i, "").replace(/\s*-\s*Chicago$/i, "");
+                const bookingUrl = variant.bookingUrl ?? `https://colorcocktailfactory.as.me/?appointmentType=${variant.appointmentTypeId}`;
+                return (
+                  <div key={variant.appointmentTypeId} className={styles.variant}>
+                    <a
+                      href={bookingUrl}
+                      data-variant-booking=""
+                      onClick={() => {
+                        const vTracking = {
+                          ...tracking,
+                          class_name: variant.title,
+                          class_id: String(variant.appointmentTypeId),
+                          appointment_type_id: String(variant.appointmentTypeId),
+                          displayed_price: variant.currentPrice ?? undefined,
+                          click_target: "variant_booking",
+                          link_url: bookingUrl,
+                        };
+                        trackCardSelect(vTracking);
+                        trackBeginCheckout({
+                          city: listCity,
+                          class_name: variant.title,
+                          class_id: String(variant.appointmentTypeId),
+                          appointment_type_id: String(variant.appointmentTypeId),
+                          link_url: bookingUrl,
+                          displayed_price: variant.currentPrice ?? undefined,
+                          click_target: "variant_booking",
+                          booking_provider: "acuity",
+                        });
+                      }}
+                    >
+                      {variantLabel} — {priceLabel(variant)} →
+                    </a>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </details>
         <Link
           href={detailHref}

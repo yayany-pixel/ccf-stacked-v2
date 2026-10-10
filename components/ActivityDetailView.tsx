@@ -9,13 +9,22 @@ import Reveal from "@/components/motion/Reveal";
 import LocationModal from "@/components/LocationModal";
 import PotteryFinishingSection from "@/components/PotteryFinishingSection";
 import type { ActivityDetail } from "@/lib/activityRegistry";
+import type { ActivityPricing } from "@/lib/pricing";
+
+export type RelatedActivityWithPrice = ActivityDetail & {
+  displayPrice: string;
+  wasPrice?: number | null;
+  hasSaleBadge?: boolean;
+};
 
 export default function ActivityDetailView({
   activity,
-  relatedActivities = []
+  pricing,
+  relatedActivities = [],
 }: {
   activity: ActivityDetail;
-  relatedActivities?: ActivityDetail[];
+  pricing: ActivityPricing;
+  relatedActivities?: RelatedActivityWithPrice[];
 }) {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
@@ -52,6 +61,11 @@ export default function ActivityDetailView({
               <div className="flex flex-wrap items-center gap-2">
                 <TagPill>{activity.categoryIcon} {activity.categoryLabel}</TagPill>
                 <TagPill>{activity.locationsOffered}</TagPill>
+                {pricing.hasSaleBadge && (
+                  <span className="rounded-full border border-amber-400/40 bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-200">
+                    ⚡ Limited-Time Sale
+                  </span>
+                )}
                 {activity.adultThemed && (
                   <span className="rounded-full border border-red-500/40 bg-red-500/20 px-3 py-1 text-xs font-bold text-red-200">
                     🔞 18+ Adults Only
@@ -71,8 +85,13 @@ export default function ActivityDetailView({
 
               {/* Price & Coverage Highlight */}
               <div className="mt-6 flex flex-wrap items-baseline gap-3">
+                {pricing.wasPrice && pricing.displayPrice !== "See price at checkout" && (
+                  <del className="font-serif text-xl sm:text-2xl text-white/50" aria-label="Original price">
+                    ${pricing.wasPrice}{" "}
+                  </del>
+                )}
                 <span className="font-serif text-2xl sm:text-3xl font-bold text-amber-300">
-                  {activity.ticketPriceDisplay}
+                  {pricing.displayPrice}
                 </span>
                 {activity.coversNote && (
                   <span className="rounded-full border border-pink-400/40 bg-pink-500/20 px-3 py-1 text-xs font-semibold text-pink-200">
@@ -80,6 +99,29 @@ export default function ActivityDetailView({
                   </span>
                 )}
               </div>
+
+              {/* Turkish Lamp Options Direct Links */}
+              {pricing.variants && pricing.variants.length > 1 && (
+                <div className="mt-6 grid gap-3 sm:grid-cols-3 max-w-3xl">
+                  {pricing.variants.map((v) => (
+                    <div
+                      key={v.id}
+                      className="rounded-2xl border border-white/20 bg-white/10 p-4 flex flex-col justify-between backdrop-blur-sm"
+                    >
+                      <div>
+                        <div className="font-semibold text-white text-sm">{v.title}</div>
+                        <div className="mt-1 text-xs font-bold text-amber-300">{v.formattedPrice}</div>
+                      </div>
+                      <a
+                        href={v.bookingUrl}
+                        className="mt-3 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-3 py-2 text-xs font-bold text-white shadow-md hover:from-pink-600 hover:to-purple-700 transition"
+                      >
+                        Book {v.title} →
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {/* Top Booking CTA Button */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -119,78 +161,122 @@ export default function ActivityDetailView({
         </div>
       </section>
 
-      {/* Main Content Area */}
-      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-20">
-        <div className="grid gap-12 lg:grid-cols-12">
-          {/* Main Content Column */}
-          <div className="lg:col-span-8">
-            {/* Key Information Bar */}
-            <section className="mb-14" aria-labelledby="key-info-title">
-              <h2 id="key-info-title" className="sr-only">Key Workshop Information</h2>
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                <GlassCard className="p-4 sm:p-5 text-center">
-                  <span className="text-2xl" role="img" aria-hidden="true">⏱️</span>
-                  <div className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">Duration</div>
-                  <div className="mt-1 font-semibold text-white text-sm sm:text-base">{activity.duration}</div>
-                </GlassCard>
-
-                <GlassCard className="p-4 sm:p-5 text-center">
-                  <span className="text-2xl" role="img" aria-hidden="true">✨</span>
-                  <div className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">Skill Level</div>
-                  <div className="mt-1 font-semibold text-white text-sm sm:text-base">
-                    {activity.beginnerFriendly ? "Beginner Friendly" : "All Levels"}
-                  </div>
-                </GlassCard>
-
-                <GlassCard className="p-4 sm:p-5 text-center">
-                  <span className="text-2xl" role="img" aria-hidden="true">🎟️</span>
-                  <div className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">Admission</div>
-                  <div className="mt-1 font-semibold text-white text-sm sm:text-base">
-                    {activity.coversTwo ? "Admits 2 Guests" : "1 Participant"}
-                  </div>
-                </GlassCard>
-
-                <GlassCard className="p-4 sm:p-5 text-center">
-                  <span className="text-2xl" role="img" aria-hidden="true">📍</span>
-                  <div className="mt-2 text-xs font-semibold uppercase tracking-wider text-white/50">Location</div>
-                  <div className="mt-1 font-semibold text-white text-sm sm:text-base">{activity.locationsOffered}</div>
-                </GlassCard>
-              </div>
-
-              {activity.coversTwo && (
-                <div className="mt-4 rounded-xl border border-pink-500/30 bg-pink-500/10 p-4 text-center sm:text-left">
-                  <p className="text-sm font-medium text-pink-200">
-                    <span className="font-bold">Note for pairs:</span> One ticket reservation admits two participants sharing one wheel or workstation.
-                  </p>
-                </div>
-              )}
-            </section>
-
-            {/* The Experience */}
-            <section className="mb-14" aria-labelledby="the-experience-title">
-              <h2 id="the-experience-title" className="font-serif text-3xl font-bold text-white">
-                The Workshop Experience
-              </h2>
-              <div className="mt-6 space-y-6">
-                {activity.theExperience.map((exp, idx) => (
-                  <GlassCard key={idx} className="p-6 sm:p-8">
-                    <h3 className="font-serif text-xl font-bold text-white mb-2">{exp.title}</h3>
-                    <p className="text-base leading-relaxed text-white/80">{exp.body}</p>
-                  </GlassCard>
+      {/* Main Content Layout */}
+      <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24">
+        <div className="grid gap-16 lg:grid-cols-12">
+          {/* Left Column: Details & Practical Info */}
+          <div className="lg:col-span-8 space-y-16">
+            {/* Value Highlights */}
+            <section aria-labelledby="highlights-heading">
+              <h2 id="highlights-heading" className="sr-only">Workshop Highlights</h2>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {activity.valueCards.map((card, idx) => (
+                  <Reveal key={idx} delay={idx * 80}>
+                    <GlassCard className="p-5 h-full flex flex-col justify-between">
+                      <div>
+                        <div className="text-xs font-bold uppercase tracking-wider text-pink-400">
+                          {card.label}
+                        </div>
+                        <h3 className="mt-2 font-serif text-lg font-bold text-white">
+                          {card.title}
+                        </h3>
+                        <p className="mt-2 text-sm text-white/70 leading-relaxed">
+                          {card.body}
+                        </p>
+                      </div>
+                    </GlassCard>
+                  </Reveal>
                 ))}
               </div>
             </section>
 
-            {/* What's Included */}
-            <section className="mb-14" aria-labelledby="included-title">
-              <h2 id="included-title" className="font-serif text-3xl font-bold text-white">
-                What’s Included
+            {/* What You Make / The Experience */}
+            <section aria-labelledby="experience-heading" className="space-y-6">
+              <div className="border-b border-white/10 pb-4">
+                <h2 id="experience-heading" className="font-serif text-2xl sm:text-3xl font-bold text-white">
+                  The Experience
+                </h2>
+                <p className="mt-2 text-base text-white/75">
+                  What to expect when you step into the studio for {activity.title.toLowerCase()}.
+                </p>
+              </div>
+
+              <div className="grid gap-6 sm:grid-cols-2">
+                {activity.theExperience.map((item, idx) => (
+                  <div key={idx} className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                    <h3 className="font-serif text-lg font-bold text-white">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-white/80">
+                      {item.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Pottery Kiln & Glazing Section (Only for pottery workshops) */}
+            {activity.isPottery && (
+              <PotteryFinishingSection />
+            )}
+
+            {/* Key Practical Info Grid */}
+            <section aria-labelledby="practical-heading" className="space-y-6">
+              <div className="border-b border-white/10 pb-4">
+                <h2 id="practical-heading" className="font-serif text-2xl sm:text-3xl font-bold text-white">
+                  Good to Know
+                </h2>
+                <p className="mt-2 text-base text-white/75">
+                  Essential details about admission, timing, drinks, and studio location.
+                </p>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                {/* Duration */}
+                <div className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+                  <div className="rounded-xl bg-pink-500/20 p-3 text-pink-300 text-xl shrink-0">⏱️</div>
+                  <div>
+                    <div className="text-xs font-semibold uppercase tracking-wider text-white/50">Duration</div>
+                    <div className="mt-1 font-semibold text-white text-sm sm:text-base">{activity.duration}</div>
+                  </div>
+                </div>
+
+                {/* Admission */}
+                <div className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+                  <div className="rounded-xl bg-purple-500/20 p-3 text-purple-300 text-xl shrink-0">🎟️</div>
+                  <div>
+                    <div className="text-xs font-semibold uppercase tracking-wider text-white/50">Admission</div>
+                    <div className="mt-1 font-semibold text-white text-sm sm:text-base">
+                      {activity.coversTwo ? "Admits 2 Guests" : "1 Participant"}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Practical Info Items */}
+                {activity.practicalInfo.map((info, idx) => (
+                  <div key={idx} className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+                    <div className="rounded-xl bg-amber-500/20 p-3 text-amber-300 text-xl shrink-0">
+                      {info.label.toLowerCase().includes("byob") ? "🍷" : "📍"}
+                    </div>
+                    <div>
+                      <div className="text-xs font-semibold uppercase tracking-wider text-white/50">{info.label}</div>
+                      <div className="mt-1 text-sm text-white/80 leading-relaxed">{info.text}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Included in Workshop */}
+            <section aria-labelledby="included-heading" className="space-y-4">
+              <h2 id="included-heading" className="font-serif text-xl sm:text-2xl font-bold text-white">
+                What&apos;s Included
               </h2>
-              <div className="mt-6 rounded-2xl border border-white/15 bg-white/5 p-6 sm:p-8">
-                <ul className="grid gap-3 sm:grid-cols-2 text-white/85 text-sm sm:text-base">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <ul className="grid gap-3 sm:grid-cols-2">
                   {activity.included.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <span className="text-pink-400 font-bold" aria-hidden="true">✓</span>
+                    <li key={idx} className="flex items-center gap-3 text-sm text-white/80">
+                      <span className="text-pink-400 font-bold">✓</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -198,65 +284,46 @@ export default function ActivityDetailView({
               </div>
             </section>
 
-            {/* Practical Information */}
-            <section className="mb-14" aria-labelledby="practical-info-title">
-              <h2 id="practical-info-title" className="font-serif text-3xl font-bold text-white">
-                Practical Information
-              </h2>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                {activity.practicalInfo.map((info, idx) => (
-                  <GlassCard key={idx} className="p-5">
-                    <div className="text-xs font-semibold uppercase tracking-wider text-pink-400">
-                      {info.label}
-                    </div>
-                    <p className="mt-2 text-sm leading-relaxed text-white/80">{info.text}</p>
-                  </GlassCard>
-                ))}
-              </div>
-            </section>
-
-            {/* Optional Pottery Firing & Glazing Section (for applicable pottery classes) */}
-            {activity.isPottery && <PotteryFinishingSection />}
-
             {/* FAQs */}
-            <section className="mb-14" aria-labelledby="faqs-title">
-              <h2 id="faqs-title" className="font-serif text-3xl font-bold text-white">
-                Frequently Asked Questions
-              </h2>
-              <div className="mt-6 space-y-4">
-                {activity.faqs.map((faq, idx) => (
-                  <GlassCard key={idx} className="p-6">
-                    <h3 className="font-serif text-lg font-semibold text-white">{faq.q}</h3>
-                    <p className="mt-2 text-sm sm:text-base leading-relaxed text-white/75">{faq.a}</p>
-                  </GlassCard>
-                ))}
-              </div>
-            </section>
+            {activity.faqs.length > 0 && (
+              <section aria-labelledby="faqs-heading" className="space-y-6">
+                <div className="border-b border-white/10 pb-4">
+                  <h2 id="faqs-heading" className="font-serif text-2xl sm:text-3xl font-bold text-white">
+                    Frequently Asked Questions
+                  </h2>
+                </div>
+                <div className="space-y-4">
+                  {activity.faqs.map((faq, idx) => (
+                    <div key={idx} className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                      <h3 className="font-serif text-base sm:text-lg font-bold text-white">
+                        {faq.q}
+                      </h3>
+                      <p className="mt-2 text-sm leading-relaxed text-white/75">
+                        {faq.a}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
 
-            {/* Bottom Call to Action Section */}
-            <section className="my-14 rounded-3xl border border-pink-500/30 bg-gradient-to-br from-pink-900/30 via-purple-900/40 to-slate-900/60 p-8 sm:p-12 text-center shadow-2xl backdrop-blur-xl">
-              <h2 className="font-serif text-3xl font-bold text-white sm:text-4xl">
+            {/* Final CTA Banner */}
+            <section className="rounded-3xl border border-pink-500/30 bg-gradient-to-r from-pink-900/40 via-purple-900/30 to-slate-900/40 p-8 text-center sm:p-12">
+              <h2 className="font-serif text-2xl sm:text-4xl font-bold text-white">
                 Ready to Create?
               </h2>
-              <p className="mx-auto mt-4 max-w-xl text-base text-white/80">
-                Direct booking with zero platform fees. Choose your preferred studio location to view real-time dates and secure your spot.
+              <p className="mx-auto mt-3 max-w-xl text-base text-white/80">
+                Pick your studio location and reserve your spot in minutes. Direct studio booking with zero convenience fees.
               </p>
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <button
                   type="button"
                   onClick={openBooking}
-                  className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-pink-500/30 transition hover:scale-[1.02] hover:shadow-pink-500/50 focus:outline-none focus:ring-2 focus:ring-pink-400"
+                  className="rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-4 font-semibold text-white shadow-lg shadow-pink-500/30 transition hover:from-pink-600 hover:to-purple-700"
                   aria-haspopup="dialog"
                 >
-                  See Dates &amp; Book
-                  <span className="ml-2 text-lg" aria-hidden="true">→</span>
+                  See Dates &amp; Book →
                 </button>
-                <Link
-                  href="/activities"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/20 bg-white/10 px-6 py-4 text-sm font-semibold text-white transition hover:bg-white/20"
-                >
-                  Browse Other Workshops
-                </Link>
               </div>
             </section>
           </div>
@@ -272,17 +339,46 @@ export default function ActivityDetailView({
                 <h3 className="mt-2 font-serif text-xl font-bold text-white">
                   {activity.title}
                 </h3>
-                <p className="mt-2 text-sm text-white/75">
-                  {activity.ticketPriceDisplay}
-                </p>
-                <button
-                  type="button"
-                  onClick={openBooking}
-                  className="mt-5 w-full inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-bold text-white shadow-md hover:from-pink-600 hover:to-purple-700 transition"
-                  aria-haspopup="dialog"
-                >
-                  See Dates &amp; Book →
-                </button>
+                <div className="mt-2 text-sm text-white/75 flex items-center justify-center gap-2">
+                  {pricing.wasPrice && pricing.displayPrice !== "See price at checkout" && (
+                    <del className="text-white/50 text-xs" aria-label="Original price">${pricing.wasPrice}</del>
+                  )}
+                  <span className="font-semibold text-amber-300">{pricing.displayPrice}</span>
+                </div>
+                {pricing.hasSaleBadge && (
+                  <div className="mt-2">
+                    <span className="inline-block rounded-full border border-amber-400/40 bg-amber-500/20 px-2.5 py-0.5 text-[11px] font-bold text-amber-200">
+                      ⚡ Limited-Time Sale
+                    </span>
+                  </div>
+                )}
+                {pricing.variants && pricing.variants.length > 1 ? (
+                  <div className="mt-4 space-y-2 text-left">
+                    {pricing.variants.map((v) => (
+                      <div key={v.id} className="rounded-xl border border-white/10 bg-white/5 p-3 flex items-center justify-between gap-2">
+                        <div>
+                          <div className="text-xs font-semibold text-white">{v.title}</div>
+                          <div className="text-[11px] font-bold text-amber-300">{v.formattedPrice}</div>
+                        </div>
+                        <a
+                          href={v.bookingUrl}
+                          className="rounded-lg bg-pink-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-pink-600 transition shrink-0"
+                        >
+                          Book →
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={openBooking}
+                    className="mt-5 w-full inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-bold text-white shadow-md hover:from-pink-600 hover:to-purple-700 transition"
+                    aria-haspopup="dialog"
+                  >
+                    See Dates &amp; Book →
+                  </button>
+                )}
               </GlassCard>
 
               {/* Related Activities */}
@@ -314,7 +410,8 @@ export default function ActivityDetailView({
                                 {related.title}
                               </h4>
                               <p className="mt-0.5 text-xs text-white/60">
-                                {related.ticketPriceDisplay}
+                                {related.wasPrice && <del className="text-white/40 mr-1">${related.wasPrice}</del>}
+                                {related.displayPrice}
                               </p>
                             </div>
                             <span className="text-white/40 group-hover:text-white transition">→</span>
@@ -360,7 +457,8 @@ export default function ActivityDetailView({
         onClose={() => setIsLocationModalOpen(false)}
         activityTitle={activity.title}
         activitySlug={activity.slug}
-        locations={activity.destinations}
+        locations={pricing.destinations}
+        variants={pricing.variants}
       />
     </>
   );

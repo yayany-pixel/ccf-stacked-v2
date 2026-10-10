@@ -6,9 +6,12 @@ import {
   getActivityDetailBySlug,
   getAllActivitySlugs,
   getAllActivityDetails,
-  type ActivityDetail
 } from "@/lib/activityRegistry";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
+import { getCatalog } from "@/lib/askccf/catalog";
+import { getActivityPricing } from "@/lib/pricing";
+
+export const revalidate = 120;
 
 export async function generateStaticParams() {
   const slugs = getAllActivitySlugs();
@@ -55,16 +58,26 @@ export async function generateMetadata({
   };
 }
 
-export default function ActivityPage({ params }: { params: { slug: string } }) {
+export default async function ActivityPage({ params }: { params: { slug: string } }) {
   const activity = getActivityDetailBySlug(params.slug);
 
   if (!activity) {
     notFound();
   }
 
+  // Fetch live Acuity catalog
+  let catalog = null;
+  try {
+    catalog = await getCatalog();
+  } catch {
+    catalog = null;
+  }
+
+  const pricing = await getActivityPricing(activity, catalog);
+
   // Get related activities from same or other categories, protecting general audience
   const allActivities = getAllActivityDetails();
-  const relatedActivities = allActivities
+  const relatedBase = allActivities
     .filter((a) => a.slug !== activity.slug)
     .filter((a) => {
       // General audience activities should prioritize general audience workshops
@@ -80,6 +93,24 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
       return 0;
     })
     .slice(0, 5);
+
+  const relatedActivities = await Promise.all(
+    relatedBase.map(async (related) => {
+      const relatedPricing = await getActivityPricing(related, catalog);
+      return {
+        ...related,
+        displayPrice: relatedPricing.displayPrice,
+        wasPrice: relatedPricing.wasPrice,
+        hasSaleBadge: relatedPricing.hasSaleBadge,
+      };
+    }),
+  );
+
+  const primaryLivePrice =
+    pricing.destinations.chicago?.currentPrice ??
+    pricing.destinations.eugene?.currentPrice ??
+    pricing.destinations.online?.currentPrice ??
+    (pricing.variants && pricing.variants.length > 0 ? pricing.variants[0].currentPrice : null);
 
   // JSON-LD structured data
   const jsonLd = {
@@ -117,7 +148,8 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
         "offers": {
           "@type": "Offer",
           "availability": "https://schema.org/InStock",
-          "priceCurrency": "USD"
+          "priceCurrency": "USD",
+          ...(primaryLivePrice !== null ? { price: primaryLivePrice } : {})
         }
       },
       {
@@ -164,9 +196,14 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <main id="main-content" tabIndex={-1} className="min-h-screen">
-        <MetaActivityView id={`activity:${activity.slug}`} name={activity.title} />
+        <MetaActivityView
+          id={`activity:${activity.slug}`}
+          name={activity.title}
+          price={primaryLivePrice ?? undefined}
+        />
         <ActivityDetailView
           activity={activity}
+          pricing={pricing}
           relatedActivities={relatedActivities}
         />
       </main>

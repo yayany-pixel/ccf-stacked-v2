@@ -114,8 +114,8 @@ export function activitiesForCity(activities: HomepageActivity[], city: Homepage
     for (const lamp of lamps) booking.searchParams.append(lamps.length === 1 ? "appointmentType" : "appointmentType[]", String(lamp.appointmentTypeId));
     const nextAvailability = lamps.map(lamp => lamp.nextAvailability).filter((time): time is string => Boolean(time))
       .sort((a, b) => new Date(a).getTime() - new Date(b).getTime())[0] ?? null;
-    // Different ticket units (including date-night tickets for two) are not comparable.
-    const samePrice = lamps.every(lamp => lamp.currentPrice === primary.currentPrice && lamp.priceUnit === primary.priceUnit);
+    const validPrices = lamps.map(l => l.currentPrice).filter((p): p is number => typeof p === "number" && Number.isFinite(p) && p >= 0);
+    const minPrice = validPrices.length ? Math.min(...validPrices) : null;
     const combined: HomepageActivity = {
       ...primary,
       key: "chicago-turkish-lamp",
@@ -133,8 +133,8 @@ export function activitiesForCity(activities: HomepageActivity[], city: Homepage
       byob: lamps.every(lamp => lamp.byob) || null,
       upcomingSessions: [...new Set(lamps.flatMap(lamp => lamp.upcomingSessions ?? []))].sort((a, b) => new Date(a).getTime() - new Date(b).getTime()).slice(0, 3),
       analyticsContentId: lamps.length > 1 ? "activity:turkish-lamp" : String(primary.appointmentTypeId),
-      currentPrice: samePrice ? primary.currentPrice : null,
-      formerPrice: samePrice ? primary.formerPrice : null,
+      currentPrice: minPrice,
+      formerPrice: null,
       nextAvailability,
       availabilityState: nextAvailability ? "available" : lamps.every(lamp => lamp.availabilityState === "empty-window") ? "empty-window" : "unavailable",
     };
@@ -154,6 +154,15 @@ export function formatNextSession(activity: HomepageActivity, now = new Date()):
 }
 
 export function priceLabel(activity: HomepageActivity): string {
+  if (activity.bookingVariants && activity.bookingVariants.length > 1) {
+    const valid = activity.bookingVariants
+      .map(v => v.currentPrice)
+      .filter((p): p is number => typeof p === "number" && Number.isFinite(p) && p >= 0);
+    if (valid.length > 0) {
+      return `From $${Math.min(...valid)}`;
+    }
+    return "See price at checkout";
+  }
   if (activity.currentPrice === null) return "See price at checkout";
   const amount = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 }).format(activity.currentPrice).replace(/\.00$/, "");
   return `${amount} ${activity.priceUnit}`;

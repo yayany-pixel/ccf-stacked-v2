@@ -9,7 +9,6 @@ export type ActivityDestination = {
   appointmentTypeId: number;
   calendarIds: number[];
   bookingUrl: string;
-  price?: number | null;
   priceUnit?: string;
   verifiedTitle?: string;
 };
@@ -30,7 +29,6 @@ export type ActivityDetail = {
   coversTwo: boolean;
   coversNote?: string;
   duration: string;
-  ticketPriceDisplay: string;
   ticketUnit: string;
   beginnerFriendly: boolean;
   adultThemed?: boolean;
@@ -76,7 +74,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$45 per ticket",
     "ticketUnit": "per ticket",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -161,7 +158,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95588506",
-        "price": 45,
         "priceUnit": "per ticket",
         "verifiedTitle": "Spin A Spell- Make your Own Clay Cauldron"
       },
@@ -172,7 +168,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96657402",
-        "price": 45,
         "priceUnit": "per ticket",
         "verifiedTitle": "Spin A Spell- Make your Own Clay Cauldron"
       }
@@ -194,7 +189,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "coversTwo": true,
     "coversNote": "One ticket covers two people",
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$50 Eugene · $55 Chicago for two",
     "ticketUnit": "for two",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -301,7 +295,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79006071",
-        "price": 55,
         "priceUnit": "for two",
         "verifiedTitle": "Date Night on the Pottery Wheel - Chicago"
       },
@@ -312,7 +305,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=91935746",
-        "price": 50,
         "priceUnit": "for two",
         "verifiedTitle": "Eugene Date Night On The Wheel"
       }
@@ -333,7 +325,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "Starting at $25 per ticket",
     "ticketUnit": "per ticket",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -439,7 +430,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79006616",
-        "price": 25,
         "priceUnit": "per ticket",
         "verifiedTitle": "Wheel Throwing for Beginners - Chicago"
       },
@@ -450,7 +440,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=93539343",
-        "price": 25,
         "priceUnit": "per ticket",
         "verifiedTitle": "Eugene Wheel Throwing for Beginners: Cup creations"
       }
@@ -471,7 +460,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "Starting at $25 per ticket",
     "ticketUnit": "per ticket",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -558,7 +546,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782668",
-        "price": 25,
         "priceUnit": "per ticket",
         "verifiedTitle": "Wheel Throwing for Beginners -Cup Creations"
       },
@@ -569,7 +556,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=93539343",
-        "price": 25,
         "priceUnit": "per ticket",
         "verifiedTitle": "Eugene Wheel Throwing for Beginners: Cup creations"
       }
@@ -590,7 +576,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$75 Table Lamp · $110 Date Night for Two",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -697,7 +682,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95416771",
-        "price": 75,
         "priceUnit": "per person",
         "verifiedTitle": "Turkish Mosaic Lamp - Chicago"
       }
@@ -718,7 +702,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$50 Eugene · $55 Chicago",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -803,7 +786,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79186725",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Ceramic Mug and a Bowl - Chicago"
       },
@@ -814,7 +796,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=90210750",
-        "price": 50,
         "priceUnit": "per person",
         "verifiedTitle": "Eugene: Ceramic Mug and a Bowl"
       }
@@ -835,7 +816,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -941,7 +921,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79189013",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Terrarium Workshop - Chicago"
       }
@@ -963,7 +942,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "coversTwo": true,
     "coversNote": "One ticket covers two people",
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$110 for two ($55/person)",
     "ticketUnit": "for two",
     "beginnerFriendly": true,
     "locationsOffered": "Eugene only",
@@ -1048,7 +1026,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=89290193",
-        "price": 110,
         "priceUnit": "for two",
         "verifiedTitle": "Eugene 🌿 Date Night Terrarium Workshop"
       }
@@ -1069,7 +1046,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -1175,7 +1151,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79182319",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Mosaic Creations - Chicago"
       }
@@ -1196,7 +1171,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -1303,7 +1277,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79185767",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Candle Making - Chicago"
       }
@@ -1325,7 +1298,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "coversTwo": true,
     "coversNote": "One ticket covers two people",
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$110 for two ($55/person)",
     "ticketUnit": "for two",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -1410,7 +1382,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=97020385",
-        "price": 110,
         "priceUnit": "for two",
         "verifiedTitle": "VIP DATE NIGHT PAINT NIGHT"
       },
@@ -1421,7 +1392,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94058109",
-        "price": 110,
         "priceUnit": "for two",
         "verifiedTitle": "VIP Date Night Paint Night"
       }
@@ -1442,7 +1412,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -1527,7 +1496,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79181599",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Cat Vase Making - Chicago"
       }
@@ -1548,7 +1516,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -1633,7 +1600,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96889121",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Halloween Pottery: Carve Your Own Clay Pumpkin"
       }
@@ -1655,7 +1621,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "coversTwo": true,
     "coversNote": "One ticket covers two people",
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$110 for two ($55/person)",
     "ticketUnit": "for two",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -1761,7 +1726,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79183146",
-        "price": 110,
         "priceUnit": "for two",
         "verifiedTitle": "Glass Fusion - Chicago"
       }
@@ -1782,7 +1746,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$110 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -1888,7 +1851,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79188910",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Bonsai for Beginners: Hands-On Workshop - Chicago"
       }
@@ -1910,7 +1872,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "coversTwo": true,
     "coversNote": "One ticket covers two people",
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$110 for two ($55/person)",
     "ticketUnit": "for two",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -1995,7 +1956,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95023345",
-        "price": 110,
         "priceUnit": "for two",
         "verifiedTitle": "Date Night On Fire - VIP EXPERIENCE"
       }
@@ -2016,7 +1976,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -2101,7 +2060,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79183668",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Paint Pottery - Chicago"
       }
@@ -2122,7 +2080,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$50 Eugene · $55 Chicago",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -2228,7 +2185,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79374003",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Wine Glass Painting - Chicago"
       },
@@ -2239,7 +2195,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95909935",
-        "price": 50,
         "priceUnit": "per person",
         "verifiedTitle": "Wine Glass Painting"
       }
@@ -2260,7 +2215,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$50 Eugene · $55 Chicago",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -2345,7 +2299,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79188019",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Mushroom Pottery - Chicago"
       },
@@ -2356,7 +2309,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=90532757",
-        "price": 50,
         "priceUnit": "per person",
         "verifiedTitle": "Eugene Mushroom Pottery"
       }
@@ -2377,7 +2329,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -2462,7 +2413,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95947521",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Water Color For Beginners"
       }
@@ -2483,7 +2433,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "Starting at $25 per ticket",
     "ticketUnit": "per ticket",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -2568,7 +2517,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782793",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl"
       },
@@ -2579,7 +2527,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=89287658",
-        "price": 25,
         "priceUnit": "per ticket",
         "verifiedTitle": "Eugene Wheel Throwing for Beginners: Matcha Bowl"
       }
@@ -2601,7 +2548,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "coversTwo": true,
     "coversNote": "One ticket covers two people",
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$110 for two ($55/person)",
     "ticketUnit": "for two",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -2686,7 +2632,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95415406",
-        "price": 110,
         "priceUnit": "for two",
         "verifiedTitle": "Date Night Candle Making"
       }
@@ -2707,7 +2652,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -2792,7 +2736,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98180179",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Halloween Ghost Pottey!"
       }
@@ -2813,7 +2756,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$50 Eugene · $55 Chicago",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -2898,7 +2840,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=97524789",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "OOGIE BOOGIE INSPIRED CANDLE HOLDER | HALLOWEEN POTTERY"
       },
@@ -2909,7 +2850,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98908868",
-        "price": 50,
         "priceUnit": "per person",
         "verifiedTitle": "OOGIE BOOGIE INSPIRED CANDLE HOLDER | HALLOWEEN POTTERY"
       }
@@ -2930,7 +2870,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -3015,7 +2954,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=97573448",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "MONSTER POTTERY! HALLOWEEN LANTERN CLASS"
       }
@@ -3036,7 +2974,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$95 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -3121,7 +3058,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96649100",
-        "price": 95,
         "priceUnit": "per person",
         "verifiedTitle": "Charcuterie Board Make And Paint"
       },
@@ -3132,7 +3068,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98845998",
-        "price": 95,
         "priceUnit": "per person",
         "verifiedTitle": "Eugene : Make Your Own Charcuterie Board"
       }
@@ -3153,7 +3088,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -3238,7 +3172,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96491249",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Handbuilding For Beginners - Vase Making"
       }
@@ -3259,7 +3192,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -3344,7 +3276,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79274876",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Soap Making - Chicago"
       }
@@ -3365,7 +3296,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$30 per ticket",
     "ticketUnit": "per ticket",
     "beginnerFriendly": true,
     "locationsOffered": "Eugene only",
@@ -3451,7 +3381,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98334198",
-        "price": 30,
         "priceUnit": "per ticket",
         "verifiedTitle": "Eugene Duck Soap holder"
       }
@@ -3472,7 +3401,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -3557,7 +3485,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95911163",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Open Studio Wheel throwing"
       }
@@ -3578,7 +3505,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -3663,7 +3589,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98548612",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Throw A Pumpkin On The Wheel"
       }
@@ -3685,7 +3610,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "coversTwo": true,
     "coversNote": "One ticket covers two people",
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$110 for two ($55/person)",
     "ticketUnit": "for two",
     "beginnerFriendly": true,
     "locationsOffered": "Eugene only",
@@ -3770,7 +3694,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=97861588",
-        "price": 110,
         "priceUnit": "for two",
         "verifiedTitle": "Date Night: Make Your Own Ceramic Chess Set ♟️"
       }
@@ -3792,7 +3715,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "coversTwo": true,
     "coversNote": "One ticket covers two people",
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$110 for two ($55/person)",
     "ticketUnit": "for two",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -3877,7 +3799,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94935292",
-        "price": 110,
         "priceUnit": "for two",
         "verifiedTitle": "Date Night Watercolor Painting for Two - Chicago"
       },
@@ -3888,7 +3809,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94932997",
-        "price": 110,
         "priceUnit": "for two",
         "verifiedTitle": "Date Night Watercolor Painting for Two - Eugene"
       }
@@ -3910,7 +3830,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "coversTwo": true,
     "coversNote": "One ticket covers two people",
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$110 for two ($55/person)",
     "ticketUnit": "for two",
     "beginnerFriendly": true,
     "locationsOffered": "Eugene only",
@@ -3995,7 +3914,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94058299",
-        "price": 110,
         "priceUnit": "for two",
         "verifiedTitle": "Date Night Bonsai VIP"
       }
@@ -4016,7 +3934,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -4101,7 +4018,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782880",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Wheel Throwing for Beginners -Vase Making"
       }
@@ -4122,7 +4038,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago only",
@@ -4207,7 +4122,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95806344",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Make And Paint - Wheel throwing"
       }
@@ -4228,7 +4142,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$50 Eugene · $55 Chicago",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "adultThemed": true,
@@ -4315,7 +4228,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79188421",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Pipe and Ashtray Making Class - Chicago"
       },
@@ -4326,7 +4238,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=90211026",
-        "price": 50,
         "priceUnit": "per person",
         "verifiedTitle": "Eugene Pipe and Ashtray Making Class"
       }
@@ -4347,7 +4258,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "adultThemed": true,
@@ -4434,7 +4344,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79187550",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Boobs Coffee Mug - Chicago"
       }
@@ -4455,7 +4364,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "adultThemed": true,
@@ -4542,7 +4450,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79186927",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Dildos and Bottles - Chicago"
       }
@@ -4563,7 +4470,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "adultThemed": true,
@@ -4650,7 +4556,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79188691",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Pussy Pottery - Chicago"
       }
@@ -4671,7 +4576,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$29 per ticket (plus materials kit)",
     "ticketUnit": "per ticket",
     "beginnerFriendly": true,
     "locationsOffered": "Live online",
@@ -4756,7 +4660,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98770334",
-        "price": 29,
         "priceUnit": "per ticket",
         "verifiedTitle": "Make a Clay Cauldron — Live Online Halloween Workshop"
       }
@@ -4777,7 +4680,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -4875,7 +4777,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Request a Private Event"
       }
@@ -4896,7 +4797,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -4993,7 +4893,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Handbuilding Pottery"
       }
@@ -5014,7 +4913,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -5114,7 +5012,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Glass Blowing (Coming Soon)"
       }
@@ -5135,7 +5032,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -5232,7 +5128,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Paper & Pigment"
       }
@@ -5253,7 +5148,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -5350,7 +5244,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Painting Department"
       }
@@ -5371,7 +5264,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -5468,7 +5360,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Parent & Me Classes"
       }
@@ -5489,7 +5380,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -5589,7 +5479,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Gift Cards"
       }
