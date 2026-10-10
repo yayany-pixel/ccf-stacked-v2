@@ -5,6 +5,7 @@
 
 import assert from "node:assert/strict";
 import { ACTIVITY_REGISTRY, getAllActivityDetails, getActivityDetailBySlug } from "../lib/activityRegistry";
+import { getActivityPricing } from "../lib/pricing";
 import { ACTIVITY_MANIFEST } from "../lib/homepage/manifest";
 import { buildHomepageData, EXPLICIT_FORMER_PRICES, priceLabel } from "../lib/homepage/data";
 import { normalize } from "../lib/askccf/catalog";
@@ -64,7 +65,8 @@ async function runQASuite() {
   assert.equal(dateNight.ticketUnit, "for two");
   assert.equal(dateNight.destinations.chicago?.priceUnit, "for two");
   assert.equal(dateNight.destinations.eugene?.priceUnit, "for two");
-  assert.doesNotMatch(dateNight.ticketPriceDisplay, /per person/i, "Couples ticket must not claim per person without context");
+  const dateNightPricing = await getActivityPricing(dateNight);
+  assert.doesNotMatch(dateNightPricing.displayPrice, /per person/i, "Couples ticket must not claim per person without context");
 
   const beginnerWheel = getActivityDetailBySlug("beginner-wheel");
   assert.ok(beginnerWheel);

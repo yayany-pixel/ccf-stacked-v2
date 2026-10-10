@@ -126,29 +126,11 @@ for (const [slug, items] of groupedManifest.entries()) {
     overlayClass = "gradient-overlay-paper";
   }
 
-  // Determine price display
-  let ticketPriceDisplay = "$50–$55 per person";
   let ticketUnit = "per person";
   if (coversTwo) {
-    ticketPriceDisplay = "$110 for two ($55/person)";
     ticketUnit = "for two";
-  } else if (slug === "turkish-lamp") {
-    ticketPriceDisplay = "$75 Table Lamp · $110 Date Night for Two";
-  } else if (slug === "bonsai" || slug === "vip-date-night-bonsai") {
-    ticketPriceDisplay = "$110 per person";
-  } else if (slug === "glass-fusion") {
-    ticketPriceDisplay = "$75 per person";
-  } else if (slug === "charcuterie-board") {
-    ticketPriceDisplay = "$95 per person";
   } else if (isOnline) {
-    ticketPriceDisplay = "$29 per ticket (plus materials kit)";
     ticketUnit = "per ticket";
-  } else if (hasChicago && hasEugene) {
-    ticketPriceDisplay = "$50 Eugene · $55 Chicago";
-  } else if (hasChicago) {
-    ticketPriceDisplay = "$55 per person";
-  } else if (hasEugene) {
-    ticketPriceDisplay = "$50 per person";
   }
 
   const destinations: Record<string, any> = {};
@@ -158,7 +140,6 @@ for (const [slug, items] of groupedManifest.entries()) {
       appointmentTypeId: chicagoItem.appointmentTypeId,
       calendarIds: chicagoItem.calendarIds,
       bookingUrl: chicagoItem.bookingUrl,
-      price: coversTwo ? 110 : (slug === "turkish-lamp" ? 75 : (slug === "charcuterie-board" ? 95 : 55)),
       priceUnit: coversTwo ? "for two" : "per person",
       verifiedTitle: chicagoItem.acuityTitle,
     };
@@ -169,7 +150,6 @@ for (const [slug, items] of groupedManifest.entries()) {
       appointmentTypeId: eugeneItem.appointmentTypeId,
       calendarIds: eugeneItem.calendarIds,
       bookingUrl: eugeneItem.bookingUrl,
-      price: coversTwo ? 110 : (slug === "charcuterie-board" ? 95 : 50),
       priceUnit: coversTwo ? "for two" : "per person",
       verifiedTitle: eugeneItem.acuityTitle,
     };
@@ -180,7 +160,6 @@ for (const [slug, items] of groupedManifest.entries()) {
       appointmentTypeId: onlineItem.appointmentTypeId,
       calendarIds: onlineItem.calendarIds,
       bookingUrl: onlineItem.bookingUrl,
-      price: 29,
       priceUnit: "per ticket",
       verifiedTitle: onlineItem.acuityTitle,
     };
@@ -233,7 +212,6 @@ for (const [slug, items] of groupedManifest.entries()) {
     coversTwo,
     coversNote: coversTwo ? "One ticket covers two people" : undefined,
     duration: sec?.scheduleRows?.[0]?.time?.includes("min") ? sec.scheduleRows[0].time : "90–120 minutes",
-    ticketPriceDisplay,
     ticketUnit,
     beginnerFriendly: true,
     locationsOffered,
@@ -275,7 +253,6 @@ for (const sec of sections) {
       coversTwo,
       coversNote: coversTwo ? "One ticket covers two people" : undefined,
       duration: "90–120 minutes",
-      ticketPriceDisplay: "$55 per person",
       ticketUnit: coversTwo ? "for two" : "per person",
       beginnerFriendly: true,
       locationsOffered: "Chicago & Eugene",
@@ -301,7 +278,6 @@ for (const sec of sections) {
           appointmentTypeId: 79006616,
           calendarIds: [12216179],
           bookingUrl: "https://colorcocktailfactory.as.me/",
-          price: 55,
           priceUnit: "per person",
           verifiedTitle: sec.heroTitle
         }
@@ -316,7 +292,7 @@ console.log("Total entries in registry:", Object.keys(registryEntries).length);
 const fileContent = `/**
  * Centralized Activity Registry
  * Authoritative source of truth for all active workshops, descriptions, verified Acuity destinations,
- * pricing, and location routing.
+ * and location routing.
  */
 
 export type ActivityDestination = {
@@ -324,7 +300,6 @@ export type ActivityDestination = {
   appointmentTypeId: number;
   calendarIds: number[];
   bookingUrl: string;
-  price?: number | null;
   priceUnit?: string;
   verifiedTitle?: string;
 };
@@ -345,7 +320,6 @@ export type ActivityDetail = {
   coversTwo: boolean;
   coversNote?: string;
   duration: string;
-  ticketPriceDisplay: string;
   ticketUnit: string;
   beginnerFriendly: boolean;
   locationsOffered: "Chicago & Eugene" | "Chicago only" | "Eugene only" | "Live online";

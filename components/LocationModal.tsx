@@ -11,7 +11,21 @@ export type LocationDestination = {
   bookingUrl: string;
   price?: number | null;
   priceUnit?: string;
+  wasPrice?: number | null;
+  formattedPrice?: string;
   verifiedTitle?: string;
+};
+
+export type VariantDestination = {
+  id: number;
+  title: string;
+  city: "chicago" | "eugene" | "online";
+  calendarIds?: number[];
+  bookingUrl: string;
+  currentPrice: number | null;
+  priceUnit?: string;
+  wasPrice?: number | null;
+  formattedPrice?: string;
 };
 
 export type LocationModalProps = {
@@ -24,6 +38,7 @@ export type LocationModalProps = {
     eugene?: LocationDestination;
     online?: LocationDestination;
   };
+  variants?: VariantDestination[];
 };
 
 export default function LocationModal({
@@ -31,7 +46,8 @@ export default function LocationModal({
   onClose,
   activityTitle,
   activitySlug,
-  locations
+  locations,
+  variants,
 }: LocationModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [preferredCity, setPreferredCity] = useState<string | null>(null);
@@ -67,14 +83,15 @@ export default function LocationModal({
 
   if (!isOpen) return null;
 
+  const hasVariants = Boolean(variants && variants.length > 1);
   const hasChicago = Boolean(locations.chicago);
   const hasEugene = Boolean(locations.eugene);
-  const isBoth = hasChicago && hasEugene;
   const isOnline = Boolean(locations.online && !hasChicago && !hasEugene);
+  const isBoth = hasChicago && hasEugene && !hasVariants;
 
-  const handleBookingClick = (dest: LocationDestination, cityLabel: string) => {
+  const handleBookingClick = (dest: LocationDestination, cityName: string) => {
     try {
-      if (dest.city === "chicago" || dest.city === "eugene") {
+      if (typeof window !== "undefined" && dest.city !== "online") {
         localStorage.setItem("preferredCity", dest.city);
         localStorage.setItem("ccf-city", dest.city);
       }
@@ -88,7 +105,7 @@ export default function LocationModal({
       link_url: dest.bookingUrl,
       displayed_price: dest.price ?? undefined,
       click_target: `see_${dest.city}_dates`,
-      booking_provider: "acuity"
+      booking_provider: "acuity",
     });
   };
 
@@ -120,15 +137,69 @@ export default function LocationModal({
         {/* Modal Header */}
         <div className="pr-8">
           <p className="text-xs font-semibold uppercase tracking-wider text-pink-400">
-            Select Studio Location
+            {hasVariants ? "Choose Workshop Option" : "Select Studio Location"}
           </p>
           <h2 id="location-modal-title" className="mt-2 font-serif text-2xl font-bold leading-tight sm:text-3xl">
-            Where would you like to take {activityTitle}?
+            {hasVariants
+              ? `Choose your ${activityTitle} style`
+              : `Where would you like to take ${activityTitle}?`}
           </h2>
           <p className="mt-2 text-sm text-white/75">
-            Choose your studio to see available dates.
+            {hasVariants
+              ? "Select an option below to view live studio dates and reserve your table."
+              : "Choose your studio to see available dates."}
           </p>
         </div>
+
+        {/* Variants Selection (e.g. Turkish Lamp) */}
+        {hasVariants && variants && (
+          <div className="mt-6 space-y-4">
+            {variants.map((v) => (
+              <div
+                key={v.id}
+                className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:border-pink-500/50 hover:bg-white/10"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-pink-400">
+                    {v.title}
+                  </span>
+                  <span className="text-xs text-white/60">Chicago Pilsen Studio</span>
+                </div>
+                <p className="mt-1.5 text-xs text-white/80">
+                  {STUDIO_LOCATIONS.chicago.address}
+                </p>
+                <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="text-sm font-semibold text-amber-300">
+                    {v.wasPrice && v.currentPrice && v.wasPrice > v.currentPrice && (
+                      <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${v.wasPrice}</del>
+                    )}
+                    {v.formattedPrice || (v.currentPrice ? `$${v.currentPrice} ${v.priceUnit || ""}` : "See price at checkout")}
+                  </div>
+                  <a
+                    href={v.bookingUrl}
+                    onClick={() =>
+                      handleBookingClick(
+                        {
+                          city: v.city,
+                          appointmentTypeId: v.id,
+                          calendarIds: v.calendarIds,
+                          bookingUrl: v.bookingUrl,
+                          price: v.currentPrice,
+                          priceUnit: v.priceUnit,
+                          verifiedTitle: v.title,
+                        },
+                        "Chicago",
+                      )
+                    }
+                    className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-500/25 transition hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40 focus:outline-none focus:ring-2 focus:ring-pink-400 shrink-0"
+                  >
+                    See {v.title} Dates →
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* Both Cities Offered */}
         {isBoth && (
@@ -152,11 +223,17 @@ export default function LocationModal({
                 <p className="mt-1.5 text-xs text-white/80">
                   {STUDIO_LOCATIONS.chicago.address}
                 </p>
-                <div className="mt-4">
+                <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="text-sm font-semibold text-amber-300">
+                    {locations.chicago.wasPrice && locations.chicago.price && locations.chicago.wasPrice > locations.chicago.price && (
+                      <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${locations.chicago.wasPrice}</del>
+                    )}
+                    {locations.chicago.formattedPrice || (locations.chicago.price ? `$${locations.chicago.price} ${locations.chicago.priceUnit || ""}` : "See price at checkout")}
+                  </div>
                   <a
                     href={locations.chicago.bookingUrl}
                     onClick={() => handleBookingClick(locations.chicago!, "Chicago")}
-                    className="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-500/25 transition hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40 focus:outline-none focus:ring-2 focus:ring-pink-400"
+                    className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-500/25 transition hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40 focus:outline-none focus:ring-2 focus:ring-pink-400 shrink-0"
                   >
                     See Chicago Dates →
                   </a>
@@ -183,11 +260,17 @@ export default function LocationModal({
                 <p className="mt-1.5 text-xs text-white/80">
                   {STUDIO_LOCATIONS.eugene.address}
                 </p>
-                <div className="mt-4">
+                <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="text-sm font-semibold text-amber-300">
+                    {locations.eugene.wasPrice && locations.eugene.price && locations.eugene.wasPrice > locations.eugene.price && (
+                      <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${locations.eugene.wasPrice}</del>
+                    )}
+                    {locations.eugene.formattedPrice || (locations.eugene.price ? `$${locations.eugene.price} ${locations.eugene.priceUnit || ""}` : "See price at checkout")}
+                  </div>
                   <a
                     href={locations.eugene.bookingUrl}
                     onClick={() => handleBookingClick(locations.eugene!, "Eugene")}
-                    className="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:from-emerald-600 hover:to-teal-700 hover:shadow-emerald-500/40 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                    className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:from-emerald-600 hover:to-teal-700 hover:shadow-emerald-500/40 focus:outline-none focus:ring-2 focus:ring-emerald-400 shrink-0"
                   >
                     See Eugene Dates →
                   </a>
@@ -198,7 +281,7 @@ export default function LocationModal({
         )}
 
         {/* Single City - Chicago Only */}
-        {!isBoth && hasChicago && locations.chicago && (
+        {!isBoth && !hasVariants && hasChicago && locations.chicago && (
           <div className="mt-6 rounded-2xl border border-white/15 bg-white/5 p-6">
             <span className="text-xs font-bold uppercase tracking-wider text-pink-400">
               In-person workshop
@@ -210,17 +293,25 @@ export default function LocationModal({
               {STUDIO_LOCATIONS.chicago.address}
             </p>
             <div className="mt-6 space-y-3">
-              <a
-                href={locations.chicago.bookingUrl}
-                onClick={() => handleBookingClick(locations.chicago!, "Chicago")}
-                className="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-500/25 transition hover:from-pink-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-pink-400"
-              >
-                See Chicago Dates →
-              </a>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="text-sm font-semibold text-amber-300">
+                  {locations.chicago.wasPrice && locations.chicago.price && locations.chicago.wasPrice > locations.chicago.price && (
+                    <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${locations.chicago.wasPrice}</del>
+                  )}
+                  {locations.chicago.formattedPrice || (locations.chicago.price ? `$${locations.chicago.price} ${locations.chicago.priceUnit || ""}` : "See price at checkout")}
+                </div>
+                <a
+                  href={locations.chicago.bookingUrl}
+                  onClick={() => handleBookingClick(locations.chicago!, "Chicago")}
+                  className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-500/25 transition hover:from-pink-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-pink-400 shrink-0"
+                >
+                  See Chicago Dates →
+                </a>
+              </div>
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full text-center text-xs text-white/60 underline hover:text-white"
+                className="w-full text-center text-xs text-white/60 underline hover:text-white pt-2"
               >
                 ← Return to workshop details
               </button>
@@ -229,7 +320,7 @@ export default function LocationModal({
         )}
 
         {/* Single City - Eugene Only */}
-        {!isBoth && hasEugene && locations.eugene && (
+        {!isBoth && !hasVariants && hasEugene && locations.eugene && (
           <div className="mt-6 rounded-2xl border border-white/15 bg-white/5 p-6">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
               In-person workshop
@@ -241,17 +332,25 @@ export default function LocationModal({
               {STUDIO_LOCATIONS.eugene.address}
             </p>
             <div className="mt-6 space-y-3">
-              <a
-                href={locations.eugene.bookingUrl}
-                onClick={() => handleBookingClick(locations.eugene!, "Eugene")}
-                className="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-emerald-400"
-              >
-                See Eugene Dates →
-              </a>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="text-sm font-semibold text-amber-300">
+                  {locations.eugene.wasPrice && locations.eugene.price && locations.eugene.wasPrice > locations.eugene.price && (
+                    <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${locations.eugene.wasPrice}</del>
+                  )}
+                  {locations.eugene.formattedPrice || (locations.eugene.price ? `$${locations.eugene.price} ${locations.eugene.priceUnit || ""}` : "See price at checkout")}
+                </div>
+                <a
+                  href={locations.eugene.bookingUrl}
+                  onClick={() => handleBookingClick(locations.eugene!, "Eugene")}
+                  className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 shrink-0"
+                >
+                  See Eugene Dates →
+                </a>
+              </div>
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full text-center text-xs text-white/60 underline hover:text-white"
+                className="w-full text-center text-xs text-white/60 underline hover:text-white pt-2"
               >
                 ← Return to workshop details
               </button>
@@ -260,7 +359,7 @@ export default function LocationModal({
         )}
 
         {/* Online Workshop Only */}
-        {isOnline && locations.online && (
+        {!hasVariants && isOnline && locations.online && (
           <div className="mt-6 rounded-2xl border border-white/15 bg-white/5 p-6">
             <span className="text-xs font-bold uppercase tracking-wider text-purple-400">
               Virtual Studio
@@ -272,17 +371,25 @@ export default function LocationModal({
               Kit delivered to your door. Join expert-guided interactive session from anywhere.
             </p>
             <div className="mt-6 space-y-3">
-              <a
-                href={locations.online.bookingUrl}
-                onClick={() => handleBookingClick(locations.online!, "Online")}
-                className="inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/25 transition hover:from-purple-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-400"
-              >
-                See Online Dates →
-              </a>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="text-sm font-semibold text-amber-300">
+                  {locations.online.wasPrice && locations.online.price && locations.online.wasPrice > locations.online.price && (
+                    <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${locations.online.wasPrice}</del>
+                  )}
+                  {locations.online.formattedPrice || (locations.online.price ? `$${locations.online.price} ${locations.online.priceUnit || ""}` : "See price at checkout")}
+                </div>
+                <a
+                  href={locations.online.bookingUrl}
+                  onClick={() => handleBookingClick(locations.online!, "Online")}
+                  className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/25 transition hover:from-purple-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-400 shrink-0"
+                >
+                  See Online Dates →
+                </a>
+              </div>
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full text-center text-xs text-white/60 underline hover:text-white"
+                className="w-full text-center text-xs text-white/60 underline hover:text-white pt-2"
               >
                 ← Return to workshop details
               </button>
@@ -291,7 +398,7 @@ export default function LocationModal({
         )}
 
         {/* Safe fallback if neither is available */}
-        {!hasChicago && !hasEugene && !isOnline && (
+        {!hasVariants && !hasChicago && !hasEugene && !isOnline && (
           <div className="mt-6 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-5 text-center">
             <p className="text-sm font-semibold text-amber-200">
               Booking is not currently available for this workshop.
