@@ -3,6 +3,7 @@ import { getCatalog, getPublicClassSchedule } from "@/lib/askccf/catalog";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { eventBookingUrl } from "@/lib/booking";
 import { getClassPhoto } from "@/lib/classPhotos";
+import { fromZonedTime } from "date-fns-tz";
 
 export type NormalizedEvent = {
   id: string;
@@ -12,6 +13,7 @@ export type NormalizedEvent = {
   startDate: string;
   endDate: string;
   city: "Chicago" | "Eugene" | "Virtual";
+  timeZone: string;
   venueName: string;
   streetAddress: string;
   addressLocality: string;
@@ -20,6 +22,8 @@ export type NormalizedEvent = {
   addressCountry: string;
   imageUrl: string | null;
   price: number | null;
+  ticketUnit: string;
+  formattedPrice: string | null;
   currency: string;
   bookingUrl: string;
   category: string;
@@ -55,13 +59,11 @@ export async function getAllEvents(daysAhead = 60): Promise<NormalizedEvent[]> {
   const cutoff = now.getTime() + daysAhead * 86400000;
   for (const slot of slots) {
     const item = classes.get(String(slot.appointmentTypeID));
-    const start = new Date(slot.time);
-    if (!item || !Number.isFinite(start.getTime()) ||
-        start <= now || start.getTime() > cutoff || slot.slotsAvailable <= 0) continue;
+    if (!item) continue;
 
-    // Determine location by slot calendar when in-person, falling back to item location
+    // Determine location: item location explicitly detected by name/title takes precedence over misassigned calendar IDs
     let locationKey: "chicago" | "eugene" | "online" | "unknown" = item.location;
-    if (item.location !== "online") {
+    if (locationKey === "unknown" && item.location !== "online") {
       if (slot.calendarID === 13582962) {
         locationKey = "eugene";
       } else if (slot.calendarID === 12216179) {
@@ -69,6 +71,17 @@ export async function getAllEvents(daysAhead = 60): Promise<NormalizedEvent[]> {
       }
     }
     if (locationKey === "unknown") continue;
+
+    const tz = locationKey === "eugene" ? STUDIO_LOCATIONS.eugene.timeZone : STUDIO_LOCATIONS.chicago.timeZone;
+    let start: Date;
+    if (/[+-]\d{2}:?\d{2}$|Z$/i.test(slot.time)) {
+      start = new Date(slot.time);
+    } else {
+      start = fromZonedTime(slot.time, tz);
+    }
+
+    if (!Number.isFinite(start.getTime()) ||
+        start <= now || start.getTime() > cutoff || slot.slotsAvailable <= 0) continue;
 
     const studio = locationKey === "online" ? null : STUDIO_LOCATIONS[locationKey];
     const city = studio?.label ?? "Virtual";
@@ -82,16 +95,22 @@ export async function getAllEvents(daysAhead = 60): Promise<NormalizedEvent[]> {
       title = title.replace(/\s*-\s*Eugene$/i, "").trim();
     }
 
+    const ticketUnit = item.pricing.covers === 2 ? "for two" : item.pricing.covers === 1 ? "per person" : "per ticket";
+    const formattedPrice = item.pricing.price !== null
+      ? `$${item.pricing.price.toFixed(2)} ${ticketUnit}`
+      : null;
+
     // One public event per class, location and actual start time.
     const key = `${item.id}:${city}:${start.toISOString()}`;
     events.set(key, {
       id, slug, source: "acuity", title, description: item.description,
       startDate: start.toISOString(),
       endDate: new Date(start.getTime() + (Number(slot.duration) || item.durationMinutes || 90) * 60000).toISOString(),
-      city, venueName: studio ? `Color Cocktail Factory — ${city}` : "Live online workshop",
+      city, timeZone: tz, venueName: studio ? `Color Cocktail Factory — ${city}` : "Live online workshop",
       streetAddress: studio?.streetAddress ?? "", addressLocality: studio?.addressLocality ?? "",
       addressRegion: studio?.addressRegion ?? "", postalCode: studio?.postalCode ?? "", addressCountry: studio?.addressCountry ?? "",
-      imageUrl: getClassPhoto(item.id)?.path ?? null, price: item.pricing.price, currency: "USD",
+      imageUrl: getClassPhoto(item.id)?.path ?? null, price: item.pricing.price,
+      ticketUnit, formattedPrice, currency: "USD",
       bookingUrl: eventBookingUrl(item.id, slot.time, slot.calendarID),
       category: eventCategory(title), status: "scheduled", lastUpdated: now.toISOString(),
     });

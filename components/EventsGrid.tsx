@@ -89,6 +89,21 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
 
   function formatEventTime(isoDate: string, city: string): string {
     const date = new Date(isoDate);
+    if (city.toLowerCase() === "virtual" || city.toLowerCase() === "online") {
+      const central = date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZoneName: 'short',
+        timeZone: 'America/Chicago'
+      });
+      const pacific = date.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZoneName: 'short',
+        timeZone: 'America/Los_Angeles'
+      });
+      return `${central} / ${pacific}`;
+    }
     return date.toLocaleTimeString('en-US', {
       hour: 'numeric',
       minute: '2-digit',
@@ -288,11 +303,15 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
 
                             {/* Price & Source */}
                             <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-3">
-                              {event.price !== null && event.price > 0 && (
+                              {event.formattedPrice ? (
                                 <span className="text-sm font-semibold text-pink-300">
-                                  ${event.price.toFixed(2)}
+                                  {event.formattedPrice}
                                 </span>
-                              )}
+                              ) : event.price !== null && event.price > 0 ? (
+                                <span className="text-sm font-semibold text-pink-300">
+                                  ${event.price.toFixed(2)} {event.ticketUnit || "per ticket"}
+                                </span>
+                              ) : null}
                               <span className="ml-auto text-xs text-white/40">
                                 via Acuity
                               </span>
@@ -359,7 +378,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                       <div className="flex items-start gap-2">
                         <span className="text-pink-400">💰</span>
                         <span>
-                          {event.price === 0 ? 'Free' : `$${event.price.toFixed(2)}`}
+                          {event.formattedPrice || (event.price === 0 ? 'Free' : `$${event.price.toFixed(2)} ${event.ticketUnit || "per ticket"}`)}
                         </span>
                       </div>
                     )}

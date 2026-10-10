@@ -33,6 +33,8 @@ export type ActivityDetail = {
   ticketPriceDisplay: string;
   ticketUnit: string;
   beginnerFriendly: boolean;
+  adultThemed?: boolean;
+  ageRestriction?: string | null;
   locationsOffered: "Chicago & Eugene" | "Chicago only" | "Eugene only" | "Live online";
   image: {
     path: string;
@@ -74,8 +76,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$50 Eugene · $55 Chicago",
-    "ticketUnit": "per person",
+    "ticketPriceDisplay": "$45 per ticket",
+    "ticketUnit": "per ticket",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
     "image": {
@@ -159,8 +161,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95588506",
-        "price": 55,
-        "priceUnit": "per person",
+        "price": 45,
+        "priceUnit": "per ticket",
         "verifiedTitle": "Spin A Spell- Make your Own Clay Cauldron"
       },
       "eugene": {
@@ -170,8 +172,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96657402",
-        "price": 50,
-        "priceUnit": "per person",
+        "price": 45,
+        "priceUnit": "per ticket",
         "verifiedTitle": "Spin A Spell- Make your Own Clay Cauldron"
       }
     }
@@ -192,7 +194,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "coversTwo": true,
     "coversNote": "One ticket covers two people",
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$110 for two ($55/person)",
+    "ticketPriceDisplay": "$50 Eugene · $55 Chicago for two",
     "ticketUnit": "for two",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
@@ -299,7 +301,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79006071",
-        "price": 110,
+        "price": 55,
         "priceUnit": "for two",
         "verifiedTitle": "Date Night on the Pottery Wheel - Chicago"
       },
@@ -310,7 +312,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=91935746",
-        "price": 110,
+        "price": 50,
         "priceUnit": "for two",
         "verifiedTitle": "Eugene Date Night On The Wheel"
       }
@@ -331,8 +333,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$50 Eugene · $55 Chicago",
-    "ticketUnit": "per person",
+    "ticketPriceDisplay": "Starting at $25 per ticket",
+    "ticketUnit": "per ticket",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
     "image": {
@@ -437,8 +439,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79006616",
-        "price": 55,
-        "priceUnit": "per person",
+        "price": 25,
+        "priceUnit": "per ticket",
         "verifiedTitle": "Wheel Throwing for Beginners - Chicago"
       },
       "eugene": {
@@ -448,8 +450,127 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=93539343",
-        "price": 50,
-        "priceUnit": "per person",
+        "price": 25,
+        "priceUnit": "per ticket",
+        "verifiedTitle": "Eugene Wheel Throwing for Beginners: Cup creations"
+      }
+    }
+  },
+  "cup-creations": {
+    "slug": "cup-creations",
+    "title": "Cup Creations on the Wheel",
+    "navLabel": "Cup Creations",
+    "heroTitle": "Cup Creations on the Wheel",
+    "heroDescription": "Master the pottery wheel while shaping your own custom drinking cup. Guided step-by-step from centering the clay to pulling the walls.",
+    "shortDescription": "Learn wheel throwing techniques while creating your own handmade ceramic cup.",
+    "category": "mud-room",
+    "categoryLabel": "Mud Room",
+    "categoryIcon": "🏺",
+    "categoryColorClass": "category-mud",
+    "overlayClass": "gradient-overlay-mud",
+    "isPottery": true,
+    "coversTwo": false,
+    "duration": "90–120 minutes",
+    "ticketPriceDisplay": "Starting at $25 per ticket",
+    "ticketUnit": "per ticket",
+    "beginnerFriendly": true,
+    "locationsOffered": "Chicago & Eugene",
+    "image": {
+      "filename": "Wheel Throwing for Beginners -Cup Creations.webp",
+      "driveFileId": "1jqsoqPsiLbjt0OKDsiEHxlArlXZzjDrH",
+      "path": "/images/classes/approved-46-ZzjDrH-20ed285cc994.webp",
+      "width": 1200,
+      "height": 900,
+      "alt": "Handmade ceramic cups created on the pottery wheel",
+      "focalPosition": "50% 42%"
+    },
+    "whatYouMake": "Wheel-Thrown Ceramic Cup",
+    "theExperience": [
+      {
+        "title": "Guided Step-by-Step Instruction",
+        "body": "Our experienced ceramic artists walk you through centering your clay, opening the ball, and pulling upward to create functional drinking cups, mugs, and tumblers."
+      },
+      {
+        "title": "Hands-On Wheel Time",
+        "body": "Each participant gets a dedicated pottery wheel with hands-on coaching throughout the session. Focus on the craft and tactile fun of throwing clay."
+      }
+    ],
+    "included": [
+      "Dedicated pottery wheel workstation",
+      "All non-toxic stoneware clay and shaping tools",
+      "Step-by-step coaching from resident ceramic artists",
+      "Full studio cleanup handled by CCF staff"
+    ],
+    "practicalInfo": [
+      {
+        "label": "BYOB Friendly",
+        "text": "Feel free to bring your favorite drinks and snacks. Must be 21+ for alcohol. Studio glassware available."
+      },
+      {
+        "label": "Location",
+        "text": "Offered in Chicago (1142 W. 18th St) and Eugene (3295 Cross St)."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Do I need any wheel throwing experience?",
+        "a": "No experience needed! This class is designed specifically for beginners."
+      },
+      {
+        "q": "What should I wear?",
+        "a": "Wear comfortable clothes and trim your nails if possible. Clay washes out of clothing easily."
+      },
+      {
+        "q": "How does firing and glazing work?",
+        "a": "Your class ticket covers instruction, clay, and wheel use. Optional professional kiln firing ($10) and glazing (from $20) are available at the end of class with ~3-week pickup."
+      }
+    ],
+    "tags": [
+      "Beginner-friendly",
+      "Wheel Throwing",
+      "Pottery",
+      "Cup Creations",
+      "BYOB"
+    ],
+    "valueCards": [
+      {
+        "label": "TECHNIQUE",
+        "title": "Centering & Pulling",
+        "body": "Learn core pottery fundamentals that work."
+      },
+      {
+        "label": "MAKING",
+        "title": "Functional Art",
+        "body": "Shape a cup you can use every day."
+      },
+      {
+        "label": "VIBE",
+        "title": "Relaxed & Social",
+        "body": "BYOB drinks and supportive artist instruction."
+      }
+    ],
+    "scheduleRows": [],
+    "destinations": {
+      "chicago": {
+        "city": "chicago",
+        "appointmentTypeId": 94782668,
+        "calendarIds": [
+          12216179
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782668",
+        "price": 25,
+        "priceUnit": "per ticket",
+        "verifiedTitle": "Wheel Throwing for Beginners -Cup Creations"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 93539343,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=93539343",
+        "price": 25,
+        "priceUnit": "per ticket",
         "verifiedTitle": "Eugene Wheel Throwing for Beginners: Cup creations"
       }
     }
@@ -3233,8 +3354,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$50 per person",
-    "ticketUnit": "per person",
+    "ticketPriceDisplay": "$30 per ticket",
+    "ticketUnit": "per ticket",
     "beginnerFriendly": true,
     "locationsOffered": "Eugene only",
     "image": {
@@ -3315,11 +3436,12 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "city": "eugene",
         "appointmentTypeId": 98334198,
         "calendarIds": [
+          13582962,
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98334198",
-        "price": 50,
-        "priceUnit": "per person",
+        "price": 30,
+        "priceUnit": "per ticket",
         "verifiedTitle": "Eugene Duck Soap holder"
       }
     }
@@ -4098,6 +4220,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "ticketPriceDisplay": "$50 Eugene · $55 Chicago",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
+    "adultThemed": true,
+    "ageRestriction": "18+",
     "locationsOffered": "Chicago & Eugene",
     "image": {
       "filename": "Pipe and Ashtray Making Class - Chicago.webp",
@@ -4215,6 +4339,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
+    "adultThemed": true,
+    "ageRestriction": "18+",
     "locationsOffered": "Chicago only",
     "image": {
       "filename": "Boobs Coffee Mug - Chicago.webp",
@@ -4321,6 +4447,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
+    "adultThemed": true,
+    "ageRestriction": "18+",
     "locationsOffered": "Chicago only",
     "image": {
       "filename": "Dildos and Bottles - Chicago.webp",
@@ -4427,6 +4555,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "ticketPriceDisplay": "$55 per person",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
+    "adultThemed": true,
+    "ageRestriction": "18+",
     "locationsOffered": "Chicago only",
     "image": {
       "filename": "Pussy Pottery - Chicago.webp",

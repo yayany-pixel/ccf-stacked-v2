@@ -5,11 +5,11 @@ import Reveal from "@/components/motion/Reveal";
 import ScrollHint from "@/components/motion/ScrollHint";
 import HeroVideoBackground from "@/components/HeroVideoBackground";
 import Testimonials from "@/components/Testimonials";
-import NewsletterSignup from "@/components/NewsletterSignup";
 import { sections } from "@/lib/config";
 import { eugeneSections } from "@/lib/eugene-config";
 import { chicagoSections } from "@/lib/chicago-config";
 import { getCityByParam, buildHomeBookLink } from "@/lib/links";
+import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { generateLocalBusinessSchema, generateOrganizationSchema, generateBreadcrumbSchema } from "@/lib/enhancedStructuredData";
 import type { Metadata } from "next";
 import { buildCityMetadata } from "@/lib/seo";
@@ -27,6 +27,7 @@ export async function generateMetadata({ params }: { params: { city: string } })
 
 export default function CityHome({ params }: { params: { city: string } }) {
   const city = getCityByParam(params.city);
+  const studio = city.param === "eugene" ? STUDIO_LOCATIONS.eugene : STUDIO_LOCATIONS.chicago;
   
   // Use city-specific sections for Eugene and Chicago, fallback to regular sections
   const citySections = city.param === 'eugene' ? eugeneSections : 
@@ -58,14 +59,14 @@ export default function CityHome({ params }: { params: { city: string } }) {
       />
       
       {/* Hero Section */}
-      <section className="gradient-breathing relative flex min-h-[90vh] items-center overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40 pt-24 sm:pt-28">
+      <section className="gradient-breathing relative flex min-h-[85vh] items-center overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40 pt-24 sm:pt-28">
         {/* Video Background + Overlays */}
         <HeroVideoBackground />
         
-        {/* Fallback layers (shown when video not playing or reduced motion) */}
+        {/* Fallback layers */}
         <div className="sparkle-noise absolute inset-0 z-10" />
         
-        {/* Vibrant multi-color gradient overlay */}
+        {/* Gradient overlay */}
         <div 
           className="absolute inset-0 z-10 opacity-50"
           style={{
@@ -79,101 +80,102 @@ export default function CityHome({ params }: { params: { city: string } }) {
           }}
         />
         
-        <div className="relative z-20 mx-auto w-full max-w-7xl px-6 py-20">
+        <div className="relative z-20 mx-auto w-full max-w-7xl px-6 py-16 sm:py-20">
           <div className="mx-auto max-w-4xl text-center">
+            {/* Studio Badge */}
             <Reveal delay={100} variant="fade-up">
-              <h1 className="font-serif text-5xl font-light leading-relaxed tracking-wide sm:text-7xl sm:leading-relaxed" style={{ letterSpacing: '0.05em' }}>
-                Where Love
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-pink-200 backdrop-blur-sm">
+                <span>📍</span>
+                <span>{city.label} Studio · {city.param === 'chicago' ? 'Pilsen Art District' : 'Cross Street Studio'}</span>
+              </div>
+            </Reveal>
+
+            <Reveal delay={200} variant="fade-up">
+              <h1 className="mt-4 font-serif text-5xl font-light leading-tight tracking-wide sm:text-7xl">
+                Where Creativity
                 <br />
-                <span className="italic font-normal">Takes Shape</span>
+                <span className="italic font-normal">Takes Shape in {city.label}</span>
               </h1>
             </Reveal>
 
-            <Reveal delay={200}>
+            <Reveal delay={300}>
               <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/85 sm:text-xl">
-                Expert-guided pottery, glass fusion, mosaics, and more. Perfect for date nights, 
-                team building, or discovering your creative side in {city.label}.
+                Expert-guided pottery wheel throwing, date night workshops, Turkish lamps, and handmade art. 
+                All skill levels welcome in our welcoming, BYOB-friendly {city.label} studio.
               </p>
             </Reveal>
 
-            <Reveal delay={300} variant="scale">
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-                <ButtonPill href={buildHomeBookLink(city)} variant="romanceCta">
-                  Book a Class
-                  <svg className="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
+            <Reveal delay={400} variant="scale">
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+                <ButtonPill href={buildHomeBookLink(city)} variant="primary" className="px-8 py-3.5 text-base">
+                  Book a Class in {city.label} →
                 </ButtonPill>
-                <ButtonPill href="/activities" variant="secondary">
-                  Explore All Workshops
+                <ButtonPill href="/private-events" variant="secondary" className="px-6 py-3.5 text-base">
+                  Group &amp; Private Parties
                 </ButtonPill>
-                <ButtonPill href="/gift-cards" variant="ghost">
+                <ButtonPill href="/gift-cards" variant="ghost" className="px-5 py-3.5 text-base">
                   🎁 Gift Cards
                 </ButtonPill>
               </div>
             </Reveal>
 
-            {/* Quick Category Links */}
-            <Reveal delay={400} variant="fade-up">
-              <div className="mt-12 flex flex-wrap items-center justify-center gap-3 text-sm">
-                <span className="text-white/60">Popular:</span>
+            {/* Quick Category Jump Links */}
+            <Reveal delay={500} variant="fade-up">
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-2.5 text-sm">
+                <span className="text-white/60 text-xs uppercase tracking-wide">Featured:</span>
                 <a 
                   href="#date-night" 
-                  className="rounded-full border bg-white/5 px-3 py-1.5 transition-all hover:scale-110 category-romance"
-                  style={{ animationDelay: '0s' }}
+                  className="rounded-full border border-white/15 bg-white/5 px-3.5 py-1 text-xs font-medium text-white/90 transition hover:bg-white/15"
                 >
                   💕 Date Night Pottery
                 </a>
                 <a 
-                  href="#mosaics" 
-                  className="rounded-full border bg-white/5 px-3 py-1.5 transition-all hover:scale-110 category-glass"
-                  style={{ animationDelay: '0.5s' }}
+                  href="#beginner-wheel" 
+                  className="rounded-full border border-white/15 bg-white/5 px-3.5 py-1 text-xs font-medium text-white/90 transition hover:bg-white/15"
                 >
-                  ✨ Mosaics & Glass
+                  🏺 Beginner Wheel
                 </a>
                 <a 
-                  href="#bonsai" 
-                  className="rounded-full border bg-white/5 px-3 py-1.5 transition-all hover:scale-110 category-roots"
-                  style={{ animationDelay: '1s' }}
+                  href="#mosaics" 
+                  className="rounded-full border border-white/15 bg-white/5 px-3.5 py-1 text-xs font-medium text-white/90 transition hover:bg-white/15"
                 >
-                  🌱 Bonsai
+                  ✨ Glass &amp; Mosaics
                 </a>
                 <a 
                   href="#private-events" 
-                  className="rounded-full border bg-white/5 px-3 py-1.5 transition-all hover:scale-110 category-private"
-                  style={{ animationDelay: '1.5s' }}
+                  className="rounded-full border border-white/15 bg-white/5 px-3.5 py-1 text-xs font-medium text-white/90 transition hover:bg-white/15"
                 >
-                  🎉 Private Events
+                  🎉 Private Parties
                 </a>
               </div>
             </Reveal>
           </div>
 
           {/* Social Proof Stats */}
-          <div className="mx-auto mt-20 max-w-4xl">
-            <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+          <div className="mx-auto mt-14 max-w-4xl">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               <Reveal variant="scale" delay={400}>
-                <GlassCard interactive className="bg-gradient-mud p-6 text-center category-mud float-gentle" style={{ animationDelay: '0s' }}>
-                  <div className="text-3xl font-bold category-accent">150K+</div>
-                  <div className="mt-1 text-sm text-white/60">Happy Customers</div>
+                <GlassCard className="p-5 text-center">
+                  <div className="text-3xl font-bold text-amber-300">150K+</div>
+                  <div className="mt-1 text-xs text-white/60">Happy Guests</div>
                 </GlassCard>
               </Reveal>
               <Reveal variant="scale" delay={500}>
-                <GlassCard interactive className="bg-gradient-glass p-6 text-center category-glass float-gentle" style={{ animationDelay: '0.5s' }}>
-                  <div className="text-3xl font-bold category-accent">4.9★</div>
-                  <div className="mt-1 text-sm text-white/60">Average Rating</div>
+                <GlassCard className="p-5 text-center">
+                  <div className="text-3xl font-bold text-pink-300">4.9★</div>
+                  <div className="mt-1 text-xs text-white/60">Average Rating</div>
                 </GlassCard>
               </Reveal>
               <Reveal variant="scale" delay={600}>
-                <GlassCard interactive className="bg-gradient-crush p-6 text-center category-crush float-gentle" style={{ animationDelay: '1s' }}>
-                  <div className="text-3xl font-bold category-accent">70+</div>
-                  <div className="mt-1 text-sm text-white/60">Classes per Week</div>
+                <GlassCard className="p-5 text-center">
+                  <div className="text-3xl font-bold text-purple-300">70+</div>
+                  <div className="mt-1 text-xs text-white/60">Weekly Sessions</div>
                 </GlassCard>
               </Reveal>
               <Reveal variant="scale" delay={700}>
-                <GlassCard interactive className="bg-gradient-roots p-6 text-center category-roots float-gentle" style={{ animationDelay: '1.5s' }}>
-                  <div className="text-3xl font-bold category-accent">All Levels</div>
-                  <div className="mt-1 text-sm text-white/60">Welcome Here</div>
+                <GlassCard className="p-5 text-center">
+                  <div className="text-3xl font-bold text-cyan-300">BYOB</div>
+                  <div className="mt-1 text-xs text-white/60">Snacks &amp; Drinks</div>
                 </GlassCard>
               </Reveal>
             </div>
@@ -183,84 +185,56 @@ export default function CityHome({ params }: { params: { city: string } }) {
         <ScrollHint />
       </section>
 
-      {/* Sections */}
+      {/* Studio Location Card */}
+      <section className="relative z-20 mx-auto max-w-7xl px-6 py-10">
+        <GlassCard className="p-6 sm:p-8">
+          <div className="grid gap-6 md:grid-cols-3">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-pink-400">
+                Studio Address
+              </div>
+              <div className="mt-2 text-base font-semibold text-white">
+                {studio.streetAddress}
+              </div>
+              <div className="text-sm text-white/70">
+                {studio.addressLocality}, {studio.addressRegion} {studio.postalCode}
+              </div>
+              <div className="mt-3 text-xs text-white/50">
+                {city.param === 'chicago' ? 'Located in Pilsen near 18th St Pink Line.' : 'Located on Cross Street with easy parking.'}
+              </div>
+            </div>
+
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-purple-400">
+                Studio Atmosphere
+              </div>
+              <div className="mt-2 text-sm text-white/80 leading-relaxed">
+                BYOB friendly for adult evening sessions (21+). We provide glassware, openers, and ice. All materials and tools included with every class.
+              </div>
+            </div>
+
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
+                Questions &amp; Private Bookings
+              </div>
+              <div className="mt-2 text-sm text-white/80 leading-relaxed">
+                Planning a group outing or birthday party? Reach our team at{" "}
+                <a href="mailto:support@colorcocktailfactory.com" className="underline hover:text-white">
+                  support@colorcocktailfactory.com
+                </a>.
+              </div>
+            </div>
+          </div>
+        </GlassCard>
+      </section>
+
+      {/* City-Specific Sections */}
       {citySections.map((section) => (
         <StackedSection key={section.id} city={city} section={section} />
       ))}
 
       {/* Testimonials */}
       <Testimonials />
-
-      {/* Footer */}
-      <footer className="border-t border-white/10 bg-black/20 px-6 pb-16 pt-10 text-white/70">
-        <div className="mx-auto max-w-5xl">
-          {/* Newsletter Signup */}
-          <div className="mb-12">
-            <NewsletterSignup />
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/5 p-8 shadow-soft">
-            <h2 className="text-lg font-semibold text-white/90">
-              {city.label} Creative Workshops & Pottery Classes | Color Cocktail Factory
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-white/75">
-              Color Cocktail Factory is {city.label}&apos;s premier creative workshop studio offering hands-on pottery classes, 
-              wheel throwing, Turkish lamp making, glass fusion, mosaics, and more. Located in {city.param === 'chicago' ? 'Pilsen, Chicago' : 'downtown Eugene, Oregon'}, 
-              our expert-led workshops are perfect for date nights, team building, private events, birthdays, bachelorette parties, 
-              and unique experience gifts. All skill levels welcome - from complete beginners to experienced artists. 
-              Book online for same-day availability.
-            </p>
-            
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="text-left">
-                <h3 className="text-xs font-semibold uppercase tracking-wide text-white/80">Quick Links</h3>
-                <ul className="mt-2 space-y-2 text-sm">
-                  <li>
-                    <a 
-                      className="inline-block py-2 text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
-                      href={buildHomeBookLink(city)}
-                    >
-                      Book a Class
-                    </a>
-                  </li>
-                  <li>
-                    <a 
-                      className="inline-block py-2 text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
-                      href="/gift-cards"
-                    >
-                      Gift Cards
-                    </a>
-                  </li>
-                  <li>
-                    <a 
-                      className="inline-block py-2 text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
-                      href={`/${city.param}/private-parties`}
-                    >
-                      Private Events & Parties
-                    </a>
-                  </li>
-                  <li>
-                    <a 
-                      className="inline-block py-2 text-white/65 underline decoration-white/25 underline-offset-4 hover:text-white/90" 
-                      href="https://www.instagram.com/colorcocktailfactory" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      Instagram
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="mt-6 border-t border-white/10 pt-4">
-              <p className="text-xs text-white/55">
-                © {new Date().getFullYear()} Color Cocktail Factory. All rights reserved.
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }

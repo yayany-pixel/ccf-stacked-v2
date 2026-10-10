@@ -205,7 +205,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
     topics: ["spin a spell", "spinaspell", "cauldron", "halloween", "witch", "witchy", "spell"],
     cities: ["chicago", "eugene"],
     content:
-      "'Spin A Spell — Make your Own Clay Cauldron' is a beginner porcelain cauldron class that works for solo makers, date nights, girls' nights and families. It includes a clear food-safe glaze, and the listing says pieces are picked up 30 days after the class. The Chicago session's own booking link is https://colorcocktailfactory.as.me/spinaspell — verified against the Acuity listing for that class (appointment type 95588506). Eugene runs its own session with a separate booking link, so check the city first.",
+      "'Spin A Spell — Make your Own Clay Cauldron' is a beginner porcelain cauldron class that works for solo makers, date nights, girls' nights and families. Workshop registration covers instruction, clay, and sculpting tools. Optional professional firing and glazing services are available at the end of class ($10 bisque, $20 solid glaze, $35 specialty, $50 gold when available; approx. 3-week pickup). The Chicago session's own booking link is https://colorcocktailfactory.as.me/spinaspell — verified against the Acuity listing for that class (appointment type 95588506). Eugene runs its own session with a separate booking link, so check the city first.",
     source: "Acuity appointment types 95588506 (Chicago) and 96657402 (Eugene)",
     verifiedOn: "2026-09-12",
   },

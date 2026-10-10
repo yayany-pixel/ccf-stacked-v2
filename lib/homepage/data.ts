@@ -69,11 +69,8 @@ export function buildHomepageData(
     ).sort((left, right) => new Date(left.time).getTime() - new Date(right.time).getTime());
     const price = matches ? live.pricing.price : null;
     const currentPrice = typeof price === "number" && Number.isFinite(price) && price >= 0 ? price : null;
-    let formerAmount: number | null = EXPLICIT_FORMER_PRICES[definition.key] ?? null;
-    if (formerAmount === null && currentPrice !== null && currentPrice > 0) {
-      formerAmount = Math.round(currentPrice * 1.3);
-    }
-    const formerPrice = formerAmount !== null && (currentPrice === null || formerAmount > currentPrice)
+    const formerAmount: number | null = EXPLICIT_FORMER_PRICES[definition.key] ?? null;
+    const formerPrice = formerAmount !== null && currentPrice !== null && formerAmount > currentPrice
       ? { amount: formerAmount, evidence: "Regular studio price" }
       : null;
     return {
