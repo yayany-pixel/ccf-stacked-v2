@@ -29,12 +29,12 @@ export const COLLECTIONS: EventCollection[] = [
     description:
       "Step into the studio with zero experience and leave with handmade art! Our instructors guide you through foundational techniques step-by-step in a fun, relaxed, and welcoming environment.",
     longDescription:
-      "Whether you've never touched a pottery wheel, never cut stained glass, or never blended essential oils, our beginner workshops are built specifically for curious first-timers. Every ticket includes hands-on coaching, premium artist-grade materials, protective aprons, firing/glazing services, and same-day or pickup options. All studio locations welcome BYOB drinks and snacks.",
+      "Whether you've never touched a pottery wheel, never cut stained glass, or never blended essential oils, our beginner workshops are built specifically for curious first-timers. Every ticket includes hands-on coaching, premium artist-grade materials, protective aprons, and same-day take-home or optional kiln finishing. All studio locations welcome BYOB drinks and snacks.",
     benefits: [
       "Zero experience necessary — 100% guided by experienced studio artists",
-      "All clay, glaze, glass, plants, wax, and tools provided",
+      "All workshop clay, glass, plants, wax, and craft tools provided",
       "BYOB-friendly studios with complimentary glassware and chill vibes",
-      "Take home your creations or have them kiln-fired & glazed"
+      "Take home same-day creations or choose optional professional kiln finishing for pottery"
     ],
     filterPattern: /beginner|for beginners|101|first spin|cup creations|matcha bowl|candle making|terrarium|mosaic|wine glass/i,
     seo: {
@@ -101,8 +101,8 @@ export const COLLECTIONS: EventCollection[] = [
       "Our ceramics collection spans the full spectrum of pottery. Feel the rhythm of the pottery wheel as you center and pull clay into cups, matcha bowls, vases, and plates. Or explore sculptural handbuilding techniques like slab, coil, and pinch-forming to sculpt ceramic mugs, pipes & ashtrays, whimsical mushrooms, Halloween cauldrons, charcuterie boards, and custom pottery chess sets.",
     benefits: [
       "Individual wheel stations with dedicated instructor feedback",
-      "Professional non-toxic ceramic clay, tools, and colored glazes",
-      "Optional kiln firing and glazing service for durable food-safe finishes",
+      "Professional non-toxic ceramic clay and studio pottery tools",
+      "Optional kiln firing ($10) and professional glazing (from $20) for durable food-safe finishes (~3-week turnaround)",
       "Both single-session intro workshops and open studio options"
     ],
     filterPattern: /pottery|wheel|ceramic|handbuild|clay|cauldron|mug|bowl|vase|ashtray|plate/i,
@@ -165,6 +165,11 @@ export function getCollectionBySlug(slug: string): EventCollection | undefined {
 
 export function getSectionsForCollection(collection: EventCollection): SectionConfig[] {
   return sections.filter(section => {
+    // Explicitly prevent non-pottery craft sections from leaking into the pottery collection
+    if (collection.slug === "pottery") {
+      const nonPotteryIds = ["mosaic", "turkish", "candle", "bonsai", "terrarium", "painting", "glass-blowing", "glass-fusion", "wine-glass", "paper-pigment"];
+      if (nonPotteryIds.includes(section.id)) return false;
+    }
     const text = `${section.id} ${section.navLabel} ${section.heroTitle} ${section.heroDescription} ${section.slug} ${(section.tags || []).join(" ")}`;
     return collection.filterPattern.test(text);
   });

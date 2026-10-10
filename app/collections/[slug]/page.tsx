@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
   if (!collection) return { title: "Collection Not Found" };
 
   return {
-    title: collection.seo.metaTitle,
+    title: { absolute: collection.seo.metaTitle },
     description: collection.seo.metaDescription,
     alternates: {
       canonical: `https://colorcocktailfactory.com/collections/${collection.slug}`,
@@ -48,7 +48,12 @@ export default async function CollectionDetailPage({ params }: CollectionPagePro
   try {
     const all = await getAllEvents(45);
     upcomingEvents = all.filter(e => {
-      const text = `${e.title} ${e.category} ${e.description || ""}`.toLowerCase();
+      // For pottery collection, do not include non-pottery craft categories
+      if (collection.slug === "pottery") {
+        const nonPotteryCategories = ["Mosaics", "Turkish Lamps", "Candle Making", "Bonsai", "Terrariums", "Glass Art", "Painting", "Soap & Bath", "Watercolor"];
+        if (nonPotteryCategories.includes(e.category)) return false;
+      }
+      const text = `${e.title} ${e.category}`.toLowerCase();
       return collection.filterPattern.test(text);
     });
   } catch (err) {
@@ -119,7 +124,7 @@ export default async function CollectionDetailPage({ params }: CollectionPagePro
                 Book Directly On Acuity to Avoid Ticket Fees
               </h2>
               <p className="mt-2 text-sm text-white/75 max-w-2xl leading-relaxed">
-                Save on third-party service fees and secure your seats immediately by registering directly through our studio scheduler. Instant confirmations, guaranteed table placement, and free date changes up to 48 hours prior.
+                Save on third-party service fees and secure your seats immediately by registering directly through our studio scheduler. Instant confirmations, guaranteed table placement, and responsive studio support. Policies for cancellation and rescheduling vary by workshop; refer to your booking confirmation or contact support@colorcocktailfactory.com for assistance.
               </p>
             </div>
             <a

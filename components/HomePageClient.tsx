@@ -25,21 +25,18 @@ function getActivityCardMeta(activity: HomepageActivity): {
 } {
   const slug = (activity.detailUrl ? activity.detailUrl.replace(/^\/activities\//, "") : "") || activity.key.replace(/^(chicago|eugene|online)-/, "");
   const reg = getActivityDetailBySlug(slug);
-  if (reg) {
-    return {
-      availabilityLabel: reg.locationsOffered,
-      displayPrice: reg.ticketPriceDisplay,
-      detailUrl: `/activities/${reg.slug}`
-    };
-  }
   let availabilityLabel = "Chicago & Eugene";
   if (activity.mode === "online") availabilityLabel = "Live online";
   else if (activity.city === "chicago") availabilityLabel = "Chicago only";
   else if (activity.city === "eugene") availabilityLabel = "Eugene only";
+  else if (reg) availabilityLabel = reg.locationsOffered;
+
+  // Authoritative customer-facing price must match verified booking ticket
+  const displayPrice = activity.currentPrice !== null ? priceLabel(activity) : (reg?.ticketPriceDisplay ?? "See price at checkout");
 
   return {
     availabilityLabel,
-    displayPrice: priceLabel(activity),
+    displayPrice,
     detailUrl: activity.detailUrl || `/activities/${slug}`
   };
 }

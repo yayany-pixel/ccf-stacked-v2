@@ -460,7 +460,7 @@ export default function PrivateEventsPage() {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-green-400">✓</span>
-                      <span>Firing, glazing, and finishing (for pottery & glass)</span>
+                      <span>Glass finishing included; optional kiln firing/glazing for pottery</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-green-400">✓</span>

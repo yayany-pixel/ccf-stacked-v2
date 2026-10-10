@@ -52,6 +52,11 @@ export default function ActivityDetailView({
               <div className="flex flex-wrap items-center gap-2">
                 <TagPill>{activity.categoryIcon} {activity.categoryLabel}</TagPill>
                 <TagPill>{activity.locationsOffered}</TagPill>
+                {activity.adultThemed && (
+                  <span className="rounded-full border border-red-500/40 bg-red-500/20 px-3 py-1 text-xs font-bold text-red-200">
+                    🔞 18+ Adults Only
+                  </span>
+                )}
                 {activity.beginnerFriendly && <TagPill>✨ Beginner Friendly</TagPill>}
                 {activity.coversTwo && <TagPill>💕 Ticket for Two</TagPill>}
               </div>
@@ -295,8 +300,15 @@ export default function ActivityDetailView({
                         <GlassCard className="p-4 transition hover:border-white/30 hover:bg-white/10">
                           <div className="flex items-center justify-between gap-2">
                             <div>
-                              <div className="text-xs font-semibold text-pink-400 uppercase tracking-wide">
-                                {related.categoryLabel}
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-xs font-semibold text-pink-400 uppercase tracking-wide">
+                                  {related.categoryLabel}
+                                </span>
+                                {related.adultThemed && (
+                                  <span className="rounded bg-red-500/30 px-1 py-0.5 text-[10px] font-bold text-red-200">
+                                    18+
+                                  </span>
+                                )}
                               </div>
                               <h4 className="mt-1 text-sm font-semibold text-white group-hover:text-pink-200 transition">
                                 {related.title}

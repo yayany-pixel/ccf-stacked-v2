@@ -16,12 +16,22 @@ export const dynamic = 'force-dynamic';
 
 // Generate metadata for each event
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  if (params.slug.startsWith("eventbrite-")) return { title: "Find Current Class Dates" };
+  if (params.slug.startsWith("eventbrite-")) return { title: "Find Current Class Dates", robots: { index: false, follow: true } };
   const event = await getEventBySlug(params.slug);
   
   if (!event) {
+    const match = params.slug.match(/^acuity-(\d+)-/);
+    const item = match ? await getClassById(match[1]) : null;
+    if (item) {
+      return {
+        title: item.title,
+        description: item.description,
+        robots: { index: false, follow: true }
+      };
+    }
     return {
-      title: "Event Not Found"
+      title: "Class Schedule",
+      robots: { index: false, follow: false }
     };
   }
 
@@ -79,6 +89,21 @@ function formatEventDateRange(startDate: string, endDate: string, city: string):
   const start = new Date(startDate);
   const end = new Date(endDate);
   
+  if (city.toLowerCase() === "virtual" || city.toLowerCase() === "online") {
+    const centralDate = start.toLocaleDateString('en-US', {
+      timeZone: 'America/Chicago',
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    const centralStart = start.toLocaleTimeString('en-US', { timeZone: 'America/Chicago', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
+    const centralEnd = end.toLocaleTimeString('en-US', { timeZone: 'America/Chicago', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
+    const pacificStart = start.toLocaleTimeString('en-US', { timeZone: 'America/Los_Angeles', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
+    const pacificEnd = end.toLocaleTimeString('en-US', { timeZone: 'America/Los_Angeles', hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
+    return `${centralDate} from ${centralStart} to ${centralEnd} (${pacificStart} – ${pacificEnd} Pacific)`;
+  }
+
   const dateOptions: Intl.DateTimeFormatOptions = {
     timeZone: eventTimeZone(city),
     weekday: 'long',
@@ -198,7 +223,7 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
                     <div>
                       <div className="font-semibold text-white">Price</div>
                       <div className="text-white/70">
-                        {event.price === 0 ? 'Free' : `$${event.price.toFixed(2)} ${event.currency}`}
+                        {event.formattedPrice || (event.price === 0 ? 'Free' : `$${event.price.toFixed(2)} ${event.ticketUnit || "per ticket"}`)}
                       </div>
                     </div>
                   </div>

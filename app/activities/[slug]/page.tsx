@@ -24,23 +24,23 @@ export async function generateMetadata({
 
   if (!activity) {
     return {
-      title: "Activity Not Found | Color Cocktail Factory",
+      title: { absolute: "Activity Not Found | Color Cocktail Factory" },
       description: "This activity could not be found."
     };
   }
 
-  const title = `${activity.heroTitle} | Color Cocktail Factory`;
+  const fullTitle = `${activity.heroTitle} | Color Cocktail Factory`;
   const description = activity.heroDescription;
   const url = `https://colorcocktailfactory.com/activities/${activity.slug}`;
 
   return {
-    title,
+    title: { absolute: fullTitle },
     description,
     alternates: {
       canonical: url
     },
     openGraph: {
-      title,
+      title: fullTitle,
       description,
       url,
       type: "website",
@@ -48,7 +48,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: fullTitle,
       description,
       images: [activity.image.path || "/og-image.jpg"]
     }
@@ -62,11 +62,23 @@ export default function ActivityPage({ params }: { params: { slug: string } }) {
     notFound();
   }
 
-  // Get related activities from same or other categories
+  // Get related activities from same or other categories, protecting general audience
   const allActivities = getAllActivityDetails();
   const relatedActivities = allActivities
     .filter((a) => a.slug !== activity.slug)
-    .sort((a, b) => (a.category === activity.category ? -1 : 1))
+    .filter((a) => {
+      // General audience activities should prioritize general audience workshops
+      if (!activity.adultThemed && a.adultThemed) return false;
+      return true;
+    })
+    .sort((a, b) => {
+      // Prioritize same category, then beginner-friendly
+      if (a.category === activity.category && b.category !== activity.category) return -1;
+      if (b.category === activity.category && a.category !== activity.category) return 1;
+      if (a.beginnerFriendly && !b.beginnerFriendly) return -1;
+      if (b.beginnerFriendly && !a.beginnerFriendly) return 1;
+      return 0;
+    })
     .slice(0, 5);
 
   // JSON-LD structured data

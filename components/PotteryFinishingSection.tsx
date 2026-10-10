@@ -8,21 +8,21 @@ export default function PotteryFinishingSection() {
           Optional Firing &amp; Glazing
         </h2>
         <p className="mt-3 text-base leading-relaxed text-white/80">
-          Your class ticket includes the instruction, clay, and tools described above. Firing and glazing are optional and are not included in the class ticket. At the end of your session, you can choose whether to have your piece fired or glazed and select your preferred finish.
+          Your workshop includes the instruction, clay, and tools needed for the experience. Firing and glazing are optional and are not included in the class price. At the end of your session, you can choose whether to have your piece professionally finished.
         </p>
 
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-left text-sm text-white/90">
-            <caption className="sr-only">Optional pottery firing and glazing pricing</caption>
+            <caption className="sr-only">Approved pottery firing and glazing pricing</caption>
             <thead>
               <tr className="border-b border-white/15 text-xs font-semibold uppercase tracking-wider text-white/60">
-                <th scope="col" className="pb-3 pr-4">Finishing service</th>
+                <th scope="col" className="pb-3 pr-4">Finishing Service</th>
                 <th scope="col" className="pb-3 pl-4 text-right">Price</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/10">
               <tr>
-                <td className="py-3.5 pr-4 font-medium">Simple / bisque firing</td>
+                <td className="py-3.5 pr-4 font-medium">Bisque firing</td>
                 <td className="py-3.5 pl-4 text-right font-semibold text-amber-300">$10 per piece</td>
               </tr>
               <tr>
@@ -30,7 +30,7 @@ export default function PotteryFinishingSection() {
                 <td className="py-3.5 pl-4 text-right font-semibold text-amber-300">$20 per piece</td>
               </tr>
               <tr>
-                <td className="py-3.5 pr-4 font-medium">Fancy / specialty glaze</td>
+                <td className="py-3.5 pr-4 font-medium">Specialty/fancy glaze</td>
                 <td className="py-3.5 pl-4 text-right font-semibold text-amber-300">$35 per piece</td>
               </tr>
               <tr>
@@ -42,7 +42,7 @@ export default function PotteryFinishingSection() {
         </div>
 
         <p className="mt-6 text-sm leading-relaxed text-white/70 border-t border-white/10 pt-4">
-          Pieces left for firing or glazing are generally ready about three weeks after the workshop. This is an approximate turnaround, not a guaranteed collection date.
+          Finished pieces are generally ready for pickup in approximately three weeks. Completion times are estimates, not guarantees.
         </p>
       </div>
     </section>
