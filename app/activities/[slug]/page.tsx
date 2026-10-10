@@ -1,3 +1,4 @@
+import { buildSearchTitle, buildActivityDescription } from "@/lib/seo";
 import MetaActivityView from "@/components/MetaActivityView";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -29,8 +30,10 @@ export async function generateMetadata({
     };
   }
 
-  const fullTitle = `${activity.heroTitle} | Color Cocktail Factory`;
-  const description = activity.heroDescription;
+  const fullTitle = buildSearchTitle(activity.heroTitle);
+  const description = activity.slug === "gift-cards"
+    ? "Give a creative workshop experience at Color Cocktail Factory. Explore gift cards for pottery, painting and more, with location and booking details."
+    : buildActivityDescription(activity.heroDescription);
   const url = `https://colorcocktailfactory.com/activities/${activity.slug}`;
 
   return {

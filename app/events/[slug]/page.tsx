@@ -1,3 +1,4 @@
+import { buildSearchTitle, summarizeSearchDescription } from "@/lib/seo";
 import MetaActivityView from "@/components/MetaActivityView";
 import { eventTimeZone } from "@/lib/locations";
 import { getCatalog, getClassById } from "@/lib/askccf/catalog";
@@ -24,8 +25,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     const item = match ? await getClassById(match[1]) : null;
     if (item) {
       return {
-        title: item.title,
-        description: item.description,
+        title: { absolute: buildSearchTitle(item.title) },
+        description: summarizeSearchDescription(item.description, `Explore ${item.title} and find current class dates at Color Cocktail Factory.`),
         robots: { index: false, follow: true }
       };
     }
@@ -36,8 +37,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 
   return {
-    title: event.title,
-    description: event.description,
+    title: { absolute: buildSearchTitle(event.title) },
+    description: summarizeSearchDescription(event.description, `Explore ${event.title} in ${event.city}. View session details and book with Color Cocktail Factory.`),
     openGraph: {
       title: event.title,
       description: event.description,

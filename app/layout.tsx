@@ -18,11 +18,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "Color Cocktail Factory — Premium Creative Workshops in Chicago & Eugene | Pottery, Glass Art & More",
+    default: "Color Cocktail Factory | Pottery & Creative Workshops",
     template: "%s | Color Cocktail Factory"
   },
   description:
-    "Book unique, hands-on creative workshops in Chicago & Eugene. Expert-led pottery classes, wheel throwing, Turkish lamp making, glass fusion, mosaics, bonsai, candle making & more. Perfect for date nights, team building, birthdays, and bachelorette parties. Same-day availability. Beginner-friendly.",
+    "Explore pottery, painting, glass art and creative workshops at Color Cocktail Factory. Choose Chicago, Eugene or online classes and find upcoming dates.",
   metadataBase: new URL("https://colorcocktailfactory.com"),
   openGraph: {
     title: "Color Cocktail Factory — Creative Workshops in Chicago & Eugene",

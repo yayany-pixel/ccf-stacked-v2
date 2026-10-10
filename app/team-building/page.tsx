@@ -7,8 +7,8 @@ import { sections } from "@/lib/config";
 import { audiencePageBreadcrumbs } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = {
-  title: "Team Building Workshops | Corporate Events in Chicago & Eugene",
-  description: "Boost morale and creativity with hands-on team building workshops. Pottery, glass fusion, mosaics & more. Perfect for corporate events, office parties, and team bonding. Chicago & Eugene.",
+  title: "Team Building Workshops",
+  description: "Plan a creative team-building workshop in Chicago or Eugene. Explore pottery, mosaics and glass art, then request dates and a group quote.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/team-building"
   },

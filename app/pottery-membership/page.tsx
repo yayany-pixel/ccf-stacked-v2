@@ -8,7 +8,7 @@ import { ONLINE_CAULDRON_URL } from "@/lib/booking";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  title: "Six-Session Online Pottery Course | $150 | Color Cocktail Factory",
+  title: "Six-Session Online Pottery Course",
   description: "Learn pottery at home in six live online sessions for $150. Includes a beginner tabletop wheel, tools, and clay for the first session. Check current enrollment.",
   alternates: { canonical: "https://colorcocktailfactory.com/pottery-membership" },
   openGraph: {

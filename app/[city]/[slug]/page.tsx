@@ -101,9 +101,19 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
                 ))}
               </div>
 
-              <h1 className="mt-5 font-serif text-4xl leading-tight md:text-5xl">{section.heroTitle}</h1>
+              <h1 className="mt-5 font-serif text-4xl leading-tight md:text-5xl">{section.heroTitle} in {city.label}</h1>
 
               <p className="mt-4 text-base leading-relaxed text-white/80">{section.heroDescription}</p>
+              <section aria-label={`${city.label} studio details`} className="mt-5 rounded-xl border border-white/10 bg-white/5 p-4">
+                <h2 className="font-semibold">Your {city.label} studio</h2>
+                <p className="mt-2 text-sm text-white/80">{city.locationName}: {city.address}.</p>
+                <p className="mt-2 text-sm text-white/80">
+                  {city.param === "chicago"
+                    ? "Visit our Pilsen studio on West 18th Street. The booking calendar shows Chicago sessions in Central Time."
+                    : "Visit our Eugene studio on Cross Street. The booking calendar shows Eugene sessions in Pacific Time."}
+                  {" "}Check the calendar for current dates and availability before planning your visit.
+                </p>
+              </section>
 
               <div className="mt-6 flex flex-wrap gap-3">
                 <BookingLink
