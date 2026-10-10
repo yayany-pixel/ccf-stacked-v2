@@ -16,6 +16,8 @@ export function activityBookingUrl(city: string, activity: string): string {
 const ACTIVITY_PATTERNS: Record<string, RegExp> = {
   "date-night-wheel": /date night.*(?:pottery|wheel)/i,
   "beginner-wheel": /wheel throwing for beginners|beginners wheel throwing/i,
+  "cup-creations": /cup creation/i,
+  "matcha-bowl": /matcha/i,
   handbuilding: /handbuilding|ceramic mug|bunny cup|cat vase|mushroom pottery|pipe.*ashtray|pussy pottery|boobs coffee|dildos/i,
   mosaic: /mosaic(?! lamp)|mosaic creations/i,
   "turkish-lamp": /turkish.*lamp/i,

@@ -42,7 +42,8 @@ function testActivityPagesAndBookingFlow() {
     "pipe-and-ashtray",
     "charcuterie-board",
     "date-night-watercolor",
-    "vip-date-night-painting"
+    "vip-date-night-painting",
+    "matcha-bowl"
   ];
 
   for (const slug of dualCitySlugs) {

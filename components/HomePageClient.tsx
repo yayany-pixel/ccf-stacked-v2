@@ -19,23 +19,16 @@ import { HOMEPAGE_REVIEWS } from "@/lib/homepage/reviews";
 import { PRIVACY_EVENT } from "@/lib/privacy";
 
 function getActivityCardMeta(activity: HomepageActivity): {
-  availabilityLabel: string;
   displayPrice: string;
   detailUrl: string;
 } {
   const slug = (activity.detailUrl ? activity.detailUrl.replace(/^\/activities\//, "") : "") || activity.key.replace(/^(chicago|eugene|online)-/, "");
   const reg = getActivityDetailBySlug(slug);
-  let availabilityLabel = "Chicago & Eugene";
-  if (activity.mode === "online") availabilityLabel = "Live online";
-  else if (activity.city === "chicago") availabilityLabel = "Chicago only";
-  else if (activity.city === "eugene") availabilityLabel = "Eugene only";
-  else if (reg) availabilityLabel = reg.locationsOffered;
 
   // Authoritative customer-facing price must match verified booking ticket
   const displayPrice = activity.currentPrice !== null ? priceLabel(activity) : (reg?.ticketPriceDisplay ?? "See price at checkout");
 
   return {
-    availabilityLabel,
     displayPrice,
     detailUrl: activity.detailUrl || `/activities/${slug}`
   };
@@ -98,7 +91,6 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
       </div>
       <div className={styles.cardBody}>
         <div className={styles.badgeRow}>
-          <span className={styles.badgeAvailability}>{cardMeta.availabilityLabel}</span>
           {activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice && (
             <span className={styles.badgeSale}>⚡ Limited-Time Sale</span>
           )}

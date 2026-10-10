@@ -1130,7 +1130,7 @@ export const ACTIVITY_MANIFEST: ActivityDefinition[] = [
     ],
     "city": "eugene",
     "mode": "in-person",
-    "detailUrl": "/activities/beginner-wheel",
+    "detailUrl": "/activities/matcha-bowl",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=89287658",
     "priority": 7,
     "adultThemed": false,

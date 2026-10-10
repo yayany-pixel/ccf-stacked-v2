@@ -2483,10 +2483,10 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketPriceDisplay": "$55 per person",
-    "ticketUnit": "per person",
+    "ticketPriceDisplay": "Starting at $25 per ticket",
+    "ticketUnit": "per ticket",
     "beginnerFriendly": true,
-    "locationsOffered": "Chicago only",
+    "locationsOffered": "Chicago & Eugene",
     "image": {
       "filename": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl.webp",
       "driveFileId": "1eK1meuDixOc_lZWYmGh78TTphwljxCA2",
@@ -2519,7 +2519,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       },
       {
         "label": "Location",
-        "text": "Studio located at 1142 W. 18th Street, Chicago, IL 60608."
+        "text": "Offered in Chicago (1142 W. 18th St) and Eugene (3295 Cross St)."
       }
     ],
     "faqs": [
@@ -2571,6 +2571,17 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "price": 55,
         "priceUnit": "per person",
         "verifiedTitle": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 89287658,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=89287658",
+        "price": 25,
+        "priceUnit": "per ticket",
+        "verifiedTitle": "Eugene Wheel Throwing for Beginners: Matcha Bowl"
       }
     }
   },
