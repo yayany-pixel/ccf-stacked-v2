@@ -141,6 +141,11 @@
   text-transform: uppercase;
 }
 .saleBannerText {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
   color: #2c251b;
   font-size: 14px;
   line-height: 1.4;
@@ -148,6 +153,48 @@
 }
 .saleBannerText strong {
   color: #8f2d14;
+}
+.saleCountdown {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  color: #8f2d14;
+}
+.saleTimer {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.saleTimeUnit {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  position: relative;
+}
+.saleTimeNumber {
+  min-width: 2.5rem;
+  padding: 4px 6px;
+  background: #fdf8f2;
+  border: 1px solid #ebd8c2;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+}
+.saleTimeLabel {
+  color: #7a6e5d;
+  font-size: 8px;
+  letter-spacing: .5px;
+  line-height: 1.2;
+}
+.saleTimeSeparator {
+  position: absolute;
+  left: -8px;
+  top: 4px;
 }
 .saleBannerNote {
   color: #7a6e5d;
