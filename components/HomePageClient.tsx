@@ -16,6 +16,7 @@ import type { HomepageActivity, HomepageCity, HomepageData } from "@/lib/homepag
 import styles from "./HomePageClient.module.css";
 import { HOMEPAGE_REVIEWS } from "@/lib/homepage/reviews";
 import { PRIVACY_EVENT } from "@/lib/privacy";
+import WorkshopSaleBanner from "@/components/WorkshopSaleBanner";
 
 function getActivityCardMeta(activity: HomepageActivity): {
   displayPrice: string;
@@ -305,15 +306,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
       </header>
       <main tabIndex={-1} id="main-content" className={styles.main}>
         <div className={styles.intro}><h1>The future is <em>handmade...</em></h1><p>Come make something together.</p></div>
-        <aside className={styles.saleBanner} aria-label="Flash studio sale notice">
-          <div className={styles.saleBannerInner}>
-            <span className={styles.saleUrgencyPill}>⏰ Flash Sale</span>
-            <p className={styles.saleBannerText}>
-              <strong>Special workshop discount pricing active now</strong> — sale ends in a few hours!
-            </p>
-            <span className={styles.saleBannerNote}>Discount applied automatically at checkout · Strikethrough shows original price</span>
-          </div>
-        </aside>
+        <WorkshopSaleBanner />
         <div className={styles.filters} role="group" aria-label="Filter workshops">
           {HOMEPAGE_FILTERS.map(option => <button key={option} type="button" aria-pressed={filter === option} onClick={() => {
             if (filter === option) return;
