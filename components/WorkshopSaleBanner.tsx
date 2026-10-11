@@ -1,31 +1,33 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { resolveSaleDeadline, saleSecondsRemaining, saleTimeParts, WORKSHOP_SALE_CONFIG, type WorkshopSaleConfig } from "@/lib/homepage/sale";
+import { resolveSaleDeadline, saleSecondsRemaining, saleTimeUnits, WORKSHOP_SALE_CONFIG, type WorkshopSaleConfig } from "@/lib/homepage/sale";
 import styles from "./HomePageClient.module.css";
 
 export default function WorkshopSaleBanner({ config = WORKSHOP_SALE_CONFIG }: { config?: WorkshopSaleConfig }) {
-  const [clock, setClock] = useState({ seconds: 0, hourDigits: 2 });
+  const [secondsRemaining, setSecondsRemaining] = useState<number | null>(null);
 
   useEffect(() => {
     const deadline = resolveSaleDeadline(config, Date.now());
-    setClock({ seconds: 0, hourDigits: 2 });
-    if (deadline === null) return;
+    if (deadline === null) {
+      setSecondsRemaining(null);
+      return;
+    }
     const initialSeconds = saleSecondsRemaining(deadline, Date.now());
+    setSecondsRemaining(initialSeconds);
     if (initialSeconds === 0) return;
-    const hourDigits = Math.max(2, String(Math.floor(initialSeconds / 3600)).length);
+
     let expired = false;
     const update = () => {
       if (expired) return;
       const seconds = saleSecondsRemaining(deadline, Date.now());
-      setClock({ seconds, hourDigits });
+      setSecondsRemaining(seconds);
       if (seconds === 0) {
         expired = true;
         window.clearInterval(interval);
       }
     };
     const interval = window.setInterval(update, 1000);
-    update();
     document.addEventListener("visibilitychange", update);
     window.addEventListener("focus", update);
     return () => {
@@ -35,9 +37,9 @@ export default function WorkshopSaleBanner({ config = WORKSHOP_SALE_CONFIG }: { 
     };
   }, [config]);
 
-  const active = clock.seconds > 0;
-  const parts = saleTimeParts(clock.seconds, clock.hourDigits);
-  const labels = ["HOURS", "MINUTES", "SECONDS"];
+  const active = secondsRemaining !== null && secondsRemaining > 0;
+  const units = active ? saleTimeUnits(secondsRemaining) : [];
+  const accessibleText = units.map(u => `${Number(u.value)} ${u.label.toLowerCase()}`).join(", ");
 
   return (
     <aside className={styles.saleBanner} aria-label={active ? "Flash studio sale notice" : "Workshop offers"}>
@@ -47,11 +49,11 @@ export default function WorkshopSaleBanner({ config = WORKSHOP_SALE_CONFIG }: { 
           <strong>{active ? "Special workshop discount pricing active now" : "Workshop offers"}</strong>
           {active && <span className={styles.saleCountdown}>
             <span>— Sale ends in</span>
-            <span className={styles.saleTimer} role="timer" aria-live="off" aria-label={`Sale ends in ${Number(parts[0])} hours, ${Number(parts[1])} minutes, ${Number(parts[2])} seconds`}>
-              {parts.map((number, index) => <span key={labels[index]} className={styles.saleTimeUnit} aria-hidden="true">
+            <span className={styles.saleTimer} role="timer" aria-live="off" aria-label={`Sale ends in ${accessibleText}`}>
+              {units.map((unit, index) => <span key={unit.label} className={styles.saleTimeUnit} aria-hidden="true">
                 {index > 0 && <span className={styles.saleTimeSeparator}>:</span>}
-                <span className={styles.saleTimeNumber}>{number}</span>
-                <span className={styles.saleTimeLabel}>{labels[index]}</span>
+                <span className={styles.saleTimeNumber}>{unit.value}</span>
+                <span className={styles.saleTimeLabel}>{unit.label}</span>
               </span>)}
             </span>
           </span>}
