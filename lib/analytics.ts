@@ -34,6 +34,7 @@ export function safeUrl(value: string, marketing = false): string {
           "utm_content",
           "utm_term",
           "gclid",
+          "fbclid",
           "location",
         ]
       : ["appointmentType", "calendarID", "owner"]) {

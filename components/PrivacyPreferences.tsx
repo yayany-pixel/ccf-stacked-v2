@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { updateAnalyticsConsent } from "@/lib/analytics";
 import {
   DEFAULT_PREFERENCES, DENIED_PREFERENCES, OPEN_PRIVACY_EVENT, PRIVACY_EVENT,
-  currentPrivacyPreferences, googleConsentState, parsePrivacyPreferences, privacySignalDenied,
+  currentPrivacyPreferences, defaultVisitorPreferences, googleConsentState, parsePrivacyPreferences, privacySignalDenied,
   type PrivacyPreferences as Preferences,
 } from "@/lib/privacy";
 import styles from "./PrivacyPreferences.module.css";
@@ -35,7 +35,7 @@ export default function PrivacyPreferences() {
         if (!response.ok) throw new Error("unavailable");
         const payload = await response.json();
         if (!active || choiceVersion.current !== 0) return;
-        const saved = parsePrivacyPreferences(payload.preferences) ?? (payload.preferences === null ? DEFAULT_PREFERENCES : null);
+        const saved = parsePrivacyPreferences(payload.preferences) ?? (payload.preferences === null ? defaultVisitorPreferences() : null);
         if (!saved) throw new Error("invalid_preferences");
         const effective = privacySignalDenied() ? { ...DENIED_PREFERENCES } : saved;
         setChoices(effective);

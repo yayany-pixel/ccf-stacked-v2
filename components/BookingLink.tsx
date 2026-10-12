@@ -41,6 +41,27 @@ export interface BookingLinkProps {
  *   Book Now
  * </BookingLink>
  */
+function getAttributedHref(rawHref: string): string {
+  if (typeof window === "undefined" || !rawHref.startsWith("http")) return rawHref;
+  try {
+    const url = new URL(rawHref);
+    if (!url.hostname.includes("as.me") && !url.hostname.includes("acuityscheduling.com")) {
+      return rawHref;
+    }
+    const currentParams = new URLSearchParams(window.location.search);
+    const trackingKeys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "fbclid"];
+    for (const key of trackingKeys) {
+      const val = currentParams.get(key);
+      if (val && !url.searchParams.has(key) && !/@|%40/i.test(val)) {
+        url.searchParams.set(key, val.slice(0, 150));
+      }
+    }
+    return url.toString();
+  } catch {
+    return rawHref;
+  }
+}
+
 export default function BookingLink({
   href,
   children,
@@ -59,13 +80,15 @@ export default function BookingLink({
   const trackCTA = useCTATracking();
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const destinationUrl = getAttributedHref(href);
+
     // Track begin_checkout event (existing)
     trackBeginCheckout({
       city,
       class_name: classNameText,
       class_id: classId,
       class_category: classCategory,
-      link_url: href,
+      link_url: destinationUrl,
       placement: ctaLocation || "booking_cta",
     });
 
@@ -76,6 +99,11 @@ export default function BookingLink({
         text: typeof children === 'string' ? children : 'Book Now',
         type: ctaType,
       });
+    }
+
+    // Update target href on click if attributed parameters were added
+    if (destinationUrl !== href && !e.defaultPrevented) {
+      (e.currentTarget as HTMLAnchorElement).href = destinationUrl;
     }
 
     // Call optional onClick handler
