@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Offer Countdown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+  /* Layout: one centered clock face with four labeled units, the next reset time, and one line explaining the cycle. */
+  :root {
+    --bg: #eceee9;
+    --surface: #f7f8f5;
+    --fg: #14191b;
+    --muted: #5d6967;
+    --line: #cfd4cf;
+    --accent: #0b6e4f;
+    --font-digits: "Fragment Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --font-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f1514;
+      --surface: #172020;
+      --fg: #e9efec;
+      --muted: #94a5a1;
+      --line: #2a3836;
+      --accent: #5fd3a5;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1514;
+    --surface: #172020;
+    --fg: #e9efec;
+    --muted: #94a5a1;
+    --line: #2a3836;
+    --accent: #5fd3a5;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-body);
+    padding-inline: 16px;
+    padding-block: 24px;
+    display: grid;
+    place-items: center;
+  }
+  main {
+    width: 100%;
+    max-width: 640px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .label {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .clock {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: clamp(20px, 5vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+  }
+  .units {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .unit { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .num {
+    font-family: var(--font-digits);
+    font-variant-numeric: tabular-nums;
+    font-size: clamp(2rem, 11vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .cap {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .foot { display: flex; flex-direction: column; gap: 4px; }
+  .deadline { margin: 0; font-size: 0.95rem; color: var(--muted); }
+  .deadline b { color: var(--fg); font-weight: 600; }
+  .note { margin: 0; font-size: 0.8rem; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<main>
+  <div class="label" id="label">Offer ends</div>
+  <section class="clock" aria-label="Countdown to the end of the current offer">
+    <div class="units" role="timer" aria-live="off">
+      <div class="unit"><span class="num" id="d">--</span><span class="cap">Days</span></div>
+      <div class="unit"><span class="num" id="h">--</span><span class="cap">Hours</span></div>
+      <div class="unit"><span class="num" id="m">--</span><span class="cap">Minutes</span></div>
+      <div class="unit"><span class="num" id="s">--</span><span class="cap">Seconds</span></div>
+    </div>
+    <div class="foot">
+      <p class="deadline" id="deadline"></p>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  // Settings. Every visitor sees the same cycle because it is calculated from these fixed values.
+  var ZONE = "America/Chicago";   // time zone the resets are tied to
+  var ZONE_LABEL = "Chicago";
+  var ANCHOR = [2026, 10, 11];    // year, month, day of any reset day (resets happen at 12:00 AM in ZONE)
+  var CYCLE_DAYS = 3;             // length of each offer period
+  var LABEL = "Offer ends";
+
+  // BEGIN CYCLE
+  var fmt = new Intl.DateTimeFormat("en-US", {
+    timeZone: ZONE, hourCycle: "h23",
+    year: "numeric", month: "numeric", day: "numeric",
+    hour: "numeric", minute: "numeric", second: "numeric"
+  });
+  function parts(ms) {
+    var o = {};
+    fmt.formatToParts(new Date(ms)).forEach(function (p) { o[p.type] = +p.value; });
+    return o;
+  }
+  function offsetAt(ms) {
+    var p = parts(ms);
+    return Date.UTC(p.year, p.month - 1, p.day, p.hour, p.minute, p.second) - Math.floor(ms / 1000) * 1000;
+  }
+  function zoneMidnight(y, m, d) {
+    var guess = Date.UTC(y, m - 1, d);
+    var t = guess - offsetAt(guess);
+    var off2 = offsetAt(t);
+    if (guess - off2 !== t) t = guess - off2;
+    return t;
+  }
+  function cycleEnd(nowMs) {
+    var p = parts(nowMs);
+    var days = Math.round((Date.UTC(p.year, p.month - 1, p.day) - Date.UTC(ANCHOR[0], ANCHOR[1] - 1, ANCHOR[2])) / 86400000);
+    var cycle = Math.floor(days / CYCLE_DAYS);
+    return zoneMidnight(ANCHOR[0], ANCHOR[1], ANCHOR[2] + (cycle + 1) * CYCLE_DAYS);
+  }
+  // END CYCLE
+
+  var els = {
+    d: document.getElementById("d"),
+    h: document.getElementById("h"),
+    m: document.getElementById("m"),
+    s: document.getElementById("s")
+  };
+  var deadlineEl = document.getElementById("deadline");
+  var shownEnd = null;
+  document.getElementById("label").textContent = LABEL;
+
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+
+  function endText(ms) {
+    try {
+      return new Date(ms).toLocaleString(undefined, {
+        weekday: "short", month: "short", day: "numeric",
+        hour: "numeric", minute: "2-digit", timeZoneName: "short"
+      });
+    } catch (e) { return new Date(ms).toString(); }
+  }
+
+  function tick() {
+    var now = Date.now();
+    var end = cycleEnd(now);
+    // Counting from a fresh cycle starts at one second under the full length (for 3 days: 02 23 59 59).
+    var secs = Math.max(0, Math.ceil((end - now) / 1000) - 1);
+    els.d.textContent = pad(Math.floor(secs / 86400));
+    els.h.textContent = pad(Math.floor((secs % 86400) / 3600));
+    els.m.textContent = pad(Math.floor((secs % 3600) / 60));
+    els.s.textContent = pad(secs % 60);
+    if (end !== shownEnd) {
+      shownEnd = end;
+      deadlineEl.innerHTML = 'Ends <b></b>';
+      deadlineEl.querySelector("b").textContent = endText(end);
+    }
+  }
+
+  tick();
+  setInterval(tick, 250);
+})();
+</script>
+</body>
+</html>
