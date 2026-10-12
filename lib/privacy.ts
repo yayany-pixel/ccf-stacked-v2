@@ -26,6 +26,33 @@ export function privacySignalDenied(): boolean {
   );
 }
 
+/**
+ * Detects whether the visitor arrived directly via an advertising link
+ * (e.g., Meta fbclid, Google gclid, or paid campaign UTM parameters).
+ */
+export function hasAdClickSignal(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const search = window.location.search;
+    return /[?&](fbclid|gclid|utm_medium=(?:cpc|paid|ad)|utm_source=(?:facebook|instagram|meta))[&=]/i.test(search);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Returns the effective default preferences for a new visitor without a saved choice.
+ * Visitors arriving via paid advertising links get marketing enabled so the pixel
+ * can train and attribute conversions, unless browser privacy signals (GPC/DNT) request denial.
+ */
+export function defaultVisitorPreferences(): PrivacyPreferences {
+  if (privacySignalDenied()) return { ...DENIED_PREFERENCES };
+  if (hasAdClickSignal()) {
+    return { analytics: true, marketing: true };
+  }
+  return { ...DEFAULT_PREFERENCES };
+}
+
 export function currentPrivacyPreferences(): PrivacyPreferences {
   if (typeof window === "undefined" || privacySignalDenied()) return { ...DENIED_PREFERENCES };
   return parsePrivacyPreferences(window.ccfPrivacyPreferences) ?? { ...DENIED_PREFERENCES };

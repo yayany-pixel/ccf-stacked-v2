@@ -15,7 +15,7 @@
     "test": "node --import tsx tests/selftest.ts && node --import tsx tests/askccf-regression.ts && node --import tsx tests/acuity-mcp.ts && node --import tsx tests/site-repairs.ts && node --import tsx tests/qa-comprehensive-repairs.ts && node --import tsx tests/live-pricing-parity.ts",
     "test:analytics": "node --import tsx tests/analytics.ts && node --import tsx tests/analytics-components.tsx && node --import tsx tests/analytics-webhook.ts && node --import tsx tests/visitor-comparison.tsx",
     "test:analytics:browser": "node tests/analytics-browser.cjs",
-    "test:meta": "node --import tsx tests/meta.ts",
+    "test:meta": "node --import tsx tests/meta.ts && node --import tsx tests/meta-ads-intelligence.ts",
     "test:meta:browser": "node tests/analytics-browser.cjs && node tests/meta-navigation.cjs"
   },
   "dependencies": {
