@@ -54,9 +54,6 @@ const handbuildingGroup: SectionConfig = {
     { label: "Kurinuki", slug: "kurinuki" },
     { label: "Bunny Cup", slug: "bunny-cup" },
     { label: "Cat Vase", slug: "cat-vase" },
-    { label: "Pipe & Ashtray", slug: "pipe-ashtray" },
-    { label: "Dildos", slug: "dildos" },
-    { label: "Vulva Cup", slug: "vulva-cup" },
     { label: "Cup & Bowl", slug: "cup-bowl" },
     { label: "Sake Set", slug: "sake-set" },
     { label: "Heart Bowl", slug: "heart-bowl" }

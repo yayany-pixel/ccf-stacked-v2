@@ -173,11 +173,11 @@ for (const [slug, items] of groupedManifest.entries()) {
   const experienceList = [
     {
       title: "Guided Instruction & Atmosphere",
-      body: `Join our instructors for an engaging, hands-on session creating ${title.toLowerCase()}. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side.`
+      body: `Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side.`
     },
     {
       title: "Materials & Equipment Provided",
-      body: `All materials, tools, and personalized artist coaching are provided for the duration of the workshop. ${isPottery ? "For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try." : ""}`
+      body: `All materials, tools, and personalized artist coaching are provided for the duration of the workshop. ${isPottery ? (/wheel/i.test(title) ? "For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try." : "For handbuilding, we'll guide you through shaping and attaching clay to create your piece.") : ""}`
     }
   ];
 
@@ -224,11 +224,12 @@ for (const [slug, items] of groupedManifest.entries()) {
     tags: sec ? sec.tags : [title, "Workshop", "Hands-on", "BYOB"],
     valueCards: sec ? sec.valueCards : [
       { label: "GUIDED", title: "Expert Support", body: "Hands-on coaching throughout the workshop." },
-      { label: "ALL-INCLUSIVE", title: "Materials Provided", body: "All studio tools and supplies ready for you." },
+      { label: "ALL INCLUDED", title: "Materials Provided", body: "All studio tools and supplies ready for you." },
       { label: "RELAXED", title: "BYOB Friendly", body: "Unwind with your favorite drinks and playlist." }
     ],
-    scheduleRows: sec ? sec.scheduleRows : [],
-    destinations
+    adultThemed: primary.adultThemed || false,
+    ageRestriction: primary.ageRestriction || undefined,
+    destinations,
   };
 }
 
@@ -340,6 +341,8 @@ export type ActivityDetail = {
   tags: string[];
   valueCards: { label: string; title: string; body: string }[];
   scheduleRows?: { time: string; note?: string; href?: string }[];
+  adultThemed?: boolean;
+  ageRestriction?: string;
   destinations: {
     chicago?: ActivityDestination;
     eugene?: ActivityDestination;

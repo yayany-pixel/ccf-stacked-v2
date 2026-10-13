@@ -63,7 +63,7 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
           onClick={handleClick}
         data-analytics-private-party="true"
           className="inline-flex items-center gap-3 rounded-2xl border border-purple-400/30 bg-gradient-to-r from-purple-500/20 to-pink-500/20 px-8 py-4 text-lg font-bold transition hover:scale-105 hover:border-purple-400/50"
-          aria-label="Request a private party quote"
+          aria-label="Plan Your Private Event"
         >
           <span className="text-2xl">🎉</span>
           <span>Plan Your Private Event →</span>
