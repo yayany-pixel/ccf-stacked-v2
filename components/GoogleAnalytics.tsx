@@ -3,7 +3,7 @@ import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { reportWebVitals, trackPageView, safeUrl } from "@/lib/analytics";
-import { currentPrivacyPreferences, googleConsentState, PRIVACY_EVENT } from "@/lib/privacy";
+import { currentPrivacyPreferences, googleConsentState, PRIVACY_EVENT, defaultVisitorPreferences } from "@/lib/privacy";
 let initialized = false;
 let vitals = false;
 let analyticsConfigured = false;
@@ -23,11 +23,9 @@ function GoogleAnalyticsInner() {
     };
     if (!initialized) {
       initialized = true;
+      const initialPreferences = defaultVisitorPreferences();
       window.gtag("consent", "default", {
-        analytics_storage: "denied",
-        ad_storage: "denied",
-        ad_user_data: "denied",
-        ad_personalization: "denied",
+        ...googleConsentState(initialPreferences),
         wait_for_update: 500,
       });
       window.gtag("js", new Date());
@@ -71,7 +69,7 @@ function GoogleAnalyticsInner() {
     <Script
       id="google-tag"
       src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`}
-      strategy="afterInteractive"
+      strategy="lazyOnload"
     />
   ) : null;
 }

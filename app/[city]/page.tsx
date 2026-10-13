@@ -92,9 +92,9 @@ export default function CityHome({ params }: { params: { city: string } }) {
 
             <Reveal delay={200} variant="fade-up">
               <h1 className="mt-4 font-serif text-5xl font-light leading-tight tracking-wide sm:text-7xl">
-                Where Creativity
+                Pottery &amp; Creative Workshops
                 <br />
-                <span className="italic font-normal">Takes Shape in {city.label}</span>
+                <span className="italic font-normal">in {city.label}</span>
               </h1>
             </Reveal>
 

@@ -100,42 +100,9 @@ export default function TeachLayout({
       </header>
 
       {/* Main Content */}
-      <main id="main-content" tabIndex={-1} className="pt-24">
+      <main id="main-content" tabIndex={-1} className="pt-24 pb-12">
         {children}
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-white/10 bg-black/20 py-12">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="grid gap-8 md:grid-cols-3">
-            <div>
-              <h3 className="mb-3 text-sm font-semibold">Teach with CCF</h3>
-              <p className="text-sm text-white/60">
-                Join our team of passionate instructors and inspire creativity in USA and Canada.
-              </p>
-            </div>
-            <div>
-              <h3 className="mb-3 text-sm font-semibold">Quick Links</h3>
-              <ul className="space-y-2 text-sm text-white/60">
-                <li><Link href="/teach/apply" className="hover:text-white">Apply Now</Link></li>
-                <li><Link href="/teach/faq" className="hover:text-white">FAQ</Link></li>
-                <li><Link href="/teach/instructors/login" className="hover:text-white">Instructor Portal — Coming Soon</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="mb-3 text-sm font-semibold">Main Site</h3>
-              <ul className="space-y-2 text-sm text-white/60">
-                <li><Link href="/chicago" className="hover:text-white">Book Classes - Chicago</Link></li>
-                <li><Link href="/eugene" className="hover:text-white">Book Classes - Eugene</Link></li>
-                <li><Link href="/blog" className="hover:text-white">Blog</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-8 border-t border-white/10 pt-8 text-center text-xs text-white/50">
-            © {new Date().getFullYear()} Color Cocktail Factory. All rights reserved.
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

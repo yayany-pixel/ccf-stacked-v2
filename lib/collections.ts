@@ -156,6 +156,28 @@ export const COLLECTIONS: EventCollection[] = [
       metaTitle: "Bonsai, Terrarium & Candle Making Classes | Color Cocktail Factory",
       metaDescription: "Hands-on botanical and aroma workshops. Style your own bonsai tree, construct a miniature glass terrarium, or pour custom scented soy candles."
     }
+  },
+  {
+    slug: "adults-only",
+    title: "18+ Adult-Themed Workshops",
+    subtitle: "Cheeky, creative, and strictly for adults.",
+    badge: "ADULTS ONLY",
+    icon: "🔞",
+    coverImage: "/images/classes/approved-21-4b62d3e4e69b.webp", // Defaulting to one of the approved images
+    description:
+      "Join us for a uniquely creative and cheeky night out. These 18+ workshops focus on adult-themed ceramic projects, from anatomical mugs to playful pipes.",
+    longDescription:
+      "Unleash your wild side in our adult-themed pottery workshops! These sessions are designed for groups, date nights, or solo creators looking to sculpt something a little more adventurous. From playful anatomical mugs and pipes to cheeky sculptures, our instructors provide a safe, hilarious, and completely judgment-free zone. Must be 18+ to attend and 21+ to BYOB.",
+    benefits: [
+      "Strictly 18+ attendees only (21+ for BYOB alcohol)",
+      "Hilarious, judgment-free creative environment",
+      "All clay, tools, and personalized instruction included"
+    ],
+    filterPattern: /pussy-pottery|dildos|boobs|pipe-ashtray|vulva-cup/i,
+    seo: {
+      metaTitle: "18+ Adult Pottery Classes | Color Cocktail Factory",
+      metaDescription: "Explore our cheeky, adult-themed creative workshops. Sculpt anatomical mugs, pipes, and more in a judgment-free, BYOB-friendly environment. Must be 18+ to attend."
+    }
   }
 ];
 

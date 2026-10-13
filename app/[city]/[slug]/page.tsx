@@ -42,7 +42,17 @@ export async function generateMetadata({
     // 200 before the page body can call notFound()).
     notFound();
   }
-  return buildActivityMetadata(city, section);
+  
+  const metadata = buildActivityMetadata(city, section);
+  
+  // Enforce primary canonical to /activities/[slug] to prevent duplicate content issues
+  // between /chicago/[slug], /eugene/[slug] and /activities/[slug]
+  return {
+    ...metadata,
+    alternates: {
+      canonical: `https://colorcocktailfactory.com/activities/${section.slug}`
+    }
+  };
 }
 
 export default function DetailPage({ params }: { params: { city: string; slug: string } }) {
@@ -101,7 +111,7 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
                 ))}
               </div>
 
-              <h1 className="mt-5 font-serif text-4xl leading-tight md:text-5xl">{section.heroTitle}</h1>
+              <h1 className="mt-5 font-serif text-4xl leading-tight md:text-5xl">{section.heroTitle.includes('Class') || section.heroTitle.includes('Workshop') ? section.heroTitle : `${section.heroTitle} Class`} in {city.label}</h1>
 
               <p className="mt-4 text-base leading-relaxed text-white/80">{section.heroDescription}</p>
 

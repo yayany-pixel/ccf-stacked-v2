@@ -70,6 +70,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const activityPages: MetadataRoute.Sitemap = activitySlugs.map((slug) => ({
     url: `${base}/activities/${slug}`,
     changeFrequency: "weekly",
+    lastModified: new Date(),
     priority: 0.85
   }));
 
@@ -78,9 +79,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     sections.map((s) => ({
       url: `${base}/${c}/${s.slug}`,
       changeFrequency: "weekly",
+      lastModified: new Date(),
       priority: 0.8
     }))
   );
+
+  // Teach pages
+  const teachPages: MetadataRoute.Sitemap = [
+    {
+      url: `${base}/teach`,
+      changeFrequency: "monthly",
+      priority: 0.8
+    },
+    {
+      url: `${base}/teach/faq`,
+      changeFrequency: "monthly",
+      priority: 0.7
+    }
+  ];
 
   // Blog pages - medium-high priority for SEO
   const blogIndex: MetadataRoute.Sitemap = [
@@ -150,6 +166,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...activitiesIndex,
     ...activityPages,
     ...cityActivityPages,
+    ...teachPages,
     ...blogIndex,
     ...blogPostPages,
     ...authorPages,

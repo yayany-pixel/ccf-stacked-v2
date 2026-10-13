@@ -151,7 +151,7 @@ export default function StackedSection({
                           {section.subClasses.map((subClass) => (
                             <Link
                               key={subClass.slug}
-                              href={`/${city.param}/${subClass.slug}`}
+                              href={`/activities/${subClass.slug}`}
                               className="rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-xs transition-all hover:border-purple-400/40 hover:bg-white/10 hover:scale-105"
                             >
                               {subClass.label}

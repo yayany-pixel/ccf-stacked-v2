@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import HomePageClient from "@/components/HomePageClient";
 import { getHomepageData } from "@/lib/homepage/server";
+import HomepageStructuredData from "@/components/HomepageStructuredData";
 
 export const revalidate = 120;
 
@@ -25,5 +26,11 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage({ searchParams }: { searchParams: { location?: string } }) {
-  return <HomePageClient initialData={await getHomepageData()} initialCity={searchParams.location === "eugene" ? "eugene" : "chicago"} />;
+  const data = await getHomepageData();
+  return (
+    <>
+      <HomepageStructuredData data={data} />
+      <HomePageClient initialData={data} initialCity={searchParams.location === "eugene" ? "eugene" : "chicago"} />
+    </>
+  );
 }

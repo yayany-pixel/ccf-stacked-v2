@@ -95,7 +95,7 @@ export default function NewsletterSignup() {
                 </div>
               )}
 
-              <p className="mt-3 text-center text-xs text-white/50">
+              <p className="mt-3 text-center text-xs text-white/70">
                 We respect your privacy. Unsubscribe anytime. 10-15% off your first workshop!
               </p>
             </form>

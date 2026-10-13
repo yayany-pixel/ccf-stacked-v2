@@ -1,6 +1,7 @@
 import Link from "next/link";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
+import { PRICING } from "@/lib/constants";
 
 export default function TeachPayPreview() {
   const highlights = [
@@ -12,7 +13,7 @@ export default function TeachPayPreview() {
     {
       amount: "+ Finishing Fees",
       role: "Additional Income",
-      note: "$5 bisque + $10 glaze per piece"
+      note: `$${PRICING.finishing.bisque} bisque + $${PRICING.finishing.glazeSolid} glaze per piece`
     },
     {
       amount: "Supplies Included",
