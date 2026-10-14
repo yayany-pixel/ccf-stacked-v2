@@ -137,7 +137,6 @@ const handbuildingGroup: SectionConfig = {
   // Sub-classes for Eugene handbuilding
   subClasses: [
     { label: "Ceramic Mug & Bowl", slug: "cup-bowl" },
-    { label: "Pipe & Ashtray", slug: "pipe-ashtray" },
     { label: "Mushroom Pottery", slug: "mushroom-pottery" },
     { label: "Charcuterie Board", slug: "charcuterie-board" },
     { label: "Ceramic Chess Set", slug: "chess-set" },

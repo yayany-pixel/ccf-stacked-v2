@@ -29,7 +29,9 @@ export default function PrivacyPreferences() {
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 8000);
     setSignalDenied(privacySignalDenied());
-    applyPreferences(DENIED_PREFERENCES);
+    const initialPrefs = defaultVisitorPreferences();
+    applyPreferences(initialPrefs);
+    setChoices(initialPrefs);
     fetch("/api/privacy", { cache: "no-store", signal: controller.signal })
       .then(async response => {
         if (!response.ok) throw new Error("unavailable");

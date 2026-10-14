@@ -1,5 +1,6 @@
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
+import { PRICING } from "@/lib/constants";
 
 interface TeachHowItWorksProps {
   detailed?: boolean;
@@ -29,7 +30,7 @@ export default function TeachHowItWorks({ detailed = false }: TeachHowItWorksPro
       number: "4",
       title: "Start Teaching!",
       description: "We send you bookings, you teach the classes. You handle instruction, firing, and customer pickup/delivery.",
-      details: detailed ? "CCF handles all marketing and bookings. When customers book a date night class in your area, you receive the booking notification. You teach the 2-hour wheel-throwing session, then handle bisque firing, glazing guidance, glaze firing, and final piece pickup or shipping. Finishing fees ($5 bisque, $10 glaze) go to you." : null
+      details: detailed ? `CCF handles all marketing and bookings. When customers book a date night class in your area, you receive the booking notification. You teach the 2-hour wheel-throwing session, then handle bisque firing, glazing guidance, glaze firing, and final piece pickup or shipping. Finishing fees ($${PRICING.finishing.bisque} bisque, $${PRICING.finishing.glazeSolid} glaze) go to you.` : null
     }
   ];
 

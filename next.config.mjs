@@ -48,6 +48,7 @@ const nextConfig = {
       { source: '/terrarium', destination: '/activities/terrarium', permanent: true },
       { source: '/candles', destination: '/activities/candle-making', permanent: true },
       { source: '/glass-blowing', destination: '/activities/glass-blowing', permanent: true },
+      { source: '/blog/pottery-classes-chicago-guide', destination: '/blog/chicago-pottery-classes-beginners-guide', permanent: true },
       { source: '/general-1-4', destination: '/activities/glass-fusion', permanent: true },
       { source: '/general-clean-2', destination: '/activities/paint-pottery', permanent: true },
       { source: '/cauldron', destination: '/activities/cauldron-pottery', permanent: true },

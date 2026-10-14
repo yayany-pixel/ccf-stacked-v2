@@ -3,8 +3,7 @@ import type { City, SectionConfig } from "@/lib/config";
 
 export function buildCityMetadata(city: City): Metadata {
   const isChicago = city.param === "chicago";
-  const neighborhood = isChicago ? "Pilsen" : "downtown Eugene";
-  const state = isChicago ? "Illinois" : "Oregon";
+  const locationText = isChicago ? "Pilsen, Chicago" : "Eugene, Oregon";
   const nearbyAreas = isChicago 
     ? "West Loop, South Loop, Bridgeport, Chinatown"
     : "Whiteaker, Downtown, University District";
@@ -12,10 +11,10 @@ export function buildCityMetadata(city: City): Metadata {
   
   return {
     title: { absolute: fullTitle },
-    description: `Top-rated creative workshops in ${neighborhood}, ${city.label}, ${state}. Expert pottery classes, wheel throwing, Turkish lamps, glass fusion, mosaics. Perfect for date nights, birthdays, team building. Walk-ins welcome! Serving ${nearbyAreas}. Book online today.`,
+    description: `Top-rated creative workshops in ${locationText}. Expert pottery classes, wheel throwing, Turkish lamps, glass fusion, mosaics. Perfect for date nights, birthdays, team building. Walk-ins welcome! Serving ${nearbyAreas}. Book online today.`,
     openGraph: {
       title: `Color Cocktail Factory — Creative Workshops in ${city.label}`,
-      description: `Join us in ${neighborhood} for pottery, glass art, and creative workshops. Perfect for beginners, couples, and groups. Book today!`,
+      description: `Join us in ${locationText} for pottery, glass art, and creative workshops. Perfect for beginners, couples, and groups. Book today!`,
       url: `https://colorcocktailfactory.com/${city.param}`,
       type: "website",
       locale: "en_US",
@@ -25,7 +24,7 @@ export function buildCityMetadata(city: City): Metadata {
     twitter: {
       card: "summary_large_image",
       title: `Creative Workshops in ${city.label}`,
-      description: `Pottery, glass art & more in ${neighborhood}`
+      description: `Pottery, glass art & more in ${locationText}`
     },
     alternates: {
       canonical: `https://colorcocktailfactory.com/${city.param}`

@@ -1,7 +1,7 @@
 /**
  * Centralized Activity Registry
  * Authoritative source of truth for all active workshops, descriptions, verified Acuity destinations,
- * pricing, and location routing.
+ * and location routing.
  */
 
 export type ActivityDestination = {
@@ -31,8 +31,6 @@ export type ActivityDetail = {
   duration: string;
   ticketUnit: string;
   beginnerFriendly: boolean;
-  adultThemed?: boolean;
-  ageRestriction?: string | null;
   locationsOffered: "Chicago & Eugene" | "Chicago only" | "Eugene only" | "Live online";
   image: {
     path: string;
@@ -51,6 +49,8 @@ export type ActivityDetail = {
   tags: string[];
   valueCards: { label: string; title: string; body: string }[];
   scheduleRows?: { time: string; note?: string; href?: string }[];
+  adultThemed?: boolean;
+  ageRestriction?: string;
   destinations: {
     chicago?: ActivityDestination;
     eugene?: ActivityDestination;
@@ -74,7 +74,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketUnit": "per ticket",
+    "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
     "image": {
@@ -90,11 +90,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating cauldron pottery. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -139,7 +139,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -149,7 +149,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -158,7 +158,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95588506",
-        "priceUnit": "per ticket",
+        "priceUnit": "per person",
         "verifiedTitle": "Spin A Spell- Make your Own Clay Cauldron"
       },
       "eugene": {
@@ -168,7 +168,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96657402",
-        "priceUnit": "per ticket",
+        "priceUnit": "per person",
         "verifiedTitle": "Spin A Spell- Make your Own Clay Cauldron"
       }
     }
@@ -205,7 +205,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating date night on the wheel. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -273,20 +273,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Clay is teamwork training."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Fri · 5:30–7:30 PM",
-        "note": "Best for after-work"
-      },
-      {
-        "time": "Sat · 7:30–9:30 PM",
-        "note": "Peak date-night energy"
-      },
-      {
-        "time": "Sun · 5:30–7:30 PM",
-        "note": "Chill + romantic"
-      }
-    ],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -325,7 +312,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketUnit": "per ticket",
+    "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
     "image": {
@@ -341,7 +328,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating wheel throwing for beginners. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -408,20 +395,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Friendly coaching, zero judgment."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Sat · 2:30 PM",
-        "note": "Strongest slot"
-      },
-      {
-        "time": "Wed · 5:30 PM",
-        "note": "Midweek favorite"
-      },
-      {
-        "time": "Fri · 7:30 PM",
-        "note": "Weekend energy"
-      }
-    ],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -430,7 +404,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79006616",
-        "priceUnit": "per ticket",
+        "priceUnit": "per person",
         "verifiedTitle": "Wheel Throwing for Beginners - Chicago"
       },
       "eugene": {
@@ -440,123 +414,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
           13582962
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=93539343",
-        "priceUnit": "per ticket",
-        "verifiedTitle": "Eugene Wheel Throwing for Beginners: Cup creations"
-      }
-    }
-  },
-  "cup-creations": {
-    "slug": "cup-creations",
-    "title": "Cup Creations on the Wheel",
-    "navLabel": "Cup Creations",
-    "heroTitle": "Cup Creations on the Wheel",
-    "heroDescription": "Master the pottery wheel while shaping your own custom drinking cup. Guided step-by-step from centering the clay to pulling the walls.",
-    "shortDescription": "Learn wheel throwing techniques while creating your own handmade ceramic cup.",
-    "category": "mud-room",
-    "categoryLabel": "Mud Room",
-    "categoryIcon": "🏺",
-    "categoryColorClass": "category-mud",
-    "overlayClass": "gradient-overlay-mud",
-    "isPottery": true,
-    "coversTwo": false,
-    "duration": "90–120 minutes",
-    "ticketUnit": "per ticket",
-    "beginnerFriendly": true,
-    "locationsOffered": "Chicago & Eugene",
-    "image": {
-      "filename": "Wheel Throwing for Beginners -Cup Creations.webp",
-      "driveFileId": "1jqsoqPsiLbjt0OKDsiEHxlArlXZzjDrH",
-      "path": "/images/classes/approved-46-ZzjDrH-20ed285cc994.webp",
-      "width": 1200,
-      "height": 900,
-      "alt": "Handmade ceramic cups created on the pottery wheel",
-      "focalPosition": "50% 42%"
-    },
-    "whatYouMake": "Wheel-Thrown Ceramic Cup",
-    "theExperience": [
-      {
-        "title": "Guided Step-by-Step Instruction",
-        "body": "Our experienced ceramic artists walk you through centering your clay, opening the ball, and pulling upward to create functional drinking cups, mugs, and tumblers."
-      },
-      {
-        "title": "Hands-On Wheel Time",
-        "body": "Each participant gets a dedicated pottery wheel with hands-on coaching throughout the session. Focus on the craft and tactile fun of throwing clay."
-      }
-    ],
-    "included": [
-      "Dedicated pottery wheel workstation",
-      "All non-toxic stoneware clay and shaping tools",
-      "Step-by-step coaching from resident ceramic artists",
-      "Full studio cleanup handled by CCF staff"
-    ],
-    "practicalInfo": [
-      {
-        "label": "BYOB Friendly",
-        "text": "Feel free to bring your favorite drinks and snacks. Must be 21+ for alcohol. Studio glassware available."
-      },
-      {
-        "label": "Location",
-        "text": "Offered in Chicago (1142 W. 18th St) and Eugene (3295 Cross St)."
-      }
-    ],
-    "faqs": [
-      {
-        "q": "Do I need any wheel throwing experience?",
-        "a": "No experience needed! This class is designed specifically for beginners."
-      },
-      {
-        "q": "What should I wear?",
-        "a": "Wear comfortable clothes and trim your nails if possible. Clay washes out of clothing easily."
-      },
-      {
-        "q": "How does firing and glazing work?",
-        "a": "Your class ticket covers instruction, clay, and wheel use. Optional professional kiln firing ($10) and glazing (from $20) are available at the end of class with ~3-week pickup."
-      }
-    ],
-    "tags": [
-      "Beginner-friendly",
-      "Wheel Throwing",
-      "Pottery",
-      "Cup Creations",
-      "BYOB"
-    ],
-    "valueCards": [
-      {
-        "label": "TECHNIQUE",
-        "title": "Centering & Pulling",
-        "body": "Learn core pottery fundamentals that work."
-      },
-      {
-        "label": "MAKING",
-        "title": "Functional Art",
-        "body": "Shape a cup you can use every day."
-      },
-      {
-        "label": "VIBE",
-        "title": "Relaxed & Social",
-        "body": "BYOB drinks and supportive artist instruction."
-      }
-    ],
-    "scheduleRows": [],
-    "destinations": {
-      "chicago": {
-        "city": "chicago",
-        "appointmentTypeId": 94782668,
-        "calendarIds": [
-          12216179
-        ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782668",
-        "priceUnit": "per ticket",
-        "verifiedTitle": "Wheel Throwing for Beginners -Cup Creations"
-      },
-      "eugene": {
-        "city": "eugene",
-        "appointmentTypeId": 93539343,
-        "calendarIds": [
-          13582962
-        ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=93539343",
-        "priceUnit": "per ticket",
+        "priceUnit": "per person",
         "verifiedTitle": "Eugene Wheel Throwing for Beginners: Cup creations"
       }
     }
@@ -592,7 +450,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating turkish lamp mosaic. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -660,20 +518,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Everyone gasps at the reveal."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Fri · 6:30–8:30 PM",
-        "note": "Best night glow"
-      },
-      {
-        "time": "Sat · 2:00–4:00 PM",
-        "note": "Prime weekend"
-      },
-      {
-        "time": "Sun · 2:00–4:00 PM",
-        "note": "Easy daytime"
-      }
-    ],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -718,11 +563,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating ceramic mug and a bowl. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -767,7 +612,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -777,7 +622,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -832,7 +677,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating terrarium class. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -899,20 +744,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Soothing and social."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Sat · 1:00 PM",
-        "note": "Weekly"
-      },
-      {
-        "time": "Sun · 1:00 PM",
-        "note": "Weekly"
-      },
-      {
-        "time": "Weekday · 12:30 PM",
-        "note": "Monthly rotating"
-      }
-    ],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -958,7 +790,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating date night terrarium. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -1007,7 +839,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -1017,7 +849,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "eugene": {
         "city": "eugene",
@@ -1062,7 +894,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating beginner mosaic class. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -1129,20 +961,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Easy to chat while you build."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Wed · 6:00–8:00 PM",
-        "note": "Midweek reset"
-      },
-      {
-        "time": "Sat · 3:30–5:30 PM",
-        "note": "Best for groups"
-      },
-      {
-        "time": "Sun · 12:30–2:30 PM",
-        "note": "Easy daytime"
-      }
-    ],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -1187,7 +1006,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating organic candle making. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -1254,20 +1073,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Perfect winter class."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Sat · 6:00 PM",
-        "note": "Weekly favorite"
-      },
-      {
-        "time": "Fri · 6:00 PM",
-        "note": "After-work cozy"
-      },
-      {
-        "time": "Sun · 4:30 PM",
-        "note": "Easy evening"
-      }
-    ],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -1314,7 +1120,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating vip date night painting. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -1363,7 +1169,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -1373,7 +1179,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -1428,11 +1234,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating cat vase making. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -1477,7 +1283,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -1487,7 +1293,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -1532,11 +1338,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating clay pumpkin lantern. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -1581,7 +1387,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -1591,7 +1397,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -1637,7 +1443,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating glass fusion. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -1704,20 +1510,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Feels like a boutique studio."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Wed · 6:15–8:15 PM",
-        "note": "Creative midweek"
-      },
-      {
-        "time": "Fri · 6:15–8:15 PM",
-        "note": "Friday treat"
-      },
-      {
-        "time": "Sat · 6:15–8:15 PM",
-        "note": "Best for friends"
-      }
-    ],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -1762,7 +1555,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating bonsai class. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -1829,20 +1622,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "A reset for your brain."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Sat · 5:00–7:00 PM",
-        "note": "Best weekend slot"
-      },
-      {
-        "time": "Sun · 5:00–7:00 PM",
-        "note": "Relaxed pace"
-      },
-      {
-        "time": "Wed · 6:00–8:00 PM",
-        "note": "Midweek zen"
-      }
-    ],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -1888,7 +1668,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating date night on fire. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -1937,7 +1717,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -1947,7 +1727,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -1992,11 +1772,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating paint your own pottery. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -2041,7 +1821,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -2051,7 +1831,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -2096,7 +1876,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating wine glass painting. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -2163,20 +1943,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Social and light."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Fri · 7:00 PM",
-        "note": "Friday fun"
-      },
-      {
-        "time": "Sat · 7:00 PM",
-        "note": "Best for groups"
-      },
-      {
-        "time": "Sun · 4:00 PM",
-        "note": "Easy Sunday"
-      }
-    ],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -2231,11 +1998,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating mushroom pottery. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -2280,7 +2047,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -2290,7 +2057,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -2345,7 +2112,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating watercolor for beginners. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -2394,7 +2161,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -2404,7 +2171,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -2433,9 +2200,9 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": true,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketUnit": "per ticket",
+    "ticketUnit": "per person",
     "beginnerFriendly": true,
-    "locationsOffered": "Chicago & Eugene",
+    "locationsOffered": "Chicago only",
     "image": {
       "filename": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl.webp",
       "driveFileId": "1eK1meuDixOc_lZWYmGh78TTphwljxCA2",
@@ -2449,7 +2216,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating matcha bowl on the wheel. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -2468,7 +2235,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       },
       {
         "label": "Location",
-        "text": "Offered in Chicago (1142 W. 18th St) and Eugene (3295 Cross St)."
+        "text": "Studio located at 1142 W. 18th Street, Chicago, IL 60608."
       }
     ],
     "faqs": [
@@ -2498,7 +2265,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -2508,7 +2275,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -2519,16 +2286,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782793",
         "priceUnit": "per person",
         "verifiedTitle": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl"
-      },
-      "eugene": {
-        "city": "eugene",
-        "appointmentTypeId": 89287658,
-        "calendarIds": [
-          13582962
-        ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=89287658",
-        "priceUnit": "per ticket",
-        "verifiedTitle": "Eugene Wheel Throwing for Beginners: Matcha Bowl"
       }
     }
   },
@@ -2564,7 +2321,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating date night candle making. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -2613,7 +2370,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -2623,7 +2380,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -2668,11 +2425,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating ghost pottery. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -2717,7 +2474,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -2727,7 +2484,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -2772,7 +2529,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating oogie boogie candle holder. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -2821,7 +2578,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -2831,7 +2588,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -2886,11 +2643,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating monster lantern pottery. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -2935,7 +2692,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -2945,7 +2702,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -2990,7 +2747,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating make & paint a charcuterie board. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -3039,7 +2796,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -3049,7 +2806,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -3104,11 +2861,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating handbuilt vase making. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -3153,7 +2910,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -3163,7 +2920,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -3208,7 +2965,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating soap making. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -3257,7 +3014,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -3267,7 +3024,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -3296,7 +3053,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "isPottery": false,
     "coversTwo": false,
     "duration": "90–120 minutes",
-    "ticketUnit": "per ticket",
+    "ticketUnit": "per person",
     "beginnerFriendly": true,
     "locationsOffered": "Eugene only",
     "image": {
@@ -3312,7 +3069,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating duck soap holder. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -3361,7 +3118,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -3371,17 +3128,16 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "eugene": {
         "city": "eugene",
         "appointmentTypeId": 98334198,
         "calendarIds": [
-          13582962,
           12216179
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98334198",
-        "priceUnit": "per ticket",
+        "priceUnit": "per person",
         "verifiedTitle": "Eugene Duck Soap holder"
       }
     }
@@ -3417,7 +3173,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating open studio wheel throwing. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -3466,7 +3222,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -3476,7 +3232,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -3521,7 +3277,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating pumpkin on the wheel. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -3570,7 +3326,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -3580,7 +3336,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -3626,11 +3382,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating date night ceramic chess. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -3675,7 +3431,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -3685,7 +3441,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "eugene": {
         "city": "eugene",
@@ -3731,7 +3487,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating date night watercolor for two. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -3780,7 +3536,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -3790,7 +3546,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -3846,7 +3602,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating vip date night bonsai. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -3895,7 +3651,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -3905,7 +3661,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "eugene": {
         "city": "eugene",
@@ -3950,7 +3706,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating vase making on the wheel. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -3999,7 +3755,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -4009,7 +3765,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -4054,7 +3810,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating make & paint on the wheel. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -4103,7 +3859,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -4113,7 +3869,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -4144,8 +3900,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "duration": "90–120 minutes",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
-    "adultThemed": true,
-    "ageRestriction": "18+",
     "locationsOffered": "Chicago & Eugene",
     "image": {
       "filename": "Pipe and Ashtray Making Class - Chicago.webp",
@@ -4160,11 +3914,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating pipe & ashtray making. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -4209,7 +3963,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -4219,7 +3973,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": true,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -4260,8 +4014,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "duration": "90–120 minutes",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
-    "adultThemed": true,
-    "ageRestriction": "18+",
     "locationsOffered": "Chicago only",
     "image": {
       "filename": "Boobs Coffee Mug - Chicago.webp",
@@ -4276,11 +4028,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating boobs coffee mug. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -4325,7 +4077,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -4335,7 +4087,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": true,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -4366,8 +4118,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "duration": "90–120 minutes",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
-    "adultThemed": true,
-    "ageRestriction": "18+",
     "locationsOffered": "Chicago only",
     "image": {
       "filename": "Dildos and Bottles - Chicago.webp",
@@ -4382,11 +4132,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating dildos pottery. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -4431,7 +4181,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -4441,7 +4191,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": true,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -4472,8 +4222,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "duration": "90–120 minutes",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
-    "adultThemed": true,
-    "ageRestriction": "18+",
     "locationsOffered": "Chicago only",
     "image": {
       "filename": "Pussy Pottery - Chicago.webp",
@@ -4488,11 +4236,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating pussy pottery. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For handbuilding, we'll guide you through shaping and attaching clay to create your piece."
       }
     ],
     "included": [
@@ -4537,7 +4285,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -4547,7 +4295,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": true,
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -4592,7 +4340,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "theExperience": [
       {
         "title": "Guided Instruction & Atmosphere",
-        "body": "Join our instructors for an engaging, hands-on session creating live online cauldron pottery. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
         "title": "Materials & Equipment Provided",
@@ -4641,7 +4389,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Hands-on coaching throughout the workshop."
       },
       {
-        "label": "ALL-INCLUSIVE",
+        "label": "ALL INCLUDED",
         "title": "Materials Provided",
         "body": "All studio tools and supplies ready for you."
       },
@@ -4651,7 +4399,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Unwind with your favorite drinks and playlist."
       }
     ],
-    "scheduleRows": [],
+    "adultThemed": false,
     "destinations": {
       "online": {
         "city": "online",

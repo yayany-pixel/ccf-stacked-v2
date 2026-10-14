@@ -22,12 +22,14 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: CollectionPageProps): Promise<Metadata> {
   const collection = getCollectionBySlug(params.slug);
   if (!collection) return { title: "Collection Not Found" };
-
   return {
-    title: { absolute: collection.seo.metaTitle },
+    title: collection.seo.metaTitle,
     description: collection.seo.metaDescription,
     alternates: {
-      canonical: `https://colorcocktailfactory.com/collections/${collection.slug}`,
+      canonical: `https://colorcocktailfactory.com/collections/${collection.slug}`
+    },
+    robots: {
+      index: collection.slug !== "adults-only"
     },
     openGraph: {
       title: `${collection.title} | Color Cocktail Factory`,

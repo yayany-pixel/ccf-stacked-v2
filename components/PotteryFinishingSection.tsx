@@ -1,4 +1,5 @@
 import React from "react";
+import { PRICING } from "@/lib/constants";
 
 export default function PotteryFinishingSection() {
   return (
@@ -23,19 +24,19 @@ export default function PotteryFinishingSection() {
             <tbody className="divide-y divide-white/10">
               <tr>
                 <td className="py-3.5 pr-4 font-medium">Bisque firing</td>
-                <td className="py-3.5 pl-4 text-right font-semibold text-amber-300">$10 per piece</td>
+                <td className="py-3.5 pl-4 text-right font-semibold text-amber-300">${PRICING.finishing.bisque} per piece</td>
               </tr>
               <tr>
                 <td className="py-3.5 pr-4 font-medium">Regular solid-color glaze</td>
-                <td className="py-3.5 pl-4 text-right font-semibold text-amber-300">$20 per piece</td>
+                <td className="py-3.5 pl-4 text-right font-semibold text-amber-300">${PRICING.finishing.glazeSolid} per piece</td>
               </tr>
               <tr>
                 <td className="py-3.5 pr-4 font-medium">Specialty/fancy glaze</td>
-                <td className="py-3.5 pl-4 text-right font-semibold text-amber-300">$35 per piece</td>
+                <td className="py-3.5 pl-4 text-right font-semibold text-amber-300">${PRICING.finishing.glazeSpecialty} per piece</td>
               </tr>
               <tr>
                 <td className="py-3.5 pr-4 font-medium">Gold glaze, when available</td>
-                <td className="py-3.5 pl-4 text-right font-semibold text-amber-300">$50 per piece</td>
+                <td className="py-3.5 pl-4 text-right font-semibold text-amber-300">${PRICING.finishing.glazeGold} per piece</td>
               </tr>
             </tbody>
           </table>

@@ -30,8 +30,19 @@ function getActivityCardMeta(activity: HomepageActivity): {
   };
 }
 
-function ActivityCard({ activity, position, listCity, first = false }: { activity: HomepageActivity; position: number; listCity: HomepageCity; first?: boolean }) {
+function ActivityCard({ activity: rawActivity, position, listCity, first }: { activity: HomepageActivity; position: number; listCity: HomepageCity; first: boolean }) {
   const [imageFailed, setImageFailed] = useState(false);
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(Date.now()), 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const upcomingSessions = rawActivity.upcomingSessions?.filter(time => new Date(time).getTime() > now) ?? [];
+  const nextAvailability = upcomingSessions[0] ?? null;
+  const activity = { ...rawActivity, upcomingSessions, nextAvailability };
+
   const photo = activity.image;
   const ref = useRef<HTMLElement>(null);
   const seen = useRef(new Set<string>());
@@ -76,7 +87,7 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
     }} className={styles.card} data-activity={activity.key} data-appointment-id={activity.bookingVariantIds?.length === 1 || !activity.bookingVariantIds ? activity.appointmentTypeId : undefined}>
       <div className={styles.photo}>
         {imageFailed ? <p className={styles.imageError}>This photograph is temporarily unavailable.</p> : (
-          <Link href={detailHref} className={styles.photoLink} aria-label={`Explore ${activity.title}`}>
+          <Link href={detailHref} className={styles.photoLink} aria-label={`Explore ${activity.title}`} prefetch={false}>
             <Image src={photo.path} alt={photo.alt} width={photo.width} height={photo.height}
               loader={props => classImageLoader({ ...props, width: Math.min(props.width, photo.width) })}
               sizes="(min-width: 900px) 560px, (min-width: 680px) 640px, calc(100vw - 32px)"
@@ -96,7 +107,7 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
         {activity.mode === "online" && <p className={styles.eyebrow}>Live Online · Join from home</p>}
         {activity.adultThemed && <p className={styles.eyebrow}>Adult-themed · {activity.ageRestriction ?? "Check age policy at booking"}</p>}
         <h2>
-          <Link href={detailHref} className={styles.titleLink}>
+          <Link href={detailHref} className={styles.titleLink} prefetch={false}>
             {activity.title}
           </Link>
         </h2>
@@ -114,7 +125,7 @@ function ActivityCard({ activity, position, listCity, first = false }: { activit
           {activity.beginnerFriendly && <p>Beginner-friendly</p>}
           {activity.byob && <p>BYOB · ages 21+ for alcohol</p>}
           {activity.ageRestriction && <p>{activity.ageRestriction}</p>}
-          {activity.listingDescription ? <p className={styles.listing}>{activity.listingDescription}</p> : !activity.bookingVariants && <p>Check the workshop detail page for included materials, what you make, and location options.</p>}
+          {activity.listingDescription && <p className={styles.listing}>{activity.listingDescription}</p>}
           {activity.pickupNotes?.map(note => <p key={note}>{note}</p>)}
           {(activity.upcomingSessions?.length ?? 0) > 1 && <><h3>Upcoming sessions</h3><ul>{activity.upcomingSessions!.map(time => <li key={time}>{formatNextSession({...activity, nextAvailability: time}).replace(/^Next: /, "")}</li>)}</ul></>}
           {activity.bookingVariants && activity.bookingVariants.length > 1 && (
@@ -285,7 +296,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
         <div className={styles.headerInner}>
           <Link href="/" className={styles.brand} aria-label="Color Cocktail Factory home">
             <BrandLogo className={styles.brandMark} />
-            <span>Color Cocktail<span>Factory</span></span>
+            <span>Color Cocktail <span>Factory</span></span>
           </Link>
           <nav className={styles.desktopNav} aria-label="Main navigation"><a href="#classes">Classes</a><a href="#private-party">Private parties</a><Link href="/gift-cards">Gift cards</Link></nav>
           <div className={styles.headerActions}>
@@ -305,7 +316,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
         </div>
       </header>
       <main tabIndex={-1} id="main-content" className={styles.main}>
-        <div className={styles.intro}><h1>The future is <em>handmade...</em></h1><p>Come make something together.</p></div>
+        <div className={styles.intro}><h1>The future is <em>handmade</em> in {studio.label}...</h1><p>Pottery &amp; creative workshops. Come make something together.</p></div>
         <WorkshopSaleBanner />
         <div className={styles.filters} role="group" aria-label="Filter workshops">
           {HOMEPAGE_FILTERS.map(option => <button key={option} type="button" aria-pressed={filter === option} onClick={() => {
@@ -344,7 +355,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
               <PrivateEventFormCard city={getCityByParam(city)} timeWindows={[]} variant="homepage" onCityChange={selectCity} />
             </div>
           </section>
-          {visible.slice(3).map((activity, index) => <ActivityCard key={activity.key} activity={activity} position={index + 4} listCity={city} />)}
+          {visible.slice(3).map((activity, index) => <ActivityCard key={activity.key} activity={activity} position={index + 4} listCity={city} first={false} />)}
         </div>
         {visibleCount < activities.length && <div className={styles.more}><button type="button" disabled={!hydrated} onClick={showMore}>Show me more</button><p>{visible.length} of {activities.length} workshops</p></div>}
         <p role="status" className="sr-only">{announcement}</p>
