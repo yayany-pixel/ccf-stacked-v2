@@ -45,7 +45,7 @@ export default function PrivacyPreferences() {
       })
       .catch(() => {
         if (active && choiceVersion.current === 0) {
-          setError("Your saved choices could not be loaded. Optional tracking stays off.");
+          setError("Your saved choices could not be loaded. Default tracking settings applied.");
         }
       })
       .finally(() => window.clearTimeout(timeout));
@@ -83,13 +83,13 @@ export default function PrivacyPreferences() {
       setChoices(saved);
       dialog.current?.close();
     } catch {
-      setError("Your choices could not be saved. No additional tracking was enabled. Please try again.");
+      setError("Your choices could not be saved. Please try again.");
     } finally {
       setSaving(false);
     }
   }
 
-  const explanation = "Essential features stay on. Google Analytics measures visits by default. You can turn analytics off below. Google Ads and Meta advertising tracking stays off unless you enable it. Your choices are saved for 180 days using an essential preference cookie and an anonymous record.";
+  const explanation = "Essential features stay on. Google Analytics and Meta advertising tracking measure visits and conversions by default. You can turn them off below. Your choices are saved for 180 days using an essential preference cookie and an anonymous record.";
 
   return (
     <>
