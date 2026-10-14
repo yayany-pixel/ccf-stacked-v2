@@ -77,6 +77,23 @@ export default function PrivateEventFormCard({
       });
 
       if (response.ok) {
+        // Fire custom Google Ads conversion event
+        if (typeof window !== "undefined" && window.gtag) {
+          window.gtag("event", "private_party_lead_submit", {
+            city: s.city.toLowerCase(),
+            group_size: s.groupSize,
+            budget_per_person: s.budget,
+            preferred_project: s.preferredProject
+          });
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: "private_party_lead_submit",
+            city: s.city.toLowerCase(),
+            group_size: s.groupSize,
+            budget_per_person: s.budget,
+            preferred_project: s.preferredProject
+          });
+        }
         // Fire GA4 conversion event — imported into Google Ads as a conversion action
         trackGALead({city:s.city.toLowerCase(),form_name:'private-party',lead_type:'private_party',placement:variant,activity:s.preferredProject,group_size_range:groupSizeRange(s.groupSize)});
         // Redirect to thank you page
