@@ -25,12 +25,14 @@ export const metadata: Metadata = {
   }
 };
 
-export default async function HomePage({ searchParams }: { searchParams: { location?: string } }) {
+export default async function HomePage({ searchParams }: { searchParams: { location?: string; city?: string } }) {
   const data = await getHomepageData();
+  const requestedCity = searchParams.city || searchParams.location;
+  const initialCity = requestedCity === "eugene" ? "eugene" : "chicago";
   return (
     <>
       <HomepageStructuredData data={data} />
-      <HomePageClient initialData={data} initialCity={searchParams.location === "eugene" ? "eugene" : "chicago"} />
+      <HomePageClient initialData={data} initialCity={initialCity} />
     </>
   );
 }

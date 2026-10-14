@@ -1,4 +1,6 @@
 import { type HomepageData } from "@/lib/homepage/types";
+import { generateLocalBusinessSchema } from "@/lib/enhancedStructuredData";
+import { getCityByParam } from "@/lib/links";
 
 export default function HomepageStructuredData({ data }: { data: HomepageData }) {
   const events = data.activities.flatMap(activity => {
@@ -30,16 +32,35 @@ export default function HomepageStructuredData({ data }: { data: HomepageData })
           price: price,
           priceCurrency: "USD",
           availability: "https://schema.org/InStock",
-          validFrom: new Date().toISOString()
+          validFrom: new Date().toISOString(),
+          priceSpecification: {
+            "@type": "UnitPriceSpecification",
+            price: price,
+            priceCurrency: "USD",
+            referenceQuantity: {
+              "@type": "QuantitativeValue",
+              value: activity.priceUnit === "for two" ? 2 : 1,
+              unitCode: "C62"
+            }
+          }
         }
       };
     });
   });
 
+  const chicagoBusiness = generateLocalBusinessSchema(getCityByParam("chicago"));
+  const eugeneBusiness = generateLocalBusinessSchema(getCityByParam("eugene"));
+
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(events) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([chicagoBusiness, eugeneBusiness]) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(events) }}
+      />
+    </>
   );
 }

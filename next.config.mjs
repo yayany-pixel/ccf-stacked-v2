@@ -38,6 +38,12 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
+  async rewrites() {
+    return [
+      { source: '/eugene', destination: '/?city=eugene' },
+      { source: '/chicago', destination: '/?city=chicago' },
+    ];
+  },
   // Preserve links from the former site with permanent, relevant destinations.
   async redirects() {
     return [

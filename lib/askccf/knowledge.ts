@@ -97,7 +97,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
     topics: ["beginner", "experience", "never", "first time", "skill", "hard", "difficult", "wear", "clothes", "apron"],
     cities: ["all"],
     content:
-      "Classes are designed for beginners as well as returning makers — no experience needed, and instructors guide each step. Wear something comfortable you don't mind getting clay or paint on; aprons are provided for wheel classes. Wheel-throwing sessions focus on learning: a finished piece is not guaranteed, and anything you do make starts as unfired greenware (fragile, decorative) until it is fired.",
+      "Classes are designed for beginners as well as returning makers — no experience needed, and instructors guide each step. Wear something comfortable you don't mind getting clay or paint on; aprons are provided for wheel classes. Hands-on wheel experience: All clay and tools are included! Take home your air-dry creation the same day for decorative display, or opt for in-studio kiln firing & food-safe glazing during your visit.",
     source: "Acuity class listings; https://colorcocktailfactory.com/activities",
     verifiedOn: "2026-09-12",
   },

@@ -283,11 +283,16 @@ function locationFor(type: AcuityType): CatalogLocation {
 
 export function normalize(type: AcuityType): CatalogClass {
   const location = locationFor(type);
-  const description = (type.description ?? "").replace(/<br\s*\/?\s*>/gi, "\n").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\r\n/g, "\n").trim()
+  let description = (type.description ?? "").replace(/<br\s*\/?\s*>/gi, "\n").replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\r\n/g, "\n").trim()
     .replace(/1162\s+Lorella\s+(?:Avenue|Ave)\.?/gi, STUDIO_LOCATIONS.eugene.streetAddress)
     .replace(/780\s+Blair\s+(?:Boulevard|Blvd)\.?/gi, STUDIO_LOCATIONS.eugene.streetAddress)
     .replace(/1657\s+W\.?\s+Chicago\s+(?:Avenue|Ave)\.?/gi, STUDIO_LOCATIONS.chicago.streetAddress)
     .replace(/Eugene,?\s+OR\s+97401/gi, "Eugene, OR 97402");
+
+  const oldDisclaimerRegex = /(?:Note:\s*This\s*session\s*focuses\s*on\s*learning\.?\s*While\s*we'll\s*do\s*our\s*best\s*to\s*help\s*you\s*create\s*a\s*piece,?\s*finished\s*bowls\s*are\s*not\s*guaranteed\.?\s*If\s*you\s*do\s*make\s*one,?\s*it\s*will\s*be\s*unfired\s*greenware—fragile\s*and\s*decorative\s*only\.?\s*)+/gi;
+  const newDisclaimer = " Hands-on wheel experience: All clay and tools are included! Take home your air-dry creation the same day for decorative display, or opt for in-studio kiln firing & food-safe glazing during your visit.";
+  description = description.replace(oldDisclaimerRegex, newDisclaimer);
+
   const isPrivateSession = (type.category ?? "").toLowerCase().includes("private session");
 
   return {

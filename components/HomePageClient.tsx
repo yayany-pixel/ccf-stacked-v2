@@ -114,7 +114,7 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
         <p className={styles.description}>{activity.description}</p>
         <div className={styles.facts} aria-live="polite">
           <p className={styles.price}>
-            {activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice && activity.formerPrice.evidence && <del aria-label="Original price">${activity.formerPrice.amount} </del>}
+            {activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice && activity.formerPrice.evidence && <del aria-label="Original price">${activity.formerPrice.amount} {activity.priceUnit} </del>}
             {cardMeta.displayPrice}
           </p>
           <p className={styles.nextDate}>{formatNextSession(activity)}</p>
@@ -147,6 +147,20 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
                       href={bookingUrl}
                       data-variant-booking=""
                       onClick={() => {
+                        if (typeof window !== "undefined" && window.gtag) {
+                          window.gtag("event", "begin_workshop_checkout", {
+                            workshop_title: variant.title,
+                            city: listCity,
+                            price: variant.currentPrice ?? 0
+                          });
+                          window.dataLayer = window.dataLayer || [];
+                          window.dataLayer.push({
+                            event: "begin_workshop_checkout",
+                            workshop_title: variant.title,
+                            city: listCity,
+                            price: variant.currentPrice ?? 0
+                          });
+                        }
                         const vTracking = {
                           ...tracking,
                           class_name: variant.title,
@@ -182,6 +196,20 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
           className={styles.bookButton}
           aria-label={`Explore class & dates for ${activity.title}`}
           onClick={() => {
+            if (typeof window !== "undefined" && window.gtag) {
+              window.gtag("event", "begin_workshop_checkout", {
+                workshop_title: activity.title,
+                city: listCity,
+                price: activity.currentPrice ?? 0
+              });
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({
+                event: "begin_workshop_checkout",
+                workshop_title: activity.title,
+                city: listCity,
+                price: activity.currentPrice ?? 0
+              });
+            }
             trackCardSelect({ ...tracking, click_target: "explore_class_dates", link_url: detailHref });
           }}
         >
@@ -227,8 +255,23 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
 
   useEffect(() => {
     const restoreCity = () => {
-      const query = new URLSearchParams(window.location.search).get("location");
-      if (query === "chicago" || query === "eugene") { selectCity(query, true, "url_parameter"); return; }
+      const search = new URLSearchParams(window.location.search);
+      const query = search.get("city") || search.get("location");
+      if (query === "chicago" || query === "eugene") { selectCity(query, true, "url_parameter"); }
+      
+      const occasion = search.get("occasion");
+      const category = search.get("category");
+      let selectedFilter: HomepageFilter | null = null;
+      if (occasion === "date-night") selectedFilter = "Date night";
+      else if (category === "pottery") selectedFilter = "Pottery";
+      else if (category === "glass") selectedFilter = "Glass & lamps";
+      
+      if (selectedFilter) {
+        setFilter(selectedFilter);
+        setTimeout(() => {
+          document.getElementById("workshops")?.scrollIntoView({ behavior: "smooth" });
+        }, 300);
+      }
     };
     if (!restored.current) { restored.current = true; restoreCity(); }
     setHydrated(true);
@@ -318,7 +361,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
       <main tabIndex={-1} id="main-content" className={styles.main}>
         <div className={styles.intro}><h1>The future is <em>handmade</em> in {studio.label}...</h1><p>Pottery &amp; creative workshops. Come make something together.</p></div>
         <WorkshopSaleBanner />
-        <div className={styles.filters} role="group" aria-label="Filter workshops">
+        <div id="workshops" style={{ scrollMarginTop: "100px" }} className={styles.filters} role="group" aria-label="Filter workshops">
           {HOMEPAGE_FILTERS.map(option => <button key={option} type="button" aria-pressed={filter === option} onClick={() => {
             if (filter === option) return;
             setFilter(option); setVisibleCount(10); revealAnchor.current = null;
@@ -345,13 +388,13 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
                   className={styles.partyToggleBtn}
                   onClick={() => setIsPartyExpanded(previous => !previous)}
                   aria-expanded={isPartyExpanded}
-                  aria-controls="party-form-container"
+                  aria-controls="private-party-quote"
                 >
                   {isPartyExpanded ? "Collapse inquiry form ↑" : "Request Private Party Quote ↓"}
                 </button>
               </div>
             </div>
-            <div id="party-form-container" className={isPartyExpanded ? styles.formVisible : styles.formHidden}>
+            <div id="private-party-quote" style={{ scrollMarginTop: "100px" }} className={isPartyExpanded ? styles.formVisible : styles.formHidden}>
               <PrivateEventFormCard city={getCityByParam(city)} timeWindows={[]} variant="homepage" onCityChange={selectCity} />
             </div>
           </section>

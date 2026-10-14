@@ -32,7 +32,7 @@ export function generateOrganizationSchema() {
     },
     "location": [
       {
-        "@type": "LocalBusiness",
+        "@type": ["LocalBusiness", "ArtGallery"],
         "@id": "https://colorcocktailfactory.com/chicago#localbusiness",
         "name": "Color Cocktail Factory - Chicago",
         "address": {
@@ -52,7 +52,7 @@ export function generateOrganizationSchema() {
         ]
       },
       {
-        "@type": "LocalBusiness",
+        "@type": ["LocalBusiness", "ArtGallery"],
         "@id": "https://colorcocktailfactory.com/eugene#localbusiness",
         "name": "Color Cocktail Factory - Eugene",
         "address": {
@@ -101,7 +101,7 @@ export function generateLocalBusinessSchema(city: City) {
   
   return {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": ["LocalBusiness", "ArtGallery"],
     "@id": `https://colorcocktailfactory.com/${city.param}`,
     "name": `Color Cocktail Factory - ${city.label}`,
     "image": "https://colorcocktailfactory.com/og-image.jpg",

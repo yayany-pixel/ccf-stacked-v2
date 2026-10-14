@@ -89,7 +89,7 @@ export default function PrivacyPreferences() {
     }
   }
 
-  const explanation = "Essential features stay on. Google Analytics measures visits by default. You can turn analytics off below. Google Ads and Meta advertising tracking stays off unless you enable it. Your choices are saved for 180 days using an essential preference cookie and an anonymous record.";
+  const explanation = "Essential features, analytics, and advertising measurement are enabled by default to help us improve our workshops. You can opt out of optional analytics or advertising tracking below at any time. Your choices are saved for 180 days using an essential preference cookie and an anonymous record.";
 
   return (
     <>
