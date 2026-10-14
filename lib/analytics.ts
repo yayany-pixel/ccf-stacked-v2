@@ -120,6 +120,17 @@ export function trackEvent(
     });
   if (process.env.NODE_ENV === "development")
     console.debug("[Analytics]", name, clean);
+
+  // Send to local Netlify DB
+  if (typeof window !== "undefined") {
+    fetch("/api/analytics-events", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ eventName: name, ...clean }),
+      keepalive: true,
+    }).catch(() => { /* silent fail for analytics */ });
+  }
+
   if (!isGtagAvailable() || !process.env.NEXT_PUBLIC_GA_ID_1) return;
   try {
     window.gtag!("event", name, {
