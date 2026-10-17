@@ -1,4 +1,8 @@
-$token = "oIGQJeU9lAs7kYddhguyrdXSMBF7nyKQgwXarQw3"
+$token = $env:PRINTFUL_API_TOKEN
+if (-not $token) {
+    Write-Error "PRINTFUL_API_TOKEN environment variable is not set."
+    exit 1
+}
 $headers = @{ Authorization = "Bearer $token" }
 
 function pf($path) {

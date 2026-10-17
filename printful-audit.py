@@ -1,6 +1,9 @@
-import urllib.request, urllib.error, json
+import os, sys, urllib.request, urllib.error, json
 
-TOKEN = "oIGQJeU9lAs7kYddhguyrdXSMBF7nyKQgwXarQw3"
+TOKEN = os.environ.get("PRINTFUL_API_TOKEN", "")
+if not TOKEN:
+    print("Error: PRINTFUL_API_TOKEN environment variable is not set.", file=sys.stderr)
+    sys.exit(1)
 BASE  = "https://api.printful.com"
 
 def get(path, store_id=None):
