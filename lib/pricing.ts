@@ -278,13 +278,8 @@ export async function getActivityPricing(
       };
     }
 
-    // Cities differ: show both, labelled, e.g. "$55 Chicago · $50 Eugene for two"
-    let displayPrice: string;
-    if (sameUnit) {
-      displayPrice = `$${chicago.currentPrice} Chicago · $${eugene.currentPrice} Eugene ${chicago.priceUnit}`;
-    } else {
-      displayPrice = `$${chicago.currentPrice} Chicago ${chicago.priceUnit} · $${eugene.currentPrice} Eugene ${eugene.priceUnit}`;
-    }
+    // Use Chicago price as default, without city label
+    const displayPrice = `$${chicago.currentPrice} ${chicago.priceUnit}`;
 
     const wasPrice =
       chicago.wasPrice && eugene.wasPrice && chicago.wasPrice === eugene.wasPrice
