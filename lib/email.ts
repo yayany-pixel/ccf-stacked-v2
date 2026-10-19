@@ -1,3 +1,5 @@
+import nodemailer from "nodemailer";
+
 /**
  * Server-side email provider wrapper
  * Supports multiple providers via EMAIL_PROVIDER env var
@@ -18,6 +20,12 @@ type EmailParams = {
  */
 export async function sendEmail({ to, from, subject, text, html }: EmailParams): Promise<void> {
   const provider = process.env.EMAIL_PROVIDER?.toLowerCase() || "resend";
+  
+  if (provider === "gmail") {
+    await sendViaGmail({ to, from, subject, text, html });
+    return;
+  }
+
   const apiKey = process.env.EMAIL_API_KEY;
 
   if (!apiKey) {
@@ -40,6 +48,34 @@ export async function sendEmail({ to, from, subject, text, html }: EmailParams):
     default:
       throw new Error(`Unsupported EMAIL_PROVIDER: ${provider}`);
   }
+}
+
+/**
+ * Gmail implementation via Nodemailer
+ */
+async function sendViaGmail(params: EmailParams): Promise<void> {
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+
+  if (!user || !pass) {
+    throw new Error("GMAIL_USER and GMAIL_APP_PASSWORD must be configured for the gmail provider");
+  }
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user,
+      pass,
+    },
+  });
+
+  await transporter.sendMail({
+    from: params.from,
+    to: params.to,
+    subject: params.subject,
+    text: params.text,
+    html: params.html,
+  });
 }
 
 /**
