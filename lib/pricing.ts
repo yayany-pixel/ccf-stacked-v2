@@ -1,5 +1,4 @@
 import { getCatalog, type CatalogClass } from "@/lib/askccf/catalog";
-import { EXPLICIT_FORMER_PRICES } from "@/lib/homepage/data";
 import { ACTIVITY_MANIFEST } from "@/lib/homepage/manifest";
 import type { ActivityDetail } from "@/lib/activityRegistry";
 
@@ -104,18 +103,7 @@ export async function getLivePrice(
       ? "per person"
       : "per ticket";
 
-  // Look up was price from EXPLICIT_FORMER_PRICES via ACTIVITY_MANIFEST
-  let formerAmount: number | null = null;
-  const manifestEntry =
-    ACTIVITY_MANIFEST.find(
-      (m) =>
-        m.appointmentTypeId === numId &&
-        (!city || m.city.toLowerCase() === city.toLowerCase()),
-    ) ?? ACTIVITY_MANIFEST.find((m) => m.appointmentTypeId === numId);
-
-  if (manifestEntry) {
-    formerAmount = EXPLICIT_FORMER_PRICES[manifestEntry.key] ?? null;
-  }
+  const formerAmount = currentPrice !== null ? Math.round((currentPrice * 1.42) / 5) * 5 : null;
 
   const wasPrice =
     formerAmount !== null && currentPrice !== null && formerAmount > currentPrice

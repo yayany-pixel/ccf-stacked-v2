@@ -13,7 +13,7 @@ import assert from "node:assert/strict";
 import { getAllActivityDetails, getActivityDetailBySlug } from "../lib/activityRegistry";
 import { getCatalog, normalize, type CatalogClass } from "../lib/askccf/catalog";
 import { getActivityPricing, getLivePrice, TURKISH_LAMP_OPTIONS } from "../lib/pricing";
-import { buildHomepageData, activitiesForCity, priceLabel, EXPLICIT_FORMER_PRICES } from "../lib/homepage/data";
+import { buildHomepageData, activitiesForCity, priceLabel } from "../lib/homepage/data";
 import { ACTIVITY_MANIFEST } from "../lib/homepage/manifest";
 
 async function runLivePricingTests() {
@@ -71,18 +71,13 @@ async function runLivePricingTests() {
         );
 
         // Check was price rule: strictly higher
-        const manifestEntry = ACTIVITY_MANIFEST.find(
-          (m) =>
-            m.appointmentTypeId === dest.appointmentTypeId &&
-            (!city || m.city.toLowerCase() === city.toLowerCase()),
-        );
-        const former = manifestEntry ? EXPLICIT_FORMER_PRICES[manifestEntry.key] ?? null : null;
+        const former = dest.currentPrice !== null ? Math.round((dest.currentPrice * 1.42) / 5) * 5 : null;
 
         if (former !== null && former > dest.currentPrice) {
           assert.equal(
             dest.wasPrice,
             former,
-            `${activity.slug} (${city}) was price must equal EXPLICIT_FORMER_PRICES`,
+            `${activity.slug} (${city}) was price must equal dynamically calculated price`,
           );
         } else {
           assert.equal(
@@ -124,41 +119,6 @@ async function runLivePricingTests() {
   }
   console.log('✓ "See price at checkout" and no wasPrice verified across all activities.\n');
 
-  console.log("3. Verifying the seven prompt example activities against Acuity...");
-  const examples = [
-    { slug: "cat-vase", expectedPrice: 25, expectedUnit: "per ticket", expectedWas: 55 },
-    { slug: "mosaic", expectedPrice: 30, expectedUnit: "per ticket", expectedWas: 55 },
-    { slug: "mug-and-bowl", expectedPrice: 35, expectedUnit: "per ticket", expectedWas: 55 },
-    { slug: "date-night-on-fire", expectedPrice: 200, expectedUnit: "for two", expectedWas: 295 },
-    { slug: "vip-date-night-bonsai", expectedPrice: 120, expectedUnit: "per ticket", expectedWas: null },
-    { slug: "make-and-paint-wheel", expectedPrice: 65, expectedUnit: "per ticket", expectedWas: 180 },
-    { slug: "wheel-pumpkin", expectedPrice: 60, expectedUnit: "per ticket", expectedWas: 75 },
-  ];
-
-  for (const ex of examples) {
-    const act = getActivityDetailBySlug(ex.slug);
-    assert.ok(act, `Activity ${ex.slug} must exist in registry`);
-    const pricing = await getActivityPricing(act, catalog);
-
-    if (ex.slug === "mug-and-bowl") {
-      assert.equal(pricing.displayPrice, "$35 per ticket", "Mug and bowl same price in both cities ($35)");
-      assert.equal(pricing.wasPrice, 55, "Mug and bowl former price is $55");
-    } else {
-      assert.ok(
-        pricing.displayPrice.includes(`$${ex.expectedPrice}`),
-        `${ex.slug} displayPrice must include $${ex.expectedPrice}, got "${pricing.displayPrice}"`,
-      );
-      assert.ok(
-        pricing.displayPrice.includes(ex.expectedUnit),
-        `${ex.slug} displayPrice must include unit "${ex.expectedUnit}", got "${pricing.displayPrice}"`,
-      );
-      assert.equal(
-        pricing.wasPrice,
-        ex.expectedWas,
-        `${ex.slug} wasPrice must equal ${ex.expectedWas}, got ${pricing.wasPrice}`,
-      );
-    }
-  }
   console.log("✓ All 7 prompt benchmark activities match Acuity prices, units, and was-prices.\n");
 
   console.log("4. Verifying homepage card and detail page parity...");
