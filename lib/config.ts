@@ -199,7 +199,7 @@ export const sections: SectionConfig[] = [
     videoSrc: placeholderVideo,
     overlayClass: "bg-gradient-to-br from-sky-900/55 via-slate-900/25 to-emerald-900/45",
     backgroundImages: [
-      "/images/classes/wheel-throwing-for-beginners-color-cocktail-factory-acuity-600x600.jpg"
+      "/images/classes/wheel-throwing-for-beginners-f3b6679a8587.jpeg"
     ],
 
     scheduleLabel: "POPULAR",
