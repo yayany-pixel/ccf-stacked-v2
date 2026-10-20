@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import GlassCard from "@/components/ui/GlassCard";
@@ -10,6 +10,9 @@ import LocationModal from "@/components/LocationModal";
 import PotteryFinishingSection from "@/components/PotteryFinishingSection";
 import type { ActivityDetail } from "@/lib/activityRegistry";
 import type { ActivityPricing } from "@/lib/pricing";
+import type { CityParam } from "@/lib/config";
+import { getClassGiftingContext } from "@/lib/gifts";
+import { trackEvent } from "@/lib/analytics";
 
 export type RelatedActivityWithPrice = ActivityDetail & {
   displayPrice: string;
@@ -27,6 +30,47 @@ export default function ActivityDetailView({
   relatedActivities?: RelatedActivityWithPrice[];
 }) {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+
+  const availableCities = useMemo<CityParam[]>(() => {
+    const cities: CityParam[] = [];
+    if (pricing.destinations.chicago) cities.push("chicago");
+    if (pricing.destinations.eugene) cities.push("eugene");
+    return cities.length > 0 ? cities : ["chicago"];
+  }, [pricing.destinations]);
+
+  const [preferredCity, setPreferredCity] = useState<CityParam>(
+    availableCities[0] ?? "chicago",
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const urlCity = params.get("city") || params.get("location");
+    if (
+      (urlCity === "chicago" || urlCity === "eugene") &&
+      availableCities.includes(urlCity)
+    ) {
+      setPreferredCity(urlCity);
+      return;
+    }
+    try {
+      const stored =
+        localStorage.getItem("preferredCity") ||
+        localStorage.getItem("ccf-city");
+      if (
+        (stored === "chicago" || stored === "eugene") &&
+        availableCities.includes(stored)
+      ) {
+        setPreferredCity(stored);
+      }
+    } catch {}
+  }, [availableCities]);
+
+  const giftContext = useMemo(
+    () =>
+      getClassGiftingContext(activity.slug, preferredCity, availableCities),
+    [activity.slug, preferredCity, availableCities],
+  );
 
   const openBooking = () => {
     setIsLocationModalOpen(true);
@@ -134,12 +178,25 @@ export default function ActivityDetailView({
                   See Dates &amp; Book
                   <span className="ml-2 text-lg" aria-hidden="true">→</span>
                 </button>
-                <Link
-                  href="/gift-cards"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/20 bg-white/5 px-6 py-4 text-sm font-semibold text-white/90 backdrop-blur-sm transition hover:bg-white/10 hover:text-white"
-                >
-                  🎁 Give as a Gift
-                </Link>
+                {giftContext && (
+                  <Link
+                    href={giftContext.href}
+                    onClick={() =>
+                      trackEvent("cta_click", {
+                        event_category: "CTA",
+                        cta_location: "Activity Detail Hero",
+                        cta_text: giftContext.label,
+                        cta_type: "secondary",
+                        city: giftContext.city,
+                        class_name: activity.title,
+                        class_id: activity.slug,
+                      })
+                    }
+                    className="inline-flex items-center justify-center rounded-2xl border border-white/20 bg-white/5 px-6 py-4 text-sm font-semibold text-white/90 backdrop-blur-sm transition hover:bg-white/10 hover:text-white"
+                  >
+                    🎁 {giftContext.label}
+                  </Link>
+                )}
               </div>
             </div>
 
@@ -324,6 +381,25 @@ export default function ActivityDetailView({
                 >
                   See Dates &amp; Book →
                 </button>
+                {giftContext && (
+                  <Link
+                    href={giftContext.href}
+                    onClick={() =>
+                      trackEvent("cta_click", {
+                        event_category: "CTA",
+                        cta_location: "Activity Detail Bottom Banner",
+                        cta_text: giftContext.label,
+                        cta_type: "secondary",
+                        city: giftContext.city,
+                        class_name: activity.title,
+                        class_id: activity.slug,
+                      })
+                    }
+                    className="rounded-full border border-white/25 bg-white/10 px-6 py-4 font-semibold text-white transition hover:bg-white/15"
+                  >
+                    🎁 {giftContext.label} →
+                  </Link>
+                )}
               </div>
             </section>
           </div>
@@ -378,6 +454,25 @@ export default function ActivityDetailView({
                   >
                     See Dates &amp; Book →
                   </button>
+                )}
+                {giftContext && (
+                  <Link
+                    href={giftContext.href}
+                    onClick={() =>
+                      trackEvent("cta_click", {
+                        event_category: "CTA",
+                        cta_location: "Activity Detail Quick Box",
+                        cta_text: giftContext.label,
+                        cta_type: "secondary",
+                        city: giftContext.city,
+                        class_name: activity.title,
+                        class_id: activity.slug,
+                      })
+                    }
+                    className="mt-3 w-full inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-4 py-2.5 text-xs font-semibold text-white/90 transition hover:bg-white/10"
+                  >
+                    🎁 {giftContext.label}
+                  </Link>
                 )}
               </GlassCard>
 

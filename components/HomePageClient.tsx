@@ -424,10 +424,100 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
           <details><summary>Do I need experience? Can children attend?</summary><p>Look for the beginner-friendly note and check the age requirements on your chosen booking listing. Ask staff about suitability for children before booking; age requirements vary by workshop.</p></details>
           <details><summary>What if I need to cancel or change my date?</summary><p>Policies vary by booking. Refer to your booking confirmation and contact <a href="mailto:support@colorcocktailfactory.com">support@colorcocktailfactory.com</a> with your booking details. Staff handle cancellation and rescheduling requests.</p></details>
         </section>
+        <section className={styles.enrichment} id="homepage-gift-cards" aria-labelledby="homepage-gift-heading">
+          <p className={styles.eyebrow}>Give them something to look forward to</p>
+          <h2 id="homepage-gift-heading">Gift a {studio.label} creative experience—let them choose the date.</h2>
+          <div className={styles.giftGrid}>
+            <article className={styles.giftFeatureCard}>
+              <div>
+                <div className={styles.giftFeatureMeta}>
+                  {city === "chicago" ? "$55 for two · Chicago — Pilsen" : "$50 for two · Eugene, OR"} · Covers 2 Guests (Shared Wheel)
+                </div>
+                <h3>Pottery Date Night for Two</h3>
+                <p className={styles.giftFeatureCopy}>
+                  “Give your favorite couple a little clay, a little laughter, and time together.”
+                </p>
+                <p className={styles.giftFeatureFacts}>
+                  Includes 90-minute guided wheel session for 2 guests sharing 1 wheel, clay, tools, and cleanup. Optional kiln firing &amp; glazing extra.
+                </p>
+              </div>
+              <Link
+                href={`/gift-cards?city=${city}&gift=pottery-date-night-for-two&workshop=date-night-wheel#pottery-date-night-for-two`}
+                className={styles.giftFeatureCta}
+                onClick={() =>
+                  trackEvent("cta_click", {
+                    event_category: "CTA",
+                    cta_location: "Homepage Gift Section",
+                    cta_text: "Gift a Date Night",
+                    cta_type: "primary",
+                    city,
+                    class_name: "Pottery Date Night for Two",
+                    class_id: "pottery-date-night-for-two",
+                  })
+                }
+              >
+                <span>Gift a Date Night ({studio.label})</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </article>
+            <article className={styles.giftFeatureCard}>
+              <div>
+                <div className={styles.giftFeatureMeta}>
+                  {city === "chicago" ? "$45 per person · Chicago — Pilsen" : "$25 per person · Eugene, OR"} · Covers 1 Guest (Individual Wheel)
+                </div>
+                <h3>Their First Pottery Class (Beginner Pottery)</h3>
+                <p className={styles.giftFeatureCopy}>
+                  “For the person who keeps saying, ‘I’ve always wanted to try that.’”
+                </p>
+                <p className={styles.giftFeatureFacts}>
+                  Includes 90-minute beginner wheel-throwing instruction for 1 guest, clay, tools, and cleanup. Optional kiln firing &amp; glazing extra.
+                </p>
+              </div>
+              <Link
+                href={`/gift-cards?city=${city}&gift=their-first-pottery-class&workshop=beginner-wheel#their-first-pottery-class`}
+                className={styles.giftFeatureCta}
+                onClick={() =>
+                  trackEvent("cta_click", {
+                    event_category: "CTA",
+                    cta_location: "Homepage Gift Section",
+                    cta_text: "Gift Their First Spin",
+                    cta_type: "primary",
+                    city,
+                    class_name: "Their First Pottery Class",
+                    class_id: "their-first-pottery-class",
+                  })
+                }
+              >
+                <span>Gift Their First Spin ({studio.label})</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            </article>
+          </div>
+          <div className={styles.giftCollectionRow}>
+            <p className={styles.dataStatus} style={{ margin: 0 }}>
+              Unsure which workshop they’ll pick? Explore flexible dollar-value certificates ($50–$250) and printable keepsake cards.
+            </p>
+            <Link
+              href={`/gift-cards?city=${city}`}
+              className={styles.giftCollectionLink}
+              onClick={() =>
+                trackEvent("cta_click", {
+                  event_category: "CTA",
+                  cta_location: "Homepage Gift Section",
+                  cta_text: "Explore Full Gift Collection",
+                  cta_type: "secondary",
+                  city,
+                })
+              }
+            >
+              Explore the full {studio.label} gift collection →
+            </Link>
+          </div>
+        </section>
         <section className={styles.studioInfo} aria-label="Selected studio">
           <p className={styles.eyebrow}>Meet us at the studio</p><h2>{studio.label}{city === "chicago" ? ", Pilsen" : ", Oregon"}</h2><p>{studio.address}</p>
           <p className={styles.dataStatus}>{refreshing ? "Checking current class details…" : refreshFailed || data.catalogState === "unavailable" || data.availabilityState === "unavailable" ? "Some live details are temporarily unavailable. Choose a date to check the studio’s current schedule." : "Prices and upcoming sessions come from the studio’s booking calendar. Your studio’s local time is shown."}</p>
-          <Link href="/gift-cards">Give a little creative time <span aria-hidden="true">↗</span></Link>
+          <Link href={`/gift-cards?city=${city}`}>Give a little creative time <span aria-hidden="true">↗</span></Link>
         </section>
       </main>
     </div>

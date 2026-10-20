@@ -19,7 +19,10 @@ export function contentIdentity(
     exact =
       u.searchParams.get("appointmentType") ||
       u.searchParams.get("appointmentTypeIds[]") ||
-      u.pathname.match(/\/appointment\/(\d+)\//)?.[1];
+      u.pathname.match(/\/appointment\/(\d+)\//)?.[1] ||
+      (u.pathname.includes("catalog")
+        ? u.searchParams.get("id") || u.searchParams.get("productId") || undefined
+        : undefined);
     if (exact && !/^\d+$/.test(exact)) exact = undefined;
     if (!exact && u.pathname.startsWith("/book/"))
       id = `activity:${u.pathname.split("/").at(-1)}`;
@@ -33,6 +36,7 @@ export function contentIdentity(
       };
 }
 export function classCategory(title: string): string {
+  if (/gift card|gift certificate/i.test(title)) return "gift_card";
   if (/pottery|wheel|ceramic|clay|handbuild/i.test(title)) return "pottery";
   if (/glass|mosaic|lamp/i.test(title)) return "glass";
   if (/bonsai|terrarium/i.test(title)) return "plants";
