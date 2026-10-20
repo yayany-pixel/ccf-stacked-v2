@@ -49,9 +49,100 @@ export default async function handler(req: Request): Promise<Response> {
     return new Response("Unauthorized", { status: 401 });
   const payload = new URLSearchParams(body);
   const id = payload.get("id");
+  const action = payload.get("action");
   if (!id || !/^\d+$/.test(id))
     return new Response("Invalid appointment ID", { status: 400 });
   try {
+    if (action === "order.completed") {
+      const orderRes = await fetch(
+        `https://acuityscheduling.com/api/v1/orders/${id}`,
+        {
+          headers: {
+            Authorization:
+              "Basic " + Buffer.from(`${user}:${apiKey}`).toString("base64"),
+          },
+          signal: AbortSignal.timeout(10000),
+        },
+      );
+      if (!orderRes.ok)
+        return new Response("Order verification unavailable", { status: 502 });
+      const order = await orderRes.json();
+      if (order.status !== "paid")
+        return new Response("Not a completed order payment", { status: 202 });
+      const orderTotal = Number(order.total);
+      if (!Number.isFinite(orderTotal) || orderTotal <= 0)
+        return new Response("Verified order amount unavailable", {
+          status: 202,
+        });
+      const transactionId = `acuity:order:${id}`;
+      const products = Array.isArray(order.products) ? order.products : [];
+      const primaryProduct = products[0] ?? {
+        id: id,
+        name: String(order.title || "Gift Certificate"),
+        quantity: 1,
+        total: orderTotal,
+      };
+      const orderCity = /eugene/i.test(String(order.title || ""))
+        ? "eugene"
+        : "chicago";
+      if (!gaEnabled)
+        return new Response("Meta delivery: disabled", { status: 200 });
+      const db = getDb();
+      const claimed: any = await db.execute(
+        sql`insert into analytics_purchases(transaction_id,status) values(${transactionId},'sending') on conflict do nothing returning transaction_id`,
+      );
+      if (!(claimed.rows ?? claimed).length)
+        return new Response("Already recorded or awaiting reconciliation", {
+          status: 200,
+        });
+      const result = await fetch(
+        `https://www.google-analytics.com/mp/collect?measurement_id=${encodeURIComponent(measurement!)}&api_secret=${encodeURIComponent(secret!)}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          signal: AbortSignal.timeout(10000),
+          body: JSON.stringify({
+            client_id: `${createHmac("sha256", apiKey).update(transactionId).digest("hex").slice(0, 16)}.1`,
+            events: [
+              {
+                name: "purchase",
+                params: {
+                  transaction_id: transactionId,
+                  value: orderTotal,
+                  currency: "USD",
+                  city: orderCity,
+                  class_name: String(primaryProduct.name || order.title || "Gift Certificate"),
+                  class_id: String(primaryProduct.id || id),
+                  booking_provider: "acuity",
+                  items: (products.length > 0 ? products : [primaryProduct]).map(
+                    (p: any) => ({
+                      item_id: String(p.id || id),
+                      item_name: String(p.name || order.title || "Gift Certificate"),
+                      item_category: "gift_card",
+                      price:
+                        Number(p.quantity) > 0
+                          ? Number(p.total) / Number(p.quantity)
+                          : orderTotal,
+                      quantity: Number(p.quantity) || 1,
+                    }),
+                  ),
+                },
+              },
+            ],
+          }),
+        },
+      );
+      await db.execute(
+        sql`update analytics_purchases set status=${result.ok ? "sent" : "review"},updated_at=now() where transaction_id=${transactionId}`,
+      );
+      return new Response(
+        result.ok
+          ? "Accepted by GA transport; reporting requires GA validation"
+          : "Delivery requires review",
+        { status: result.ok ? 200 : 502 },
+      );
+    }
+
     const response = await fetch(
       `https://acuityscheduling.com/api/v1/appointments/${id}`,
       {

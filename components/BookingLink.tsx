@@ -13,6 +13,9 @@ export interface BookingLinkProps {
   classNameText: string; // Display name of the class
   classId: string; // slug
   classCategory?: string;
+  appointmentTypeId?: string;
+  cardPosition?: number;
+  displayedPrice?: number;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   target?: string;
   rel?: string;
@@ -70,6 +73,9 @@ export default function BookingLink({
   classNameText,
   classId,
   classCategory,
+  appointmentTypeId,
+  cardPosition,
+  displayedPrice,
   onClick,
   target,
   rel,
@@ -88,6 +94,9 @@ export default function BookingLink({
       class_name: classNameText,
       class_id: classId,
       class_category: classCategory,
+      appointment_type_id: appointmentTypeId,
+      card_position: cardPosition,
+      displayed_price: displayedPrice,
       link_url: destinationUrl,
       placement: ctaLocation || "booking_cta",
     });

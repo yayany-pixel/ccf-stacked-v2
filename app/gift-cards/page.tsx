@@ -1,89 +1,100 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import GlassCard from "@/components/ui/GlassCard";
-import ButtonPill from "@/components/ui/ButtonPill";
-import { giftCardUrl } from "@/lib/config";
+import GiftCardsStorefront from "@/components/GiftCardsStorefront";
+import type { CityParam } from "@/lib/config";
+import {
+  fetchLiveAcuityProducts,
+  GIFT_FAQS,
+  resolveGiftExperiences,
+  type GiftExperienceId,
+} from "@/lib/gifts";
+import { faqJsonLd, breadcrumbJsonLd } from "@/lib/structuredData";
 
 export const metadata: Metadata = {
-  title: "Gift Cards | Color Cocktail Factory",
-  description: "Give the gift of creativity. Gift cards for Color Cocktail Factory pottery, glass, and art workshops.",
+  title:
+    "Gift Experiences & Pottery Gift Cards | Chicago & Eugene | Color Cocktail Factory",
+  description:
+    "Give them something to look forward to. Gift Pottery Date Night for Two, Their First Pottery Class, or Choose Your Gift Card Amount ($50–$250) at Color Cocktail Factory in Chicago and Eugene. Let them choose the date.",
   alternates: {
-    canonical: "https://colorcocktailfactory.com/gift-cards"
-  }
+    canonical: "https://colorcocktailfactory.com/gift-cards",
+  },
+  openGraph: {
+    title: "Give them something to look forward to | Color Cocktail Factory Gift Cards",
+    description:
+      "A first spin on the pottery wheel. A date together. Something beautiful made by hand. Choose their experience—let them choose the date.",
+    url: "https://colorcocktailfactory.com/gift-cards",
+    type: "website",
+    images: [
+      {
+        url: "https://colorcocktailfactory.com/images/classes/approved-07-Go6xn9-08daf172fdf1.webp",
+        width: 1200,
+        height: 630,
+        alt: "Pottery Date Night for Two and Creative Gift Experiences at Color Cocktail Factory",
+      },
+    ],
+  },
 };
 
-export default function GiftCardsPage() {
+export default async function GiftCardsPage({
+  searchParams,
+}: {
+  searchParams?: {
+    city?: string;
+    location?: string;
+    gift?: string;
+    workshop?: string;
+    amount?: string;
+  };
+}) {
+  const rawProducts = await fetchLiveAcuityProducts();
+  const experiences = resolveGiftExperiences(rawProducts);
+
+  const rawCity = searchParams?.city || searchParams?.location;
+  const initialCity: CityParam = rawCity === "eugene" ? "eugene" : "chicago";
+
+  const rawGift = searchParams?.gift;
+  const initialGiftId: GiftExperienceId | null =
+    rawGift === "pottery-date-night-for-two" ||
+    rawGift === "their-first-pottery-class" ||
+    rawGift === "let-them-choose"
+      ? rawGift
+      : null;
+
+  const initialWorkshopSlug = searchParams?.workshop ?? null;
+  const parsedAmount = searchParams?.amount ? Number(searchParams.amount) : NaN;
+  const initialAmount = Number.isFinite(parsedAmount) ? parsedAmount : null;
+
+  const faqSchema = faqJsonLd([...GIFT_FAQS]);
+  const breadcrumbs = breadcrumbJsonLd([
+    { name: "Home", url: "https://colorcocktailfactory.com" },
+    {
+      name: "Gift Experiences & Choose Your Gift Card Amount",
+      url: "https://colorcocktailfactory.com/gift-cards",
+    },
+  ]);
+
   return (
-    <main id="main-content" tabIndex={-1} className="min-h-screen px-6">
-      <div className="h-24" />
-      <div className="mx-auto max-w-4xl">
-        <GlassCard className="p-8">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold tracking-wide text-white/80">
-            GIFT CARDS
-          </div>
-          <h1 className="mt-4 font-serif text-5xl leading-tight">Gift Cards</h1>
-          <p className="mt-4 max-w-2xl text-white/80">
-            Let them choose the workshop. You get the credit for being thoughtful. Available in any custom denomination.
-          </p>
-
-          <div className="mt-7 flex flex-wrap gap-3">
-            <ButtonPill href={giftCardUrl} variant="primary">
-              Choose Your Gift Card Amount →
-            </ButtonPill>
-          </div>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-              <div className="text-xs font-semibold text-white/60">INTRO WORKSHOP</div>
-              <div className="mt-2 text-2xl font-semibold">$50</div>
-              <p className="mt-2 text-sm text-white/70">
-                Ideal for a single beginner workshop or craft session.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-              <div className="text-xs font-semibold text-pink-300">POPULAR CHOICE</div>
-              <div className="mt-2 text-2xl font-semibold">$100</div>
-              <p className="mt-2 text-sm text-white/70">
-                Great for date night pottery for two or specialty glass workshops.
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-              <div className="text-xs font-semibold text-purple-300">CELEBRATION</div>
-              <div className="mt-2 text-2xl font-semibold">$200</div>
-              <p className="mt-2 text-sm text-white/70">
-                Perfect for multi-person outings or premium VIP experiences.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-6 text-center">
-            <ButtonPill href={giftCardUrl} variant="primary" className="px-8 py-3.5 text-base">
-              Choose Your Gift Card Amount →
-            </ButtonPill>
-          </div>
-
-          <div className="mt-8 border-t border-white/10 pt-6 space-y-3 text-sm text-white/70">
-            <p>
-              <strong>Redemption Notice:</strong> Gift certificates can be redeemed directly in our online booking scheduler for eligible workshops. To book in a specific studio, view the current schedules for{" "}
-              <Link className="text-white/85 underline decoration-white/30 underline-offset-4" href="/chicago">
-                Chicago
-              </Link>{" "}
-              or{" "}
-              <Link className="text-white/85 underline decoration-white/30 underline-offset-4" href="/eugene">
-                Eugene
-              </Link>.
-            </p>
-            <p className="text-xs text-white/50">
-              For corporate bulk certificates or custom amounts, contact{" "}
-              <a className="underline hover:text-white" href="mailto:support@colorcocktailfactory.com">
-                support@colorcocktailfactory.com
-              </a>.
-            </p>
-          </div>
-        </GlassCard>
-      </div>
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="min-h-screen px-4 pb-20 pt-28 sm:px-6"
+    >
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
+      />
+      <GiftCardsStorefront
+        experiences={experiences}
+        initialCity={initialCity}
+        initialGiftId={initialGiftId}
+        initialWorkshopSlug={initialWorkshopSlug}
+        initialAmount={initialAmount}
+      />
     </main>
   );
 }

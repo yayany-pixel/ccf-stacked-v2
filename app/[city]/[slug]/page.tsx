@@ -9,11 +9,17 @@ import ButtonPill from "@/components/ui/ButtonPill";
 import BookingLink from "@/components/BookingLink";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
 import PotteryFinishingSection from "@/components/PotteryFinishingSection";
+import GiftCardsStorefront from "@/components/GiftCardsStorefront";
 import { sections, type SectionConfig } from "@/lib/config";
 import { cities, getCityByParam, buildBookingLink } from "@/lib/links";
 import { buildActivityMetadata } from "@/lib/seo";
 import { activityJsonLd, faqJsonLd, breadcrumbJsonLd } from "@/lib/structuredData";
 import { generateFAQSchema, generateCourseSchema, generateBreadcrumbSchema } from "@/lib/enhancedStructuredData";
+import {
+  fetchLiveAcuityProducts,
+  getClassGiftingContext,
+  resolveGiftExperiences,
+} from "@/lib/gifts";
 
 function getSection(slug: string): SectionConfig | undefined {
   return sections.find((s) => s.slug === slug);
@@ -50,12 +56,15 @@ export async function generateMetadata({
   return {
     ...metadata,
     alternates: {
-      canonical: `https://colorcocktailfactory.com/activities/${section.slug}`
+      canonical:
+        section.slug === "gift-cards"
+          ? "https://colorcocktailfactory.com/gift-cards"
+          : `https://colorcocktailfactory.com/activities/${section.slug}`
     }
   };
 }
 
-export default function DetailPage({ params }: { params: { city: string; slug: string } }) {
+export default async function DetailPage({ params }: { params: { city: string; slug: string } }) {
   const city = getCityByParam(params.city);
   const section = getSection(params.slug);
 
@@ -63,7 +72,32 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
     notFound();
   }
 
+  if (section.slug === "gift-cards") {
+    const rawProducts = await fetchLiveAcuityProducts();
+    const experiences = resolveGiftExperiences(rawProducts);
+    return (
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="min-h-screen px-4 pb-20 pt-28 sm:px-6"
+      >
+        <MetaActivityView
+          id="activity:gift-cards"
+          name={`Gift Cards — ${city.label}`}
+          city={city.param}
+        />
+        <GiftCardsStorefront
+          experiences={experiences}
+          initialCity={city.param}
+        />
+      </main>
+    );
+  }
+
   const booking = buildBookingLink(city, section);
+  const giftContext = getClassGiftingContext(section.slug, city.param, [
+    city.param,
+  ]);
   const related = sections
     .filter((s) => s.id !== section.id)
     .filter((s) => section.relatedSlugs?.includes(s.slug))
@@ -125,9 +159,11 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
                 >
                   Open booking
                 </BookingLink>
-                <ButtonPill href="/gift-cards" variant="secondary">
-                  Gift cards
-                </ButtonPill>
+                {giftContext && (
+                  <ButtonPill href={giftContext.href} variant="secondary">
+                    🎁 {giftContext.label}
+                  </ButtonPill>
+                )}
                 <ButtonPill href={`/${city.param}/private-parties`} variant="ghost">
                   Private events
                 </ButtonPill>
@@ -174,6 +210,11 @@ export default function DetailPage({ params }: { params: { city: string; slug: s
                     >
                       Open calendar
                     </BookingLink>
+                    {giftContext && (
+                      <ButtonPill href={giftContext.href} variant="secondary" full>
+                        🎁 {giftContext.label}
+                      </ButtonPill>
+                    )}
                     {related.map((r) => (
                       <ButtonPill key={r.id} href={`/${city.param}/${r.slug}`} variant="secondary" full>
                         Related: {r.navLabel}

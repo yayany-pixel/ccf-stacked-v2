@@ -37,7 +37,20 @@ export function safeUrl(value: string, marketing = false): string {
           "fbclid",
           "location",
         ]
-      : ["appointmentType", "calendarID", "owner"]) {
+      : [
+          "appointmentType",
+          "calendarID",
+          "owner",
+          "id",
+          "productId",
+          "action",
+          "clear",
+          "clearCart",
+          "category",
+          "categories",
+          "gift",
+          "city",
+        ]) {
       const v = url.searchParams.get(key);
       if (v && !/@|%40/i.test(v)) query.set(key, v.slice(0, 150));
     }
