@@ -296,3 +296,15 @@
 .review { border-left: 3px solid var(--clay); padding: 8px 20px; margin-block: 20px; }
 .review blockquote { font: 22px/1.5 Georgia, serif; }
 .review figcaption { margin-top: 12px; color: var(--muted); font-size: 14px; }
+.giftGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+@media (max-width: 679px) { .giftGrid { grid-template-columns: 1fr; } }
+.giftFeatureCard { background: #fffefa; border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
+.giftFeatureCard h3 { font: 22px/1.2 Georgia, serif; margin-top: 4px; color: var(--ink); }
+.giftFeatureMeta { font-size: 12px; font-weight: 700; color: var(--clay); text-transform: uppercase; letter-spacing: .8px; }
+.giftFeatureCopy { font-size: 15px; line-height: 1.5; color: #5a5147; }
+.giftFeatureFacts { font-size: 13px; color: var(--muted); line-height: 1.45; }
+.giftFeatureCta { display: inline-flex; align-items: center; justify-content: space-between; min-height: 44px; border-radius: 6px; background: var(--clay); color: #fffdf7 !important; padding: 10px 16px; font-size: 14px; font-weight: 700; text-decoration: none !important; transition: background .15s ease; }
+.giftFeatureCta:hover { background: #873320; }
+.giftCollectionRow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-top: 8px; }
+.giftCollectionLink { font-weight: 700; color: var(--clay); text-decoration: underline; text-underline-offset: 4px; }
+
