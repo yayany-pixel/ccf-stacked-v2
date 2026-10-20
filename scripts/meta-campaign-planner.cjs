@@ -126,7 +126,7 @@ const BLUEPRINTS = [
     ],
     callToAction: "BOOK_TRAVEL",
     destinationUrl: "https://colorcocktailfactory.com/activities/matcha-bowl?utm_source=meta&utm_medium=cpc&utm_campaign=matcha_bowl_intro",
-    imageAsset: "/images/classes/wheel-throwing-for-beginners-color-cocktail-factory-acuity-600x600.jpg",
+    imageAsset: "/images/classes/wheel-throwing-for-beginners-f3b6679a8587.jpeg",
     recommendedDailyBudget: 3.0,
     optimizationGoal: "INITIATE_CHECKOUT",
     audience: {

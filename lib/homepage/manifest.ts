@@ -206,11 +206,11 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Eugene Wheel Throwing for Beginners: Cup creations.webp",
     "driveFileId": "1GPlEk3mPWnLxi_mUfgrXocT4eNe-GdkT",
-    "path": "/images/classes/approved-21-e-GdkT-20ed285cc994.webp",
-    "width": 1200,
-    "height": 900,
-    "alt": "A smiling workshop guest holding a freshly made clay cup",
-    "focalPosition": "50% 42%"
+    "path": "/images/classes/cup-creations-763410615494.jpeg",
+    "width": 1206,
+    "height": 1481,
+    "alt": "Hands shaping a gray clay cup on a spinning pottery wheel",
+    "focalPosition": "50% 55%"
   },
   {
     "filename": "Eugene Wheel Throwing for Beginners: Matcha Bowl.webp",
@@ -233,11 +233,11 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "FLASH SALE BEGINNERS WHEEL THROWING.webp",
     "driveFileId": "1us6KmXl90xq-GVC7Ik5dWGjA511Xe4O7",
-    "path": "/images/classes/wheel-throwing-for-beginners-color-cocktail-factory-acuity-600x600.jpg",
-    "width": 600,
-    "height": 600,
-    "alt": "Students shaping clay on pottery wheels during a beginner workshop",
-    "focalPosition": "50% 50%"
+    "path": "/images/classes/wheel-throwing-for-beginners-f3b6679a8587.jpeg",
+    "width": 1440,
+    "height": 1800,
+    "alt": "An excited workshop guest giving a clay-covered thumbs-up at a pottery wheel",
+    "focalPosition": "50% 48%"
   },
   {
     "filename": "Halloween Ghost Pottey!.webp",
@@ -422,20 +422,20 @@ export const APPROVED_PHOTOS: ApprovedPhoto[] = [
   {
     "filename": "Wheel Throwing for Beginners - Chicago.webp",
     "driveFileId": "1rUWLJ1sUh8iFBVU5xwI0CCmlO5e58mRd",
-    "path": "/images/classes/wheel-throwing-for-beginners-color-cocktail-factory-acuity-600x600.jpg",
-    "width": 600,
-    "height": 600,
-    "alt": "Students shaping clay on pottery wheels during a beginner workshop",
-    "focalPosition": "50% 50%"
+    "path": "/images/classes/wheel-throwing-for-beginners-f3b6679a8587.jpeg",
+    "width": 1440,
+    "height": 1800,
+    "alt": "An excited workshop guest giving a clay-covered thumbs-up at a pottery wheel",
+    "focalPosition": "50% 48%"
   },
   {
     "filename": "Wheel Throwing for Beginners -Cup Creations.webp",
     "driveFileId": "1jqsoqPsiLbjt0OKDsiEHxlArlXZzjDrH",
-    "path": "/images/classes/approved-46-ZzjDrH-20ed285cc994.webp",
-    "width": 1200,
-    "height": 900,
-    "alt": "A smiling workshop guest holding a freshly made clay cup",
-    "focalPosition": "50% 42%"
+    "path": "/images/classes/cup-creations-763410615494.jpeg",
+    "width": 1206,
+    "height": 1481,
+    "alt": "Hands shaping a gray clay cup on a spinning pottery wheel",
+    "focalPosition": "50% 55%"
   },
   {
     "filename": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl.webp",
