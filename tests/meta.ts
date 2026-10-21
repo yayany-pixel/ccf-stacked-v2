@@ -86,6 +86,7 @@ async function main() {
   const delivered: any[] = [];
   const env: Record<string, string> = {
     META_CAPI_ENABLED: "true",
+    META_CAPI_VALIDATED_PIXEL_ID: "123456789", META_CAPI_PURCHASES_ENABLED: "true",
     META_CAPI_ACCESS_TOKEN: "unit-test-only",
     NEXT_PUBLIC_META_PIXEL_ID: "123456789",
     META_GRAPH_API_VERSION: "v99.0",
@@ -190,6 +191,14 @@ async function main() {
     ),
     "invalid",
   );
+  env.META_CAPI_VALIDATED_PIXEL_ID = "999999999";
+  assert.equal(await sendMetaConversion(event, deps), "disabled");
+  env.META_CAPI_VALIDATED_PIXEL_ID = env.NEXT_PUBLIC_META_PIXEL_ID;
+  env.META_CAPI_PURCHASES_ENABLED = "false";
+  assert.equal(await sendMetaConversion(purchase, deps), "disabled");
+  env.CONTEXT = "deploy-preview";
+  assert.equal(await sendMetaConversion(event, deps), "disabled");
+  delete env.CONTEXT;
   delete env.META_CAPI_ACCESS_TOKEN;
   assert.equal(await sendMetaConversion(purchase, deps), "disabled");
   console.log(

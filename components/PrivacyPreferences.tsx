@@ -29,7 +29,7 @@ export default function PrivacyPreferences() {
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 8000);
     setSignalDenied(privacySignalDenied());
-    const initialPrefs = defaultVisitorPreferences();
+    const initialPrefs = { ...DENIED_PREFERENCES };
     applyPreferences(initialPrefs);
     setChoices(initialPrefs);
     fetch("/api/privacy", { cache: "no-store", signal: controller.signal })

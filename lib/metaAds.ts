@@ -83,7 +83,7 @@ export interface OptimizationReport {
   recommendations: OptimizationRecommendation[];
 }
 
-const GRAPH_API_VERSION = "v19.0";
+const GRAPH_API_VERSION = process.env.META_REPORTING_API_VERSION || "v26.0";
 const BASE_URL = `https://graph.facebook.com/${GRAPH_API_VERSION}`;
 
 /**
@@ -435,15 +435,13 @@ export async function fetchMetaCampaignInsights(
   ].join(",");
 
   const url = new URL(`${BASE_URL}/${accountId}/insights`);
-  url.searchParams.set("access_token", accessToken);
   url.searchParams.set("level", "campaign");
   url.searchParams.set("fields", fields);
   url.searchParams.set("date_preset", datePreset);
 
-  const response = await fetch(url.toString());
+  const response = await fetch(url.toString(), { headers: { Authorization: `Bearer ${accessToken}` }, signal: AbortSignal.timeout(10000) });
   if (!response.ok) {
-    const errorBody = await response.text();
-    throw new Error(`Meta API error (${response.status}): ${errorBody}`);
+    throw new Error(`Meta API error (${response.status})`);
   }
 
   const json = await response.json();
@@ -488,14 +486,12 @@ export async function fetchMetaCampaigns(
   const accountId = formatAdAccountId(rawAccountId);
   const fields = "id,name,status,objective,daily_budget,lifetime_budget,start_time,stop_time";
   const url = new URL(`${BASE_URL}/${accountId}/campaigns`);
-  url.searchParams.set("access_token", accessToken);
   url.searchParams.set("fields", fields);
   url.searchParams.set("limit", "100");
 
-  const response = await fetch(url.toString());
+  const response = await fetch(url.toString(), { headers: { Authorization: `Bearer ${accessToken}` }, signal: AbortSignal.timeout(10000) });
   if (!response.ok) {
-    const errorBody = await response.text();
-    throw new Error(`Meta API error (${response.status}): ${errorBody}`);
+    throw new Error(`Meta API error (${response.status})`);
   }
 
   const json = await response.json();

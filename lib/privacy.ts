@@ -3,7 +3,7 @@ export type PrivacyPreferences = { analytics: boolean; marketing: boolean };
 export const PRIVACY_EVENT = "ccf-privacy-consent";
 export const OPEN_PRIVACY_EVENT = "ccf-open-privacy";
 // Applied only after successfully checking for an existing saved choice.
-export const DEFAULT_PREFERENCES: PrivacyPreferences = { analytics: true, marketing: true };
+export const DEFAULT_PREFERENCES: PrivacyPreferences = { analytics: true, marketing: false };
 export const DENIED_PREFERENCES: PrivacyPreferences = { analytics: false, marketing: false };
 
 declare global {
@@ -40,16 +40,9 @@ export function hasAdClickSignal(): boolean {
   }
 }
 
-/**
- * Returns the effective default preferences for a new visitor without a saved choice.
- * Visitors arriving via paid advertising links get marketing enabled so the pixel
- * can train and attribute conversions, unless browser privacy signals (GPC/DNT) request denial.
- */
+/** An advertising click is attribution context, never consent. */
 export function defaultVisitorPreferences(): PrivacyPreferences {
   if (privacySignalDenied()) return { ...DENIED_PREFERENCES };
-  if (hasAdClickSignal()) {
-    return { analytics: true, marketing: true };
-  }
   return { ...DEFAULT_PREFERENCES };
 }
 

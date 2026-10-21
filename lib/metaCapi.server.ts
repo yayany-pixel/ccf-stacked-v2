@@ -55,6 +55,9 @@ export async function sendMetaConversion(
   const version = env("META_GRAPH_API_VERSION");
   if (
     env("META_CAPI_ENABLED") !== "true" ||
+    env("META_CAPI_VALIDATED_PIXEL_ID") !== pixel ||
+    (event.name === "Purchase" && env("META_CAPI_PURCHASES_ENABLED") !== "true") ||
+    (env("CONTEXT") && env("CONTEXT") !== "production" && !env("META_CAPI_TEST_EVENT_CODE")) ||
     !token ||
     !pixel ||
     !/^\d+$/.test(pixel) ||
