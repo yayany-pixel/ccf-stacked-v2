@@ -130,12 +130,12 @@ async function main() {
   // Case B: Visitor from Facebook/Instagram ad click (fbclid)
   setTestEnv("?fbclid=IwAR1234567890abcdef", false);
   assert.equal(hasAdClickSignal(), true);
-  assert.deepEqual(defaultVisitorPreferences(), { analytics: true, marketing: true });
+  assert.deepEqual(defaultVisitorPreferences(), { analytics: true, marketing: false });
 
   // Case C: Visitor with GPC signal enabled (must override ad click)
   setTestEnv("?fbclid=IwAR1234567890abcdef", true);
   assert.deepEqual(defaultVisitorPreferences(), DENIED_PREFERENCES);
-  console.log("✓ Ad Click Detection and Privacy Signal Precedence verified.");
+  console.log("✓ Ad click attribution does not grant marketing consent; privacy signal precedence verified.");
 
   console.log("\n=======================================================");
   console.log("ALL META AD INTELLIGENCE & TRACKING TESTS PASSED!");

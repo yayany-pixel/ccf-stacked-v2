@@ -66,6 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <meta name="theme-color" content="#1a1a2e" />
+        <meta name="facebook-domain-verification" content="mebaogz44r6k4onum9zlhduwf5r41e" />
         <link rel="icon" href="/favicon.ico?v=20261006" sizes="16x16 32x32 48x48" />
         <link rel="icon" href="/favicon.png?v=20261006" type="image/png" sizes="64x64" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=20261006" sizes="180x180" />
@@ -76,10 +77,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               window.dataLayer = window.dataLayer || [];
               function gtag(){window.dataLayer.push(arguments);}
               gtag('consent', 'default', {
-                ad_storage: 'granted',
-                ad_user_data: 'granted',
-                ad_personalization: 'granted',
-                analytics_storage: 'granted',
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                analytics_storage: 'denied',
                 wait_for_update: 500
               });
             `

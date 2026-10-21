@@ -1,5 +1,7 @@
 # Meta measurement and operating guide
 
+**Current migration status (21 October 2026):** See [the audited migration record](meta-dataset-migration.md). Historical claims below are not evidence of current deployment or activation.
+
 Current policy (9 October 2026): the automatic privacy banner has been removed. After a successful saved-preference lookup, visitors without a saved choice get Google Analytics enabled and advertising disabled. Saved choices and browser Global Privacy Control / Do Not Track signals take precedence. Failed lookups keep optional tracking off. Visitors can change choices in the footer’s Privacy preferences dialog; choices continue to use the existing Netlify Database storage. Google Ads and Meta still require advertising permission. This policy supersedes the historical consent/default notes below.
 
 

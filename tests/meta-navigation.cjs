@@ -24,6 +24,13 @@ const base = process.env.CCF_BASE_URL || "http://localhost:8889";
       window.gtag = () => {};
     });
     const page = await context.newPage();
+    await page.addInitScript(() => {
+      document.addEventListener("DOMContentLoaded", () => {
+        const style = document.createElement("style");
+        style.textContent = 'iframe[title="Netlify Drawer"] { display: none !important; }';
+        document.head.appendChild(style);
+      });
+    });
     await page.route("**/api/privacy", route => route.fulfill({ json: { preferences: { analytics: true, marketing: true } } }));
     await page.goto(base);
     await page.waitForSelector("script#meta-pixel-library", {
@@ -44,7 +51,15 @@ const base = process.env.CCF_BASE_URL || "http://localhost:8889";
     );
     assert.equal(detail.length, 1);
     assert.deepEqual(detail[0][2].content_ids, ["activity:date-night-wheel"]);
-    assert.equal(detail[0][2].value, undefined);
+    // Provider-backed deployments may have a verified live price; local builds
+    // without provider credentials intentionally omit it.
+    if (detail[0][2].value !== undefined) {
+      assert.equal(typeof detail[0][2].value, "number");
+      assert(detail[0][2].value > 0);
+      assert.equal(detail[0][2].currency, "USD");
+      const shownPrice = await page.locator('main').innerText();
+      assert(shownPrice.includes(`$${detail[0][2].value}`));
+    }
     await page.goBack();
     await page.waitForURL(base + "/");
     await page.waitForTimeout(500);
@@ -114,6 +129,8 @@ const base = process.env.CCF_BASE_URL || "http://localhost:8889";
         },
       }),
     );
+    // Remove Netlify's injected preview-only feedback host before UI checks.
+    await page.locator('div[data-netlify-deploy-id]').evaluateAll(nodes => nodes.forEach(node => node.remove()));
     await page
       .getByRole("button", { name: "Open studio help, the CCF AI assistant" })
       .click();

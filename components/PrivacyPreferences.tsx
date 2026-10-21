@@ -30,7 +30,7 @@ export default function PrivacyPreferences() {
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 8000);
     setSignalDenied(privacySignalDenied());
-    const initialPrefs = defaultVisitorPreferences();
+    const initialPrefs = { ...DENIED_PREFERENCES };
     applyPreferences(initialPrefs);
     setChoices(initialPrefs);
     fetch("/api/privacy", { cache: "no-store", signal: controller.signal })
@@ -96,7 +96,7 @@ export default function PrivacyPreferences() {
     }
   }
 
-  const explanation = "Essential features, analytics, and advertising measurement are enabled to help us improve our workshops. You can opt out of optional analytics or advertising tracking below at any time. Your choices are saved for 180 days using an essential preference cookie and an anonymous record.";
+  const explanation = "Essential features keep the site working. Optional analytics and advertising measurement stay off until your saved choices are loaded or you choose to enable them below. Your choices are saved for 180 days using an essential preference cookie and an anonymous record.";
 
   return (
     <>

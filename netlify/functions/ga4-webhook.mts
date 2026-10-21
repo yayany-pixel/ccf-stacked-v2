@@ -25,6 +25,7 @@ export default async function handler(req: Request): Promise<Response> {
     env("GA4_PURCHASES_ENABLED") === "true" && !!measurement && !!secret;
   const metaEnabled =
     env("META_CAPI_ENABLED") === "true" &&
+    env("META_CAPI_PURCHASES_ENABLED") === "true" &&
     !!env("META_CAPI_ACCESS_TOKEN") &&
     !!env("META_GRAPH_API_VERSION") &&
     !!env("NEXT_PUBLIC_META_PIXEL_ID");

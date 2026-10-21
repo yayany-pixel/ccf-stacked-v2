@@ -100,6 +100,7 @@ export function metaMatchContext(): MetaMatchContext | null {
       consent: "granted",
       fbp: cookies._fbp,
       fbc: cookies._fbc,
+      client_user_agent: navigator.userAgent,
     });
   } catch {
     return null;

@@ -1,5 +1,7 @@
 "use client";
 
+import { metaMatchContext, newMetaEventId } from "@/lib/metaPixel";
+
 import { trackLead } from "@/lib/analytics";
 import { useState } from "react";
 
@@ -66,9 +68,12 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
     e.preventDefault();
     setStatus("sending");
     try {
+      const metaEventId = newMetaEventId();
+      const match = metaMatchContext();
       const body = new URLSearchParams({
         "form-name": "birthday-party",
         ...form,
+        ...(metaEventId && match ? { meta_form_name: "birthday-party", meta_event_id: metaEventId, meta_context: JSON.stringify(match) } : {}),
       }).toString();
       const res = await fetch("/netlify-forms.html", {
         method: "POST",
@@ -77,7 +82,7 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
       });
       if (!res.ok) throw new Error("Network response not ok");
       // Fire GA4 conversion event — imported into Google Ads as a conversion action
-      trackLead({city:form.city.toLowerCase(),form_name:'birthday-party',lead_type:'birthday',activity:form.experience,group_size_range:form.guestCount});
+      trackLead({city:form.city.toLowerCase(),form_name:'birthday-party',lead_type:'birthday',activity:form.experience,group_size_range:form.guestCount}, metaEventId);
       setStatus("success");
       setForm(INITIAL);
     } catch {
