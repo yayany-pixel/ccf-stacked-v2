@@ -104,7 +104,7 @@ export default function PrivateEventFormCard({
           });
         }
         // Fire GA4 conversion event — imported into Google Ads as a conversion action
-        trackGALead({city:s.city.toLowerCase(),form_name:'private-party',lead_type:'private_party',placement:variant,activity:s.preferredProject,group_size_range:groupSizeRange(s.groupSize)}, metaEventId);
+        trackGALead({city:s.city.toLowerCase(),form_name:'private-party',lead_type:'private_party',placement:variant,activity:s.preferredProject,group_size_range:groupSizeRange(s.groupSize)}, metaEventId, false);
         // Redirect to thank you page
         window.location.href = "/thanks/private-party";
       } else {
