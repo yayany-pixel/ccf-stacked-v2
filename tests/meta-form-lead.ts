@@ -25,3 +25,16 @@ const deps: CapiDependencies = {
 };
 async function main(){assert.deepEqual((await Promise.all([sendMetaConversion(lead,deps),sendMetaConversion(lead,deps)])).sort(),['duplicate','sent']);assert.equal(calls,1); console.log('Accepted Netlify Lead checks passed: exact form identity, consent, PII exclusion, shared IDs and concurrent deduplication.');}
 main();
+
+async function testEnvironment() {
+  const {formLeadEnvironment} = await import('../lib/metaFormLead.server');
+  const env=(k:string)=>({META_CAPI_ENABLED:'false',META_CAPI_TEST_EVENT_CODE:'TEST-ONLY'})[k];
+  const normal=formLeadEnvironment(env,'ordinary_lead_123');
+  assert.equal(normal('META_CAPI_ENABLED'),'false');
+  assert.equal(normal('META_CAPI_TEST_EVENT_CODE'),undefined);
+  const test=formLeadEnvironment(env,'ccf_test_123456789');
+  assert.equal(test('META_CAPI_ENABLED'),'true');
+  assert.equal(test('META_CAPI_TEST_EVENT_CODE'),'TEST-ONLY');
+  assert.equal(formLeadEnvironment(k=>k==='META_CAPI_ENABLED'?'false':undefined,'ccf_test_123456789')('META_CAPI_ENABLED'),'false');
+}
+testEnvironment();

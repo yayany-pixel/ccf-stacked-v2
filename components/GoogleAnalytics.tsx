@@ -3,7 +3,7 @@ import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { reportWebVitals, trackPageView, safeUrl } from "@/lib/analytics";
-import { currentPrivacyPreferences, googleConsentState, PRIVACY_EVENT, defaultVisitorPreferences } from "@/lib/privacy";
+import { currentPrivacyPreferences, googleConsentState, PRIVACY_EVENT, DENIED_PREFERENCES } from "@/lib/privacy";
 let initialized = false;
 let vitals = false;
 let analyticsConfigured = false;
@@ -23,7 +23,7 @@ function GoogleAnalyticsInner() {
     };
     if (!initialized) {
       initialized = true;
-      const initialPreferences = defaultVisitorPreferences();
+      const initialPreferences = DENIED_PREFERENCES;
       window.gtag("consent", "default", {
         ...googleConsentState(initialPreferences),
         wait_for_update: 500,

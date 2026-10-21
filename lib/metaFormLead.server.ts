@@ -35,3 +35,19 @@ export function acceptedFormLead(
     },
   };
 }
+
+/** Explicitly marked operator tests can run while live CAPI remains off.
+ * The temporary Test Events code is never applied to ordinary submissions.
+ * Removing the code disables this test path completely.
+ */
+export function formLeadEnvironment(
+  env: (key: string) => string | undefined,
+  eventId: string,
+) {
+  const isTest = eventId.startsWith("ccf_test_") && !!env("META_CAPI_TEST_EVENT_CODE");
+  return (key: string) => {
+    if (key === "META_CAPI_TEST_EVENT_CODE") return isTest ? env(key) : undefined;
+    if (key === "META_CAPI_ENABLED" && isTest) return "true";
+    return env(key);
+  };
+}
