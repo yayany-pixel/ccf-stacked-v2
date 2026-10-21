@@ -268,8 +268,11 @@ export function trackLead(
     group_size_range?: string;
   },
   eventId?: string,
+  metaVerified = true,
 ) {
-  trackMetaLead(
+  // Ordinary Netlify HTTP success also covers spam; verified platform CAPI
+  // owns those Meta Leads. Ask CCF supplies server-confirmed acceptance.
+  if (metaVerified) trackMetaLead(
     {
       content_name:
         p.lead_type === "birthday"
