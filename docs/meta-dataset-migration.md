@@ -5,7 +5,7 @@ Status: PREPARED, NOT ACTIVATED. This audit supersedes conflicting historical st
 ## Verified live state
 
 - Site teal-concha-819f3e / 59df13dc-1a2e-40e2-8a0c-20901ea6422e, colorcocktailfactory.com.
-- Published deploy 6ad91dbaf837dc8f0b08a5ff, commit 43224d2f980b8b8f88ab265110d4554704a52e62.
+- Initial audited deploy 6ad91dbaf837dc8f0b08a5ff, commit 43224d2f980b8b8f88ab265110d4554704a52e62. A concurrent privacy-banner update published deploy 6ad942bb133699da2ba92be2, commit 3256b450d034b1c1ef49417ea72dca38f8cd1466 during this work. The draft incorporates that update and preserves its banner. The latest deploy still lacks submission-created and uses unchanged tracking configuration.
 - Live browser initializes legacy pixel 1554498828184467. It requests the library and queues events before saved advertising denial loads. This branch fixes that race and removes advertising-click/default marketing consent.
 - Ad account act_950834718873487 is Naughty Things. HYPD Info account lists Conversion Pixel 315271500363564, owned by Color Cocktail Factory business 2086421151454754.
 - Existing development CAPI token read both the target dataset and ad account successfully through v26.0. Production token is masked; its event-write authorization has NOT been verified. No test event or production conversion was submitted.
