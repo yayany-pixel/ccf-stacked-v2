@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
 import BrandLogo from "@/components/BrandLogo";
 import { classImageLoader } from "@/lib/classImageLoader";
@@ -46,7 +46,7 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
   const photo = activity.image;
   const ref = useRef<HTMLElement>(null);
   const seen = useRef(new Set<string>());
-  const tracking = {city: listCity, class_name: activity.title, class_id: activity.analyticsContentId ?? String(activity.appointmentTypeId), appointment_type_id: activity.bookingVariantIds && activity.bookingVariantIds.length > 1 ? undefined : String(activity.appointmentTypeId), class_category: 'workshop', card_position: position, item_list_name: `Homepage - ${listCity === 'chicago' ? 'Chicago' : 'Eugene'} Workshops`, displayed_price: activity.currentPrice ?? undefined, mode: activity.mode === 'online' ? 'online' : 'in_studio', batch_number: Math.ceil(position / 10)};
+  const tracking = useMemo(() => ({city: listCity, class_name: activity.title, class_id: activity.analyticsContentId ?? String(activity.appointmentTypeId), appointment_type_id: activity.bookingVariantIds && activity.bookingVariantIds.length > 1 ? undefined : String(activity.appointmentTypeId), class_category: 'workshop', card_position: position, item_list_name: `Homepage - ${listCity === 'chicago' ? 'Chicago' : 'Eugene'} Workshops`, displayed_price: activity.currentPrice ?? undefined, mode: activity.mode === 'online' ? 'online' : 'in_studio', batch_number: Math.ceil(position / 10)}), [listCity, activity.title, activity.analyticsContentId, activity.appointmentTypeId, activity.bookingVariantIds, position, activity.currentPrice, activity.mode]);
   useEffect(() => {
     const node=ref.current; if(!node)return;
     const key=listCity + ':' + activity.key;
@@ -72,7 +72,7 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
     window.addEventListener('ccf-meta-consent',consentChanged);
     window.addEventListener(PRIVACY_EVENT,consentChanged);
     observer.observe(node); return ()=>{observer.disconnect();window.removeEventListener('ccf-meta-consent',consentChanged);window.removeEventListener(PRIVACY_EVENT,consentChanged);};
-  },[listCity,activity.key,activity.currentPrice,position]);
+  },[listCity,activity.key,activity.currentPrice,position,tracking]);
   if (!photo) return null;
 
   const cardMeta = getActivityCardMeta(activity);
@@ -359,7 +359,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
         </div>
       </header>
       <main tabIndex={-1} id="main-content" className={styles.main}>
-        <div className={styles.intro}><h1>The future is <em>handmade</em> in {studio.label}...</h1><p>Pottery &amp; creative workshops. Come make something together.</p></div>
+        <div className={styles.intro}><h1>Pottery &amp; creative workshops</h1><p>The future is <em>handmade</em>... Come make something together.</p></div>
         <WorkshopSaleBanner />
         <div id="workshops" style={{ scrollMarginTop: "100px" }} className={styles.filters} role="group" aria-label="Filter workshops">
           {HOMEPAGE_FILTERS.map(option => <button key={option} type="button" aria-pressed={filter === option} onClick={() => {
