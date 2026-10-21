@@ -24,6 +24,13 @@ const base = process.env.CCF_BASE_URL || "http://localhost:8889";
       window.gtag = () => {};
     });
     const page = await context.newPage();
+    await page.addInitScript(() => {
+      document.addEventListener("DOMContentLoaded", () => {
+        const style = document.createElement("style");
+        style.textContent = 'iframe[title="Netlify Drawer"] { display: none !important; }';
+        document.head.appendChild(style);
+      });
+    });
     await page.route("**/api/privacy", route => route.fulfill({ json: { preferences: { analytics: true, marketing: true } } }));
     await page.goto(base);
     await page.waitForSelector("script#meta-pixel-library", {
@@ -122,6 +129,8 @@ const base = process.env.CCF_BASE_URL || "http://localhost:8889";
         },
       }),
     );
+    // Remove Netlify's injected preview-only feedback host before UI checks.
+    await page.locator('div[data-netlify-deploy-id]').evaluateAll(nodes => nodes.forEach(node => node.remove()));
     await page
       .getByRole("button", { name: "Open studio help, the CCF AI assistant" })
       .click();

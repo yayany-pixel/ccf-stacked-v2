@@ -1,40 +1,11 @@
 import assert from "node:assert/strict";
-import { acceptedFormLead } from "../lib/metaFormLead.server";
+import { acceptedFormLead, formLeadEnvironment } from "../lib/metaFormLead.server";
 import { sendMetaConversion, type CapiDependencies } from "../lib/metaCapi.server";
-const data = {
-  "form-name": "private-party", meta_form_name: "private-party", city: "Chicago",
-  meta_event_id: "netlify:test:12345678",
-  meta_context: JSON.stringify({consent:"granted", fbp:"fb.1.1700000000000.12345", client_user_agent:"UnitTest/1.0"}),
-  name: "Private Person", email: "private@example.invalid", details: "Do not transmit",
-};
-const lead = acceptedFormLead(data)!;
-assert.equal(lead.eventId, data.meta_event_id);
-assert.equal(lead.data.lead_type, "private_party");
-assert(!JSON.stringify(lead).includes("private@example.invalid"));
-for (const update of [
-  {"form-name":"newsletter"}, {"form-name":""}, {meta_form_name:"birthday-party"},
-  {meta_event_id:""}, {meta_context:"{"}, {"bot-field":"spam"},
-  {meta_context:JSON.stringify({consent:"denied"})}, {city:"unknown"},
-] as Record<string, string>[]) assert.equal(acceptedFormLead({...data,...update}), null);
-assert.equal(acceptedFormLead({...data,"form-name":"birthday-party",meta_form_name:"birthday-party"})?.data.lead_type,"birthday");
-const keys = new Set(); let calls = 0;
-const deps: CapiDependencies = {
- env:k=>({META_CAPI_ENABLED:"true", META_CAPI_VALIDATED_PIXEL_ID:"315271500363564", META_CAPI_ACCESS_TOKEN:"mock", NEXT_PUBLIC_META_PIXEL_ID:"315271500363564", META_GRAPH_API_VERSION:"v26.0"})[k],
- claim:async k=>{if(keys.has(k))return false;keys.add(k);return true}, finish:async()=>{},
- fetch:async(url,opts)=>{calls++;assert(String(url).includes('/315271500363564/events'));const p=JSON.parse(String(opts?.body));assert.equal(p.data[0].event_id,data.meta_event_id);return Response.json({events_received:1})},
-};
-async function main(){assert.deepEqual((await Promise.all([sendMetaConversion(lead,deps),sendMetaConversion(lead,deps)])).sort(),['duplicate','sent']);assert.equal(calls,1); console.log('Accepted Netlify Lead checks passed: exact form identity, consent, PII exclusion, shared IDs and concurrent deduplication.');}
-main();
-
-async function testEnvironment() {
-  const {formLeadEnvironment} = await import('../lib/metaFormLead.server');
-  const env=(k:string)=>({META_CAPI_ENABLED:'false',META_CAPI_TEST_EVENT_CODE:'TEST-ONLY'})[k];
-  const normal=formLeadEnvironment(env,'ordinary_lead_123');
-  assert.equal(normal('META_CAPI_ENABLED'),'false');
-  assert.equal(normal('META_CAPI_TEST_EVENT_CODE'),undefined);
-  const test=formLeadEnvironment(env,'ccf_test_123456789');
-  assert.equal(test('META_CAPI_ENABLED'),'true');
-  assert.equal(test('META_CAPI_TEST_EVENT_CODE'),'TEST-ONLY');
-  assert.equal(formLeadEnvironment(k=>k==='META_CAPI_ENABLED'?'false':undefined,'ccf_test_123456789')('META_CAPI_ENABLED'),'false');
-}
-testEnvironment();
+const data={meta_form_name:'private-party',city:'Chicago',meta_event_id:'netlify:test:12345678',meta_context:JSON.stringify({consent:'granted',fbp:'fb.1.1700000000000.12345',client_user_agent:'UnitTest/1.0'}),name:'Private Person',email:'private@example.invalid'};
+const payload={id:'0123456789abcdef01234567',form_id:'692cbf5dc836c30008e87c35',form_name:'private-party',created_at:new Date().toISOString(),data};
+const lead=acceptedFormLead(payload)!;assert(lead);assert.equal(lead.eventId,data.meta_event_id);assert(!JSON.stringify(lead).includes('private@example.invalid'));
+for(const update of [{form_name:'newsletter'},{form_id:'other'},{id:''},{spam:true},{created_at:'invalid'},{created_at:'2020-01-01T00:00:00Z'}])assert.equal(acceptedFormLead({...payload,...update}),null);
+for(const update of [{meta_form_name:'birthday-party'},{meta_event_id:''},{meta_context:'{'},{'bot-field':'spam'},{city:'unknown'},{meta_context:JSON.stringify({consent:'denied'})}] as Record<string,string>[])assert.equal(acceptedFormLead({...payload,data:{...data,...update}}),null);
+assert.equal(acceptedFormLead({...payload,form_id:'69a50e767120ed0008557c97',form_name:'birthday-party',data:{...data,meta_form_name:'birthday-party'}})?.data.lead_type,'birthday');
+const keys=new Set();let calls=0;const deps:CapiDependencies={env:k=>({META_CAPI_ENABLED:'true',META_CAPI_VALIDATED_PIXEL_ID:'315271500363564',META_CAPI_ACCESS_TOKEN:'mock',NEXT_PUBLIC_META_PIXEL_ID:'315271500363564',META_GRAPH_API_VERSION:'v26.0'})[k],claim:async k=>{if(keys.has(k))return false;keys.add(k);return true},finish:async()=>{},fetch:async(url,opts)=>{calls++;assert(String(url).includes('/315271500363564/events'));assert.equal(JSON.parse(String(opts?.body)).data[0].event_id,data.meta_event_id);return Response.json({events_received:1})}};
+async function main(){assert.deepEqual((await Promise.all([sendMetaConversion(lead,deps),sendMetaConversion(lead,deps)])).sort(),['duplicate','sent']);assert.equal(calls,1);const env=(k:string)=>({META_CAPI_ENABLED:'false',META_CAPI_TEST_EVENT_CODE:'TEST-ONLY'})[k];assert.equal(formLeadEnvironment(env,'ordinary_lead_123')('META_CAPI_ENABLED'),'false');assert.equal(formLeadEnvironment(env,'ordinary_lead_123')('META_CAPI_TEST_EVENT_CODE'),undefined);assert.equal(formLeadEnvironment(env,'ccf_test_123456789')('META_CAPI_ENABLED'),'true');assert.equal(formLeadEnvironment(k=>k==='META_CAPI_ENABLED'?'false':undefined,'ccf_test_123456789')('META_CAPI_ENABLED'),'false');console.log('Signed form metadata, spam rejection, consent, exact IDs, event time, PII exclusion, test isolation and concurrent deduplication passed.');}main();
