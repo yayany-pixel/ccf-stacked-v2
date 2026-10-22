@@ -25,6 +25,7 @@ async function main() {
   assert.equal(commands.filter((x) => x[0] === "init").length, 1);
   pixel.trackMetaPageView();
   assert.equal(commands.filter((command) => command[0] === "track").length, 0);
+  assert.equal(commands.filter(command => command[0] === "consent" && command[1] === "revoke").length, 0);
   pixel.updateMetaConsent("granted");
   pixel.trackMetaPageView();
   pixel.trackMetaPageView();
@@ -77,7 +78,9 @@ async function main() {
   pixel.trackMetaLead({ lead_type: "ask_ccf_private_party" }, leadId);
   assert.equal(commands.find((x) => x[1] === "Lead")[3].eventID, leadId);
   const consentBefore = commands.filter((x) => x[0] === "track").length;
+  window.fbq!.callMethod = () => {};
   pixel.updateMetaConsent("denied");
+  assert.equal(commands.filter(command => command[0] === "consent" && command[1] === "revoke").length, 1);
   pixel.trackMetaInitiateCheckout(card);
   assert.equal(commands.filter((x) => x[0] === "track").length, consentBefore);
   delete (globalThis as any).window.fbq;

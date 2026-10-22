@@ -66,7 +66,9 @@ export function initializeMetaPixel() {
   }
   if (!window.ccfMetaInitialized) {
     window.ccfMetaInitialized = true;
-    if (metaConsent() !== "unknown")
+    // The library is not loaded until consent is granted. A queued revoke
+    // locks Meta's queue before it can process a later queued grant.
+    if (metaConsent() === "granted" || window.fbq.callMethod)
       window.fbq("consent", metaConsent() === "denied" ? "revoke" : "grant");
     // Disable automatic button/form collection; only reviewed explicit events.
     window.fbq("set", "autoConfig", false, META_PIXEL_ID);
@@ -78,7 +80,8 @@ export function updateMetaConsent(choice: MetaConsent) {
   if (typeof window === "undefined" || !["granted", "denied"].includes(choice))
     return;
   window.ccfMetaConsent = choice;
-  window.fbq?.("consent", metaConsent() === "denied" ? "revoke" : "grant");
+  if (metaConsent() === "granted" || window.fbq?.callMethod)
+    window.fbq?.("consent", metaConsent() === "denied" ? "revoke" : "grant");
   window.dispatchEvent(new Event("ccf-meta-consent"));
 }
 export function newMetaEventId() {
