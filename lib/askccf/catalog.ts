@@ -1,3 +1,4 @@
+import { withBookingCalendar } from "@/lib/booking";
 /**
  * Ask CCF — authoritative class catalog.
  *
@@ -309,9 +310,10 @@ export function normalize(type: AcuityType): CatalogClass {
     durationMinutes: typeof type.duration === "number" ? type.duration : null,
     maxGroupSize: typeof type.classSize === "number" ? type.classSize : null,
     imageUrl: getClassPhoto(type.id)?.path ?? type.image ?? null,
-    bookingUrl:
-      type.schedulingUrl ??
-      `https://colorcocktailfactory.as.me/?appointmentType=${type.id}`,
+    bookingUrl: withBookingCalendar(
+      type.schedulingUrl ?? `https://colorcocktailfactory.as.me/?appointmentType=${type.id}`,
+      type.calendarIDs,
+    ),
     pricing: derivePricing(type.name, description, type.price),
     pickupNotes: pickupNotesFrom(description),
     byob: /byob|bring (a )?(bottle|your (own|favorite) drink)/i.test(description),

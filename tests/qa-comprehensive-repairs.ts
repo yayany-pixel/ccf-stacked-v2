@@ -1,3 +1,6 @@
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import PotteryFinishingSection from "../components/PotteryFinishingSection";
 /**
  * Comprehensive Automated Quality Assurance and Regression Suite
  * Covers all 18 minimum criteria required by Phase 15.
@@ -100,13 +103,15 @@ async function runQASuite() {
 
   // 6. Pottery firing and glazing policy is consistent
   console.log("6. Verifying pottery firing and glazing policy...");
-  const finishingFile = fs.readFileSync(path.join(__dirname, "../components/PotteryFinishingSection.tsx"), "utf8");
-  assert.ok(finishingFile.includes("PRICING.finishing.bisque"), "Bisque firing must be $10");
-  assert.ok(finishingFile.includes("PRICING.finishing.glazeSolid"), "Regular solid-color glaze must be $20");
-  assert.ok(finishingFile.includes("PRICING.finishing.glazeSpecialty"), "Specialty glaze must be $35");
-  assert.ok(finishingFile.includes("PRICING.finishing.glazeGold"), "Gold glaze must be $50");
-  assert.ok(finishingFile.includes("three weeks"), "Turnaround estimate must be approx. three weeks");
-  assert.ok(finishingFile.includes("not included in the class price"), "Must state firing/glazing is optional");
+  const genericFinishing = renderToStaticMarkup(React.createElement(PotteryFinishingSection));
+  assert.match(genericFinishing, /vary by workshop and studio/);
+  assert.match(genericFinishing, /\$25 for one piece or \$50 for two pieces/);
+  assert.doesNotMatch(genericFinishing, /not included in the class price|three weeks/);
+  for (const activitySlug of ["cauldron-pottery", "date-night-on-fire"]) {
+    const included = renderToStaticMarkup(React.createElement(PotteryFinishingSection, { activitySlug }));
+    assert.match(included, /includes glazing/);
+    assert.doesNotMatch(included, /not included in the class price/);
+  }
 
   const collectionsFile = fs.readFileSync(path.join(__dirname, "../lib/collections.ts"), "utf8");
   assert.doesNotMatch(collectionsFile, /firing\/glazing services included/i);
@@ -164,8 +169,8 @@ async function runQASuite() {
 
   // 13. Activity pages render (Cup Creations dedicated page verified)
   console.log("13. Verifying dedicated Cup Creations page presence...");
-  // assert.ok(getActivityDetailBySlug("cup-creations"), "Cup creations must be available in activity registry");
-  // assert.equal(getActivityDetailBySlug("cup-creations")?.isPottery, true);
+  assert.ok(getActivityDetailBySlug("cup-creations"), "Cup creations must be available in activity registry");
+  assert.equal(getActivityDetailBySlug("cup-creations")?.isPottery, true);
   console.log("✓ Dedicated Cup Creations activity page verified.\n");
 
   // 14. The private-party form remains functional

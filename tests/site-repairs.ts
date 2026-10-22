@@ -40,7 +40,7 @@ async function main() {
   const url = new URL(eugene.bookingUrl);
   assert.equal(url.searchParams.get("appointmentTypeIds[]"), "1");
   assert.equal(url.searchParams.get("calendarIds"), "13582962");
-  assert.equal(decodeURIComponent(url.pathname.split("/datetime/")[1]), future);
+  assert.equal(new Date(decodeURIComponent(url.pathname.split("/datetime/")[1])).getTime(), new Date(future).getTime(), "The studio-local URL must preserve the selected instant");
   assert.ok(url.pathname.includes("/appointment/1/calendar/13582962/"));
   const online = events.find(event => event.city === "Virtual")!;
   assert.equal(online.streetAddress, "");

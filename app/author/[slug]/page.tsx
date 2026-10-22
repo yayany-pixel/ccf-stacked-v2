@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = getAuthorUrl(author.slug);
 
   return {
-    title,
+    title: title.includes("Color Cocktail Factory") ? { absolute: title } : title,
     description,
     alternates: { canonical: url },
     openGraph: {

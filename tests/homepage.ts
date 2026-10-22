@@ -44,7 +44,8 @@ for (const activity of [...chicago, ...eugene]) {
     assert.deepEqual(destination.searchParams.getAll("appointmentType[]"), activity.bookingVariantIds.map(String));
   } else {
     assert.equal(destination.searchParams.get("appointmentType"), String(activity.appointmentTypeId));
-    assert.equal(destination.searchParams.size, 1);
+    assert.equal(destination.searchParams.get("calendarID"), activity.calendarIds.length === 1 ? String(activity.calendarIds[0]) : null);
+    assert.equal(destination.searchParams.size, activity.calendarIds.length === 1 ? 2 : 1);
   }
   assert.ok(activity.calendarIds.length > 0);
   assert.ok(activity.formerPrice === null || (activity.formerPrice.amount > 0 && typeof activity.formerPrice.evidence === "string"));
