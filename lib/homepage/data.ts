@@ -124,15 +124,23 @@ export function priceLabel(activity: HomepageActivity): string {
   return `${amount} ${activity.priceUnit}`;
 }
 
-export const HOMEPAGE_FILTERS = ["All workshops", "Date night", "Pottery", "Glass & lamps", "Online"] as const;
+export const HOMEPAGE_FILTERS = ["All workshops", "Lowest prices", "Date night", "Pottery", "Glass & lamps", "Online"] as const;
 export type HomepageFilter = typeof HOMEPAGE_FILTERS[number];
 export function matchesHomepageFilter(activity: HomepageActivity, filter: HomepageFilter): boolean {
   const title = [activity.title, ...(activity.bookingVariants ?? []).map(variant => variant.title)].join(" ");
   switch (filter) {
+    case "Lowest prices": return typeof activity.currentPrice === "number" && Number.isFinite(activity.currentPrice) && activity.currentPrice >= 0;
     case "Date night": return /date night/i.test(title);
     case "Pottery": return /pottery|ceramic|clay|wheel|handbuild|mug|vase/i.test(title);
     case "Glass & lamps": return /glass|mosaic|lamp/i.test(title);
     case "Online": return activity.mode === "online";
     default: return true;
   }
+}
+
+export function filterHomepageActivities(activities: HomepageActivity[], filter: HomepageFilter): HomepageActivity[] {
+  const matching = activities.filter(activity => matchesHomepageFilter(activity, filter));
+  if (filter !== "Lowest prices") return matching;
+  // Compare the displayed ticket prices, including the starting price of grouped workshops.
+  return matching.sort((left, right) => left.currentPrice! - right.currentPrice! || left.priority - right.priority || left.key.localeCompare(right.key)).slice(0, 5);
 }
