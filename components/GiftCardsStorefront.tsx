@@ -9,11 +9,9 @@ import BookingLink from "@/components/BookingLink";
 import PotteryFinishingSection from "@/components/PotteryFinishingSection";
 import type { CityParam } from "@/lib/config";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
-import { PRICING } from "@/lib/constants";
 import {
   ACUITY_GIFT_CARDS_CATALOG_URL,
   GIFT_FAQS,
-  MANUAL_ACUITY_SETUP_SPECS,
   VERIFIED_CHICAGO_GIFT_WORKSHOPS,
   type GiftExperienceCardData,
   type GiftExperienceId,
@@ -272,7 +270,7 @@ export default function GiftCardsStorefront({
                 }
                 className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/10 px-6 py-4 text-sm font-semibold text-white transition hover:bg-white/15"
               >
-                Flexible Dollar Gift Cards ($50–$250) →
+                {dollarOffering.status === "active" ? `Gift Cards (${dollarOffering.formattedPrice})` : "Gift Availability & Help"} →
               </a>
             </div>
           </div>
@@ -341,25 +339,11 @@ export default function GiftCardsStorefront({
                 <div className="font-semibold text-white">
                   📍 Active Studio: {studio.label} ({studio.address})
                 </div>
-                {city === "chicago" ? (
-                  <p className="mt-1 text-white/75">
-                    <strong className="text-emerald-300">
-                      ✓ Live Acuity Gift Certificates Verified:
-                    </strong>{" "}
-                    $50–$250 Chicago Gift Cards are active and redeemable across
-                    19 Chicago workshops. Dedicated $55 Date Night &amp; $45
-                    Beginner Wheel single-class certificates are documented
-                    below for manual Acuity Admin setup.
-                  </p>
-                ) : (
-                  <p className="mt-1 text-amber-200/95">
-                    <strong>⚠️ Eugene Acuity Setup Status:</strong> Existing
-                    Acuity gift certificates (#2119866–#2119873) are currently
-                    linked only to Chicago appointment types. Eugene purchase
-                    buttons are disabled until Eugene appointment types are
-                    enabled in Acuity Admin.
-                  </p>
-                )}
+                <p className="mt-1 text-white/75">
+                  {dollarOffering.status === "active"
+                    ? `Gift cards are available for ${studio.label}. Check the eligible workshops below before purchasing.`
+                    : `Online gift purchases for ${studio.label} are currently unavailable. Contact us for help with a gift or an existing certificate.`}
+                </p>
               </div>
 
               <label className="mt-4 flex cursor-pointer items-start gap-2.5 text-xs text-white/85">
@@ -544,12 +528,12 @@ export default function GiftCardsStorefront({
                       </div>
                       <div className="col-span-2 border-t border-white/10 pt-2.5">
                         <div className="font-semibold uppercase tracking-wider text-white/50">
-                          Redeemable Acuity Class
+                          Eligible Workshop
                         </div>
                         <ul className="mt-1 space-y-1 text-white/90">
                           {offering.eligibleAppointmentTypes.map((apt) => (
                             <li key={apt.id}>
-                              <strong>{apt.name}</strong> (Acuity ID #{apt.id} ·
+                              <strong>{apt.name}</strong> (
                               ${apt.price} {apt.unit})
                             </li>
                           ))}
@@ -621,20 +605,16 @@ export default function GiftCardsStorefront({
                         <span className="rounded-full border border-amber-300/40 bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-200">
                           {!studioConfirmed
                             ? "Confirm Studio Above"
-                            : "Acuity Setup Pending"}
+                            : "Currently unavailable"}
                         </span>
                       </button>
 
                       {offering.pendingSetupReason && (
-                        <div className="rounded-xl border border-white/15 bg-white/5 p-3.5 text-xs leading-relaxed text-white/80">
-                          <p>{offering.pendingSetupReason}</p>
-                          <a
-                            href="#manual-acuity-setup"
-                            className="mt-1.5 inline-block font-semibold text-pink-300 underline hover:text-pink-200"
-                          >
-                            View exact manual Acuity setup specs ↓
-                          </a>
-                        </div>
+                        <p className="text-sm text-white/80">
+                          This class-specific gift is currently unavailable online.
+                          {offering.verifiedDollarAlternative ? " You can use the dollar-value gift card option below." : " Contact our team for help choosing a gift."}
+                          {" "}<a className="underline text-pink-300" href="mailto:support@colorcocktailfactory.com">Get gift help</a>
+                        </p>
                       )}
 
                       {/* Verified Active Dollar-Value Certificate Alternative in Chicago */}
@@ -797,7 +777,7 @@ export default function GiftCardsStorefront({
                       Choose Your Gift Card Amount · {dollarOffering.studioLabel}
                     </div>
                     <h3 className="mt-1 font-serif text-2xl font-bold text-white">
-                      Select a Verified Acuity Denomination
+                      Choose a Gift Amount
                     </h3>
                     <p className="mt-1 text-sm text-white/75">
                       Each button below links directly to its real, redeemable
@@ -843,7 +823,7 @@ export default function GiftCardsStorefront({
                             {denom.formattedPrice}
                           </span>
                           <span className="mt-1 text-[11px] text-white/65">
-                            ID #{denom.productId}
+                            {dollarOffering.studioLabel}
                           </span>
                         </button>
                       );
@@ -856,7 +836,7 @@ export default function GiftCardsStorefront({
                       <div className="flex flex-wrap items-baseline justify-between gap-2">
                         <div>
                           <span className="text-xs font-bold uppercase tracking-wider text-emerald-300">
-                            ✓ Verified Acuity Product #{activeDenomination.productId}
+                            Available gift card
                           </span>
                           <h4 className="font-serif text-2xl font-bold text-white">
                             {activeDenomination.name} ({dollarOffering.studioLabel})
@@ -945,13 +925,13 @@ export default function GiftCardsStorefront({
               ) : (
                 <div className="rounded-2xl border border-amber-300/30 bg-amber-500/10 p-6 space-y-4">
                   <div className="inline-block rounded-full bg-amber-500/25 px-3 py-1 text-xs font-bold text-amber-200">
-                    Unfinished Acuity Setup · {dollarOffering.studioLabel}
+                    Online gifts unavailable · {dollarOffering.studioLabel}
                   </div>
                   <h3 className="font-serif text-2xl font-bold text-white">
-                    Eugene Dollar-Value Gift Certificates Pending Acuity Configuration
+                    Gift purchases are currently unavailable for this studio
                   </h3>
                   <p className="text-sm leading-relaxed text-white/85">
-                    {dollarOffering.pendingSetupReason}
+                    Please contact our team for help with gifts for this studio or an existing gift certificate.
                   </p>
                   <button
                     type="button"
@@ -959,14 +939,14 @@ export default function GiftCardsStorefront({
                     aria-disabled="true"
                     className="w-full cursor-not-allowed rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-base font-bold text-white/55"
                   >
-                    {dollarCard.buttonLabel} — Pending Eugene Acuity Setup
+                    {dollarCard.buttonLabel} — Currently unavailable
                   </button>
                   <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs">
                     <a
-                      href="#manual-acuity-setup"
+                      href="mailto:support@colorcocktailfactory.com"
                       className="font-semibold text-pink-300 underline hover:text-pink-200"
                     >
-                      See exact Eugene Acuity setup instructions ↓
+                      Contact us about a gift →
                     </a>
                     <button
                       type="button"
@@ -986,7 +966,7 @@ export default function GiftCardsStorefront({
                     <span>
                       {city === "chicago"
                         ? `View All ${dollarOffering.eligibleAppointmentTypes.length} Verified Eligible Chicago Workshops & Prices ($39–$85)`
-                        : `View Target Eugene Workshops for Acuity Gift Certificate Setup ($25–$55)`}
+                        : `Explore Eugene Workshops`}
                     </span>
                     <span className="text-pink-300 transition group-open:rotate-45">
                       +
@@ -1107,38 +1087,7 @@ export default function GiftCardsStorefront({
       {/* 5. Pottery Finishing & Glazing Fee Disclosure + Why We Don't Invent Bundles (Section 4) */}
       <section id="pottery-finishing-disclosure" className="space-y-4">
         <PotteryFinishingSection />
-        <GlassCard className="p-6 text-xs leading-relaxed text-white/80 border-white/10">
-          <div className="font-bold uppercase tracking-wider text-pink-300">
-            Verified Fee Structure &amp; Why Finishing Is Paid Separately
-          </div>
-          <p className="mt-2">
-            In Acuity Scheduling, gift certificates redeem toward the base
-            appointment type price and do not automatically bundle variable
-            per-piece kiln finishing tiers. During class, makers can choose to
-            take unfired air-dry clay home the same day at no extra cost, or
-            select kiln finishing per piece: in-studio options are{" "}
-            <strong>${PRICING.finishing.bisque} bisque firing</strong>,{" "}
-            <strong>
-              ${PRICING.finishing.glazeSolid} regular solid-color glaze
-            </strong>
-            ,{" "}
-            <strong>
-              ${PRICING.finishing.glazeSpecialty} specialty glaze
-            </strong>
-            , or <strong>${PRICING.finishing.glazeGold} gold glaze</strong>{" "}
-            (when available), while Acuity checkout also offers an optional
-            combined add-on,{" "}
-            <em>“Finish My Piece: Glaze + Kiln Firing”</em>, at{" "}
-            <strong>$25 for 1 piece</strong> (ID #6000237) or{" "}
-            <strong>$50 for 2 pieces</strong> (ID #7380494). Because piece
-            counts and glaze tiers vary by guest and studio staff confirm
-            in-studio finishing selections at the end of class, we do not sell
-            an unverified “unlimited finishing” package. Buyers who want to help
-            cover kiln glazing for a Chicago recipient can choose a{" "}
-            <strong>$100 or $150 Gift Card</strong> so the extra studio balance
-            stays on the recipient’s certificate code.
-          </p>
-        </GlassCard>
+
       </section>
 
       {/* 6. Printable Gift Certificate & Personal Message Builder (Section 5) */}
@@ -1365,155 +1314,6 @@ export default function GiftCardsStorefront({
             </GlassCard>
           ))}
         </div>
-      </section>
-
-      {/* 8. Manual Acuity Setup Instructions for Unfinished Products (Section 2 & 7) */}
-      <section
-        id="manual-acuity-setup"
-        aria-labelledby="manual-acuity-setup-heading"
-        className="scroll-mt-24"
-      >
-        <GlassCard className="p-7 sm:p-8 border-amber-300/30">
-          <details className="group">
-            <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-4">
-              <div>
-                <span className="inline-block rounded-full bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-200 border border-amber-300/30">
-                  Acuity Integration Transparency &amp; Staff Setup Guide
-                </span>
-                <h2
-                  id="manual-acuity-setup-heading"
-                  className="mt-2 font-serif text-2xl font-bold text-white"
-                >
-                  Manual Acuity Admin Setup Specifications (Unfinished Acuity
-                  Products)
-                </h2>
-                <p className="mt-1 text-xs text-white/75">
-                  Acuity Scheduling’s REST API exposes{" "}
-                  <code className="text-amber-200">GET /api/v1/products</code>{" "}
-                  as read-only and does not permit API creation of new store
-                  products. Expand for exact copy-paste product specs to finish
-                  creating experience certificates in Acuity Admin.
-                </p>
-              </div>
-              <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold text-white group-open:bg-white/20">
-                View Exact Setup Specs ↓
-              </span>
-            </summary>
-
-            <div className="mt-6 space-y-6 border-t border-white/15 pt-6 text-xs leading-relaxed text-white/85">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-2">
-                <div className="font-bold text-white">
-                  Why Some Products Require Manual Creation in Acuity Admin (
-                  <em>Packages, Gifts &amp; Subscriptions</em>):
-                </div>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>
-                    <strong>Verified Live Today:</strong> 5 Chicago dollar-value
-                    Gift Cards (IDs <code className="text-emerald-300">2119866</code>{" "}
-                    $50, <code className="text-emerald-300">2119869</code> $100,{" "}
-                    <code className="text-emerald-300">2119870</code> $150,{" "}
-                    <code className="text-emerald-300">2119872</code> $200,{" "}
-                    <code className="text-emerald-300">2119873</code> $250) are
-                    active in Acuity and cover 19 active Chicago workshops.
-                  </li>
-                  <li>
-                    <strong>Preserving Existing Balances:</strong> Per safety
-                    requirements, existing certificates and customer balances
-                    were not altered or deleted.
-                  </li>
-                  <li>
-                    <strong>Automatic Activation:</strong> As soon as any of the
-                    products below are created in Acuity Admin,{" "}
-                    <code className="text-pink-300">
-                      fetchLiveAcuityProducts()
-                    </code>{" "}
-                    detects them via{" "}
-                    <code className="text-pink-300">GET /api/v1/products</code>{" "}
-                    and automatically enables their primary purchase buttons on
-                    this page.
-                  </li>
-                  <li>
-                    <strong>Why “Creative Outing for Two” Is Omitted:</strong>{" "}
-                    Unlike Date Night on the Wheel (where 1 booking slot = 2
-                    guests sharing 1 wheel), standard per-person workshops book 1
-                    guest per appointment and vary from $25 to $85. Acuity
-                    single-appointment certificates do not atomically reserve 2
-                    separate seats in one redemption code. Buyers gifting a pair
-                    of per-person classes in Chicago can use the verified{" "}
-                    <strong>$100 Gift Card (#2119869)</strong>, which covers two
-                    $45 classes ($90 total) across two bookings.
-                  </li>
-                </ul>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {MANUAL_ACUITY_SETUP_SPECS.map((spec) => (
-                  <div
-                    key={spec.key}
-                    className="rounded-2xl border border-white/15 bg-black/30 p-5 space-y-2.5"
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="rounded-full bg-pink-500/20 px-2.5 py-0.5 text-[11px] font-bold uppercase text-pink-200">
-                        {spec.city} Studio
-                      </span>
-                      <span className="font-mono text-amber-300 font-bold">
-                        {spec.verifiedPrice}
-                      </span>
-                    </div>
-                    <h3 className="font-serif text-lg font-bold text-white">
-                      {spec.productName}
-                    </h3>
-                    <div>
-                      <strong className="text-white">Category / Group:</strong>{" "}
-                      {spec.categoryGroup}
-                    </div>
-                    <div>
-                      <strong className="text-white">Redemption Value:</strong>{" "}
-                      {spec.redemptionValue} ({spec.redemptionModel})
-                    </div>
-                    <div>
-                      <strong className="text-white">Expiration:</strong>{" "}
-                      {spec.expiration}
-                    </div>
-                    <div>
-                      <strong className="text-white">
-                        Eligible Appointment Types:
-                      </strong>
-                      <ul className="mt-1 list-disc pl-4 space-y-0.5">
-                        {spec.eligibleAppointmentTypes.map((apt) => (
-                          <li key={apt.id}>
-                            <code>{apt.id}</code> — {apt.name} ({apt.price},
-                            Calendar <code>{apt.calendarId}</code>)
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <strong className="text-white">Product Image:</strong>{" "}
-                      <code className="break-all text-white/75">
-                        {spec.imageUrl}
-                      </code>
-                    </div>
-                    <div>
-                      <strong className="text-white">Description:</strong>
-                      <p className="mt-1 rounded-lg bg-white/5 p-2.5 text-white/80">
-                        {spec.description}
-                      </p>
-                    </div>
-                    <div>
-                      <strong className="text-white">
-                        Required Purchase Link Format:
-                      </strong>{" "}
-                      <code className="break-all text-emerald-300">
-                        {spec.requiredPurchaseLinkPattern}
-                      </code>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </details>
-        </GlassCard>
       </section>
 
       {/* Bottom Navigation & Support */}

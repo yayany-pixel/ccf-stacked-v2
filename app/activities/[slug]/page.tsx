@@ -145,12 +145,12 @@ export default async function ActivityPage({ params }: { params: { slug: string 
           "telephone": "+1-312-881-9929"
         },
         "category": activity.categoryLabel,
-        "offers": {
+        ...(!activity.bookingAlternative ? { "offers": {
           "@type": "Offer",
           "availability": "https://schema.org/InStock",
           "priceCurrency": "USD",
           ...(primaryLivePrice !== null ? { price: primaryLivePrice } : {})
-        }
+        }} : {})
       },
       {
         "@type": "FAQPage",

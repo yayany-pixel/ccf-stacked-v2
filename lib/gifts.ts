@@ -433,7 +433,7 @@ export type ManualAcuityProductSpec = {
   requiredPurchaseLinkPattern: string;
 };
 
-export const POTTERY_FINISHING_DISCLOSURE = `Firing and glazing are optional and not included in the workshop or gift certificate price. Guests may take unfired air-dry clay (greenware) home the same day for decorative use at no extra cost, or leave pieces for kiln finishing: $${PRICING.finishing.bisque}/piece bisque firing, $${PRICING.finishing.glazeSolid}/piece regular solid-color glaze, $${PRICING.finishing.glazeSpecialty}/piece specialty glaze, or $${PRICING.finishing.glazeGold}/piece gold glaze when available (or select Acuity's optional "Finish My Piece: Glaze + Kiln Firing" checkout add-on at $25 for 1 piece / $50 for 2 pieces). Whether in-studio bisque firing and glazing fees apply separately or by selected finish tier is confirmed at the studio when choosing finishes. Finished pieces are ready for pickup in approximately 3 weeks.`;
+export const POTTERY_FINISHING_DISCLOSURE = "Finishing varies by workshop. Check the selected class description for included glazing, optional add-ons, and pickup timing. A gift card applies to eligible class bookings; confirm any finishing charges before purchasing.";
 
 export const MANUAL_ACUITY_SETUP_SPECS: ReadonlyArray<ManualAcuityProductSpec> = [
   {
@@ -1325,7 +1325,7 @@ export function getClassGiftingContext(
   const chicagoMatch = VERIFIED_CHICAGO_GIFT_WORKSHOPS.find(
     (w) => w.slug === normalizedSlug,
   );
-  if (chicagoMatch && availableCities.includes("chicago")) {
+  if (chicagoMatch && resolvedCity === "chicago" && availableCities.includes("chicago")) {
     const recommendedDenomination =
       chicagoMatch.price <= 50 ? 50 : chicagoMatch.price <= 100 ? 100 : 150;
     return {
@@ -1354,7 +1354,7 @@ export const GIFT_FAQS: ReadonlyArray<{ q: string; a: string }> = [
   },
   {
     q: "Which studio and classes are covered?",
-    a: "Studio eligibility is strictly separated between Chicago (1142 W. 18th Street, Pilsen) and Eugene (3295 Cross Street, Eugene, OR). Our currently active $50–$250 Acuity Gift Cards (IDs 2119866–2119873) are configured and verified for 19 Chicago studio workshops (including Date Night on the Pottery Wheel, Wheel Throwing for Beginners, Ceramic Mug & Bowl, Mosaic Creations, Glass Fusion, Hanging Turkish Mosaic Lamp, Wine Glass Painting, Bonsai, Terrarium, Candle Making, and Soap Making). Dedicated experience certificates for Pottery Date Night for Two ($55 Chicago / $50 Eugene), Their First Pottery Class ($45 Chicago / $25 Eugene), and Eugene workshop gift cards require manual product creation in Acuity Admin before checkout is enabled.",
+    a: "Choose the recipient’s studio first. Available gift cards and eligible workshops are listed on this page. Chicago gift cards cover the listed Chicago workshops. If your selected gift or studio is unavailable online, contact support@colorcocktailfactory.com before purchasing.",
   },
   {
     q: "Does a dollar-value gift card guarantee a full class, or might there be a balance due?",
@@ -1362,7 +1362,7 @@ export const GIFT_FAQS: ReadonlyArray<{ q: string; a: string }> = [
   },
   {
     q: "What is included in a pottery class, and what costs extra?",
-    a: "All pottery workshops include clay, tools, studio aprons, guided artist instruction, and cleanup. Kiln firing and glazing are optional and are not included in the base class or gift certificate price. Guests can take unfired greenware home the same day for decorative use at no cost, or pay for kiln finishing: $10/piece bisque firing, $20/piece solid-color glaze, $35/piece specialty glaze, or $50/piece gold glaze in studio (or select the optional Acuity checkout add-on 'Finish My Piece: Glaze + Kiln Firing' at $25 for 1 piece / $50 for 2 pieces). Fired pieces are typically ready for pickup in about three weeks.",
+    a: POTTERY_FINISHING_DISCLOSURE,
   },
   {
     q: "Does Pottery Date Night cover one guest or two?",

@@ -49,7 +49,7 @@ export default function LocationModal({
   locations,
   variants,
 }: LocationModalProps) {
-  const modalRef = useRef<HTMLDivElement>(null);
+  const modalRef = useRef<HTMLDialogElement>(null);
   const [preferredCity, setPreferredCity] = useState<string | null>(null);
 
   useEffect(() => {
@@ -63,21 +63,36 @@ export default function LocationModal({
 
   useEffect(() => {
     if (!isOpen) return;
+    const dialog = modalRef.current;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    dialog?.showModal();
+    document.body.style.overflow = "hidden";
+    const handleCancel = (event: Event) => {
+      event.preventDefault();
+      onClose();
+    };
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        onClose();
+      if (event.key !== "Tab" || !dialog) return;
+      const controls = Array.from(dialog.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex="0"]',
+      )).filter(element => element.getClientRects().length > 0);
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault(); last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault(); first?.focus();
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    // Focus first interactive element in modal
-    const focusTimer = setTimeout(() => {
-      const firstBtn = modalRef.current?.querySelector<HTMLElement>("button, a");
-      firstBtn?.focus();
-    }, 50);
-
+    dialog?.addEventListener("cancel", handleCancel);
+    dialog?.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      clearTimeout(focusTimer);
+      dialog?.removeEventListener("cancel", handleCancel);
+      dialog?.removeEventListener("keydown", handleKeyDown);
+      dialog?.close();
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus({ preventScroll: true });
     };
   }, [isOpen, onClose]);
 
@@ -110,20 +125,17 @@ export default function LocationModal({
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-fadeIn"
-      role="dialog"
+    <dialog
+      ref={modalRef}
       aria-modal="true"
       aria-labelledby="location-modal-title"
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
+      className="fixed m-auto w-[calc(100%-2rem)] max-w-lg max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain rounded-3xl border border-white/20 bg-slate-900 p-6 sm:p-8 text-white shadow-2xl backdrop:bg-black/80 backdrop:backdrop-blur-md"
+      onClick={(event) => {
+        if (event.target !== event.currentTarget) return;
+        const bounds = event.currentTarget.getBoundingClientRect();
+        if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) onClose();
       }}
     >
-      <div
-        ref={modalRef}
-        className="relative w-full max-w-lg rounded-3xl border border-white/20 bg-slate-900/95 p-6 sm:p-8 text-white shadow-2xl backdrop-blur-xl"
-        onClick={(e) => e.stopPropagation()}
-      >
         {/* Close Button */}
         <button
           type="button"
@@ -420,7 +432,6 @@ export default function LocationModal({
         <p className="mt-6 text-center text-xs text-white/50">
           Direct studio booking with zero ticketing fees. Select your studio above to view live dates.
         </p>
-      </div>
-    </div>
+    </dialog>
   );
 }

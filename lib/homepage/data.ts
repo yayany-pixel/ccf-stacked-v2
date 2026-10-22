@@ -1,3 +1,4 @@
+import { withBookingCalendar } from "@/lib/booking";
 import type { CatalogClass, PublicClassSlot } from "@/lib/askccf/catalog";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { ACTIVITY_MANIFEST } from "./manifest";
@@ -31,6 +32,7 @@ export function buildHomepageData(
       : null;
     return {
       ...definition,
+      bookingUrl: definition.bookingUrl ? withBookingCalendar(definition.bookingUrl, definition.calendarIds) : null,
       durationMinutes: matches && live.durationMinutes && live.durationMinutes > 0 ? live.durationMinutes : null,
       listingDescription: matches ? live.description : null,
       pickupNotes: matches ? live.pickupNotes : [],
@@ -79,7 +81,7 @@ export function activitiesForCity(activities: HomepageActivity[], city: Homepage
       description: "Create a colorful glass mosaic lamp. Explore available standard, hanging, and date-night workshops at booking.",
       priority: ACTIVITY_MANIFEST.find(activity => activity.key === "chicago-turkish-lamp")!.priority,
       detailUrl: "/activities/turkish-lamp",
-      bookingUrl: booking.toString(),
+      bookingUrl: withBookingCalendar(booking.toString(), primary.calendarIds),
       bookingVariantIds: lamps.map(lamp => lamp.appointmentTypeId),
       bookingVariants: lamps,
       durationMinutes: lamps.every(lamp => lamp.durationMinutes === primary.durationMinutes) ? primary.durationMinutes : null,

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
   const collection = getCollectionBySlug(params.slug);
   if (!collection) return { title: "Collection Not Found" };
   return {
-    title: collection.seo.metaTitle,
+    title: { absolute: collection.seo.metaTitle },
     description: collection.seo.metaDescription,
     alternates: {
       canonical: `https://colorcocktailfactory.com/collections/${collection.slug}`

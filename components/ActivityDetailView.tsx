@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import GlassCard from "@/components/ui/GlassCard";
@@ -22,7 +22,7 @@ export type RelatedActivityWithPrice = ActivityDetail & {
 
 export default function ActivityDetailView({
   activity,
-  pricing,
+  pricing: allPricing,
   relatedActivities = [],
 }: {
   activity: ActivityDetail;
@@ -33,10 +33,10 @@ export default function ActivityDetailView({
 
   const availableCities = useMemo<CityParam[]>(() => {
     const cities: CityParam[] = [];
-    if (pricing.destinations.chicago) cities.push("chicago");
-    if (pricing.destinations.eugene) cities.push("eugene");
+    if (allPricing.destinations.chicago) cities.push("chicago");
+    if (allPricing.destinations.eugene) cities.push("eugene");
     return cities.length > 0 ? cities : ["chicago"];
-  }, [pricing.destinations]);
+  }, [allPricing.destinations]);
 
   const [preferredCity, setPreferredCity] = useState<CityParam>(
     availableCities[0] ?? "chicago",
@@ -66,10 +66,21 @@ export default function ActivityDetailView({
     } catch {}
   }, [availableCities]);
 
+  const selectedDestination = allPricing.destinations[preferredCity] ?? allPricing.destinations.online;
+  const pricing: ActivityPricing = activity.bookingAlternative ? {
+    ...allPricing, displayPrice: activity.bookingAlternative.status, wasPrice: null, hasSaleBadge: false,
+  } : selectedDestination && !allPricing.variants?.length ? {
+    ...allPricing,
+    displayPrice: `${selectedDestination.formattedPrice} · ${selectedDestination.city === "chicago" ? "Chicago" : selectedDestination.city === "eugene" ? "Eugene" : "Online"}`,
+    wasPrice: selectedDestination.wasPrice,
+    hasSaleBadge: selectedDestination.wasPrice !== null,
+  } : allPricing;
+  const closeBooking = useCallback(() => setIsLocationModalOpen(false), []);
+
   const giftContext = useMemo(
     () =>
-      getClassGiftingContext(activity.slug, preferredCity, availableCities),
-    [activity.slug, preferredCity, availableCities],
+      activity.bookingAlternative ? null : getClassGiftingContext(activity.slug, preferredCity, availableCities),
+    [activity.slug, activity.bookingAlternative, preferredCity, availableCities],
   );
 
   const openBooking = () => {
@@ -169,15 +180,15 @@ export default function ActivityDetailView({
 
               {/* Top Booking CTA Button */}
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <button
-                  type="button"
-                  onClick={openBooking}
+                <BookingAction
+                  alternative={activity.bookingAlternative}
+                  onBook={openBooking}
                   className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-pink-500/25 transition-all duration-200 hover:scale-[1.02] hover:shadow-pink-500/40 focus:outline-none focus:ring-2 focus:ring-pink-400"
-                  aria-haspopup="dialog"
+
                 >
-                  See Dates &amp; Book
+                  {activity.bookingAlternative?.label ?? "See Dates & Book"}
                   <span className="ml-2 text-lg" aria-hidden="true">→</span>
-                </button>
+                </BookingAction>
                 {giftContext && (
                   <Link
                     href={giftContext.href}
@@ -274,7 +285,7 @@ export default function ActivityDetailView({
 
             {/* Pottery Kiln & Glazing Section (Only for pottery workshops) */}
             {activity.isPottery && (
-              <PotteryFinishingSection />
+              <PotteryFinishingSection activitySlug={activity.slug} />
             )}
 
             {/* Key Practical Info Grid */}
@@ -370,17 +381,17 @@ export default function ActivityDetailView({
                 Ready to Create?
               </h2>
               <p className="mx-auto mt-3 max-w-xl text-base text-white/80">
-                Pick your studio location and reserve your spot in minutes. Direct studio booking with zero convenience fees.
+                {activity.bookingAlternative ? "Explore the available options or contact our studio for help planning your visit." : "Pick your studio location and view live dates to reserve your spot."}
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <button
-                  type="button"
-                  onClick={openBooking}
+                <BookingAction
+                  alternative={activity.bookingAlternative}
+                  onBook={openBooking}
                   className="rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-4 font-semibold text-white shadow-lg shadow-pink-500/30 transition hover:from-pink-600 hover:to-purple-700"
-                  aria-haspopup="dialog"
+
                 >
-                  See Dates &amp; Book →
-                </button>
+                  {activity.bookingAlternative?.label ?? "See Dates & Book"} →
+                </BookingAction>
                 {giftContext && (
                   <Link
                     href={giftContext.href}
@@ -446,14 +457,14 @@ export default function ActivityDetailView({
                     ))}
                   </div>
                 ) : (
-                  <button
-                    type="button"
-                    onClick={openBooking}
+                  <BookingAction
+                    alternative={activity.bookingAlternative}
+                    onBook={openBooking}
                     className="mt-5 w-full inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-bold text-white shadow-md hover:from-pink-600 hover:to-purple-700 transition"
-                    aria-haspopup="dialog"
+
                   >
-                    See Dates &amp; Book →
-                  </button>
+                    {activity.bookingAlternative?.label ?? "See Dates & Book"} →
+                  </BookingAction>
                 )}
                 {giftContext && (
                   <Link
@@ -533,28 +544,38 @@ export default function ActivityDetailView({
 
       {/* Mobile Sticky Booking Bar */}
       <div className="fixed bottom-4 left-4 right-4 z-40 sm:hidden">
-        <button
-          type="button"
-          onClick={openBooking}
+        <BookingAction
+          alternative={activity.bookingAlternative}
+          onBook={openBooking}
           className="w-full flex items-center justify-between rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-3.5 text-sm font-bold text-white shadow-2xl shadow-pink-500/50 backdrop-blur-md active:scale-95 transition"
-          aria-haspopup="dialog"
+
         >
           <span>{activity.title}</span>
           <span className="inline-flex items-center gap-1 font-semibold">
-            See Dates &amp; Book →
+            {activity.bookingAlternative?.label ?? "See Dates & Book"} →
           </span>
-        </button>
+        </BookingAction>
       </div>
 
       {/* Location Selection Panel (Modal) */}
       <LocationModal
         isOpen={isLocationModalOpen}
-        onClose={() => setIsLocationModalOpen(false)}
+        onClose={closeBooking}
         activityTitle={activity.title}
         activitySlug={activity.slug}
-        locations={pricing.destinations}
+        locations={allPricing.destinations}
         variants={pricing.variants}
       />
     </>
   );
+}
+
+function BookingAction({ alternative, onBook, className, children }: {
+  alternative?: ActivityDetail["bookingAlternative"];
+  onBook: () => void;
+  className: string;
+  children: React.ReactNode;
+}) {
+  if (alternative) return <a href={alternative.href} className={className}>{children}</a>;
+  return <button type="button" onClick={onBook} className={className} aria-haspopup="dialog">{children}</button>;
 }

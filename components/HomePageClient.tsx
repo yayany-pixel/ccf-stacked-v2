@@ -456,7 +456,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
                   })
                 }
               >
-                <span>Gift a Date Night ({studio.label})</span>
+                <span>Explore Date Night Gift Options ({studio.label})</span>
                 <span aria-hidden="true">→</span>
               </Link>
             </article>
@@ -488,14 +488,14 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
                   })
                 }
               >
-                <span>Gift Their First Spin ({studio.label})</span>
+                <span>Explore Beginner Gift Options ({studio.label})</span>
                 <span aria-hidden="true">→</span>
               </Link>
             </article>
           </div>
           <div className={styles.giftCollectionRow}>
             <p className={styles.dataStatus} style={{ margin: 0 }}>
-              Unsure which workshop they’ll pick? Explore flexible dollar-value certificates ($50–$250) and printable keepsake cards.
+              Explore gift availability for your studio, eligible classes, and printable keepsake cards.
             </p>
             <Link
               href={`/gift-cards?city=${city}`}

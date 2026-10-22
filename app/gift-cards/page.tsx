@@ -10,10 +10,9 @@ import {
 import { faqJsonLd, breadcrumbJsonLd } from "@/lib/structuredData";
 
 export const metadata: Metadata = {
-  title:
-    "Gift Experiences & Pottery Gift Cards | Chicago & Eugene | Color Cocktail Factory",
+  title: { absolute: "Gift Experiences & Pottery Gift Cards | Chicago & Eugene | Color Cocktail Factory" },
   description:
-    "Give them something to look forward to. Gift Pottery Date Night for Two, Their First Pottery Class, or Choose Your Gift Card Amount ($50–$250) at Color Cocktail Factory in Chicago and Eugene. Let them choose the date.",
+    "Explore available Color Cocktail Factory gift cards. Choose the recipient’s studio, review eligible workshops, and let them choose their class date.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/gift-cards",
   },

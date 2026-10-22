@@ -1,3 +1,4 @@
+import { withBookingCalendar } from "@/lib/booking";
 import { getCatalog, type CatalogClass } from "@/lib/askccf/catalog";
 import { ACTIVITY_MANIFEST } from "@/lib/homepage/manifest";
 import type { ActivityDetail } from "@/lib/activityRegistry";
@@ -148,7 +149,7 @@ export async function getActivityPricing(
         title: opt.title,
         city: opt.city,
         calendarIds: opt.calendarIds,
-        bookingUrl: opt.bookingUrl,
+        bookingUrl: withBookingCalendar(opt.bookingUrl, opt.calendarIds),
         currentPrice: priceInfo.currentPrice,
         priceUnit: priceInfo.priceUnit,
         wasPrice: priceInfo.wasPrice,
@@ -266,20 +267,11 @@ export async function getActivityPricing(
       };
     }
 
-    // Use Chicago price as default, without city label
-    const displayPrice = `$${chicago.currentPrice} ${chicago.priceUnit}`;
-
-    const wasPrice =
-      chicago.wasPrice && eugene.wasPrice && chicago.wasPrice === eugene.wasPrice
-        ? chicago.wasPrice
-        : chicago.wasPrice ?? eugene.wasPrice ?? null;
-
-    const hasSaleBadge = Boolean(chicago.wasPrice || eugene.wasPrice);
-
+    // A neutral listing price until the visitor selects a studio.
     return {
-      displayPrice,
-      wasPrice,
-      hasSaleBadge,
+      displayPrice: `From $${Math.min(chicago.currentPrice, eugene.currentPrice)}`,
+      wasPrice: null,
+      hasSaleBadge: false,
       destinations,
     };
   }

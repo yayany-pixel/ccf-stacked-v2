@@ -1,3 +1,5 @@
+import { withBookingCalendar } from "@/lib/booking";
+
 /**
  * Centralized Activity Registry
  * Authoritative source of truth for all active workshops, descriptions, verified Acuity destinations,
@@ -15,6 +17,7 @@ export type ActivityDestination = {
 
 export type ActivityDetail = {
   slug: string;
+  bookingAlternative?: { href: string; label: string; status: string };
   title: string;
   navLabel: string;
   heroTitle: string;
@@ -2202,7 +2205,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "duration": "90–120 minutes",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
-    "locationsOffered": "Chicago only",
+    "locationsOffered": "Chicago & Eugene",
     "image": {
       "filename": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl.webp",
       "driveFileId": "1eK1meuDixOc_lZWYmGh78TTphwljxCA2",
@@ -2232,10 +2235,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       {
         "label": "BYOB Friendly",
         "text": "Feel free to bring your favorite drinks. Must be 21+ for alcohol. Cups and openers are available in the studio."
-      },
-      {
-        "label": "Location",
-        "text": "Studio located at 1142 W. 18th Street, Chicago, IL 60608."
       }
     ],
     "faqs": [
@@ -2286,6 +2285,16 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782793",
         "priceUnit": "per person",
         "verifiedTitle": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 89287658,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=89287658",
+        "priceUnit": "per person",
+        "verifiedTitle": "Eugene Wheel Throwing for Beginners: Matcha Bowl"
       }
     }
   },
@@ -4503,31 +4512,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Fast confirmations and clear expectations."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Sat · 2:30–5:00 PM",
-        "note": "Best overall slot"
-      },
-      {
-        "time": "Fri · 5:30–7:30 PM",
-        "note": "After-work win"
-      },
-      {
-        "time": "Sun · 1:00–4:30 PM",
-        "note": "Easy daytime"
-      }
-    ],
-    "destinations": {
-      "chicago": {
-        "city": "chicago",
-        "appointmentTypeId": 79006616,
-        "calendarIds": [
-          12216179
-        ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "priceUnit": "per person",
-        "verifiedTitle": "Request a Private Event"
-      }
+    "destinations": {},
+    "bookingAlternative": {
+      "href": "/private-events",
+      "label": "Request a Private Event",
+      "status": "Request a quote"
     }
   },
   "handbuilding": {
@@ -4619,31 +4608,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Perfect for chatting + creating."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Sun · 1:00 PM",
-        "note": "Easy daytime"
-      },
-      {
-        "time": "Thu · 5:30 PM",
-        "note": "After-work calm"
-      },
-      {
-        "time": "Sat · 12:00 PM",
-        "note": "Classic slot"
-      }
-    ],
-    "destinations": {
-      "chicago": {
-        "city": "chicago",
-        "appointmentTypeId": 79006616,
-        "calendarIds": [
-          12216179
-        ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "priceUnit": "per person",
-        "verifiedTitle": "Handbuilding Pottery"
-      }
+    "destinations": {},
+    "bookingAlternative": {
+      "href": "/activities/mug-and-bowl",
+      "label": "Explore Handbuilding Classes",
+      "status": "View available workshops"
     }
   },
   "glass-blowing": {
@@ -4735,34 +4704,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "A true 'I did that' workshop."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Launching soon",
-        "note": "Sign up for updates",
-        "href": "mailto:support@colorcocktailfactory.com?subject=Glass%20Blowing%20Waitlist&body=Hi%20CCF!%20Please%20add%20me%20to%20the%20waitlist.%0A%0AName%3A%0AEmail%3A%0APhone%3A%0ACity%3A%0ANotes%3A%0A"
-      },
-      {
-        "time": "First dates TBD",
-        "note": "We'll email when live",
-        "href": "mailto:support@colorcocktailfactory.com?subject=Glass%20Blowing%20Waitlist&body=Hi%20CCF!%20Please%20add%20me%20to%20the%20waitlist.%0A%0AName%3A%0AEmail%3A%0APhone%3A%0ACity%3A%0ANotes%3A%0A"
-      },
-      {
-        "time": "VIP early access",
-        "note": "Limited seats",
-        "href": "mailto:support@colorcocktailfactory.com?subject=Glass%20Blowing%20Waitlist&body=Hi%20CCF!%20Please%20add%20me%20to%20the%20waitlist.%0A%0AName%3A%0AEmail%3A%0APhone%3A%0ACity%3A%0ANotes%3A%0A"
-      }
-    ],
-    "destinations": {
-      "chicago": {
-        "city": "chicago",
-        "appointmentTypeId": 79006616,
-        "calendarIds": [
-          12216179
-        ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "priceUnit": "per person",
-        "verifiedTitle": "Glass Blowing (Coming Soon)"
-      }
+    "destinations": {},
+    "bookingAlternative": {
+      "href": "mailto:support@colorcocktailfactory.com?subject=Glass%20Blowing%20Updates",
+      "label": "Ask About Glass Blowing",
+      "status": "Coming soon"
     }
   },
   "paper-pigment": {
@@ -4854,31 +4800,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "A gentle creative reset."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Make your own watercolor + paint",
-        "note": "Premium signature"
-      },
-      {
-        "time": "Weekly watercolor session",
-        "note": "All skills"
-      },
-      {
-        "time": "Online watercolor classes",
-        "note": "Learn anywhere"
-      }
-    ],
-    "destinations": {
-      "chicago": {
-        "city": "chicago",
-        "appointmentTypeId": 79006616,
-        "calendarIds": [
-          12216179
-        ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "priceUnit": "per person",
-        "verifiedTitle": "Paper & Pigment"
-      }
+    "destinations": {},
+    "bookingAlternative": {
+      "href": "/activities#paper-pigment",
+      "label": "Explore Painting Classes",
+      "status": "View available workshops"
     }
   },
   "painting": {
@@ -4970,31 +4896,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Perfect for birthdays and friends."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Acrylic painting nights",
-        "note": "Beginner-friendly"
-      },
-      {
-        "time": "Themed painting sessions",
-        "note": "Holiday specials"
-      },
-      {
-        "time": "Sip & paint classics",
-        "note": "Easy wins"
-      }
-    ],
-    "destinations": {
-      "chicago": {
-        "city": "chicago",
-        "appointmentTypeId": 79006616,
-        "calendarIds": [
-          12216179
-        ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "priceUnit": "per person",
-        "verifiedTitle": "Painting Department"
-      }
+    "destinations": {},
+    "bookingAlternative": {
+      "href": "/activities#paper-pigment",
+      "label": "Explore Painting Classes",
+      "status": "View available workshops"
     }
   },
   "parent-and-me": {
@@ -5086,31 +4992,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "A screen-free win for everyone."
       }
     ],
-    "scheduleRows": [
-      {
-        "time": "Sat · 10:30 AM",
-        "note": "Best family slot"
-      },
-      {
-        "time": "Sun · 12:00 PM",
-        "note": "Easy weekend"
-      },
-      {
-        "time": "Holiday pop-ups",
-        "note": "Special themes"
-      }
-    ],
-    "destinations": {
-      "chicago": {
-        "city": "chicago",
-        "appointmentTypeId": 79006616,
-        "calendarIds": [
-          12216179
-        ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "priceUnit": "per person",
-        "verifiedTitle": "Parent & Me Classes"
-      }
+    "destinations": {},
+    "bookingAlternative": {
+      "href": "mailto:support@colorcocktailfactory.com?subject=Parent%20and%20Me%20Classes",
+      "label": "Ask About Family Classes",
+      "status": "Contact us for availability"
     }
   },
   "gift-cards": {
@@ -5202,37 +5088,142 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "body": "Creative plans beat last-minute stuff."
       }
     ],
-    "scheduleRows": [
+    "destinations": {},
+    "bookingAlternative": {
+      "href": "/gift-cards",
+      "label": "Explore Gift Cards",
+      "status": "Choose a gift amount"
+    }
+  },
+  "cup-creations": {
+    "slug": "cup-creations",
+    "title": "Cup Creations on the Wheel",
+    "navLabel": "Cup Creations",
+    "heroTitle": "Cup Creations on the Wheel",
+    "heroDescription": "Learn to center clay and throw your own cup in a guided, beginner-friendly pottery wheel workshop.",
+    "shortDescription": "Learn to center clay and throw your own cup on the wheel.",
+    "category": "mud-room",
+    "categoryLabel": "Mud Room",
+    "categoryIcon": "🏺",
+    "categoryColorClass": "category-mud",
+    "overlayClass": "gradient-overlay-mud",
+    "isPottery": true,
+    "coversTwo": false,
+    "duration": "90–120 minutes",
+    "ticketUnit": "per person",
+    "beginnerFriendly": true,
+    "locationsOffered": "Chicago & Eugene",
+    "image": {
+      "filename": "Wheel Throwing for Beginners - Chicago.webp",
+      "driveFileId": "1rUWLJ1sUh8iFBVU5xwI0CCmlO5e58mRd",
+      "path": "/images/classes/wheel-throwing-for-beginners-f3b6679a8587.jpeg",
+      "width": 1440,
+      "height": 1800,
+      "alt": "An excited workshop guest giving a clay-covered thumbs-up at a pottery wheel",
+      "focalPosition": "50% 48%"
+    },
+    "whatYouMake": "Your own wheel-thrown clay cup",
+    "theExperience": [
       {
-        "time": "$50 · Popular pick",
-        "note": "Perfect for a first class",
-        "href": "https://app.acuityscheduling.com/catalog.php?owner=35932879&category=Gift+Cards"
+        "title": "Guided Instruction & Atmosphere",
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
       },
       {
-        "time": "$100 · Date night energy",
-        "note": "Two people, one great plan",
-        "href": "https://app.acuityscheduling.com/catalog.php?owner=35932879&category=Gift+Cards"
-      },
-      {
-        "time": "$200 · Full experience",
-        "note": "Premium workshop + extras",
-        "href": "https://app.acuityscheduling.com/catalog.php?owner=35932879&category=Gift+Cards"
+        "title": "Materials & Equipment Provided",
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
       }
     ],
+    "included": [
+      "All required tools and materials",
+      "Step-by-step artist instruction",
+      "Studio cleanup handled by CCF staff"
+    ],
+    "practicalInfo": [
+      {
+        "label": "BYOB Friendly",
+        "text": "Feel free to bring your favorite drinks. Must be 21+ for alcohol. Cups and openers are available in the studio."
+      },
+      {
+        "label": "Location",
+        "text": "Offered in Chicago (1142 W. 18th St) and Eugene (3295 Cross St)."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Do I need experience?",
+        "a": "No. This is designed for first-timers."
+      },
+      {
+        "q": "Do I keep my piece?",
+        "a": "Your ticket covers all instruction, clay, and tools. Optional bisque firing is $10/piece and glazing is available from $20/piece (approx. three-week turnaround)."
+      },
+      {
+        "q": "What will I learn?",
+        "a": "Clay prep, centering, pulling, basic shaping."
+      },
+      {
+        "q": "Is it messy?",
+        "a": "Yes — the fun kind. Wear comfy clothes."
+      },
+      {
+        "q": "Can I book with friends?",
+        "a": "Absolutely."
+      }
+    ],
+    "tags": [
+      "Beginner-friendly",
+      "Hands-on",
+      "Skill-building",
+      "Great gift"
+    ],
+    "valueCards": [
+      {
+        "label": "STYLE",
+        "title": "Real technique",
+        "body": "Centering + pulls, simplified."
+      },
+      {
+        "label": "RESULT",
+        "title": "First forms",
+        "body": "Create your first bowl/cylinder attempts."
+      },
+      {
+        "label": "VIBE",
+        "title": "Supportive",
+        "body": "Friendly coaching, zero judgment."
+      }
+    ],
+    "adultThemed": false,
     "destinations": {
       "chicago": {
         "city": "chicago",
-        "appointmentTypeId": 79006616,
+        "appointmentTypeId": 94782668,
         "calendarIds": [
           12216179
         ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782668",
         "priceUnit": "per person",
-        "verifiedTitle": "Gift Cards"
+        "verifiedTitle": "Wheel Throwing for Beginners -Cup Creations"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 93539343,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=93539343",
+        "priceUnit": "per person",
+        "verifiedTitle": "Eugene Wheel Throwing for Beginners: Cup creations"
       }
     }
   }
 };
+
+for (const activity of Object.values(ACTIVITY_REGISTRY)) {
+  for (const destination of Object.values(activity.destinations)) {
+    if (destination) destination.bookingUrl = withBookingCalendar(destination.bookingUrl, destination.calendarIds);
+  }
+}
 
 export function getAllActivityDetails(): ActivityDetail[] {
   return Object.values(ACTIVITY_REGISTRY);
