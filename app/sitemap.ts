@@ -70,7 +70,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const activityPages: MetadataRoute.Sitemap = activitySlugs.map((slug) => ({
     url: `${base}/activities/${slug}`,
     changeFrequency: "weekly",
-    lastModified: new Date(),
     priority: 0.85
   }));
 
@@ -79,7 +78,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     sections.map((s) => ({
       url: `${base}/${c}/${s.slug}`,
       changeFrequency: "weekly",
-      lastModified: new Date(),
       priority: 0.8
     }))
   );

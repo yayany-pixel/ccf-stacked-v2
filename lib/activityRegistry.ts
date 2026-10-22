@@ -2202,7 +2202,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "duration": "90–120 minutes",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
-    "locationsOffered": "Chicago only",
+    "locationsOffered": "Chicago & Eugene",
     "image": {
       "filename": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl.webp",
       "driveFileId": "1eK1meuDixOc_lZWYmGh78TTphwljxCA2",
@@ -2234,8 +2234,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "text": "Feel free to bring your favorite drinks. Must be 21+ for alcohol. Cups and openers are available in the studio."
       },
       {
-        "label": "Location",
-        "text": "Studio located at 1142 W. 18th Street, Chicago, IL 60608."
+        "label": "Locations",
+        "text": "Chicago: 1142 W. 18th Street (Pilsen). Eugene: 3295 Cross Street, Eugene, OR 97402."
       }
     ],
     "faqs": [
@@ -2286,6 +2286,132 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782793",
         "priceUnit": "per person",
         "verifiedTitle": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 89287658,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=89287658",
+        "priceUnit": "per person",
+        "verifiedTitle": "Eugene Wheel Throwing for Beginners: Matcha Bowl"
+      }
+    }
+  },
+  "cup-creations": {
+    "slug": "cup-creations",
+    "title": "Beginner Wheel: Cup Creations",
+    "navLabel": "Cup Creations",
+    "heroTitle": "Beginner Wheel: Cup Creations",
+    "heroDescription": "Learn to center clay, pull walls, and throw your own ceramic cup or tumbler on the pottery wheel.",
+    "shortDescription": "Learn to center clay and throw your own ceramic cup on the pottery wheel.",
+    "category": "mud-room",
+    "categoryLabel": "Mud Room",
+    "categoryIcon": "🏺",
+    "categoryColorClass": "category-mud",
+    "overlayClass": "gradient-overlay-mud",
+    "isPottery": true,
+    "coversTwo": false,
+    "duration": "90–120 minutes",
+    "ticketUnit": "per person",
+    "beginnerFriendly": true,
+    "locationsOffered": "Chicago & Eugene",
+    "image": {
+      "filename": "Wheel Throwing for Beginners -Cup Creations.webp",
+      "driveFileId": "1-cup-creations-drive-id",
+      "path": "/images/classes/cup-creations-763410615494.jpeg",
+      "width": 1200,
+      "height": 900,
+      "alt": "Guest throwing a ceramic cup on the pottery wheel",
+      "focalPosition": "50% 50%"
+    },
+    "whatYouMake": "Handmade Ceramic Cup or Tumbler",
+    "theExperience": [
+      {
+        "title": "Wheel Throwing Basics",
+        "body": "Discover the art of pottery wheel throwing! Learn centering, pulling cylinders, and shaping cups in a fun, beginner-friendly atmosphere."
+      },
+      {
+        "title": "All Materials & Tools Included",
+        "body": "Porcelain/stoneware clay, pottery wheels, trimming tools, and aprons are ready for you. Personalized guidance from resident ceramic artists throughout."
+      }
+    ],
+    "included": [
+      "Individual pottery wheel & tools",
+      "All clay and studio materials",
+      "Step-by-step coaching by expert ceramicists",
+      "Full studio cleanup handled by our team"
+    ],
+    "practicalInfo": [
+      {
+        "label": "BYOB Friendly",
+        "text": "Feel free to bring your favorite drinks. Must be 21+ for alcohol. Cups and openers are available in the studio."
+      },
+      {
+        "label": "Locations",
+        "text": "Chicago: 1142 W. 18th Street (Pilsen). Eugene: 3295 Cross Street, Eugene, OR 97402."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Do I need previous pottery wheel experience?",
+        "a": "No experience needed! This class is designed specifically for first-time makers and beginners."
+      },
+      {
+        "q": "What should I wear?",
+        "a": "Wear comfortable clothes you don't mind getting dusty or splashed with clay. Clay washes out of fabric."
+      },
+      {
+        "q": "Can I keep and fire my cup?",
+        "a": "Yes! Optional professional bisque firing ($10) and colorful glazing ($20) are available at the end of class with ~3 week pickup."
+      }
+    ],
+    "tags": [
+      "Cup Creations",
+      "Wheel Throwing",
+      "Pottery",
+      "Beginners",
+      "BYOB"
+    ],
+    "valueCards": [
+      {
+        "label": "GUIDED",
+        "title": "Expert Support",
+        "body": "Hands-on coaching throughout the workshop."
+      },
+      {
+        "label": "ALL INCLUDED",
+        "title": "Materials Provided",
+        "body": "All studio tools and supplies ready for you."
+      },
+      {
+        "label": "RELAXED",
+        "title": "BYOB Friendly",
+        "body": "Unwind with your favorite drinks and playlist."
+      }
+    ],
+    "adultThemed": false,
+    "destinations": {
+      "chicago": {
+        "city": "chicago",
+        "appointmentTypeId": 94782668,
+        "calendarIds": [
+          12216179
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782668",
+        "priceUnit": "per person",
+        "verifiedTitle": "Wheel Throwing for Beginners -Cup Creations"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 93539343,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=93539343",
+        "priceUnit": "per person",
+        "verifiedTitle": "Eugene Wheel Throwing for Beginners: Cup creations"
       }
     }
   },
@@ -4520,11 +4646,21 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "destinations": {
       "chicago": {
         "city": "chicago",
-        "appointmentTypeId": 79006616,
+        "appointmentTypeId": 0,
         "calendarIds": [
           12216179
         ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
+        "bookingUrl": "/private-events",
+        "priceUnit": "per person",
+        "verifiedTitle": "Request a Private Event"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 0,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "/private-events",
         "priceUnit": "per person",
         "verifiedTitle": "Request a Private Event"
       }
@@ -4549,13 +4685,13 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
     "image": {
-      "filename": "Bonsai for Beginners: Hands-On Workshop - Chicago.webp",
-      "driveFileId": "1313Zo8PU-B93TPrRK2BtgSa1PoHsW-Hv",
-      "path": "/images/classes/approved-01-HsW-Hv-48dba9a4f983.webp",
+      "filename": "Ceramic Mug and a Bowl - Chicago.webp",
+      "driveFileId": "1WtKmP1ivyyj2SBnF1N1FlXOfKB9-c5wW",
+      "path": "/images/classes/approved-05-9-c5wW-833640afcace.webp",
       "width": 1200,
       "height": 900,
-      "alt": "Two workshop guests holding their finished bonsai trees",
-      "focalPosition": "50% 42%"
+      "alt": "Two finished handmade ceramic mugs and a bowl",
+      "focalPosition": "50% 50%"
     },
     "whatYouMake": "Handbuilding Pottery",
     "theExperience": [
@@ -4636,13 +4772,23 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "destinations": {
       "chicago": {
         "city": "chicago",
-        "appointmentTypeId": 79006616,
+        "appointmentTypeId": 79186725,
         "calendarIds": [
           12216179
         ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79186725",
         "priceUnit": "per person",
-        "verifiedTitle": "Handbuilding Pottery"
+        "verifiedTitle": "Ceramic Mug and a Bowl - Chicago"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 90210750,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=90210750",
+        "priceUnit": "per person",
+        "verifiedTitle": "Eugene: Ceramic Mug and a Bowl"
       }
     }
   },
@@ -4755,11 +4901,21 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "destinations": {
       "chicago": {
         "city": "chicago",
-        "appointmentTypeId": 79006616,
+        "appointmentTypeId": 0,
         "calendarIds": [
           12216179
         ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
+        "bookingUrl": "mailto:support@colorcocktailfactory.com?subject=Glass%20Blowing%20Waitlist&body=Hi%20CCF!%20Please%20add%20me%20to%20the%20waitlist.",
+        "priceUnit": "per person",
+        "verifiedTitle": "Glass Blowing (Coming Soon)"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 0,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "mailto:support@colorcocktailfactory.com?subject=Glass%20Blowing%20Waitlist&body=Hi%20CCF!%20Please%20add%20me%20to%20the%20waitlist.",
         "priceUnit": "per person",
         "verifiedTitle": "Glass Blowing (Coming Soon)"
       }
@@ -4784,13 +4940,13 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
     "image": {
-      "filename": "Bonsai for Beginners: Hands-On Workshop - Chicago.webp",
-      "driveFileId": "1313Zo8PU-B93TPrRK2BtgSa1PoHsW-Hv",
-      "path": "/images/classes/approved-01-HsW-Hv-48dba9a4f983.webp",
-      "width": 1200,
-      "height": 900,
-      "alt": "Two workshop guests holding their finished bonsai trees",
-      "focalPosition": "50% 42%"
+      "filename": "Water Color For Beginners.webp",
+      "driveFileId": "1GujlQ9QUHvUdMFJJoh_ajjyWdg-Yj9yC",
+      "path": "/images/classes/approved-44--Yj9yC-1250486ab1dc.webp",
+      "width": 940,
+      "height": 705,
+      "alt": "Watercolor flowers beside a watercolor palette and brushes",
+      "focalPosition": "50% 50%"
     },
     "whatYouMake": "Paper & Pigment",
     "theExperience": [
@@ -4871,13 +5027,23 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "destinations": {
       "chicago": {
         "city": "chicago",
-        "appointmentTypeId": 79006616,
+        "appointmentTypeId": 95947521,
         "calendarIds": [
           12216179
         ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95947521",
         "priceUnit": "per person",
-        "verifiedTitle": "Paper & Pigment"
+        "verifiedTitle": "Water Color For Beginners"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 94932997,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94932997",
+        "priceUnit": "for two",
+        "verifiedTitle": "Date Night Watercolor Painting for Two - Eugene"
       }
     }
   },
@@ -4900,13 +5066,13 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
     "image": {
-      "filename": "Bonsai for Beginners: Hands-On Workshop - Chicago.webp",
-      "driveFileId": "1313Zo8PU-B93TPrRK2BtgSa1PoHsW-Hv",
-      "path": "/images/classes/approved-01-HsW-Hv-48dba9a4f983.webp",
+      "filename": "Wine Glass Painting - Chicago.webp",
+      "driveFileId": "1GxySoZHJuUstkXWjY6Z8t2DE9hltrBKB",
+      "path": "/images/classes/approved-49-ltrBKB-622409207453.webp",
       "width": 1200,
       "height": 900,
-      "alt": "Two workshop guests holding their finished bonsai trees",
-      "focalPosition": "50% 42%"
+      "alt": "Colorfully painted wine glasses",
+      "focalPosition": "50% 50%"
     },
     "whatYouMake": "Painting Department",
     "theExperience": [
@@ -4987,13 +5153,23 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "destinations": {
       "chicago": {
         "city": "chicago",
-        "appointmentTypeId": 79006616,
+        "appointmentTypeId": 79374003,
         "calendarIds": [
           12216179
         ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79374003",
         "priceUnit": "per person",
-        "verifiedTitle": "Painting Department"
+        "verifiedTitle": "Wine Glass Painting - Chicago"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 95909935,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95909935",
+        "priceUnit": "per person",
+        "verifiedTitle": "Wine Glass Painting"
       }
     }
   },
@@ -5016,13 +5192,13 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
     "image": {
-      "filename": "Bonsai for Beginners: Hands-On Workshop - Chicago.webp",
-      "driveFileId": "1313Zo8PU-B93TPrRK2BtgSa1PoHsW-Hv",
-      "path": "/images/classes/approved-01-HsW-Hv-48dba9a4f983.webp",
-      "width": 1200,
-      "height": 900,
-      "alt": "Two workshop guests holding their finished bonsai trees",
-      "focalPosition": "50% 42%"
+      "filename": "Paint Pottery - Chicago.webp",
+      "driveFileId": "1N4Smjtmki9ib-oTL2xL8ipQCL4hnfruv",
+      "path": "/images/classes/approved-36-hnfruv-c1631ba91192.webp",
+      "width": 816,
+      "height": 612,
+      "alt": "Pottery painting at the studio and examples of painted plates",
+      "focalPosition": "50% 50%"
     },
     "whatYouMake": "Parent & Me Classes",
     "theExperience": [
@@ -5103,13 +5279,23 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "destinations": {
       "chicago": {
         "city": "chicago",
-        "appointmentTypeId": 79006616,
+        "appointmentTypeId": 79183668,
         "calendarIds": [
           12216179
         ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79183668",
         "priceUnit": "per person",
-        "verifiedTitle": "Parent & Me Classes"
+        "verifiedTitle": "Paint Pottery - Chicago"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 98334198,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98334198",
+        "priceUnit": "per person",
+        "verifiedTitle": "Eugene Duck Soap holder"
       }
     }
   },
@@ -5132,13 +5318,13 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "beginnerFriendly": true,
     "locationsOffered": "Chicago & Eugene",
     "image": {
-      "filename": "Bonsai for Beginners: Hands-On Workshop - Chicago.webp",
-      "driveFileId": "1313Zo8PU-B93TPrRK2BtgSa1PoHsW-Hv",
-      "path": "/images/classes/approved-01-HsW-Hv-48dba9a4f983.webp",
+      "filename": "Gift Cards.webp",
+      "driveFileId": "194clPBzrJEB4A7mrJkYSNlPfzmGo6xn9",
+      "path": "/images/classes/approved-07-Go6xn9-08daf172fdf1.webp",
       "width": 1200,
       "height": 900,
-      "alt": "Two workshop guests holding their finished bonsai trees",
-      "focalPosition": "50% 42%"
+      "alt": "Color Cocktail Factory Gift Card",
+      "focalPosition": "50% 50%"
     },
     "whatYouMake": "Gift Cards",
     "theExperience": [
@@ -5222,12 +5408,22 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "destinations": {
       "chicago": {
         "city": "chicago",
-        "appointmentTypeId": 79006616,
+        "appointmentTypeId": 2119866,
         "calendarIds": [
           12216179
         ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "priceUnit": "per person",
+        "bookingUrl": "/gift-cards?city=chicago",
+        "priceUnit": "per ticket",
+        "verifiedTitle": "Gift Cards"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 2119866,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "/gift-cards?city=eugene",
+        "priceUnit": "per ticket",
         "verifiedTitle": "Gift Cards"
       }
     }

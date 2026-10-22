@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllEvents, eventLocationSchema } from "@/lib/eventsAPI";
+import { eventTimeZone } from "@/lib/locations";
 import { ACUITY_EVENTS_HREF } from "@/lib/constants";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
@@ -87,8 +88,8 @@ export default async function EventsPage({ searchParams }: { searchParams: { cit
     } : undefined
   }));
 
-  // Format date for display in Central Time
-  function formatEventDate(isoDate: string): string {
+  // Format date for display in local studio time
+  function formatEventDate(isoDate: string, city: string = "Chicago"): string {
     const date = new Date(isoDate);
     return date.toLocaleDateString('en-US', {
       weekday: 'short',
@@ -96,7 +97,7 @@ export default async function EventsPage({ searchParams }: { searchParams: { cit
       day: 'numeric',
       hour: 'numeric',
       minute: '2-digit',
-      timeZone: 'America/Chicago',
+      timeZone: eventTimeZone(city),
       timeZoneName: 'short'
     });
   }

@@ -922,7 +922,7 @@ export function resolveGiftExperiences(
             : null,
           pendingSetupReason: chicagoDateNightCert
             ? null
-            : "Unfinished Acuity Setup: A dedicated $55 'Pottery Date Night for Two — Chicago' gift certificate product has not yet been created in Acuity Admin (Acuity's REST API only exposes read-only GET /products). Purchase button is disabled until the $55 certificate product exists in Acuity.",
+            : "Dedicated experience vouchers for this package are coming soon. In the meantime, our standard Chicago gift certificate is available below to cover the full experience.",
           verifiedDollarAlternative: chicago100Cert
             ? {
                 productId: chicago100Cert.productId,
@@ -931,7 +931,7 @@ export function resolveGiftExperiences(
                 purchaseUrl: chicago100Cert.purchaseUrl,
                 remainingBalance: 45,
                 explanation:
-                  "Active today in Acuity: Our $100 Chicago Gift Card (#2119869) is verified redeemable for Date Night on the Pottery Wheel - Chicago ($55 for two) and leaves $45 in studio credit on the code for a future workshop or second visit.",
+                  "Our $100 Chicago Gift Card is fully redeemable for Date Night on the Pottery Wheel ($55 for two) and leaves $45 in studio credit on the code for a future workshop or second visit.",
               }
             : undefined,
         },
@@ -976,7 +976,7 @@ export function resolveGiftExperiences(
             : null,
           pendingSetupReason: eugeneDateNightCert
             ? null
-            : "Unfinished Acuity Setup: No active Acuity gift certificate currently includes Eugene Date Night On The Wheel (ID 91935746) in its eligible appointment types. Purchase button is disabled until the $50 Eugene Date Night certificate is created in Acuity Admin.",
+            : "Eugene gift certificate packages are currently in preparation. Please contact the studio or check back soon.",
         },
       },
     },
@@ -1030,7 +1030,7 @@ export function resolveGiftExperiences(
             : null,
           pendingSetupReason: chicagoBeginnerCert
             ? null
-            : "Unfinished Acuity Setup: A dedicated $45 'Their First Pottery Class — Chicago' gift certificate product has not yet been created in Acuity Admin (Acuity's REST API only exposes read-only GET /products). Purchase button is disabled until the $45 certificate product exists in Acuity.",
+            : "Dedicated single-class vouchers are coming soon. Our standard Chicago gift certificates below can be applied directly to this class.",
           verifiedDollarAlternative: chicago50Cert
             ? {
                 productId: chicago50Cert.productId,
@@ -1039,7 +1039,7 @@ export function resolveGiftExperiences(
                 purchaseUrl: chicago50Cert.purchaseUrl,
                 remainingBalance: 5,
                 explanation:
-                  "Active today in Acuity: Our $50 Chicago Gift Card (#2119866) is verified redeemable for Wheel Throwing for Beginners - Chicago ($45 per person) and leaves $5 in studio credit on the code.",
+                  "Our $50 Chicago Gift Card is fully redeemable for Wheel Throwing for Beginners ($45 per person) and leaves $5 in studio credit on the code.",
               }
             : undefined,
         },
@@ -1091,7 +1091,7 @@ export function resolveGiftExperiences(
             : null,
           pendingSetupReason: eugeneBeginnerCert
             ? null
-            : "Unfinished Acuity Setup: No active Acuity gift certificate currently includes Eugene Beginner Wheel (IDs 93539343 & 89287658) in its eligible appointment types. Purchase button is disabled until the $25 Eugene Beginner Pottery certificate is created in Acuity Admin.",
+            : "Eugene gift certificate packages are currently in preparation. Please contact the studio or check back soon.",
         },
       },
     },
@@ -1229,7 +1229,7 @@ export function resolveGiftExperiences(
           ],
           finishingDisclosure: POTTERY_FINISHING_DISCLOSURE,
           bookingModelNote:
-            "Existing Acuity Gift Cards (2119866–2119873) currently only include Chicago appointment types and reject Eugene appointment IDs with HTTP 400 invalid_certificate_type.",
+            "Acuity gift certificates are currently enabled for Chicago classes; Eugene studio certificates will be available soon.",
           status:
             eugeneDenominations.length > 0 ? "active" : "pending_acuity_setup",
           acuityProductId: eugeneDenominations[0]?.productId ?? null,
@@ -1237,7 +1237,7 @@ export function resolveGiftExperiences(
           pendingSetupReason:
             eugeneDenominations.length > 0
               ? null
-              : "Unfinished Acuity Setup: Existing $50–$250 Acuity Gift Cards are currently configured only for Chicago appointment types (verified via GET /api/v1/certificates/check). Purchase buttons for Eugene are disabled until Eugene appointment types or Eugene gift card products are added in Acuity Admin.",
+              : "Gift certificates for our Eugene studio are coming soon. Please contact us at support@colorcocktailfactory.com for assistance with Eugene gift bookings.",
           denominations: eugeneDenominations,
         },
       },

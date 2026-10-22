@@ -13,7 +13,6 @@ import { PRICING } from "@/lib/constants";
 import {
   ACUITY_GIFT_CARDS_CATALOG_URL,
   GIFT_FAQS,
-  MANUAL_ACUITY_SETUP_SPECS,
   VERIFIED_CHICAGO_GIFT_WORKSHOPS,
   type GiftExperienceCardData,
   type GiftExperienceId,
@@ -621,19 +620,13 @@ export default function GiftCardsStorefront({
                         <span className="rounded-full border border-amber-300/40 bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-200">
                           {!studioConfirmed
                             ? "Confirm Studio Above"
-                            : "Acuity Setup Pending"}
+                            : "Coming Soon"}
                         </span>
                       </button>
 
                       {offering.pendingSetupReason && (
                         <div className="rounded-xl border border-white/15 bg-white/5 p-3.5 text-xs leading-relaxed text-white/80">
                           <p>{offering.pendingSetupReason}</p>
-                          <a
-                            href="#manual-acuity-setup"
-                            className="mt-1.5 inline-block font-semibold text-pink-300 underline hover:text-pink-200"
-                          >
-                            View exact manual Acuity setup specs ↓
-                          </a>
                         </div>
                       )}
 
@@ -945,10 +938,10 @@ export default function GiftCardsStorefront({
               ) : (
                 <div className="rounded-2xl border border-amber-300/30 bg-amber-500/10 p-6 space-y-4">
                   <div className="inline-block rounded-full bg-amber-500/25 px-3 py-1 text-xs font-bold text-amber-200">
-                    Unfinished Acuity Setup · {dollarOffering.studioLabel}
+                    Coming Soon · {dollarOffering.studioLabel}
                   </div>
                   <h3 className="font-serif text-2xl font-bold text-white">
-                    Eugene Dollar-Value Gift Certificates Pending Acuity Configuration
+                    Eugene Gift Certificates Coming Soon
                   </h3>
                   <p className="text-sm leading-relaxed text-white/85">
                     {dollarOffering.pendingSetupReason}
@@ -959,15 +952,9 @@ export default function GiftCardsStorefront({
                     aria-disabled="true"
                     className="w-full cursor-not-allowed rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-base font-bold text-white/55"
                   >
-                    {dollarCard.buttonLabel} — Pending Eugene Acuity Setup
+                    {dollarCard.buttonLabel} — Coming Soon for Eugene
                   </button>
                   <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-xs">
-                    <a
-                      href="#manual-acuity-setup"
-                      className="font-semibold text-pink-300 underline hover:text-pink-200"
-                    >
-                      See exact Eugene Acuity setup instructions ↓
-                    </a>
                     <button
                       type="button"
                       onClick={() => handleCitySelect("chicago")}
@@ -1365,155 +1352,6 @@ export default function GiftCardsStorefront({
             </GlassCard>
           ))}
         </div>
-      </section>
-
-      {/* 8. Manual Acuity Setup Instructions for Unfinished Products (Section 2 & 7) */}
-      <section
-        id="manual-acuity-setup"
-        aria-labelledby="manual-acuity-setup-heading"
-        className="scroll-mt-24"
-      >
-        <GlassCard className="p-7 sm:p-8 border-amber-300/30">
-          <details className="group">
-            <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-4">
-              <div>
-                <span className="inline-block rounded-full bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-200 border border-amber-300/30">
-                  Acuity Integration Transparency &amp; Staff Setup Guide
-                </span>
-                <h2
-                  id="manual-acuity-setup-heading"
-                  className="mt-2 font-serif text-2xl font-bold text-white"
-                >
-                  Manual Acuity Admin Setup Specifications (Unfinished Acuity
-                  Products)
-                </h2>
-                <p className="mt-1 text-xs text-white/75">
-                  Acuity Scheduling’s REST API exposes{" "}
-                  <code className="text-amber-200">GET /api/v1/products</code>{" "}
-                  as read-only and does not permit API creation of new store
-                  products. Expand for exact copy-paste product specs to finish
-                  creating experience certificates in Acuity Admin.
-                </p>
-              </div>
-              <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold text-white group-open:bg-white/20">
-                View Exact Setup Specs ↓
-              </span>
-            </summary>
-
-            <div className="mt-6 space-y-6 border-t border-white/15 pt-6 text-xs leading-relaxed text-white/85">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-2">
-                <div className="font-bold text-white">
-                  Why Some Products Require Manual Creation in Acuity Admin (
-                  <em>Packages, Gifts &amp; Subscriptions</em>):
-                </div>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>
-                    <strong>Verified Live Today:</strong> 5 Chicago dollar-value
-                    Gift Cards (IDs <code className="text-emerald-300">2119866</code>{" "}
-                    $50, <code className="text-emerald-300">2119869</code> $100,{" "}
-                    <code className="text-emerald-300">2119870</code> $150,{" "}
-                    <code className="text-emerald-300">2119872</code> $200,{" "}
-                    <code className="text-emerald-300">2119873</code> $250) are
-                    active in Acuity and cover 19 active Chicago workshops.
-                  </li>
-                  <li>
-                    <strong>Preserving Existing Balances:</strong> Per safety
-                    requirements, existing certificates and customer balances
-                    were not altered or deleted.
-                  </li>
-                  <li>
-                    <strong>Automatic Activation:</strong> As soon as any of the
-                    products below are created in Acuity Admin,{" "}
-                    <code className="text-pink-300">
-                      fetchLiveAcuityProducts()
-                    </code>{" "}
-                    detects them via{" "}
-                    <code className="text-pink-300">GET /api/v1/products</code>{" "}
-                    and automatically enables their primary purchase buttons on
-                    this page.
-                  </li>
-                  <li>
-                    <strong>Why “Creative Outing for Two” Is Omitted:</strong>{" "}
-                    Unlike Date Night on the Wheel (where 1 booking slot = 2
-                    guests sharing 1 wheel), standard per-person workshops book 1
-                    guest per appointment and vary from $25 to $85. Acuity
-                    single-appointment certificates do not atomically reserve 2
-                    separate seats in one redemption code. Buyers gifting a pair
-                    of per-person classes in Chicago can use the verified{" "}
-                    <strong>$100 Gift Card (#2119869)</strong>, which covers two
-                    $45 classes ($90 total) across two bookings.
-                  </li>
-                </ul>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {MANUAL_ACUITY_SETUP_SPECS.map((spec) => (
-                  <div
-                    key={spec.key}
-                    className="rounded-2xl border border-white/15 bg-black/30 p-5 space-y-2.5"
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="rounded-full bg-pink-500/20 px-2.5 py-0.5 text-[11px] font-bold uppercase text-pink-200">
-                        {spec.city} Studio
-                      </span>
-                      <span className="font-mono text-amber-300 font-bold">
-                        {spec.verifiedPrice}
-                      </span>
-                    </div>
-                    <h3 className="font-serif text-lg font-bold text-white">
-                      {spec.productName}
-                    </h3>
-                    <div>
-                      <strong className="text-white">Category / Group:</strong>{" "}
-                      {spec.categoryGroup}
-                    </div>
-                    <div>
-                      <strong className="text-white">Redemption Value:</strong>{" "}
-                      {spec.redemptionValue} ({spec.redemptionModel})
-                    </div>
-                    <div>
-                      <strong className="text-white">Expiration:</strong>{" "}
-                      {spec.expiration}
-                    </div>
-                    <div>
-                      <strong className="text-white">
-                        Eligible Appointment Types:
-                      </strong>
-                      <ul className="mt-1 list-disc pl-4 space-y-0.5">
-                        {spec.eligibleAppointmentTypes.map((apt) => (
-                          <li key={apt.id}>
-                            <code>{apt.id}</code> — {apt.name} ({apt.price},
-                            Calendar <code>{apt.calendarId}</code>)
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <strong className="text-white">Product Image:</strong>{" "}
-                      <code className="break-all text-white/75">
-                        {spec.imageUrl}
-                      </code>
-                    </div>
-                    <div>
-                      <strong className="text-white">Description:</strong>
-                      <p className="mt-1 rounded-lg bg-white/5 p-2.5 text-white/80">
-                        {spec.description}
-                      </p>
-                    </div>
-                    <div>
-                      <strong className="text-white">
-                        Required Purchase Link Format:
-                      </strong>{" "}
-                      <code className="break-all text-emerald-300">
-                        {spec.requiredPurchaseLinkPattern}
-                      </code>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </details>
-        </GlassCard>
       </section>
 
       {/* Bottom Navigation & Support */}

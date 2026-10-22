@@ -15,9 +15,9 @@ export default function Header({ city }: { city: City }) {
     { id: "pigment-lab", label: "Pigment Lab", href: `/${city.param}/paper-pigment` },
     { id: "activities", label: "All Classes", href: "/activities" },
     { id: "teach", label: "Teach", href: "/teach" },
-    { id: "date-night", label: "Date Night Pottery" },
-    { id: "mosaics", label: "Mosaics and Glass" },
-    { id: "bonsai", label: "Bonsai" }
+    { id: "date-night", label: "Date Night Pottery", href: `/${city.param}/date-night-wheel` },
+    { id: "mosaics", label: "Mosaics and Glass", href: `/${city.param}/mosaic` },
+    { id: "bonsai", label: "Bonsai", href: `/${city.param}/bonsai` }
   ];
 
   return (

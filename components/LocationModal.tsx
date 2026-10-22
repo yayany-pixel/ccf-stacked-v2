@@ -105,8 +105,15 @@ export default function LocationModal({
       link_url: dest.bookingUrl,
       displayed_price: dest.price ?? undefined,
       click_target: `see_${dest.city}_dates`,
-      booking_provider: "acuity",
+      booking_provider: dest.bookingUrl.startsWith("http") && dest.bookingUrl.includes("acuity") ? "acuity" : "unknown",
     });
+  };
+
+  const getButtonText = (url: string, cityName: string) => {
+    if (url.includes("private-events")) return `Request ${cityName} Quote →`;
+    if (url.includes("gift-cards")) return `Shop ${cityName} Gift Cards →`;
+    if (url.startsWith("mailto:")) return `Join Waitlist →`;
+    return `See ${cityName} Dates →`;
   };
 
   return (
@@ -235,7 +242,7 @@ export default function LocationModal({
                     onClick={() => handleBookingClick(locations.chicago!, "Chicago")}
                     className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-500/25 transition hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40 focus:outline-none focus:ring-2 focus:ring-pink-400 shrink-0"
                   >
-                    See Chicago Dates →
+                    {getButtonText(locations.chicago.bookingUrl, "Chicago")}
                   </a>
                 </div>
               </div>
@@ -272,7 +279,7 @@ export default function LocationModal({
                     onClick={() => handleBookingClick(locations.eugene!, "Eugene")}
                     className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:from-emerald-600 hover:to-teal-700 hover:shadow-emerald-500/40 focus:outline-none focus:ring-2 focus:ring-emerald-400 shrink-0"
                   >
-                    See Eugene Dates →
+                    {getButtonText(locations.eugene.bookingUrl, "Eugene")}
                   </a>
                 </div>
               </div>
@@ -305,7 +312,7 @@ export default function LocationModal({
                   onClick={() => handleBookingClick(locations.chicago!, "Chicago")}
                   className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-500/25 transition hover:from-pink-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-pink-400 shrink-0"
                 >
-                  See Chicago Dates →
+                  {getButtonText(locations.chicago.bookingUrl, "Chicago")}
                 </a>
               </div>
               <button
