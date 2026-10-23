@@ -238,7 +238,7 @@ feature({
   ],
   "relatedActivitySlugs": [
     "beginner-wheel",
-    "mosaic",
+    "mug-and-bowl",
     "handbuilding"
   ],
   "relatedPostSlugs": [
@@ -341,7 +341,7 @@ feature({
   "relatedActivitySlugs": [
     "beginner-wheel",
     "handbuilding",
-    "mosaic"
+    "mug-and-bowl"
   ],
   "relatedPostSlugs": [
     "eugene-date-ideas-beyond-coffee-15-experiences",
