@@ -446,7 +446,7 @@ feature({
     "private-parties"
   ],
   "relatedPostSlugs": [
-    "one-day-art-classes-vs-firing-comparison",
+    "one-day-art-classes-vs-pottery-firing-comparison",
     "pottery-101-beginners-guide"
   ],
   "sources": [
