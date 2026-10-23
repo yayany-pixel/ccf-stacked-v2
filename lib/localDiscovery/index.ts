@@ -28,7 +28,10 @@ export function getLocalDiscoveryGuideBySlug(slug: string): DiscoveryGuide | und
 }
 
 export function getLocalDiscoveryGuidesForActivity(slug: string): DiscoveryGuide[] {
-  return localDiscoveryGuides.filter((guide) => guide.relatedActivitySlugs.includes(slug));
+  const newGuides = localDiscoveryGuides.filter((guide) => guide.relatedActivitySlugs.includes(slug));
+  return correctedEugeneDateNightGuide.relatedActivitySlugs.includes(slug)
+    ? [...newGuides, correctedEugeneDateNightGuide]
+    : newGuides;
 }
 
 function articleWords(post: DiscoveryGuide): number {
