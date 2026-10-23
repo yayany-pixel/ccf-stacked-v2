@@ -27,7 +27,14 @@ export const metadata: Metadata = {
   }
 };
 
-export default function PrivateEventsPage() {
+export default function PrivateEventsPage({
+  searchParams,
+}: {
+  searchParams?: { city?: string };
+}) {
+  // Keep city selected for location-specific editorial inbound links.
+  // The default remains Chicago for readers arriving without a city query.
+  const selectedCity = searchParams?.city === "eugene" ? cities[1] : cities[0];
   // JSON-LD structured data
   const serviceSchema = {
     "@context": "https://schema.org",
@@ -528,7 +535,7 @@ export default function PrivateEventsPage() {
             </div>
             <Reveal variant="fade-up">
               <PrivateEventFormCard
-                city={cities[0]}
+                city={selectedCity}
                 timeWindows={[]}
               />
             </Reveal>
