@@ -6,6 +6,8 @@ import ButtonPill from "@/components/ui/ButtonPill";
 import Reveal from "@/components/motion/Reveal";
 import BlogPostSchema from "@/components/blog/BlogPostSchema";
 import WorkshopGuidePage from "@/components/blog/WorkshopGuidePage";
+import LocalFeaturePage from "@/components/blog/LocalFeaturePage";
+import { getLocalFeatureBySlug } from "@/lib/localFeatures";
 import { getWorkshopGuideBySlug } from "@/lib/workshopGuides";
 import AuthorBio from "@/components/blog/AuthorBio";
 import RelatedActivities from "@/components/blog/RelatedActivities";
@@ -110,6 +112,9 @@ export default function BlogPostPage({ params }: Props) {
 }
 
 function renderBlogPostContent(slug: string, post: BlogPost) {
+  const localFeature = getLocalFeatureBySlug(slug);
+  if (localFeature) return <LocalFeaturePage post={post} feature={localFeature} />;
+
   const guide = getWorkshopGuideBySlug(slug);
   if (guide) return <WorkshopGuidePage post={post} guide={guide} />;
 
