@@ -205,8 +205,8 @@ feature({
       ],
       [
         "Make a creative group project",
-        "A tabletop mosaic or painting activity may suit relatives of varied experience levels. Verify any age restrictions and material handling requirements.",
-        "https://colorcocktailfactory.com/activities/mosaic"
+        "A beginner painting or handbuilding activity may suit relatives of varied experience levels. Verify any age restrictions and material handling requirements.",
+        "https://colorcocktailfactory.com/activities/handbuilding"
       ],
       [
         "Let the student choose a favorite food stop",
@@ -401,9 +401,9 @@ feature({
         "https://colorcocktailfactory.com/activities/painting"
       ],
       [
-        "Mosaic pattern-making celebration",
-        "Guests build independent artworks with a shared color system. Ask about tools, age eligibility and potential curing time.",
-        "https://colorcocktailfactory.com/activities/mosaic"
+        "Handbuilt mug-and-bowl gathering",
+        "Guests make coordinated pottery objects in a guided session. Check whether the project, guest count and optional kiln finishing fit the proposed party.",
+        "https://colorcocktailfactory.com/activities/mug-and-bowl"
       ],
       [
         "A Hult Center performance and meal",
