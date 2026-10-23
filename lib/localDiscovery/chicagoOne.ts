@@ -30,17 +30,17 @@ export const chicagoDiscoveryPartOne: DiscoveryGuide[] = [
           {
             "title": "Anticonquista Café — 952 W. 18th Street",
             "description": "A specialty coffee stop east of the studio. A sensible choice before a daytime class when you want time to talk but do not need a large meal.",
-            "href": "https://www.choosechicago.com/neighborhoods/pilsen/"
+            "href": "https://www.anticonquistacafe.com/contact"
           },
           {
             "title": "Carnitas Don Pedro — 1113 W. 18th Street",
             "description": "A longstanding local carnitas counter very close to the studio. Think breakfast or lunch-style timing; check its own opening hours before visiting.",
-            "href": "https://chicago.eater.com/maps/best-tacos-chicago-map"
+            "href": "https://www.toasttab.com/local/order/don-pedro-carnitas-1113-west-18th-street"
           },
           {
             "title": "QuesaBirria Jalisco — 1314 W. 18th Street",
             "description": "A compact option farther west along 18th Street for crisp quesabirria and consommé; useful when you're in the mood for a focused taco stop.",
-            "href": "https://chicago.eater.com/neighborhood/352/pilsen"
+            "href": "https://chicago.eater.com/venue/115077/quesabirria-jalisco-tacos"
           }
         ]
       },
@@ -54,17 +54,17 @@ export const chicagoDiscoveryPartOne: DiscoveryGuide[] = [
           {
             "title": "La Luna — 1726 S. Racine Avenue",
             "description": "A nearby Pilsen Mexican restaurant with a lively dining atmosphere; a practical partner for a date-night itinerary.",
-            "href": "https://www.choosechicago.com/listing/la-luna-pilsen/"
+            "href": "https://www.lalunachicago.com/contact"
           },
           {
             "title": "HaiSous Vietnamese Kitchen — 1800 S. Carpenter Street",
             "description": "A more considered dinner choice featuring Vietnamese cooking. Reserve ahead and allow time, especially if you're celebrating an occasion.",
-            "href": "https://www.haisous.com/"
+            "href": "https://www.haisous.com/contact-us"
           },
           {
             "title": "5 Rabanitos — 1758 W. 18th Street",
             "description": "Mexican cooking and a wide range of dishes, but farther west along 18th Street than the other choices here. Plan the extra travel instead of assuming it is next door.",
-            "href": "https://chicago.eater.com/maps/best-restaurants-bars-pilsen-chicago"
+            "href": "https://5rabanitos.com/"
           }
         ]
       },
@@ -140,20 +140,32 @@ export const chicagoDiscoveryPartOne: DiscoveryGuide[] = [
     ],
     "sources": [
       {
-        "label": "Choose Chicago: Pilsen neighborhood guide",
-        "href": "https://www.choosechicago.com/neighborhoods/pilsen/"
+        "label": "Anticonquista Café — Pilsen address and hours",
+        "href": "https://www.anticonquistacafe.com/contact"
       },
       {
-        "label": "Eater Chicago: Where to eat and drink in Pilsen",
-        "href": "https://chicago.eater.com/maps/best-restaurants-bars-pilsen-chicago"
+        "label": "Don Pedro Carnitas — Location and menu",
+        "href": "https://www.toasttab.com/local/order/don-pedro-carnitas-1113-west-18th-street"
       },
       {
-        "label": "National Museum of Mexican Art: Plan your visit",
+        "label": "QuesaBirria Jalisco Tacos — Pilsen location",
+        "href": "https://chicago.eater.com/venue/115077/quesabirria-jalisco-tacos"
+      },
+      {
+        "label": "La Luna — Pilsen restaurant hours",
+        "href": "https://www.lalunachicago.com/contact"
+      },
+      {
+        "label": "HaiSous — Official restaurant information",
+        "href": "https://www.haisous.com/contact-us"
+      },
+      {
+        "label": "5 Rabanitos — Pilsen",
+        "href": "https://5rabanitos.com/"
+      },
+      {
+        "label": "National Museum of Mexican Art — Plan your visit",
         "href": "https://nationalmuseumofmexicanart.org/visit"
-      },
-      {
-        "label": "Choose Chicago: La Luna",
-        "href": "https://www.choosechicago.com/listing/la-luna-pilsen/"
       }
     ]
   },
