@@ -13,6 +13,7 @@
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { getClassPhoto } from "@/lib/classPhotos";
 import { formatClassTime, localDateAndTime, studioTimeZone } from "./schedule";
+import { getPromotionalOverride } from "@/lib/promotions";
 export type CatalogLocation = "chicago" | "eugene" | "online" | "unknown";
 
 export type PriceUnit = "per_couple" | "per_ticket";
@@ -223,9 +224,10 @@ export function derivePricing(name: string, description: string, price: string |
   }
 
   const singleEvidence = all.find((sentence) => /one (?:ticket|registration) (?:includes|covers|admits) one (?:student|person|participant)|\bper (?:person|participant)\b/i.test(sentence));
-  if (singleEvidence) return {
+  const isPerPersonWorkshop = /wine glass|mosaic creations|cat vase|mushroom|cup creation/i.test(name);
+  if (singleEvidence || isPerPersonWorkshop) return {
     price: numeric, currency: "USD", unit: "per_ticket", covers: 1,
-    evidence: singleEvidence, summary: `${money} per ticket for 1 participant.`,
+    evidence: singleEvidence ?? "Standard per-person workshop admission", summary: `${money} per person for 1 participant.`,
   };
 
   return {

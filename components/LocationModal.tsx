@@ -39,6 +39,8 @@ export type LocationModalProps = {
     online?: LocationDestination;
   };
   variants?: VariantDestination[];
+  minimumAge?: number;
+  isAdultThemed?: boolean;
 };
 
 export default function LocationModal({
@@ -48,9 +50,17 @@ export default function LocationModal({
   activitySlug,
   locations,
   variants,
+  minimumAge,
+  isAdultThemed,
 }: LocationModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const [preferredCity, setPreferredCity] = useState<string | null>(null);
+  const [isAgeConfirmed, setIsAgeConfirmed] = useState(false);
+  const requiresAgeConfirmation = Boolean((minimumAge && minimumAge >= 21) || isAdultThemed);
+
+  useEffect(() => {
+    setIsAgeConfirmed(false);
+  }, [isOpen]);
 
   useEffect(() => {
     try {
@@ -89,7 +99,14 @@ export default function LocationModal({
   const isOnline = Boolean(locations.online && !hasChicago && !hasEugene);
   const isBoth = hasChicago && hasEugene && !hasVariants;
 
-  const handleBookingClick = (dest: LocationDestination, cityName: string) => {
+  const canBook = !requiresAgeConfirmation || isAgeConfirmed;
+
+  const handleBookingClick = (dest: LocationDestination, cityName: string, e?: React.MouseEvent) => {
+    if (!canBook) {
+      if (e) e.preventDefault();
+      return false;
+    }
+
     try {
       if (typeof window !== "undefined" && dest.city !== "online") {
         localStorage.setItem("preferredCity", dest.city);
@@ -107,6 +124,7 @@ export default function LocationModal({
       click_target: `see_${dest.city}_dates`,
       booking_provider: "acuity",
     });
+    return true;
   };
 
   return (
@@ -151,6 +169,34 @@ export default function LocationModal({
           </p>
         </div>
 
+        {/* Age Restriction Confirmation (21+ Workshops) */}
+        {requiresAgeConfirmation && (
+          <div className="mt-5 rounded-2xl border border-red-500/40 bg-red-950/40 p-4 text-left">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl" role="img" aria-label="21 plus warning">🔞</span>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-wider text-red-300">
+                  21+ Adults Only Age Requirement
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-white/80">
+                  This adult workshop is strictly reserved for guests aged 21 and over. A valid government-issued photo ID is required for all participants at studio check-in.
+                </p>
+                <label className="mt-3 flex items-center gap-2.5 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={isAgeConfirmed}
+                    onChange={(e) => setIsAgeConfirmed(e.target.checked)}
+                    className="h-4 w-4 rounded border-white/40 bg-white/10 text-pink-500 focus:ring-pink-400"
+                  />
+                  <span className="text-xs font-semibold text-white">
+                    I confirm that all attending guests are 21 years of age or older
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Variants Selection (e.g. Turkish Lamp) */}
         {hasVariants && variants && (
           <div className="mt-6 space-y-4">
@@ -177,8 +223,8 @@ export default function LocationModal({
                   </div>
                   <a
                     href={v.bookingUrl}
-                    onClick={() =>
-                      handleBookingClick(
+                    onClick={(e) => {
+                      if (!handleBookingClick(
                         {
                           city: v.city,
                           appointmentTypeId: v.id,
@@ -189,9 +235,16 @@ export default function LocationModal({
                           verifiedTitle: v.title,
                         },
                         "Chicago",
-                      )
-                    }
-                    className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-500/25 transition hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40 focus:outline-none focus:ring-2 focus:ring-pink-400 shrink-0"
+                        e,
+                      )) {
+                        alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
+                      }
+                    }}
+                    className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+                      canBook
+                        ? "bg-gradient-to-r from-pink-500 to-purple-600 shadow-pink-500/25 hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40"
+                        : "bg-slate-700 text-white/50 cursor-not-allowed"
+                    }`}
                   >
                     See {v.title} Dates →
                   </a>
@@ -232,8 +285,16 @@ export default function LocationModal({
                   </div>
                   <a
                     href={locations.chicago.bookingUrl}
-                    onClick={() => handleBookingClick(locations.chicago!, "Chicago")}
-                    className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-500/25 transition hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40 focus:outline-none focus:ring-2 focus:ring-pink-400 shrink-0"
+                    onClick={(e) => {
+                      if (!handleBookingClick(locations.chicago!, "Chicago", e)) {
+                        alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
+                      }
+                    }}
+                    className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+                      canBook
+                        ? "bg-gradient-to-r from-pink-500 to-purple-600 shadow-pink-500/25 hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40"
+                        : "bg-slate-700 text-white/50 cursor-not-allowed"
+                    }`}
                   >
                     See Chicago Dates →
                   </a>
@@ -269,8 +330,16 @@ export default function LocationModal({
                   </div>
                   <a
                     href={locations.eugene.bookingUrl}
-                    onClick={() => handleBookingClick(locations.eugene!, "Eugene")}
-                    className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:from-emerald-600 hover:to-teal-700 hover:shadow-emerald-500/40 focus:outline-none focus:ring-2 focus:ring-emerald-400 shrink-0"
+                    onClick={(e) => {
+                      if (!handleBookingClick(locations.eugene!, "Eugene", e)) {
+                        alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
+                      }
+                    }}
+                    className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
+                      canBook
+                        ? "bg-gradient-to-r from-emerald-500 to-teal-600 shadow-emerald-500/25 hover:from-emerald-600 hover:to-teal-700 hover:shadow-emerald-500/40"
+                        : "bg-slate-700 text-white/50 cursor-not-allowed"
+                    }`}
                   >
                     See Eugene Dates →
                   </a>
@@ -302,8 +371,16 @@ export default function LocationModal({
                 </div>
                 <a
                   href={locations.chicago.bookingUrl}
-                  onClick={() => handleBookingClick(locations.chicago!, "Chicago")}
-                  className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-pink-500/25 transition hover:from-pink-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-pink-400 shrink-0"
+                  onClick={(e) => {
+                    if (!handleBookingClick(locations.chicago!, "Chicago", e)) {
+                      alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
+                    }
+                  }}
+                  className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+                    canBook
+                      ? "bg-gradient-to-r from-pink-500 to-purple-600 shadow-pink-500/25 hover:from-pink-600 hover:to-purple-700"
+                      : "bg-slate-700 text-white/50 cursor-not-allowed"
+                  }`}
                 >
                   See Chicago Dates →
                 </a>
@@ -341,8 +418,16 @@ export default function LocationModal({
                 </div>
                 <a
                   href={locations.eugene.bookingUrl}
-                  onClick={() => handleBookingClick(locations.eugene!, "Eugene")}
-                  className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/25 transition hover:from-emerald-600 hover:to-teal-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 shrink-0"
+                  onClick={(e) => {
+                    if (!handleBookingClick(locations.eugene!, "Eugene", e)) {
+                      alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
+                    }
+                  }}
+                  className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
+                    canBook
+                      ? "bg-gradient-to-r from-emerald-500 to-teal-600 shadow-emerald-500/25 hover:from-emerald-600 hover:to-teal-700"
+                      : "bg-slate-700 text-white/50 cursor-not-allowed"
+                  }`}
                 >
                   See Eugene Dates →
                 </a>
@@ -380,8 +465,16 @@ export default function LocationModal({
                 </div>
                 <a
                   href={locations.online.bookingUrl}
-                  onClick={() => handleBookingClick(locations.online!, "Online")}
-                  className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-purple-500 to-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-purple-500/25 transition hover:from-purple-600 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-purple-400 shrink-0"
+                  onClick={(e) => {
+                    if (!handleBookingClick(locations.online!, "Online", e)) {
+                      alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
+                    }
+                  }}
+                  className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-purple-400 ${
+                    canBook
+                      ? "bg-gradient-to-r from-purple-500 to-indigo-600 shadow-purple-500/25 hover:from-purple-600 hover:to-indigo-700"
+                      : "bg-slate-700 text-white/50 cursor-not-allowed"
+                  }`}
                 >
                   See Online Dates →
                 </a>

@@ -15,6 +15,7 @@ import { getCatalog, normalize, type CatalogClass } from "../lib/askccf/catalog"
 import { getActivityPricing, getLivePrice, TURKISH_LAMP_OPTIONS } from "../lib/pricing";
 import { buildHomepageData, activitiesForCity, priceLabel } from "../lib/homepage/data";
 import { ACTIVITY_MANIFEST } from "../lib/homepage/manifest";
+import { getPromotionalOverride } from "../lib/promotions";
 
 async function runLivePricingTests() {
   console.log("Starting Live Acuity Pricing Parity & Policy Verification...\n");
@@ -51,11 +52,13 @@ async function runLivePricingTests() {
       const catalogItem: CatalogClass | undefined = catalog.find(
         (c: CatalogClass) => Number(c.id) === dest.appointmentTypeId,
       );
+      const promo = getPromotionalOverride(dest.appointmentTypeId);
       if (catalogItem && catalogItem.pricing.price !== null) {
+        const expectedPrice: number | null = promo ? promo.promoPrice : catalogItem.pricing.price;
         assert.equal(
           dest.currentPrice,
-          catalogItem.pricing.price,
-          `${activity.slug} (${city}) price must match live Acuity catalog`,
+          expectedPrice,
+          `${activity.slug} (${city}) price must match live Acuity catalog or active promotional price`,
         );
 
         const expectedUnit: "for two" | "per person" | "per ticket" =
@@ -70,10 +73,12 @@ async function runLivePricingTests() {
           `${activity.slug} (${city}) unit must match Acuity coverage`,
         );
 
-        // Check was price rule: strictly higher
-        const former = dest.currentPrice !== null ? Math.round((dest.currentPrice * 1.42) / 5) * 5 : null;
+        // Check was price rule: strictly higher (using verified promotional regular price or dynamic 1.42 formula)
+        const former = promo
+          ? (promo.regularPrice > (dest.currentPrice ?? 0) ? promo.regularPrice : null)
+          : (dest.currentPrice !== null ? Math.round((dest.currentPrice * 1.42) / 5) * 5 : null);
 
-        if (former !== null && former > dest.currentPrice) {
+        if (former !== null && former > dest.currentPrice!) {
           assert.equal(
             dest.wasPrice,
             former,

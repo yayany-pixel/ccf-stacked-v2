@@ -98,14 +98,21 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
       </div>
       <div className={styles.cardBody}>
         <div className={styles.badgeRow}>
-          {activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice && (
+          {activity.flashSale ? (
+            <span className={styles.badgeSale}>⚡ {activity.flashSaleLabel || "Flash Sale — $25"}</span>
+          ) : activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice ? (
             <span className={styles.badgeSale}>⚡ Limited-Time Sale</span>
+          ) : null}
+          {(activity.minimumAge === 21 || activity.adultThemed) && (
+            <span className={styles.badgeAge || styles.badgeWeekend}>🔞 21+ Adults Only</span>
           )}
           {activity.byob && <span className={styles.badgeWeekend}>🥂 BYOB</span>}
           {activity.beginnerFriendly && <span className={styles.badgePopular}>✨ First-Timer Friendly</span>}
         </div>
         {activity.mode === "online" && <p className={styles.eyebrow}>Live Online · Join from home</p>}
-        {activity.adultThemed && <p className={styles.eyebrow}>Adult-themed · {activity.ageRestriction ?? "Check age policy at booking"}</p>}
+        {(activity.minimumAge === 21 || activity.adultThemed) ? (
+          <p className={styles.eyebrow}>🔞 Adults Only (21+) · {activity.ageRestriction ?? "Valid photo ID required"}</p>
+        ) : null}
         <h2>
           <Link href={detailHref} className={styles.titleLink} prefetch={false}>
             {activity.title}
@@ -265,7 +272,8 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
       if (occasion === "date-night") selectedFilter = "Date night";
       else if (category === "pottery") selectedFilter = "Pottery";
       else if (category === "glass") selectedFilter = "Glass & lamps";
-      else if (category === "lowest-prices") selectedFilter = "Lowest prices";
+      else if (category === "under-40" || category === "lowest-prices") selectedFilter = "Under $40";
+      else if (category === "21-plus" || category === "adults-only" || category === "21-adults-only") selectedFilter = "21+ Adults Only";
       
       if (selectedFilter) {
         setFilter(selectedFilter);
@@ -362,6 +370,19 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
       <main tabIndex={-1} id="main-content" className={styles.main}>
         <div className={styles.intro}><h1>The future is <em>handmade</em> in {studio.label}...</h1><p>Pottery &amp; creative workshops. Come make something together.</p></div>
         <WorkshopSaleBanner />
+        <div className={styles.saleCalloutRow}>
+          <button
+            type="button"
+            onClick={() => {
+              setFilter("Under $40");
+              setVisibleCount(10);
+              document.getElementById("workshops")?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className={styles.saleLink}
+          >
+            Creative Workshops Starting at $25 →
+          </button>
+        </div>
         <div id="workshops" style={{ scrollMarginTop: "100px" }} className={styles.filters} role="group" aria-label="Filter workshops">
           {HOMEPAGE_FILTERS.map(option => <button key={option} type="button" aria-pressed={filter === option} onClick={() => {
             if (filter === option) return;
@@ -370,10 +391,12 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
             trackEvent("homepage_filter_selected", {city, placement: "homepage", class_category: option});
           }}>{option}</button>)}
         </div>
-        <p className={styles.filterCount} role="status">{filter === "Lowest prices"
-          ? `${activities.length} lowest-priced workshops · ${studio.label} · Lowest to highest listed ticket price. Tickets may cover one or two people; check each card.`
+        <p className={styles.filterCount} role="status">{filter === "Under $40" || filter === ("Lowest prices" as any)
+          ? `${activities.length} workshops under $40 · ${studio.label} · Lowest to highest listed ticket price. Tickets may cover one or two people; check each card.`
+          : filter === "21+ Adults Only"
+          ? `${activities.length} 21+ adults-only workshops · ${studio.label}`
           : `${activities.length} ${filter === "All workshops" ? "workshops" : filter.toLowerCase() + " workshops"} · ${studio.label}`}</p>
-        {!activities.length && <p className={styles.empty}>{filter === "Lowest prices" ? "Current prices are unavailable right now. Try All workshops to explore classes and check prices at booking." : "No matching workshops are listed right now. Try another filter or city."}</p>}
+        {!activities.length && <p className={styles.empty}>{filter === "Under $40" || filter === ("Lowest prices" as any) ? "Current prices are unavailable right now. Try All workshops to explore classes and check prices at booking." : "No matching workshops are listed right now. Try another filter or city."}</p>}
         <div className={styles.feed} id="classes" aria-label={`${studio.label} creative workshops`}>
           {visible.slice(0, 3).map((activity, index) => <ActivityCard key={activity.key} activity={activity} position={index + 1} listCity={city} first={index === 0} />)}
           <section id="private-party" className={`${styles.party} ${isPartyExpanded ? styles.partyExpanded : styles.partyCollapsed}`} aria-labelledby="private-party-title">

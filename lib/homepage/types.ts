@@ -28,6 +28,7 @@ export type ActivityDefinition = {
   bookingUrl: string | null;
   priority: number;
   adultThemed: boolean;
+  minimumAge?: number | null;
   ageRestriction: string | null;
   beginnerFriendly: boolean | null;
   byob: boolean | null;
@@ -49,6 +50,8 @@ export type HomepageActivity = ActivityDefinition & {
   priceUnit: TicketUnit;
   priceEvidence: string | null;
   formerPrice: { amount: number; evidence: string } | null;
+  flashSale?: boolean;
+  flashSaleLabel?: string | null;
   nextAvailability: string | null;
   availabilityState: "available" | "empty-window" | "unavailable";
   offeringState: "active" | "inactive" | "unverified";

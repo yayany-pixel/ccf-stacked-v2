@@ -2,6 +2,7 @@ import type { CatalogClass, PublicClassSlot } from "@/lib/askccf/catalog";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { ACTIVITY_MANIFEST } from "./manifest";
 import type { HomepageActivity, HomepageCity, HomepageData } from "./types";
+import { getPromotionalOverride } from "@/lib/promotions";
 
 export const AVAILABILITY_WINDOW_DAYS = 30;
 
@@ -23,12 +24,22 @@ export function buildHomepageData(
       new Date(slot.time).getTime() > now.getTime() &&
       new Date(slot.time).getTime() <= windowEnd,
     ).sort((left, right) => new Date(left.time).getTime() - new Date(right.time).getTime());
-    const price = matches ? live.pricing.price : null;
-    const currentPrice = typeof price === "number" && Number.isFinite(price) && price >= 0 ? price : null;
-    const formerAmount = currentPrice !== null ? Math.round((currentPrice * 1.42) / 5) * 5 : null;
-    const formerPrice = formerAmount !== null && currentPrice !== null && formerAmount > currentPrice
-      ? { amount: formerAmount, evidence: "Original price" }
+    const promo = catalog !== null && (catalog.length > 0 || matches) ? getPromotionalOverride(definition.appointmentTypeId, now.getTime()) : null;
+    const rawPrice = matches ? live.pricing.price : null;
+    const currentPrice = promo
+      ? promo.promoPrice
+      : typeof rawPrice === "number" && Number.isFinite(rawPrice) && rawPrice >= 0
+      ? rawPrice
       : null;
+    let formerPrice: { amount: number; evidence: string } | null = null;
+    if (promo && promo.regularPrice > promo.promoPrice) {
+      formerPrice = { amount: promo.regularPrice, evidence: "Original verified price" };
+    } else if (!promo && currentPrice !== null) {
+      const formerAmount = Math.round((currentPrice * 1.42) / 5) * 5;
+      if (formerAmount > currentPrice) {
+        formerPrice = { amount: formerAmount, evidence: "Original price" };
+      }
+    }
     return {
       ...definition,
       durationMinutes: matches && live.durationMinutes && live.durationMinutes > 0 ? live.durationMinutes : null,
@@ -40,6 +51,8 @@ export function buildHomepageData(
         matches && live.pricing.covers === 1 ? "per person" : "per ticket",
       priceEvidence: matches ? live.pricing.evidence : null,
       formerPrice,
+      flashSale: promo?.flashSale ?? false,
+      flashSaleLabel: promo?.flashSaleLabel ?? null,
       nextAvailability: matches ? upcoming[0]?.time ?? null : null,
       availabilityState: !slots || !matches ? "unavailable" : upcoming.length ? "available" : "empty-window",
       offeringState: catalog === null ? "unverified" : matches ? "active" : "inactive",
@@ -124,12 +137,25 @@ export function priceLabel(activity: HomepageActivity): string {
   return `${amount} ${activity.priceUnit}`;
 }
 
-export const HOMEPAGE_FILTERS = ["All workshops", "Lowest prices", "Date night", "Pottery", "Glass & lamps", "Online"] as const;
+export const HOMEPAGE_FILTERS = [
+  "All workshops",
+  "Under $40",
+  "21+ Adults Only",
+  "Date night",
+  "Pottery",
+  "Glass & lamps",
+  "Online",
+] as const;
 export type HomepageFilter = typeof HOMEPAGE_FILTERS[number];
-export function matchesHomepageFilter(activity: HomepageActivity, filter: HomepageFilter): boolean {
+
+export function matchesHomepageFilter(activity: HomepageActivity, filter: HomepageFilter | string): boolean {
   const title = [activity.title, ...(activity.bookingVariants ?? []).map(variant => variant.title)].join(" ");
   switch (filter) {
-    case "Lowest prices": return typeof activity.currentPrice === "number" && Number.isFinite(activity.currentPrice) && activity.currentPrice >= 0;
+    case "Under $40":
+    case "Lowest prices":
+      return typeof activity.currentPrice === "number" && Number.isFinite(activity.currentPrice) && activity.currentPrice >= 0 && activity.currentPrice < 40;
+    case "21+ Adults Only":
+      return Boolean((activity.minimumAge && activity.minimumAge >= 21) || activity.adultThemed);
     case "Date night": return /date night/i.test(title);
     case "Pottery": return /pottery|ceramic|clay|wheel|handbuild|mug|vase/i.test(title);
     case "Glass & lamps": return /glass|mosaic|lamp/i.test(title);
@@ -138,9 +164,11 @@ export function matchesHomepageFilter(activity: HomepageActivity, filter: Homepa
   }
 }
 
-export function filterHomepageActivities(activities: HomepageActivity[], filter: HomepageFilter): HomepageActivity[] {
+export function filterHomepageActivities(activities: HomepageActivity[], filter: HomepageFilter | string): HomepageActivity[] {
   const matching = activities.filter(activity => matchesHomepageFilter(activity, filter));
-  if (filter !== "Lowest prices") return matching;
-  // Compare the displayed ticket prices, including the starting price of grouped workshops.
-  return matching.sort((left, right) => left.currentPrice! - right.currentPrice! || left.priority - right.priority || left.key.localeCompare(right.key)).slice(0, 5);
+  if (filter === "Under $40" || filter === "Lowest prices") {
+    // Compare displayed ticket prices numerically, including starting price of grouped workshops, in ascending order
+    return matching.sort((left, right) => (left.currentPrice ?? 1e9) - (right.currentPrice ?? 1e9) || left.priority - right.priority || left.key.localeCompare(right.key));
+  }
+  return matching;
 }
