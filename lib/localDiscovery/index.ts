@@ -26,6 +26,10 @@ export function getLocalDiscoveryGuideBySlug(slug: string): DiscoveryGuide | und
   return bySlug.get(slug);
 }
 
+export function getLocalDiscoveryGuidesForActivity(slug: string): DiscoveryGuide[] {
+  return localDiscoveryGuides.filter((guide) => guide.relatedActivitySlugs.includes(slug));
+}
+
 function articleWords(post: DiscoveryGuide): number {
   return [
     ...post.intro,
