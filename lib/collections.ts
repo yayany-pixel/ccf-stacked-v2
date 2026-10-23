@@ -94,7 +94,7 @@ export const COLLECTIONS: EventCollection[] = [
     subtitle: "Centering, throwing, trimming, handbuilding, and sculptural ceramics.",
     badge: "CLAY & WHEEL",
     icon: "🏺",
-    coverImage: "/images/classes/wheel-throwing-for-beginners-f3b6679a8587.jpeg",
+    coverImage: "/images/classes/wheel-throwing-for-beginners-90d2f8c6bb29.jpeg",
     description:
       "Immerse yourself in clay. From high-energy wheel throwing sessions to detailed sculptural handbuilding, master foundational ceramic art in our studios.",
     longDescription:

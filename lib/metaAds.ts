@@ -190,7 +190,7 @@ export const CCF_AD_BLUEPRINTS: MetaAdCreativeBlueprint[] = [
     ],
     callToAction: "BOOK_TRAVEL",
     destinationUrl: "https://colorcocktailfactory.com/activities/matcha-bowl?utm_source=meta&utm_medium=cpc&utm_campaign=matcha_bowl_intro",
-    imageAsset: "/images/classes/wheel-throwing-for-beginners-f3b6679a8587.jpeg",
+    imageAsset: "/images/classes/wheel-throwing-for-beginners-90d2f8c6bb29.jpeg",
     recommendedDailyBudget: 3.00,
     optimizationGoal: "INITIATE_CHECKOUT",
     audience: {
