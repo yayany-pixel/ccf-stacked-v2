@@ -8,14 +8,14 @@ import { getWorkshopGuidesForActivity } from "@/lib/workshopGuides";
 const PAGE_SIZE = 24;
 
 export const metadata: Metadata = {
-  title: "Creative Workshop Blog: Pottery, Glass, Painting & More",
+  title: "Chicago & Eugene Creative Guides, Dates & Workshops",
   description:
-    "Practical step-by-step pottery, glass, candle, plant and painting guides from Color Cocktail Factory. Browse creative ideas for Chicago and Eugene workshops.",
+    "Explore Chicago and Eugene neighborhood itineraries, date ideas, family outings, creative workshop tutorials, and planning guides from Color Cocktail Factory.",
   alternates: { canonical: "https://colorcocktailfactory.com/blog" },
   openGraph: {
-    title: "Creative Workshop Guides | Color Cocktail Factory",
+    title: "Creative City Guides & Workshop Ideas | Color Cocktail Factory",
     description:
-      "Ideas, techniques and creative projects connected to real studio workshops in Chicago and Eugene.",
+      "Local itineraries, creative date-night ideas, art projects, and group event guides for Chicago and Eugene.",
     url: "https://colorcocktailfactory.com/blog",
     type: "website",
     images: ["/og-image.jpg"],
@@ -66,7 +66,7 @@ export default function BlogPage({ searchParams }: Props) {
           </h1>
           <p className="mt-5 max-w-3xl text-lg leading-8 text-white/75">
             Get inspired, learn a practical technique, and find the workshop where you can make something yourself.
-            Explore articles on ceramics, glass, botanical arts, painting, creative dates, and groups in Chicago and Eugene.
+            Explore local neighborhoods, date nights, family outings, private events, and hands-on ceramics, glass, botanical arts, and painting in Chicago and Eugene.
           </p>
         </div>
       </section>
