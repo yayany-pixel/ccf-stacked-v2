@@ -7,6 +7,8 @@ import Reveal from "@/components/motion/Reveal";
 import BlogPostSchema from "@/components/blog/BlogPostSchema";
 import WorkshopGuidePage from "@/components/blog/WorkshopGuidePage";
 import { getWorkshopGuideBySlug } from "@/lib/workshopGuides";
+import LocalDiscoveryArticle from "@/components/blog/LocalDiscoveryArticle";
+import { getLocalDiscoveryGuideBySlug } from "@/lib/localDiscovery";
 import AuthorBio from "@/components/blog/AuthorBio";
 import RelatedActivities from "@/components/blog/RelatedActivities";
 import RelatedArticles from "@/components/blog/RelatedArticles";
@@ -110,6 +112,9 @@ export default function BlogPostPage({ params }: Props) {
 }
 
 function renderBlogPostContent(slug: string, post: BlogPost) {
+  const discovery = getLocalDiscoveryGuideBySlug(slug);
+  if (discovery) return <LocalDiscoveryArticle post={post} guide={discovery} />;
+
   const guide = getWorkshopGuideBySlug(slug);
   if (guide) return <WorkshopGuidePage post={post} guide={guide} />;
 
