@@ -104,16 +104,25 @@ assert.ok(!matchesHomepageFilter(lamp[0], 'Pottery'));
 assert.ok(chicago.filter(activity => matchesHomepageFilter(activity, 'Online')).every(activity => activity.mode === 'online'));
 assert.deepEqual(chicago.filter(activity => matchesHomepageFilter(activity, 'All workshops')), chicago);
 
-// Lowest prices ranks valid ticket prices, caps the results, and leaves other filters in catalog order.
-assert.ok(HOMEPAGE_FILTERS.includes('Lowest prices'));
+// Under $40 filter ranks valid ticket prices below $40 ascending, and 21+ Adults Only filters age-restricted workshops.
+assert.ok(HOMEPAGE_FILTERS.includes('Under $40'));
+assert.ok(HOMEPAGE_FILTERS.includes('21+ Adults Only'));
 const priced = chicago.slice(0, 9).map((activity, index) => ({ ...activity, currentPrice: [90, null, 0, 30, 15, 20, 10, NaN, -5][index] }));
 const originalKeys = priced.map(activity => activity.key);
-assert.deepEqual(filterHomepageActivities(priced, 'Lowest prices').map(activity => activity.currentPrice), [0, 10, 15, 20, 30]);
+assert.deepEqual(filterHomepageActivities(priced, 'Under $40').map(activity => activity.currentPrice), [0, 10, 15, 20, 30]);
 assert.deepEqual(priced.map(activity => activity.key), originalKeys);
 assert.deepEqual(filterHomepageActivities(priced, 'All workshops'), priced);
-assert.deepEqual(filterHomepageActivities(activitiesForCity(offline.activities, 'chicago'), 'Lowest prices'), []);
-assert.equal(filterHomepageActivities(priced.slice(3, 5), 'Lowest prices').length, 2);
+assert.deepEqual(filterHomepageActivities(activitiesForCity(offline.activities, 'chicago'), 'Under $40'), []);
+assert.equal(filterHomepageActivities(priced.slice(3, 5), 'Under $40').length, 2);
 const cheapLamp = { ...lamp[0], currentPrice: 5 };
-assert.equal(filterHomepageActivities([...priced, cheapLamp], 'Lowest prices')[1].key, cheapLamp.key);
-assert.ok(filterHomepageActivities(eugene, 'Lowest prices').every(activity => activity.city === 'eugene' || activity.city === 'online'));
-console.log('Lowest-price checks passed: five cheapest ticket prices, grouped workshops, invalid prices, city isolation, and catalog order.');
+assert.equal(filterHomepageActivities([...priced, cheapLamp], 'Under $40')[1].key, cheapLamp.key);
+assert.ok(filterHomepageActivities(eugene, 'Under $40').every(activity => activity.city === 'eugene' || activity.city === 'online'));
+
+// 21+ Adults Only filter test
+const adultWorkshop = { ...chicago[0], minimumAge: 21, adultThemed: true };
+const allAgesWorkshop = { ...chicago[1], minimumAge: undefined, adultThemed: false };
+const adultFiltered = filterHomepageActivities([adultWorkshop, allAgesWorkshop], '21+ Adults Only');
+assert.equal(adultFiltered.length, 1);
+assert.equal(adultFiltered[0].key, adultWorkshop.key);
+
+console.log('Under $40 and 21+ filter checks passed: prices under $40 ascending, grouped workshops, 21+ restriction, city isolation, and catalog order.');

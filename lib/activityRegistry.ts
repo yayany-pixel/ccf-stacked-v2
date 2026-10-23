@@ -50,6 +50,7 @@ export type ActivityDetail = {
   valueCards: { label: string; title: string; body: string }[];
   scheduleRows?: { time: string; note?: string; href?: string }[];
   adultThemed?: boolean;
+  minimumAge?: number;
   ageRestriction?: string;
   destinations: {
     chicago?: ActivityDestination;
@@ -2185,6 +2186,125 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       }
     }
   },
+  "cup-creations": {
+    "slug": "cup-creations",
+    "title": "Cup Creations on the Wheel",
+    "navLabel": "Cup Creations on the Wheel",
+    "heroTitle": "Cup Creations on the Wheel",
+    "heroDescription": "Learn wheel throwing techniques while creating your own custom handmade cups and mugs.",
+    "shortDescription": "Learn wheel throwing techniques while creating your own custom handmade cups and mugs.",
+    "category": "mud-room",
+    "categoryLabel": "Mud Room",
+    "categoryIcon": "🏺",
+    "categoryColorClass": "category-mud",
+    "overlayClass": "gradient-overlay-mud",
+    "isPottery": true,
+    "coversTwo": false,
+    "duration": "90–120 minutes",
+    "ticketUnit": "per person",
+    "beginnerFriendly": true,
+    "locationsOffered": "Chicago & Eugene",
+    "image": {
+      "filename": "Wheel Throwing for Beginners -Cup Creations.webp",
+      "driveFileId": "1g95LffW6rU7aV1b42T_0Pj-5e-tJ27pM",
+      "path": "/images/classes/cup-creations-763410615494.jpeg",
+      "width": 1200,
+      "height": 900,
+      "alt": "Ceramic cups crafted on a pottery wheel",
+      "focalPosition": "50% 50%"
+    },
+    "whatYouMake": "Cup Creations on the Wheel",
+    "theExperience": [
+      {
+        "title": "Guided Instruction & Atmosphere",
+        "body": "Join our instructors for an engaging, hands-on session. Our studio provides a welcoming, low-pressure atmosphere where everyone can explore their creative side."
+      },
+      {
+        "title": "Materials & Equipment Provided",
+        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+      }
+    ],
+    "included": [
+      "All required tools and materials",
+      "Step-by-step artist instruction",
+      "Studio cleanup handled by CCF staff"
+    ],
+    "practicalInfo": [
+      {
+        "label": "BYOB Friendly",
+        "text": "Feel free to bring your favorite drinks. Must be 21+ for alcohol. Cups and openers are available in the studio."
+      },
+      {
+        "label": "Location",
+        "text": "Offered in Chicago (1142 W. 18th St) and Eugene (3295 Cross St)."
+      }
+    ],
+    "faqs": [
+      {
+        "q": "Do I keep my piece?",
+        "a": "Your ticket covers all instruction, clay, and tools. Optional bisque firing is $10/piece and glazing is available from $20/piece (approx. three-week turnaround)."
+      },
+      {
+        "q": "Do I need any previous experience?",
+        "a": "No! All of our workshops are structured to be beginner-friendly with step-by-step guidance from our resident artists."
+      },
+      {
+        "q": "What should I wear?",
+        "a": "Wear comfortable clothes you don't mind getting dusty or splashed with clay. Clay washes out of most fabrics."
+      },
+      {
+        "q": "Can I bring my own drinks?",
+        "a": "Yes, our adult evening sessions are BYOB friendly (21+ for alcohol)."
+      }
+    ],
+    "tags": [
+      "Cup Creations on the Wheel",
+      "Pottery",
+      "Beginner-friendly",
+      "Hands-on",
+      "BYOB"
+    ],
+    "valueCards": [
+      {
+        "label": "GUIDED",
+        "title": "Expert Support",
+        "body": "Hands-on coaching throughout the workshop."
+      },
+      {
+        "label": "ALL INCLUDED",
+        "title": "Materials Provided",
+        "body": "All studio tools and supplies ready for you."
+      },
+      {
+        "label": "RELAXED",
+        "title": "BYOB Friendly",
+        "body": "Unwind with your favorite drinks and playlist."
+      }
+    ],
+    "adultThemed": false,
+    "destinations": {
+      "chicago": {
+        "city": "chicago",
+        "appointmentTypeId": 94782668,
+        "calendarIds": [
+          12216179
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782668",
+        "priceUnit": "per person",
+        "verifiedTitle": "Wheel Throwing for Beginners -Cup Creations"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 93539343,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=93539343",
+        "priceUnit": "per person",
+        "verifiedTitle": "Eugene Wheel Throwing for Beginners: Cup creations"
+      }
+    }
+  },
   "matcha-bowl": {
     "slug": "matcha-bowl",
     "title": "Matcha Bowl on the Wheel",
@@ -2202,7 +2322,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "duration": "90–120 minutes",
     "ticketUnit": "per person",
     "beginnerFriendly": true,
-    "locationsOffered": "Chicago only",
+    "locationsOffered": "Chicago & Eugene",
     "image": {
       "filename": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl.webp",
       "driveFileId": "1eK1meuDixOc_lZWYmGh78TTphwljxCA2",
@@ -2235,7 +2355,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       },
       {
         "label": "Location",
-        "text": "Studio located at 1142 W. 18th Street, Chicago, IL 60608."
+        "text": "Offered in Chicago (1142 W. 18th St) and Eugene (3295 Cross St)."
       }
     ],
     "faqs": [
@@ -2286,6 +2406,16 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782793",
         "priceUnit": "per person",
         "verifiedTitle": "Wheel Throwing for Beginners -Make Your Own Matcha Bowl"
+      },
+      "eugene": {
+        "city": "eugene",
+        "appointmentTypeId": 89287658,
+        "calendarIds": [
+          13582962
+        ],
+        "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=89287658",
+        "priceUnit": "per person",
+        "verifiedTitle": "Eugene Wheel Throwing for Beginners: Matcha Bowl"
       }
     }
   },
@@ -3974,6 +4104,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       }
     ],
     "adultThemed": true,
+    "minimumAge": 21,
+    "ageRestriction": "Ages 21+ only",
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -4088,6 +4220,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       }
     ],
     "adultThemed": true,
+    "minimumAge": 21,
+    "ageRestriction": "Ages 21+ only",
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -4192,6 +4326,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       }
     ],
     "adultThemed": true,
+    "minimumAge": 21,
+    "ageRestriction": "Ages 21+ only",
     "destinations": {
       "chicago": {
         "city": "chicago",
@@ -4296,6 +4432,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       }
     ],
     "adultThemed": true,
+    "minimumAge": 21,
+    "ageRestriction": "Ages 21+ only",
     "destinations": {
       "chicago": {
         "city": "chicago",

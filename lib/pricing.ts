@@ -1,6 +1,7 @@
 import { getCatalog, type CatalogClass } from "@/lib/askccf/catalog";
 import { ACTIVITY_MANIFEST } from "@/lib/homepage/manifest";
 import type { ActivityDetail } from "@/lib/activityRegistry";
+import { getPromotionalOverride } from "@/lib/promotions";
 
 export type PriceUnit = "for two" | "per person" | "per ticket";
 
@@ -9,6 +10,8 @@ export type LivePriceInfo = {
   priceUnit: PriceUnit;
   wasPrice: number | null;
   formattedPrice: string;
+  isFlashSale?: boolean;
+  flashSaleLabel?: string;
 };
 
 export type DestinationPricing = {
@@ -21,6 +24,8 @@ export type DestinationPricing = {
   wasPrice: number | null;
   formattedPrice: string;
   verifiedTitle?: string;
+  isFlashSale?: boolean;
+  flashSaleLabel?: string;
 };
 
 export type VariantPricing = {
@@ -39,6 +44,8 @@ export type ActivityPricing = {
   displayPrice: string;
   wasPrice: number | null;
   hasSaleBadge: boolean;
+  isFlashSale?: boolean;
+  flashSaleLabel?: string;
   destinations: {
     chicago?: DestinationPricing;
     eugene?: DestinationPricing;
@@ -91,9 +98,22 @@ export async function getLivePrice(
   }
 
   const live = catalog ? catalog.find((c) => Number(c.id) === numId) : null;
-  const price = live?.pricing.price;
-  const currentPrice =
-    typeof price === "number" && Number.isFinite(price) && price >= 0 ? price : null;
+  if (!live && catalog !== undefined) {
+    return {
+      currentPrice: null,
+      priceUnit: "per ticket",
+      wasPrice: null,
+      formattedPrice: "See price at checkout",
+    };
+  }
+
+  const promo = getPromotionalOverride(numId);
+  const rawPrice = live?.pricing.price;
+  const currentPrice = promo
+    ? promo.promoPrice
+    : typeof rawPrice === "number" && Number.isFinite(rawPrice) && rawPrice >= 0
+    ? rawPrice
+    : null;
 
   // Determine ticket unit from live catalog covers count
   const priceUnit: PriceUnit =
@@ -103,12 +123,15 @@ export async function getLivePrice(
       ? "per person"
       : "per ticket";
 
-  const formerAmount = currentPrice !== null ? Math.round((currentPrice * 1.42) / 5) * 5 : null;
-
-  const wasPrice =
-    formerAmount !== null && currentPrice !== null && formerAmount > currentPrice
-      ? formerAmount
-      : null;
+  let wasPrice: number | null = null;
+  if (promo && promo.regularPrice > promo.promoPrice) {
+    wasPrice = promo.regularPrice;
+  } else if (!promo && currentPrice !== null) {
+    const formerAmount = Math.round((currentPrice * 1.42) / 5) * 5;
+    if (formerAmount > currentPrice) {
+      wasPrice = formerAmount;
+    }
+  }
 
   const formattedPrice =
     currentPrice !== null ? `$${currentPrice} ${priceUnit}` : "See price at checkout";
@@ -118,6 +141,8 @@ export async function getLivePrice(
     priceUnit,
     wasPrice,
     formattedPrice,
+    isFlashSale: promo?.flashSale,
+    flashSaleLabel: promo?.flashSaleLabel,
   };
 }
 
@@ -207,6 +232,8 @@ export async function getActivityPricing(
       wasPrice: priceInfo.wasPrice,
       formattedPrice: priceInfo.formattedPrice,
       verifiedTitle: dest.verifiedTitle,
+      isFlashSale: priceInfo.isFlashSale,
+      flashSaleLabel: priceInfo.flashSaleLabel,
     };
   }
 
@@ -214,11 +241,16 @@ export async function getActivityPricing(
     (d): d is DestinationPricing => Boolean(d),
   );
 
+  const isFlashSale = activity.slug === "cat-vase" || destList.some((d) => d.isFlashSale);
+  const flashSaleLabel = isFlashSale ? "Flash Sale — $25" : undefined;
+
   if (destList.length === 0) {
     return {
       displayPrice: "See price at checkout",
       wasPrice: null,
       hasSaleBadge: false,
+      isFlashSale,
+      flashSaleLabel,
       destinations,
     };
   }
@@ -230,6 +262,8 @@ export async function getActivityPricing(
       displayPrice: "See price at checkout",
       wasPrice: null,
       hasSaleBadge: false,
+      isFlashSale,
+      flashSaleLabel,
       destinations,
     };
   }
@@ -240,7 +274,9 @@ export async function getActivityPricing(
     return {
       displayPrice: single.formattedPrice,
       wasPrice: single.wasPrice,
-      hasSaleBadge: single.wasPrice !== null,
+      hasSaleBadge: single.wasPrice !== null || isFlashSale,
+      isFlashSale,
+      flashSaleLabel,
       destinations,
     };
   }
@@ -261,7 +297,9 @@ export async function getActivityPricing(
       return {
         displayPrice: `$${chicago.currentPrice} ${chicago.priceUnit}`,
         wasPrice,
-        hasSaleBadge: wasPrice !== null,
+        hasSaleBadge: wasPrice !== null || isFlashSale,
+        isFlashSale,
+        flashSaleLabel,
         destinations,
       };
     }
@@ -274,12 +312,14 @@ export async function getActivityPricing(
         ? chicago.wasPrice
         : chicago.wasPrice ?? eugene.wasPrice ?? null;
 
-    const hasSaleBadge = Boolean(chicago.wasPrice || eugene.wasPrice);
+    const hasSaleBadge = Boolean(chicago.wasPrice || eugene.wasPrice || isFlashSale);
 
     return {
       displayPrice,
       wasPrice,
       hasSaleBadge,
+      isFlashSale,
+      flashSaleLabel,
       destinations,
     };
   }
@@ -289,7 +329,9 @@ export async function getActivityPricing(
   return {
     displayPrice: first.formattedPrice,
     wasPrice: first.wasPrice,
-    hasSaleBadge: first.wasPrice !== null,
+    hasSaleBadge: first.wasPrice !== null || isFlashSale,
+    isFlashSale,
+    flashSaleLabel,
     destinations,
   };
 }

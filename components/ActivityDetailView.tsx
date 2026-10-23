@@ -105,14 +105,18 @@ export default function ActivityDetailView({
               <div className="flex flex-wrap items-center gap-2">
                 <TagPill>{activity.categoryIcon} {activity.categoryLabel}</TagPill>
                 <TagPill>{activity.locationsOffered}</TagPill>
-                {pricing.hasSaleBadge && (
+                {pricing.isFlashSale || activity.slug === "cat-vase" ? (
+                  <span className="rounded-full border border-amber-400/40 bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-200">
+                    ⚡ {pricing.flashSaleLabel || "Flash Sale — $25"}
+                  </span>
+                ) : pricing.hasSaleBadge ? (
                   <span className="rounded-full border border-amber-400/40 bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-200">
                     ⚡ Limited-Time Sale
                   </span>
-                )}
-                {activity.adultThemed && (
+                ) : null}
+                {(activity.minimumAge === 21 || activity.adultThemed) && (
                   <span className="rounded-full border border-red-500/40 bg-red-500/20 px-3 py-1 text-xs font-bold text-red-200">
-                    🔞 18+ Adults Only
+                    🔞 21+ Adults Only
                   </span>
                 )}
                 {activity.beginnerFriendly && <TagPill>✨ Beginner Friendly</TagPill>}
@@ -554,6 +558,8 @@ export default function ActivityDetailView({
         activitySlug={activity.slug}
         locations={pricing.destinations}
         variants={pricing.variants}
+        minimumAge={activity.minimumAge}
+        isAdultThemed={activity.adultThemed}
       />
     </>
   );

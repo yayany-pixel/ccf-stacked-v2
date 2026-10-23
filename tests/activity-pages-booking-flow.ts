@@ -43,7 +43,8 @@ function testActivityPagesAndBookingFlow() {
     "charcuterie-board",
     "date-night-watercolor",
     "vip-date-night-painting",
-    "matcha-bowl"
+    "matcha-bowl",
+    "cup-creations"
   ];
 
   for (const slug of dualCitySlugs) {

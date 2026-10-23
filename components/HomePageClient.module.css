@@ -88,6 +88,44 @@
   padding: 2px 8px;
   letter-spacing: .2px;
 }
+.badgeAge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  letter-spacing: .2px;
+}
+.saleCalloutRow {
+  display: flex;
+  justify-content: center;
+  margin: -8px 0 16px;
+}
+.saleLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #9a3412;
+  background: #ffedd5;
+  border: 1px solid #fed7aa;
+  border-radius: 9999px;
+  padding: 6px 16px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.saleLink:hover {
+  background: #fed7aa;
+  color: #7c2d12;
+  transform: translateY(-1px);
+}
 .badgeAvailability {
   display: inline-flex;
   align-items: center;
