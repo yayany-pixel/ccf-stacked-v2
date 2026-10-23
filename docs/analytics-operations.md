@@ -1,3 +1,5 @@
+> Implementation update (23 October 2026): see [Advertising activation](advertising-activation.md) for the current code and required configuration. Historical deployment and environment statements below are not a current credential audit.
+
 # Analytics operation and production handoff
 
 Current policy (9 October 2026): the automatic privacy banner has been removed. After a successful saved-preference lookup, visitors without a saved choice get Google Analytics enabled and advertising disabled. Saved choices and browser Global Privacy Control / Do Not Track signals take precedence. Failed lookups keep optional tracking off. Visitors can change choices in the footer’s Privacy preferences dialog; choices continue to use the existing Netlify Database storage. Google Ads and Meta still require advertising permission. This policy supersedes the historical consent/default notes below.

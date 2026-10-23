@@ -16,6 +16,9 @@ export interface MetaCampaignInsight {
   cpm: number;
   ctr: number;
   conversions: number;
+  leads?: number;
+  purchases?: number;
+  checkouts?: number;
   dateStart?: string;
   dateStop?: string;
 }
@@ -365,35 +368,11 @@ export function analyzeCampaignPerformance(
   const averageCpc = totalClicks > 0 ? Number((totalSpend / totalClicks).toFixed(2)) : 0;
   const averageCtr = totalImpressions > 0 ? Number(((totalClicks / totalImpressions) * 100).toFixed(2)) : 0;
 
-  // Learning Phase Evaluation: Meta requires ~50 conversions per week per ad set
-  let learningStatus: OptimizationReport["learningStatus"] = "LEARNING";
-  let learningSummary = "";
-
-  if (totalImpressions === 0 && totalSpend === 0) {
-    learningStatus = "INSUFFICIENT_DATA";
-    learningSummary = "No ad impressions or spend recorded yet. Launch campaigns using CCF_AD_BLUEPRINTS to begin data collection.";
-  } else if (totalConversions < 10) {
-    learningStatus = "LEARNING_LIMITED";
-    learningSummary = `Only ${totalConversions} conversion(s) recorded. Low conversion volume limits Meta's machine learning. Ensure ad set is optimized for 'InitiateCheckout' instead of 'Purchase' to gather more signal.`;
-    recommendations.push({
-      priority: "HIGH",
-      action: "SWITCH_OPTIMIZATION_EVENT",
-      target: "All Ad Sets",
-      reason: "Conversion volume is too low for Purchase optimization on a limited daily budget. Switch ad set goal to InitiateCheckout to generate 5-10x more signals.",
-    });
-  } else if (totalConversions >= 50) {
-    learningStatus = "OPTIMIZED";
-    learningSummary = `50+ conversions achieved (${totalConversions} recorded). Meta's learning algorithm is fully trained! You can now transition the campaign objective directly to Purchase and safely scale budget.`;
-  } else {
-    learningStatus = "LEARNING";
-    learningSummary = `Currently in Learning Phase (${totalConversions}/50 conversions towards exit). Do not make large budget or targeting changes right now; allow the algorithm to stabilize.`;
-    recommendations.push({
-      priority: "LOW",
-      action: "CONTINUE_LEARNING",
-      target: "Active Campaigns",
-      reason: "Campaign is progressing through initial learning. Keep daily budget steady for 3-5 more days.",
-    });
-  }
+  // Campaign totals cannot establish Meta's per-ad-set learning phase.
+  const learningStatus: OptimizationReport["learningStatus"] = "INSUFFICIENT_DATA";
+  const learningSummary = totalSpend === 0
+    ? "No spend recorded. AI assessment is awaiting delivery data."
+    : "AI assessment uses campaign totals only. Meta learning status is unavailable; inspect ad-set delivery status in Ads Manager.";
 
   return {
     totalSpend: Number(totalSpend.toFixed(2)),
@@ -407,6 +386,43 @@ export function analyzeCampaignPerformance(
     campaignEvaluations: evaluations,
     recommendations,
   };
+}
+
+export function finiteMetric(value: unknown): number {
+  const n = Number(value);
+  return Number.isFinite(n) && n >= 0 ? n : 0;
+}
+
+export class MetaReportingError extends Error {
+  constructor(public readonly reason: "permission" | "unavailable") {
+    super(`Meta reporting ${reason}`);
+  }
+}
+
+async function fetchMetaPages(url: URL, accessToken: string): Promise<any[]> {
+  const rows: any[] = [];
+  const cursors = new Set<string>();
+  url.searchParams.set("limit", "100");
+  for (let page = 0; page < 50; page++) {
+    const response = await fetch(url.toString(), {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      cache: "no-store", signal: AbortSignal.timeout(10000),
+    });
+    const json = await response.json().catch(() => null);
+    if (!response.ok || json?.error) {
+      const permission = [10, 190, 200, 294].includes(json?.error?.code) || [401, 403].includes(response.status);
+      throw new MetaReportingError(permission ? "permission" : "unavailable");
+    }
+    if (!Array.isArray(json?.data)) throw new MetaReportingError("unavailable");
+    rows.push(...json.data);
+    if (!json.paging?.next) return rows;
+    const cursor = json.paging?.cursors?.after;
+    if (typeof cursor !== "string" || cursors.has(cursor)) throw new MetaReportingError("unavailable");
+    cursors.add(cursor);
+    // Rebuild trusted URL instead of following a credential-bearing paging URL.
+    url.searchParams.set("after", cursor);
+  }
+  throw new MetaReportingError("unavailable"); // Never display a truncated total.
 }
 
 /**
@@ -439,37 +455,36 @@ export async function fetchMetaCampaignInsights(
   url.searchParams.set("fields", fields);
   url.searchParams.set("date_preset", datePreset);
 
-  const response = await fetch(url.toString(), { headers: { Authorization: `Bearer ${accessToken}` }, signal: AbortSignal.timeout(10000) });
-  if (!response.ok) {
-    throw new Error(`Meta API error (${response.status})`);
-  }
-
-  const json = await response.json();
-  const data = json.data || [];
+  const data = await fetchMetaPages(url, accessToken);
 
   return data.map((item: any) => {
     const actions: Array<{ action_type: string; value: string }> = item.actions || [];
-    const purchaseOrLead = actions.find(
-      a =>
-        a.action_type === "omni_purchase" ||
-        a.action_type === "lead" ||
-        a.action_type === "purchase" ||
-        a.action_type === "initiate_checkout"
-    );
-    const conversions = purchaseOrLead ? parseFloat(purchaseOrLead.value) : 0;
+    const count = (...names: string[]) => {
+      // Aliases overlap; choose one canonical count, never sum aliases.
+      for (const name of names) {
+        const value = actions.find(a => a.action_type === name)?.value;
+        if (value !== undefined) return finiteMetric(value);
+      }
+      return 0;
+    };
+    const purchases = count("omni_purchase", "purchase", "offsite_conversion.fb_pixel_purchase");
+    const leads = count("lead", "onsite_conversion.lead_grouped", "offsite_conversion.fb_pixel_lead");
+    const checkouts = count("omni_initiated_checkout", "initiate_checkout", "offsite_conversion.fb_pixel_initiate_checkout");
+    // Primary business outcome only; checkout is intent, never a purchase/lead.
+    const conversions = item.objective === "OUTCOME_LEADS" ? leads : purchases;
 
     return {
       campaignId: item.campaign_id,
       campaignName: item.campaign_name,
-      status: item.status || "ACTIVE",
+      status: item.status || "UNKNOWN",
       objective: item.objective || "UNKNOWN",
-      spend: parseFloat(item.spend || "0"),
-      impressions: parseInt(item.impressions || "0", 10),
-      clicks: parseInt(item.clicks || "0", 10),
-      cpc: parseFloat(item.cpc || "0"),
-      cpm: parseFloat(item.cpm || "0"),
-      ctr: parseFloat(item.ctr || "0"),
-      conversions,
+      spend: finiteMetric(item.spend),
+      impressions: finiteMetric(item.impressions),
+      clicks: finiteMetric(item.clicks),
+      cpc: finiteMetric(item.cpc),
+      cpm: finiteMetric(item.cpm),
+      ctr: finiteMetric(item.ctr),
+      conversions, leads, purchases, checkouts,
       dateStart: item.date_start,
       dateStop: item.date_stop
     };
@@ -489,13 +504,7 @@ export async function fetchMetaCampaigns(
   url.searchParams.set("fields", fields);
   url.searchParams.set("limit", "100");
 
-  const response = await fetch(url.toString(), { headers: { Authorization: `Bearer ${accessToken}` }, signal: AbortSignal.timeout(10000) });
-  if (!response.ok) {
-    throw new Error(`Meta API error (${response.status})`);
-  }
-
-  const json = await response.json();
-  return json.data || [];
+  return fetchMetaPages(url, accessToken);
 }
 
 /**
