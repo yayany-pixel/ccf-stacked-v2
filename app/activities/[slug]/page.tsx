@@ -60,7 +60,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function ActivityPage({ params }: { params: { slug: string } }) {
+export default async function ActivityPage({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams?: { city?: string; location?: string };
+}) {
   const activity = getActivityDetailBySlug(params.slug);
 
   if (!activity) {
@@ -209,6 +215,7 @@ export default async function ActivityPage({ params }: { params: { slug: string 
           relatedActivities={relatedActivities}
           relatedGuides={getWorkshopGuidesForActivity(activity.slug).map(({ slug, title, description }) => ({ slug, title, description }))}
           relatedLocalGuides={getLocalDiscoveryGuidesForActivity(activity.slug).map(({ slug, title, description, city }) => ({ slug, title, description, city }))}
+          initialCity={(searchParams?.city || searchParams?.location) === "eugene" ? "eugene" : (searchParams?.city || searchParams?.location) === "chicago" ? "chicago" : undefined}
         />
       </main>
     </>
