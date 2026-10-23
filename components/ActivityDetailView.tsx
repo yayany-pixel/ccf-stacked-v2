@@ -36,12 +36,14 @@ export default function ActivityDetailView({
   relatedActivities = [],
   relatedGuides = [],
   relatedLocalGuides = [],
+  initialCity,
 }: {
   activity: ActivityDetail;
   pricing: ActivityPricing;
   relatedActivities?: RelatedActivityWithPrice[];
   relatedGuides?: RelatedGuideCard[];
   relatedLocalGuides?: RelatedLocalGuideCard[];
+  initialCity?: CityParam;
 }) {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
@@ -53,7 +55,9 @@ export default function ActivityDetailView({
   }, [pricing.destinations]);
 
   const [preferredCity, setPreferredCity] = useState<CityParam>(
-    availableCities[0] ?? "chicago",
+    initialCity && availableCities.includes(initialCity)
+      ? initialCity
+      : (availableCities[0] ?? "chicago"),
   );
 
   useEffect(() => {
@@ -80,9 +84,11 @@ export default function ActivityDetailView({
     } catch {}
   }, [availableCities]);
 
+  // Server-render links for the city in the URL so search crawlers and users
+  // receive Eugene-only content immediately, without waiting for hydration.
   const visibleLocalGuides = relatedLocalGuides
     .filter((guide) => guide.city === null || guide.city === preferredCity)
-    .slice(0, 3);
+    .slice(0, 6);
 
   const giftContext = useMemo(
     () =>
