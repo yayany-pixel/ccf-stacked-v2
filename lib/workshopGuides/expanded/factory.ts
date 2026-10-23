@@ -103,10 +103,17 @@ export function buildActivityEditorialGuides(series: ActivityEditorialSeries): W
   return series.ideas.map((idea, index) => {
     const noteA = series.notes[index];
     const noteB = series.notes[(index + 2) % 5];
+    const uniqueDetail = idea.sections[0].text.split(/[.!?]/)[0].trim();
+    const descriptionDraft = idea.description.length >= 105
+      ? idea.description
+      : `${idea.description} ${uniqueDetail}.`;
+    const description = descriptionDraft.length > 158
+      ? `${descriptionDraft.slice(0, 154).replace(/\\s+\\S*$/, "").trim()}…`
+      : descriptionDraft;
     return {
       slug: idea.slug,
       title: idea.title,
-      description: idea.description,
+      description,
       activitySlug: series.activitySlug,
       city: series.city,
       category: series.category,
