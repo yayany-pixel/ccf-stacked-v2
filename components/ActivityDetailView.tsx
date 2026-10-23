@@ -26,16 +26,24 @@ export type RelatedGuideCard = {
   description: string;
 };
 
+export type RelatedLocalGuideCard = RelatedGuideCard & {
+  city: "chicago" | "eugene" | null;
+};
+
 export default function ActivityDetailView({
   activity,
   pricing,
   relatedActivities = [],
   relatedGuides = [],
+  relatedLocalGuides = [],
+  initialCity,
 }: {
   activity: ActivityDetail;
   pricing: ActivityPricing;
   relatedActivities?: RelatedActivityWithPrice[];
   relatedGuides?: RelatedGuideCard[];
+  relatedLocalGuides?: RelatedLocalGuideCard[];
+  initialCity?: CityParam;
 }) {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
@@ -47,7 +55,9 @@ export default function ActivityDetailView({
   }, [pricing.destinations]);
 
   const [preferredCity, setPreferredCity] = useState<CityParam>(
-    availableCities[0] ?? "chicago",
+    initialCity && availableCities.includes(initialCity)
+      ? initialCity
+      : (availableCities[0] ?? "chicago"),
   );
 
   useEffect(() => {
@@ -73,6 +83,12 @@ export default function ActivityDetailView({
       }
     } catch {}
   }, [availableCities]);
+
+  // City is derived on the server from ?city= for the initial HTML, so search
+  // crawlers and visitors see the correct links even without JavaScript.
+  const shownLocalGuides = relatedLocalGuides
+    .filter((guide) => guide.city === null || guide.city === preferredCity)
+    .slice(0, 4);
 
   const giftContext = useMemo(
     () =>
@@ -397,6 +413,34 @@ export default function ActivityDetailView({
                       <h3 className="font-serif text-lg font-bold leading-snug text-white group-hover:text-purple-200">{guide.title}</h3>
                       <p className="mt-2 line-clamp-3 text-sm leading-6 text-white/70">{guide.description}</p>
                       <span className="mt-4 inline-block text-sm font-semibold text-purple-300 group-hover:text-purple-200">Read guide →</span>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Local discovery articles, filtered to the studio city the customer chose. */}
+            {shownLocalGuides.length > 0 && (
+              <section aria-labelledby="local-guide-heading" className="space-y-5">
+                <div className="border-b border-white/10 pb-4">
+                  <h2 id="local-guide-heading" className="font-serif text-2xl font-bold text-white sm:text-3xl">
+                    Plan Your {preferredCity === "eugene" ? "Eugene" : "Chicago"} Outing
+                  </h2>
+                  <p className="mt-2 text-sm leading-7 text-white/70">
+                    Useful local ideas, food, and event planning around the {preferredCity === "eugene" ? "Eugene, Oregon" : "Pilsen, Chicago"} studio.
+                  </p>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {shownLocalGuides.map((guide) => (
+                    <Link
+                      key={guide.slug}
+                      href={`/blog/${guide.slug}`}
+                      className="group block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-purple-400/40 hover:bg-white/10"
+                    >
+                      <p className="text-xs font-semibold uppercase tracking-wider text-purple-200">{guide.city === "eugene" ? "Eugene Guide" : guide.city === "chicago" ? "Chicago Guide" : "Chicago & Eugene"}</p>
+                      <h3 className="mt-2 font-serif text-lg font-bold leading-snug text-white group-hover:text-purple-200">{guide.title}</h3>
+                      <p className="mt-2 line-clamp-3 text-sm leading-6 text-white/70">{guide.description}</p>
+                      <span className="mt-3 inline-block text-sm font-semibold text-purple-200">Read Local Guide →</span>
                     </Link>
                   ))}
                 </div>
