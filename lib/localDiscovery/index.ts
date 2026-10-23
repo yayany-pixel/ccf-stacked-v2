@@ -6,6 +6,7 @@ import { chicagoDiscoveryPartOne } from "./chicagoOne";
 import { chicagoDiscoveryPartTwo } from "./chicagoTwo";
 import { eugeneDiscovery } from "./eugene";
 import { holidayDiscovery } from "./holiday";
+import { correctedEugeneDateNightGuide } from "./legacyEugene";
 
 export type { DiscoveryCity, DiscoveryGuide, DiscoveryLink, DiscoverySection, DiscoveryCTA } from "./types";
 
@@ -23,7 +24,7 @@ if (localDiscoveryGuides.length !== 10 || bySlug.size !== 10) {
 }
 
 export function getLocalDiscoveryGuideBySlug(slug: string): DiscoveryGuide | undefined {
-  return bySlug.get(slug);
+  return bySlug.get(slug) ?? (slug === "eugene-date-night-ideas" ? correctedEugeneDateNightGuide : undefined);
 }
 
 export function getLocalDiscoveryGuidesForActivity(slug: string): DiscoveryGuide[] {
