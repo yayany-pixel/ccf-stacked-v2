@@ -18,6 +18,56 @@ export default function WorkshopGuidePage({ post, guide }: Props) {
   const author = getAuthorBySlug(post.authorSlug);
   const activityHref = `/activities/${guide.activitySlug}${guide.city ? `?city=${guide.city}` : ""}`;
   const activityName = activity?.title || "this creative workshop";
+  const isProgramHub = ["paper-pigment", "painting", "handbuilding", "parent-and-me"].includes(guide.activitySlug);
+  const action = guide.activitySlug === "glass-blowing"
+    ? {
+        eyebrow: "Coming Soon",
+        headline: "Glass Blowing Has Not Launched Yet",
+        description: "The glass-blowing activity is marked coming soon. Visit the official page for any launch or waitlist updates, not an immediate booking. Glass fusion is a separate technique.",
+        button: "Check Launch Status →",
+        bottomHeading: "Interested in Glass Blowing?",
+        bottomDescription: "This workshop is not currently presented as bookable. Check the activity page for a verified launch date or waitlist information.",
+        sidebarDescription: "Coming soon: do not assume class dates or instant reservations are available.",
+      }
+    : guide.activitySlug === "private-parties"
+    ? {
+        eyebrow: "Group Events",
+        headline: "Plan a Creative Private Event",
+        description: "Share your city, group size, occasion and preferred dates so the studio can confirm a suitable format and provide an individual quote.",
+        button: "Request Event Details →",
+        bottomHeading: "Planning a Group Outing?",
+        bottomDescription: "A private-event inquiry is not a confirmed booking. Tell the studio what you need and review its actual availability and quote.",
+        sidebarDescription: "Custom events require a confirmed date, activity, headcount and price.",
+      }
+    : guide.activitySlug === "gift-cards"
+    ? {
+        eyebrow: "Creative Gifts",
+        headline: "Give a Hands-On Experience",
+        description: "Explore gift card options, redemption rules and actual workshop availability. Confirm location eligibility and any optional pottery-finishing charges.",
+        button: "Explore Gift Card Options →",
+        bottomHeading: "Make the Gift Personal",
+        bottomDescription: "Choose a gift card amount informed by the recipient's interests and current class prices, then check the official checkout terms.",
+        sidebarDescription: "Review gift card conditions and current workshop options before purchasing.",
+      }
+    : isProgramHub
+    ? {
+        eyebrow: "Explore the Program",
+        headline: "Find the Right Creative Workshop",
+        description: "This activity is a broader workshop category. Choose a specific scheduled project and the correct studio rather than assuming every class runs in both cities.",
+        button: "Explore Related Workshops →",
+        bottomHeading: "Choose an Available Session",
+        bottomDescription: "Visit this workshop category, select a project and review the actual dates, materials and admission terms.",
+        sidebarDescription: "This is a collection of creative formats. Actual sessions and prices vary.",
+      }
+    : {
+        eyebrow: "Learn It in the Studio",
+        headline: "Make Something Yourself at Color Cocktail Factory",
+        description: `Explore ${activityName.toLowerCase()}, select your studio or online session, and review current ticket and finishing terms before booking.`,
+        button: `Explore ${activityName} →`,
+        bottomHeading: "Ready to Try It Yourself?",
+        bottomDescription: `Visit the ${activityName} activity page to select an available session and review what is included in the current class.`,
+        sidebarDescription: "Find actual dates and pricing for your chosen studio. Pottery finishing may be optional.",
+      };
   const publishedLabel = new Date(`${post.publishedAt}T12:00:00Z`).toLocaleDateString("en-US", {
     month: "long", day: "numeric", year: "numeric", timeZone: "UTC",
   });
@@ -65,16 +115,15 @@ export default function WorkshopGuidePage({ post, guide }: Props) {
             </div>
 
             <div className="my-9 rounded-2xl border border-purple-400/25 bg-purple-500/10 p-6">
-              <p className="text-sm font-semibold uppercase tracking-wider text-purple-200">Learn it in the studio</p>
+              <p className="text-sm font-semibold uppercase tracking-wider text-purple-200">{action.eyebrow}</p>
               <p className="mt-2 font-serif text-xl font-semibold text-white">
-                Make something yourself at Color Cocktail Factory
+                {action.headline}
               </p>
               <p className="mt-2 text-sm leading-7 text-white/75">
-                Explore {activityName.toLowerCase()}, see which studios are offering sessions,
-                and review current ticket and finishing details before you book.
+                {action.description}
               </p>
               <Link href={activityHref} className="mt-4 inline-flex rounded-full bg-purple-600 px-5 py-3 text-sm font-semibold text-white hover:bg-purple-500">
-                Explore {activityName} →
+                {action.button}
               </Link>
             </div>
 
@@ -109,13 +158,12 @@ export default function WorkshopGuidePage({ post, guide }: Props) {
             </section>
 
             <section className="mt-10 rounded-3xl border border-pink-400/20 bg-gradient-to-r from-pink-900/40 to-purple-900/40 p-7 sm:p-9">
-              <h2 className="font-serif text-2xl font-bold text-white">Ready to try it yourself?</h2>
+              <h2 className="font-serif text-2xl font-bold text-white">{action.bottomHeading}</h2>
               <p className="mt-3 leading-7 text-white/80">
-                Visit the {activityName} activity page to choose your city, compare available dates,
-                and review what is included in the current class.
+                {action.bottomDescription}
               </p>
               <Link href={activityHref} className="mt-5 inline-flex rounded-full bg-pink-600 px-6 py-3 text-sm font-semibold text-white hover:bg-pink-500">
-                See class details and dates →
+                {action.button}
               </Link>
             </section>
           </article>
@@ -125,7 +173,7 @@ export default function WorkshopGuidePage({ post, guide }: Props) {
               <p className="text-xs font-semibold uppercase tracking-wider text-purple-200">Related workshop</p>
               <h2 className="mt-2 font-serif text-xl font-bold text-white">{activityName}</h2>
               <p className="mt-2 text-sm leading-6 text-white/70">
-                Find actual dates and pricing for your chosen studio. Pottery finishing may be optional.
+                {action.sidebarDescription}
               </p>
               <Link href={activityHref} className="mt-5 block rounded-xl bg-purple-600 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-purple-500">
                 Visit activity page →
