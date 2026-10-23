@@ -444,6 +444,13 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
         </section>}
         <section className={styles.enrichment} aria-labelledby="before-visit">
           <p className={styles.eyebrow}>A few useful details</p><h2 id="before-visit">Before you visit {studio.label}</h2>
+          {city === "chicago" && (
+            <details>
+              <summary>Where should we eat before or after our workshop in Pilsen?</summary>
+              <p>Our Chicago studio is at 1142 W. 18th Street, surrounded by Pilsen’s restaurants, cafés, and bakeries. Whether you’re looking for tacos, coffee, a quick bite, or dinner after making art, our neighborhood guide has ideas to explore. Check each place’s current hours and leave enough time to arrive for your class.</p>
+              <Link href="/blog/pilsen-student-guide">Explore our Pilsen food and neighborhood guide →</Link>
+            </details>
+          )}
           <details><summary>Where do I go, and where can I park?</summary><p>{studio.address}. Check local parking signs and allow time to arrive. For parking or accessibility guidance, contact the studio before your visit.</p><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(studio.address)}`} target="_blank" rel="noopener noreferrer">Open studio map →</a></details>
           <details><summary>What’s included, and what do I take home?</summary><p>Open Workshop details on a card for the class listing. Materials, tools, finishing fees, and pickup arrangements vary. Pottery may need firing and a later pickup; a finished wheel-thrown piece is not guaranteed.</p></details>
           <details><summary>Can I bring drinks?</summary><p>Look for BYOB in the workshop details and confirm your class’s rules. Alcohol is for guests 21+ with valid ID. Bring your own cups, ice, and mixers, and keep drinks away from art-making surfaces.</p></details>
