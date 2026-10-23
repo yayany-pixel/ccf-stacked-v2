@@ -10,6 +10,7 @@ import {
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { getCatalog } from "@/lib/askccf/catalog";
 import { getActivityPricing } from "@/lib/pricing";
+import { getWorkshopGuidesForActivity } from "@/lib/workshopGuides";
 
 export const revalidate = 120;
 
@@ -205,6 +206,7 @@ export default async function ActivityPage({ params }: { params: { slug: string 
           activity={activity}
           pricing={pricing}
           relatedActivities={relatedActivities}
+          relatedGuides={getWorkshopGuidesForActivity(activity.slug).map(({ slug, title, description }) => ({ slug, title, description }))}
         />
       </main>
     </>
