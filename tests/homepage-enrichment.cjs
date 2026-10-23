@@ -22,6 +22,11 @@ const fixture = buildHomepageData(ACTIVITY_MANIFEST.map(a => normalize({id:a.app
       const errors=[];page.on('pageerror',error=>errors.push(error.message));
       await page.goto(base+'/?location=chicago',{timeout:90000});
       await page.waitForFunction(()=>!document.querySelector('button[aria-pressed]').disabled);
+      const beforeVisitFaq = page.locator('section[aria-labelledby="before-visit"] details');
+      assert.equal(await beforeVisitFaq.first().locator('summary').innerText(), 'Where should we eat before or after our workshop in Pilsen?');
+      await beforeVisitFaq.first().locator('summary').click();
+      assert.equal(await beforeVisitFaq.first().locator('a').getAttribute('href'), '/blog/pilsen-student-guide');
+      assert.ok((await beforeVisitFaq.first().innerText()).includes('1142 W. 18th Street'));
       await page.getByRole('button',{name:'Glass & lamps',exact:true}).click();
       const lamp=page.locator('[data-activity="chicago-turkish-lamp"]');
       await lamp.locator('summary').click();
@@ -40,6 +45,8 @@ const fixture = buildHomepageData(ACTIVITY_MANIFEST.map(a => normalize({id:a.app
       assert.ok((await page.locator('[data-activity]').allTextContents()).every(text=>text.includes('Live Online')));
       await page.getByRole('button',{name:'Eugene',exact:true}).click();
       assert.equal(await page.getByRole('button',{name:'All workshops',exact:true}).getAttribute('aria-pressed'),'true');
+      assert.equal(await beforeVisitFaq.first().locator('summary').innerText(), 'Where do I go, and where can I park?');
+      assert.equal(await page.getByText('Where should we eat before or after our workshop in Pilsen?', { exact:true }).count(), 0);
       await page.getByText('Where do I go, and where can I park?',{exact:true}).click();
       assert.ok((await page.locator('main').innerText()).includes('3295 Cross Street'));
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
