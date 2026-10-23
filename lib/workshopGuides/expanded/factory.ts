@@ -108,7 +108,7 @@ export function buildActivityEditorialGuides(series: ActivityEditorialSeries): W
       ? idea.description
       : `${idea.description} ${uniqueDetail}.`;
     const description = descriptionDraft.length > 158
-      ? `${descriptionDraft.slice(0, 154).replace(/\\s+\\S*$/, "").trim()}…`
+      ? `${descriptionDraft.slice(0, 154).replace(/\s+\S*$/, "").trim()}…`
       : descriptionDraft;
     return {
       slug: idea.slug,
