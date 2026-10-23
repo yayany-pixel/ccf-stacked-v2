@@ -149,12 +149,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "eugene-date-night-ideas",
     title: "10 Romantic Date Night Ideas in Eugene, Oregon (Creative & Unique)",
+    seoTitle: "10 Creative Date Night Ideas in Eugene, Oregon",
     description:
-      "Explore the best creative date experiences in Eugene - from pottery workshops to glass art. Perfect for couples seeking unique, hands-on activities!",
+      "Discover ten authentic Eugene, Oregon date ideas with correct Cross Street studio details, local museums, and current Eugene-only workshop routes.",
     authorSlug: DEFAULT_AUTHOR_SLUG,
     author: "Yahya Moosavi",
     publishedAt: "2025-01-08",
-    updatedAt: "2025-01-08",
+    updatedAt: "2026-10-23",
     date: "2025-01-08",
     category: "Date Night Ideas",
     readTime: "6 min read",
@@ -172,13 +173,13 @@ export const blogPosts: BlogPost[] = [
     ],
     city: "eugene",
     relatedActivitySlugs: [
-      "date-night-wheel",
-      "beginner-wheel",
-      "turkish-lamp",
-      "glass-fusion",
-      "bonsai",
+      "date-night-wheel", "beginner-wheel", "cup-creations", "date-night-terrarium", "vip-date-night-bonsai", "date-night-watercolor",
     ],
-    relatedPostSlugs: ["pottery-101-beginners-guide"],
+    relatedPostSlugs: [
+      "eugene-bachelorette-party-ideas-8-to-20",
+      "rainy-day-things-to-do-eugene-oregon",
+      "university-of-oregon-visiting-student-eugene-weekend",
+    ],
   },
   {
     slug: "pilsen-student-guide",
