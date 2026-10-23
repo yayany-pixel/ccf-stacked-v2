@@ -51,7 +51,7 @@ export default function BlogPage() {
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-8 md:grid-cols-2">
             {posts.map((post, idx) => (
-              <Reveal key={post.slug} delay={idx * 100} variant="fade-up">
+              <Reveal key={post.slug} delay={(idx % 6) * 60} variant="fade-up">
                 <Link href={`/blog/${post.slug}`}>
                   <GlassCard interactive className="h-full transition-all hover:scale-[1.02]">
                     <div className="flex h-full flex-col p-6">
@@ -83,20 +83,22 @@ export default function BlogPage() {
             ))}
           </div>
 
-          {/* Coming Soon Tease */}
+          {/* Help readers move from editorial discovery to real workshops */}
           <Reveal delay={300} variant="fade-up">
             <div className="mt-12 text-center">
               <GlassCard>
                 <div className="p-8">
-                  <h3 className="font-serif text-xl font-semibold">More Articles Coming Soon!</h3>
+                  <h3 className="font-serif text-xl font-semibold">Find Your Next Creative Workshop</h3>
                   <p className="mt-2 text-white/70">
-                    Subscribe to our newsletter to get notified when we publish new pottery tips, creative ideas, and workshop guides.
+                    Explore more than thirty step-by-step project ideas and workshop guides, then choose a class in Chicago or Eugene to try the techniques yourself.
                   </p>
-                  <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-white/60">
-                    <span>Coming up:</span>
-                    <span className="rounded-full border border-white/20 bg-white/5 px-3 py-1">Glazing 101</span>
-                    <span className="rounded-full border border-white/20 bg-white/5 px-3 py-1">Eugene Date Spots</span>
-                    <span className="rounded-full border border-white/20 bg-white/5 px-3 py-1">Handbuilding Tips</span>
+                  <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                    <Link href="/activities" className="rounded-full bg-purple-600 px-6 py-3 text-sm font-semibold text-white hover:bg-purple-500">
+                      Browse All Workshops →
+                    </Link>
+                    <Link href="/private-events" className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">
+                      Plan a Creative Group Outing →
+                    </Link>
                   </div>
                 </div>
               </GlassCard>
