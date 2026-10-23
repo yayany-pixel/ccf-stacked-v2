@@ -27,6 +27,10 @@ export function getLocalFeatureBySlug(slug: string): LocalFeature | undefined {
   return featuresBySlug.get(slug);
 }
 
+export function getLocalFeaturesForActivity(activitySlug: string): LocalFeature[] {
+  return localFeatures.filter(feature => feature.relatedActivitySlugs.includes(activitySlug));
+}
+
 export const localFeaturePosts: BlogPost[] = localFeatures.map(feature => {
   const words = localFeatureWordCount(feature);
   return {
