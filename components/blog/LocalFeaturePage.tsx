@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import type { BlogPost } from "@/lib/blogPosts";
 import type { LocalFeature } from "@/lib/localFeatures";
 import { getAuthorBySlug } from "@/lib/authors";
@@ -8,7 +9,7 @@ import RelatedArticles from "@/components/blog/RelatedArticles";
 
 type Props = { post: BlogPost; feature: LocalFeature };
 
-function ResourceLink({ url, children }: { url: string; children: React.ReactNode }) {
+function ResourceLink({ url, children }: { url: string; children: ReactNode }) {
   if (url.startsWith("https://colorcocktailfactory.com/")) {
     const internal = url.replace("https://colorcocktailfactory.com", "");
     return <Link href={internal} className="font-semibold text-purple-200 underline decoration-purple-300/40 underline-offset-4 hover:text-white">{children}</Link>;
