@@ -1,4 +1,5 @@
 import { DEFAULT_AUTHOR_SLUG, getAuthorBySlug } from "./authors";
+import { workshopGuidePosts } from "./workshopGuides";
 
 export type BlogCity = "chicago" | "eugene" | null;
 
@@ -79,6 +80,7 @@ export function getPostUpdatedAt(post: BlogPost): string {
  * getPostImage() will fall back to DEFAULT_BLOG_IMAGE (/og-image.jpg).
  */
 export const blogPosts: BlogPost[] = [
+  ...workshopGuidePosts,
   {
     slug: "pottery-101-beginners-guide",
     title: "Pottery 101: A Beginner's Guide to Getting Started with Ceramics",

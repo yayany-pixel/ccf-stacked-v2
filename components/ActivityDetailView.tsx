@@ -20,14 +20,22 @@ export type RelatedActivityWithPrice = ActivityDetail & {
   hasSaleBadge?: boolean;
 };
 
+export type RelatedGuideCard = {
+  slug: string;
+  title: string;
+  description: string;
+};
+
 export default function ActivityDetailView({
   activity,
   pricing,
   relatedActivities = [],
+  relatedGuides = [],
 }: {
   activity: ActivityDetail;
   pricing: ActivityPricing;
   relatedActivities?: RelatedActivityWithPrice[];
+  relatedGuides?: RelatedGuideCard[];
 }) {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
@@ -363,6 +371,33 @@ export default function ActivityDetailView({
                         {faq.a}
                       </p>
                     </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Article cluster: five guides that link back to this exact activity. */}
+            {relatedGuides.length > 0 && (
+              <section aria-labelledby="activity-guide-heading" className="space-y-6">
+                <div className="border-b border-white/10 pb-4">
+                  <h2 id="activity-guide-heading" className="font-serif text-2xl sm:text-3xl font-bold text-white">
+                    Ideas, Techniques &amp; Inspiration
+                  </h2>
+                  <p className="mt-2 text-base leading-relaxed text-white/70">
+                    Get inspired before your workshop with practical tips, design ideas, and creative guides.
+                  </p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {relatedGuides.map((guide) => (
+                    <Link
+                      key={guide.slug}
+                      href={`/blog/${guide.slug}`}
+                      className="group block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-purple-400/40 hover:bg-white/10"
+                    >
+                      <h3 className="font-serif text-lg font-bold leading-snug text-white group-hover:text-purple-200">{guide.title}</h3>
+                      <p className="mt-2 line-clamp-3 text-sm leading-6 text-white/70">{guide.description}</p>
+                      <span className="mt-4 inline-block text-sm font-semibold text-purple-300 group-hover:text-purple-200">Read guide →</span>
+                    </Link>
                   ))}
                 </div>
               </section>
