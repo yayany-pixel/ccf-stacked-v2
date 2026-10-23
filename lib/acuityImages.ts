@@ -34,9 +34,9 @@ export const appointmentImages: CategoryImageMap = {
   // Pottery
   "date night on the wheel": "https://placehold.co/800x450/8b4513/fff?text=Date+Night+Pottery",
   "cup creations": "/images/classes/cup-creations-763410615494.jpeg",
-  "wheel throwing for beginners": "/images/classes/wheel-throwing-for-beginners-f3b6679a8587.jpeg",
-  "beginners wheel throwing": "/images/classes/wheel-throwing-for-beginners-f3b6679a8587.jpeg",
-  "beginner wheel throwing": "/images/classes/wheel-throwing-for-beginners-f3b6679a8587.jpeg",
+  "wheel throwing for beginners": "/images/classes/wheel-throwing-for-beginners-90d2f8c6bb29.jpeg",
+  "beginners wheel throwing": "/images/classes/wheel-throwing-for-beginners-90d2f8c6bb29.jpeg",
+  "beginner wheel throwing": "/images/classes/wheel-throwing-for-beginners-90d2f8c6bb29.jpeg",
   "pottery wheel": "https://placehold.co/800x450/8b4513/fff?text=Pottery+Wheel",
   "handbuilding": "https://placehold.co/800x450/a0522d/fff?text=Hand+Building",
   "clay workshop": "https://placehold.co/800x450/8b4513/fff?text=Clay+Workshop",

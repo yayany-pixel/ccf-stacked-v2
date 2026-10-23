@@ -318,11 +318,11 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "image": {
       "filename": "Wheel Throwing for Beginners - Chicago.webp",
       "driveFileId": "1rUWLJ1sUh8iFBVU5xwI0CCmlO5e58mRd",
-      "path": "/images/classes/wheel-throwing-for-beginners-f3b6679a8587.jpeg",
-      "width": 1440,
-      "height": 1800,
-      "alt": "An excited workshop guest giving a clay-covered thumbs-up at a pottery wheel",
-      "focalPosition": "50% 48%"
+      "path": "/images/classes/wheel-throwing-for-beginners-90d2f8c6bb29.jpeg",
+      "width": 1122,
+      "height": 1402,
+      "alt": "Students shaping clay on pottery wheels during a beginner wheel throwing workshop",
+      "focalPosition": "50% 45%"
     },
     "whatYouMake": "Wheel Throwing for Beginners",
     "theExperience": [
