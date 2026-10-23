@@ -27,7 +27,12 @@ export const metadata: Metadata = {
   }
 };
 
-export default function PrivateEventsPage() {
+export default function PrivateEventsPage({
+  searchParams,
+}: {
+  searchParams?: { city?: string };
+}) {
+  const selectedCity = searchParams?.city === "eugene" ? cities[1] : cities[0];
   // JSON-LD structured data
   const serviceSchema = {
     "@context": "https://schema.org",
@@ -528,7 +533,7 @@ export default function PrivateEventsPage() {
             </div>
             <Reveal variant="fade-up">
               <PrivateEventFormCard
-                city={cities[0]}
+                city={selectedCity}
                 timeWindows={[]}
               />
             </Reveal>

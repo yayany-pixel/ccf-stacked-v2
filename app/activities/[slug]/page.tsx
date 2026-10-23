@@ -12,6 +12,7 @@ import { getCatalog } from "@/lib/askccf/catalog";
 import { getActivityPricing } from "@/lib/pricing";
 import { getWorkshopGuidesForActivity } from "@/lib/workshopGuides";
 import { getLocalFeaturesForActivity } from "@/lib/localFeatures";
+import { getLocalDiscoveryGuidesForActivity } from "@/lib/localDiscovery";
 
 export const revalidate = 120;
 
@@ -60,7 +61,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function ActivityPage({ params }: { params: { slug: string } }) {
+export default async function ActivityPage({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams?: { city?: string; location?: string };
+}) {
   const activity = getActivityDetailBySlug(params.slug);
 
   if (!activity) {
@@ -208,7 +215,11 @@ export default async function ActivityPage({ params }: { params: { slug: string 
           pricing={pricing}
           relatedActivities={relatedActivities}
           relatedGuides={getWorkshopGuidesForActivity(activity.slug).map(({ slug, title, description }) => ({ slug, title, description }))}
-          relatedLocalGuides={getLocalFeaturesForActivity(activity.slug).map(({ slug, title, description, city }) => ({ slug, title, description, city }))}
+          relatedLocalGuides={[
+            ...getLocalDiscoveryGuidesForActivity(activity.slug),
+            ...getLocalFeaturesForActivity(activity.slug),
+          ].map(({ slug, title, description, city }) => ({ slug, title, description, city }))}
+          initialCity={(searchParams?.city || searchParams?.location) === "eugene" ? "eugene" : (searchParams?.city || searchParams?.location) === "chicago" ? "chicago" : undefined}
         />
       </main>
     </>
