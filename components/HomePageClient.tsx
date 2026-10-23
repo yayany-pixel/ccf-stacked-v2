@@ -11,7 +11,7 @@ import { trackEvent, trackBeginCheckout, trackCardView, trackCardSelect, trackSh
 import { trackMetaViewContent } from "@/lib/metaPixel";
 import { getCityByParam } from "@/lib/links";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
-import { activitiesForCity, formatNextSession, priceLabel, HOMEPAGE_FILTERS, matchesHomepageFilter, type HomepageFilter } from "@/lib/homepage/data";
+import { activitiesForCity, formatNextSession, priceLabel, HOMEPAGE_FILTERS, filterHomepageActivities, type HomepageFilter } from "@/lib/homepage/data";
 import type { HomepageActivity, HomepageCity, HomepageData } from "@/lib/homepage/types";
 import styles from "./HomePageClient.module.css";
 import { HOMEPAGE_REVIEWS } from "@/lib/homepage/reviews";
@@ -265,6 +265,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
       if (occasion === "date-night") selectedFilter = "Date night";
       else if (category === "pottery") selectedFilter = "Pottery";
       else if (category === "glass") selectedFilter = "Glass & lamps";
+      else if (category === "lowest-prices") selectedFilter = "Lowest prices";
       
       if (selectedFilter) {
         setFilter(selectedFilter);
@@ -315,7 +316,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
   }, []);
 
   const cityActivities = activitiesForCity(data.activities, city);
-  const activities = cityActivities.filter(activity => matchesHomepageFilter(activity, filter));
+  const activities = filterHomepageActivities(cityActivities, filter);
   const visible = activities.slice(0, visibleCount);
   const studio = STUDIO_LOCATIONS[city];
 
@@ -369,8 +370,10 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
             trackEvent("homepage_filter_selected", {city, placement: "homepage", class_category: option});
           }}>{option}</button>)}
         </div>
-        <p className={styles.filterCount} role="status">{activities.length} {filter === "All workshops" ? "workshops" : filter.toLowerCase() + " workshops"} · {studio.label}</p>
-        {!activities.length && <p className={styles.empty}>No matching workshops are listed right now. Try another filter or city.</p>}
+        <p className={styles.filterCount} role="status">{filter === "Lowest prices"
+          ? `${activities.length} lowest-priced workshops · ${studio.label} · Lowest to highest listed ticket price. Tickets may cover one or two people; check each card.`
+          : `${activities.length} ${filter === "All workshops" ? "workshops" : filter.toLowerCase() + " workshops"} · ${studio.label}`}</p>
+        {!activities.length && <p className={styles.empty}>{filter === "Lowest prices" ? "Current prices are unavailable right now. Try All workshops to explore classes and check prices at booking." : "No matching workshops are listed right now. Try another filter or city."}</p>}
         <div className={styles.feed} id="classes" aria-label={`${studio.label} creative workshops`}>
           {visible.slice(0, 3).map((activity, index) => <ActivityCard key={activity.key} activity={activity} position={index + 1} listCity={city} first={index === 0} />)}
           <section id="private-party" className={`${styles.party} ${isPartyExpanded ? styles.partyExpanded : styles.partyCollapsed}`} aria-labelledby="private-party-title">

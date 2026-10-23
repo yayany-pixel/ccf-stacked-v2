@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
 import { normalize, type PublicClassSlot } from "../lib/askccf/catalog";
 import { ACTIVITY_MANIFEST, APPROVED_PHOTOS } from "../lib/homepage/manifest";
-import { activitiesForCity, buildHomepageData, formatNextSession, priceLabel, matchesHomepageFilter } from "../lib/homepage/data";
+import { activitiesForCity, buildHomepageData, formatNextSession, priceLabel, matchesHomepageFilter, filterHomepageActivities, HOMEPAGE_FILTERS } from "../lib/homepage/data";
 
 const now = new Date("2026-10-05T12:00:00Z");
 const catalog = ACTIVITY_MANIFEST.map(activity => normalize({
@@ -103,3 +103,17 @@ assert.ok(matchesHomepageFilter(lamp[0], 'Glass & lamps'));
 assert.ok(!matchesHomepageFilter(lamp[0], 'Pottery'));
 assert.ok(chicago.filter(activity => matchesHomepageFilter(activity, 'Online')).every(activity => activity.mode === 'online'));
 assert.deepEqual(chicago.filter(activity => matchesHomepageFilter(activity, 'All workshops')), chicago);
+
+// Lowest prices ranks valid ticket prices, caps the results, and leaves other filters in catalog order.
+assert.ok(HOMEPAGE_FILTERS.includes('Lowest prices'));
+const priced = chicago.slice(0, 9).map((activity, index) => ({ ...activity, currentPrice: [90, null, 0, 30, 15, 20, 10, NaN, -5][index] }));
+const originalKeys = priced.map(activity => activity.key);
+assert.deepEqual(filterHomepageActivities(priced, 'Lowest prices').map(activity => activity.currentPrice), [0, 10, 15, 20, 30]);
+assert.deepEqual(priced.map(activity => activity.key), originalKeys);
+assert.deepEqual(filterHomepageActivities(priced, 'All workshops'), priced);
+assert.deepEqual(filterHomepageActivities(activitiesForCity(offline.activities, 'chicago'), 'Lowest prices'), []);
+assert.equal(filterHomepageActivities(priced.slice(3, 5), 'Lowest prices').length, 2);
+const cheapLamp = { ...lamp[0], currentPrice: 5 };
+assert.equal(filterHomepageActivities([...priced, cheapLamp], 'Lowest prices')[1].key, cheapLamp.key);
+assert.ok(filterHomepageActivities(eugene, 'Lowest prices').every(activity => activity.city === 'eugene' || activity.city === 'online'));
+console.log('Lowest-price checks passed: five cheapest ticket prices, grouped workshops, invalid prices, city isolation, and catalog order.');
