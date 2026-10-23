@@ -36,12 +36,14 @@ export default function ActivityDetailView({
   relatedActivities = [],
   relatedGuides = [],
   relatedLocalGuides = [],
+  initialCity,
 }: {
   activity: ActivityDetail;
   pricing: ActivityPricing;
   relatedActivities?: RelatedActivityWithPrice[];
   relatedGuides?: RelatedGuideCard[];
   relatedLocalGuides?: RelatedLocalGuideCard[];
+  initialCity?: CityParam;
 }) {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
@@ -53,11 +55,10 @@ export default function ActivityDetailView({
   }, [pricing.destinations]);
 
   const [preferredCity, setPreferredCity] = useState<CityParam>(
-    availableCities[0] ?? "chicago",
+    initialCity && availableCities.includes(initialCity)
+      ? initialCity
+      : (availableCities[0] ?? "chicago"),
   );
-
-  // Avoid flashing Chicago guide recommendations for visitors opening an Eugene deep link.
-  const [cityReady, setCityReady] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -83,13 +84,11 @@ export default function ActivityDetailView({
     } catch {}
   }, [availableCities]);
 
-  useEffect(() => {
-    setCityReady(true);
-  }, []);
-
-  const shownLocalGuides = cityReady
-    ? relatedLocalGuides.filter((guide) => guide.city === null || guide.city === preferredCity).slice(0, 4)
-    : [];
+  // City is derived on the server from ?city= for the initial HTML, so search
+  // crawlers and visitors see the correct links even without JavaScript.
+  const shownLocalGuides = relatedLocalGuides
+    .filter((guide) => guide.city === null || guide.city === preferredCity)
+    .slice(0, 4);
 
   const giftContext = useMemo(
     () =>
