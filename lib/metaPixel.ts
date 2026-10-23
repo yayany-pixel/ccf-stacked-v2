@@ -6,7 +6,8 @@ import {
   type MetaMatchContext,
   validEventId,
 } from "./metaEvents";
-export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+import { resolveMetaDatasetId } from "./metaConfig";
+export const META_PIXEL_ID = resolveMetaDatasetId(process.env.NEXT_PUBLIC_META_PIXEL_ID);
 type Pixel = ((
   command: string,
   event: string,

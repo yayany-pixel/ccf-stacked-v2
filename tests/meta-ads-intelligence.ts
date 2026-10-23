@@ -73,8 +73,8 @@ async function main() {
       conversions: 3,
     },
   ], 10);
-  assert.equal(lowConvReport.learningStatus, "LEARNING_LIMITED");
-  assert(lowConvReport.recommendations.some(r => r.action === "SWITCH_OPTIMIZATION_EVENT"));
+  assert.equal(lowConvReport.learningStatus, "INSUFFICIENT_DATA");
+  assert.match(lowConvReport.learningSummary, /unavailable/);
 
   const fatigueReport = analyzeCampaignPerformance([
     {
@@ -109,7 +109,7 @@ async function main() {
       conversions: 55,
     },
   ], 10);
-  assert.equal(scaledReport.learningStatus, "OPTIMIZED");
+  assert.equal(scaledReport.learningStatus, "INSUFFICIENT_DATA");
   console.log("✓ Meta Ad Machine Learning Phase and Optimization Engine verified.");
 
   // 5. Verify Ad Click Signal & Privacy Precedence

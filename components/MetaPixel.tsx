@@ -9,6 +9,7 @@ import {
   trackMetaPageView,
 } from "@/lib/metaPixel";
 export default function MetaPixel() {
+  // Shared dataset resolver keeps browser and CAPI defaults aligned.
   const path = usePathname();
   const [load, setLoad] = useState(false);
   useEffect(() => {

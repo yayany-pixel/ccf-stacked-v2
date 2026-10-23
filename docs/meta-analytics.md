@@ -1,3 +1,5 @@
+> Implementation update (23 October 2026): see [Advertising activation](advertising-activation.md) for the current code and required configuration. Historical deployment and environment statements below are not a current credential audit.
+
 # Meta measurement and operating guide
 
 **Current migration status (21 October 2026):** See [the audited migration record](meta-dataset-migration.md). Historical claims below are not evidence of current deployment or activation.

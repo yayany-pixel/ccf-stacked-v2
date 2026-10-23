@@ -4,6 +4,7 @@ import {
   acuityMetaMatch,
   verifiedPaymentTime,
 } from "../../lib/metaCapi.server";
+import { resolveMetaDatasetId } from "../../lib/metaConfig";
 import { classCategory } from "../../lib/analyticsIdentity";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { sql } from "drizzle-orm";
@@ -13,10 +14,22 @@ import { ACTIVITY_MANIFEST } from "../../lib/homepage/manifest";
 /** Acuity native webhook: authenticate exact body, then verify payment via API.
  * Never accept client-submitted purchase values, names, or arbitrary events.
  */
+export interface WebhookDependencies {
+  env: (key: string) => string | undefined;
+  fetch: typeof fetch;
+  db: () => Pick<ReturnType<typeof getDb>, "execute">;
+  sendMeta: typeof sendMetaConversion;
+}
 export default async function handler(req: Request): Promise<Response> {
+  return processAcuityWebhook(req, {
+    env: key => Netlify.env.get(key), fetch: globalThis.fetch,
+    db: getDb, sendMeta: sendMetaConversion,
+  });
+}
+export async function processAcuityWebhook(req: Request, deps: WebhookDependencies): Promise<Response> {
   if (req.method !== "POST")
     return new Response("Method not allowed", { status: 405 });
-  const env = (key: string) => Netlify.env.get(key);
+  const { env, fetch } = deps;
   const apiKey = env("ACUITY_API_KEY");
   const user = env("ACUITY_USER_ID");
   const measurement = env("GA4_MEASUREMENT_ID") || env("NEXT_PUBLIC_GA_ID_1");
@@ -28,7 +41,7 @@ export default async function handler(req: Request): Promise<Response> {
     env("META_CAPI_PURCHASES_ENABLED") === "true" &&
     !!env("META_CAPI_ACCESS_TOKEN") &&
     !!env("META_GRAPH_API_VERSION") &&
-    !!env("NEXT_PUBLIC_META_PIXEL_ID");
+    env("META_CAPI_VALIDATED_PIXEL_ID") === resolveMetaDatasetId(env("NEXT_PUBLIC_META_PIXEL_ID"));
   if (
     (!gaEnabled && !metaEnabled) ||
     env("ACUITY_CURRENCY") !== "USD" ||
@@ -88,7 +101,7 @@ export default async function handler(req: Request): Promise<Response> {
         : "chicago";
       if (!gaEnabled)
         return new Response("Meta delivery: disabled", { status: 200 });
-      const db = getDb();
+      const db = deps.db();
       const claimed: any = await db.execute(
         sql`insert into analytics_purchases(transaction_id,status) values(${transactionId},'sending') on conflict do nothing returning transaction_id`,
       );
@@ -144,6 +157,9 @@ export default async function handler(req: Request): Promise<Response> {
       );
     }
 
+    if (!["scheduled", "changed", "rescheduled"].includes(action || ""))
+      return new Response("Unsupported appointment action", { status: 400 });
+
     const response = await fetch(
       `https://acuityscheduling.com/api/v1/appointments/${id}`,
       {
@@ -157,6 +173,8 @@ export default async function handler(req: Request): Promise<Response> {
     if (!response.ok)
       return new Response("Booking verification unavailable", { status: 502 });
     const appointment = await response.json();
+    if (String(appointment.id) !== id)
+      return new Response("Appointment identity mismatch", { status: 422 });
     // Only fully paid, non-cancelled appointments; no inferred or quoted revenue.
     if (appointment.canceled || appointment.paid !== "yes")
       return new Response("Not a completed payment", { status: 202 });
@@ -193,7 +211,7 @@ export default async function handler(req: Request): Promise<Response> {
           : null;
         const paymentTime = verifiedPaymentTime(payments, amount);
         if (paymentTime !== null) {
-          metaResult = await sendMetaConversion(
+          metaResult = await deps.sendMeta(
             {
               name: "Purchase",
               eventId: `purchase:${transactionId}`,
@@ -232,7 +250,7 @@ export default async function handler(req: Request): Promise<Response> {
       return new Response(`Meta delivery: ${metaResult}`, {
         status: metaResult === "review" ? 502 : 200,
       });
-    const db = getDb();
+    const db = deps.db();
     // Atomic insert prevents concurrent deliveries. Ambiguous sends are held for
     // operator reconciliation, never automatically replayed into double revenue.
     const claimed: any = await db.execute(
@@ -266,7 +284,7 @@ export default async function handler(req: Request): Promise<Response> {
                   {
                     item_id: String(activity.appointmentTypeId),
                     item_name: activity.title,
-                    item_category: "workshop",
+                    item_category: classCategory(activity.title),
                     price: amount,
                     quantity: 1,
                   },
