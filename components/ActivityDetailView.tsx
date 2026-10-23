@@ -26,16 +26,22 @@ export type RelatedGuideCard = {
   description: string;
 };
 
+export type RelatedLocalGuideCard = RelatedGuideCard & {
+  city: "chicago" | "eugene" | null;
+};
+
 export default function ActivityDetailView({
   activity,
   pricing,
   relatedActivities = [],
   relatedGuides = [],
+  relatedLocalGuides = [],
 }: {
   activity: ActivityDetail;
   pricing: ActivityPricing;
   relatedActivities?: RelatedActivityWithPrice[];
   relatedGuides?: RelatedGuideCard[];
+  relatedLocalGuides?: RelatedLocalGuideCard[];
 }) {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
@@ -73,6 +79,10 @@ export default function ActivityDetailView({
       }
     } catch {}
   }, [availableCities]);
+
+  const visibleLocalGuides = relatedLocalGuides
+    .filter((guide) => guide.city === null || guide.city === preferredCity)
+    .slice(0, 3);
 
   const giftContext = useMemo(
     () =>
@@ -397,6 +407,33 @@ export default function ActivityDetailView({
                       <h3 className="font-serif text-lg font-bold leading-snug text-white group-hover:text-purple-200">{guide.title}</h3>
                       <p className="mt-2 line-clamp-3 text-sm leading-6 text-white/70">{guide.description}</p>
                       <span className="mt-4 inline-block text-sm font-semibold text-purple-300 group-hover:text-purple-200">Read guide →</span>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Curated, place-specific content beyond the five class technique articles */}
+            {visibleLocalGuides.length > 0 && (
+              <section aria-labelledby="activity-local-guides" className="space-y-5">
+                <div className="border-b border-white/10 pb-4">
+                  <h2 id="activity-local-guides" className="font-serif text-2xl sm:text-3xl font-bold text-white">
+                    Plan a Creative Outing
+                  </h2>
+                  <p className="mt-2 text-base leading-relaxed text-white/70">
+                    Explore local itineraries, celebrations, and practical ways to make the most of your workshop.
+                  </p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {visibleLocalGuides.map((guide) => (
+                    <Link
+                      key={guide.slug}
+                      href={`/blog/${guide.slug}`}
+                      className="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-purple-400/40 hover:bg-white/10"
+                    >
+                      <h3 className="font-serif text-lg font-bold text-white group-hover:text-purple-200">{guide.title}</h3>
+                      <p className="mt-2 line-clamp-3 text-sm leading-6 text-white/70">{guide.description}</p>
+                      <span className="mt-3 inline-block text-sm font-semibold text-purple-200">Read local guide →</span>
                     </Link>
                   ))}
                 </div>
