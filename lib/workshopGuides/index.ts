@@ -8,6 +8,7 @@ import { mushroomGuides } from "./mushroom";
 import { cupGuides } from "./cup";
 import { dildosGuides } from "./dildos";
 import { pussyGuides } from "./pussy";
+import { expandedWorkshopGuides } from "./expanded";
 import type { WorkshopGuide } from "./types";
 
 export type { WorkshopGuide, WorkshopGuideSection, WorkshopGuideFAQ } from "./types";
@@ -20,9 +21,13 @@ export const workshopGuides: WorkshopGuide[] = [
   ...cupGuides,
   ...dildosGuides,
   ...pussyGuides,
+  ...expandedWorkshopGuides,
 ];
 
 const guidesBySlug = new Map(workshopGuides.map((guide) => [guide.slug, guide]));
+const expandedSlugSet = new Set(expandedWorkshopGuides.map((guide) => guide.slug));
+
+if (guidesBySlug.size !== workshopGuides.length) throw new Error("Duplicate slugs across workshop guide collections");
 
 export function getWorkshopGuideBySlug(slug: string): WorkshopGuide | undefined {
   return guidesBySlug.get(slug);
@@ -44,7 +49,7 @@ function wordCount(guide: WorkshopGuide): number {
 /** These posts reuse the existing blog registry, metadata, sitemap and article schema. */
 export const workshopGuidePosts: BlogPost[] = workshopGuides.map((guide) => {
   const activity = getActivityDetailBySlug(guide.activitySlug);
-  const date = "2026-10-22";
+  const date = expandedSlugSet.has(guide.slug) ? "2026-10-23" : "2026-10-22";
   return {
     slug: guide.slug,
     title: guide.title,
