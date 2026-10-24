@@ -1,4 +1,4 @@
-ID: 94782610, Price: 45.00, Name: Wheel Throwing for Beginners -Make Your Own Plate Set
+ID: 94782610, Price: 30.00, Name: Wheel Throwing for Beginners -Make Your Own Plate Set
 ID: 96732594, Price: 65.00, Name: YK Lab Annual Summer Outing
 ID: 97312247, Price: 35.00, Name: Private Event -Mel’s Dirty Thirty
 ID: 97799262, Price: 55.00, Name: Touch-n-Clay PlayDay
@@ -6,34 +6,34 @@ ID: 97804677, Price: 150.00, Name: Date night Art Session
 ID: 97840100, Price: 450.00, Name: UChicago CEO Teambuilding
 ID: 97932409, Price: 45.00, Name: Charlotte’s 8th birthday
 ID: 98918350, Price: 45.00, Name: Mercy Home for Boys and Girls
-ID: 94782668, Price: 45.00, Name: Wheel Throwing for Beginners -Cup Creations
-ID: 94782793, Price: 45.00, Name: Wheel Throwing for Beginners -Make Your Own Matcha Bowl
-ID: 94782880, Price: 45.00, Name: Wheel Throwing for Beginners -Vase Making
-ID: 94930972, Price: 75.00, Name: Chicago Date Night Pottery
+ID: 94782668, Price: 25.00, Name: Wheel Throwing for Beginners -Cup Creations
+ID: 94782793, Price: 30.00, Name: Wheel Throwing for Beginners -Make Your Own Matcha Bowl
+ID: 94782880, Price: 25.00, Name: Wheel Throwing for Beginners -Vase Making
+ID: 94930972, Price: 50.00, Name: Chicago Date Night Pottery
 ID: 94935292, Price: 75.00, Name: Date Night Watercolor Painting for Two - Chicago
 ID: 95023345, Price: 200.00, Name: Date Night On Fire - VIP EXPERIENCE
-ID: 95415406, Price: 75.00, Name: Date Night Candle Making
+ID: 95415406, Price: 50.00, Name: Date Night Candle Making
 ID: 95416771, Price: 85.00, Name: Turkish Mosaic Lamp - Chicago
 ID: 95588506, Price: 45.00, Name: Spin A Spell- Make your Own Clay Cauldron
-ID: 95806344, Price: 75.00, Name: Make And Paint - Wheel throwing
+ID: 95806344, Price: 60.00, Name: Make And Paint - Wheel throwing
 ID: 95840864, Price: 30.00, Name: Private Event Emily's Bachelorette Make Your Own Matcha Bowl
 ID: 95894050, Price: 90.00, Name: Date Night Turkish Mosaic Lamp - Chicago
 ID: 95911163, Price: 25.00, Name: Open Studio Wheel throwing
 ID: 95947521, Price: 50.00, Name: Water Color For Beginners
-ID: 96113161, Price: 35.00, Name: FLASH SALE BEGINNERS WHEEL THROWING
-ID: 96474464, Price: 55.00, Name: Wheel Throwing for Beginners - Fat Belly Mugs
+ID: 96113161, Price: 15.00, Name: FLASH SALE BEGINNERS WHEEL THROWING
+ID: 96474464, Price: 45.00, Name: Wheel Throwing for Beginners - Fat Belly Mugs
 ID: 96476276, Price: 35.00, Name: Private Event CHRS Team Outing
 ID: 96488155, Price: 45.00, Name: Moira’s Birthday Private Event
-ID: 96491249, Price: 55.00, Name: Handbuilding For Beginners - Vase Making
+ID: 96491249, Price: 35.00, Name: Handbuilding For Beginners - Vase Making
 ID: 96649100, Price: 55.00, Name: Charcuterie Board Make And Paint
 ID: 96730509, Price: 65.00, Name: YK Lab Annual Summer Outing
 ID: 96857633, Price: 35.00, Name: The Royal Mold Dildo Making Workshop
 ID: 96869261, Price: 65.00, Name: Margo’s Playtime
 ID: 96869395, Price: 65.00, Name: Isabella’s Bachlorette Party
-ID: 96889121, Price: 45.00, Name: Halloween Pottery: Carve Your Own Clay Pumpkin
+ID: 96889121, Price: 35.00, Name: Halloween Pottery: Carve Your Own Clay Pumpkin
 ID: 97020385, Price: 100.00, Name: VIP DATE NIGHT PAINT NIGHT
 ID: 97312173, Price: 65.00, Name: Private Party - Exhausted
-ID: 97524789, Price: 45.00, Name: OOGIE BOOGIE INSPIRED CANDLE HOLDER | HALLOWEEN POTTERY
+ID: 97524789, Price: 25.00, Name: OOGIE BOOGIE INSPIRED CANDLE HOLDER | HALLOWEEN POTTERY
 ID: 97573448, Price: 50.00, Name: MONSTER POTTERY! HALLOWEEN LANTERN CLASS
 ID: 97619271, Price: 55.00, Name: Erica’s birthday Pottery :)
 ID: 97904101, Price: 50.00, Name: Date Night Chix
@@ -43,30 +43,30 @@ ID: 97932190, Price: 55.00, Name: Zi’Keya’s Birthday Party
 ID: 98095413, Price: 45.00, Name: Sydni’s Garden Of Life Party
 ID: 98097634, Price: 45.00, Name: Alijah Terrell
 ID: 98102179, Price: 45.00, Name: The 30’s + 1
-ID: 98139196, Price: 80.00, Name: Make a Jar! — Wheel Throwing + Lid Workshop.
+ID: 98139196, Price: 50.00, Name: Make a Jar! — Wheel Throwing + Lid Workshop.
 ID: 98180179, Price: 20.00, Name: Halloween Ghost Pottey! 
 ID: 98323116, Price: 45.00, Name: MAKE YOUR PET  IN CLAY
 ID: 98407830, Price: 300.00, Name: Elizabeths Bachlorette
 ID: 98548612, Price: 60.00, Name: Throw A Pumpkin On The Wheel
 ID: 98635104, Price: 45.00, Name: Ja’Mahria Celebration
-ID: 79006616, Price: 45.00, Name: Wheel Throwing for Beginners - Chicago
+ID: 79006616, Price: 25.00, Name: Wheel Throwing for Beginners - Chicago
 ID: 79006071, Price: 55.00, Name: Date Night on the Pottery Wheel - Chicago
-ID: 79186725, Price: 55.00, Name: Ceramic Mug and a Bowl - Chicago
-ID: 79188421, Price: 55.00, Name: Pipe and Ashtray Making Class - Chicago
-ID: 79181599, Price: 45.00, Name: Cat Vase Making - Chicago
+ID: 79186725, Price: 35.00, Name: Ceramic Mug and a Bowl - Chicago
+ID: 79188421, Price: 35.00, Name: Pipe and Ashtray Making Class - Chicago
+ID: 79181599, Price: 25.00, Name: Cat Vase Making - Chicago
 ID: 79183668, Price: 39.00, Name: Paint Pottery - Chicago
-ID: 79186489, Price: 45.00, Name: Ceramic Bunny Cup - Chicago
-ID: 79186927, Price: 45.00, Name: Dildos and Bottles - Chicago
-ID: 79187550, Price: 45.00, Name: Boobs Coffee Mug - Chicago
-ID: 79188019, Price: 45.00, Name: Mushroom Pottery - Chicago
-ID: 79188691, Price: 45.00, Name: Pussy Pottery - Chicago
+ID: 79186489, Price: 20.00, Name: Ceramic Bunny Cup - Chicago
+ID: 79186927, Price: 35.00, Name: Dildos and Bottles - Chicago
+ID: 79187550, Price: 30.00, Name: Boobs Coffee Mug - Chicago
+ID: 79188019, Price: 20.00, Name: Mushroom Pottery - Chicago
+ID: 79188691, Price: 35.00, Name: Pussy Pottery - Chicago
 ID: 79182319, Price: 55.00, Name: Mosaic Creations - Chicago
 ID: 79183146, Price: 55.00, Name: Glass Fusion - Chicago
 ID: 79374537, Price: 45.00, Name: Hanging Turkish Mosaic Lamp - Chicago
-ID: 79374003, Price: 40.00, Name: Wine Glass Painting - Chicago
-ID: 79188910, Price: 85.00, Name: Bonsai for Beginners: Hands-On Workshop - Chicago
-ID: 79189013, Price: 45.00, Name: Terrarium Workshop - Chicago
-ID: 79185767, Price: 45.00, Name: Candle Making - Chicago
+ID: 79374003, Price: 37.00, Name: Wine Glass Painting - Chicago
+ID: 79188910, Price: 65.00, Name: Bonsai for Beginners: Hands-On Workshop - Chicago
+ID: 79189013, Price: 35.00, Name: Terrarium Workshop - Chicago
+ID: 79185767, Price: 35.00, Name: Candle Making - Chicago
 ID: 79274876, Price: 45.00, Name: Soap Making - Chicago
 ID: 91154739, Price: 45.00, Name: Eugene Make Your Own Matcha Bowl
 ID: 92719840, Price: 45.00, Name: Mothers Day Wheel Share

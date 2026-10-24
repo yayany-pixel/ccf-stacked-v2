@@ -26,10 +26,10 @@ export function buildHomepageData(
     ).sort((left, right) => new Date(left.time).getTime() - new Date(right.time).getTime());
     const promo = catalog !== null && (catalog.length > 0 || matches) ? getPromotionalOverride(definition.appointmentTypeId, now.getTime()) : null;
     const rawPrice = matches ? live.pricing.price : null;
-    const currentPrice = promo
-      ? promo.promoPrice
-      : typeof rawPrice === "number" && Number.isFinite(rawPrice) && rawPrice >= 0
+    const currentPrice = typeof rawPrice === "number" && Number.isFinite(rawPrice) && rawPrice >= 0
       ? rawPrice
+      : promo
+      ? promo.promoPrice
       : null;
     let formerPrice: { amount: number; evidence: string } | null = null;
     if (promo && promo.regularPrice > promo.promoPrice) {
