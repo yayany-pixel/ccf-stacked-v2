@@ -130,3 +130,23 @@ export const privacyPreferences = pgTable("privacy_preferences", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
 }, table => [index("privacy_preferences_expires_at_idx").on(table.expiresAt)]);
+
+/**
+ * Analytics Events table for storing local analytics data.
+ * Used for tracking homepage card clicks, views, and other attention metrics.
+ */
+export const analyticsEvents = pgTable("analytics_events", {
+  id: serial().primaryKey(),
+  eventName: text("event_name").notNull(),
+  city: text().notNull().default("unknown"),
+  className: text("class_name"),
+  classId: text("class_id"),
+  placement: text(),
+  clickTarget: text("click_target"),
+  timestamp: timestamp("timestamp", { withTimezone: true }).notNull().defaultNow(),
+  // Store any extra payload data safely
+  metadata: text("metadata"), 
+}, table => [
+  index("analytics_events_name_idx").on(table.eventName),
+  index("analytics_events_timestamp_idx").on(table.timestamp)
+]);
