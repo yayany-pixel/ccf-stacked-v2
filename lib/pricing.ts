@@ -109,10 +109,10 @@ export async function getLivePrice(
 
   const promo = getPromotionalOverride(numId);
   const rawPrice = live?.pricing.price;
-  const currentPrice = promo
-    ? promo.promoPrice
-    : typeof rawPrice === "number" && Number.isFinite(rawPrice) && rawPrice >= 0
+  const currentPrice = typeof rawPrice === "number" && Number.isFinite(rawPrice) && rawPrice >= 0
     ? rawPrice
+    : promo
+    ? promo.promoPrice
     : null;
 
   // Determine ticket unit from live catalog covers count

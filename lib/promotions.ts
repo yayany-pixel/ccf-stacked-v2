@@ -20,9 +20,9 @@ export type PromotionalWorkshop = {
   bookingUrl: string;
 };
 
-// Promotional test window: October 23, 2026 onwards (Central Time)
+// Promotional test window: October 23, 2026 (concluded)
 export const PROMOTION_START_ISO = "2026-10-23T00:00:00-05:00";
-export const PROMOTION_END_ISO = "2027-12-31T23:59:59-05:00";
+export const PROMOTION_END_ISO = "2026-10-23T23:59:59-05:00";
 
 export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
   {
@@ -30,8 +30,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Wine Glass Painting",
     "appointmentTypeId": 79374003,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 40,
+    "promoPrice": 37,
+    "regularPrice": 37,
     "priceUnit": "per person",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79374003"
   },
@@ -40,7 +40,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Wine Glass Painting",
     "appointmentTypeId": 95909935,
     "city": "eugene",
-    "promoPrice": 25,
+    "promoPrice": 35,
     "regularPrice": 35,
     "priceUnit": "per person",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95909935"
@@ -50,7 +50,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Mosaic Creations",
     "appointmentTypeId": 79182319,
     "city": "chicago",
-    "promoPrice": 25,
+    "promoPrice": 55,
     "regularPrice": 55,
     "priceUnit": "per person",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79182319"
@@ -60,7 +60,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Cauldron Pottery",
     "appointmentTypeId": 95588506,
     "city": "chicago",
-    "promoPrice": 25,
+    "promoPrice": 45,
     "regularPrice": 45,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95588506"
@@ -70,7 +70,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Cauldron Pottery",
     "appointmentTypeId": 96657402,
     "city": "eugene",
-    "promoPrice": 25,
+    "promoPrice": 45,
     "regularPrice": 45,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96657402"
@@ -90,7 +90,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Date Night Pottery on the Wheel",
     "appointmentTypeId": 91935746,
     "city": "eugene",
-    "promoPrice": 55,
+    "promoPrice": 50,
     "regularPrice": 50,
     "priceUnit": "for two",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=91935746"
@@ -101,7 +101,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "appointmentTypeId": 79006616,
     "city": "chicago",
     "promoPrice": 25,
-    "regularPrice": 45,
+    "regularPrice": 25,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79006616"
   },
@@ -120,8 +120,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Ceramic Mug and a Bowl",
     "appointmentTypeId": 79186725,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 55,
+    "promoPrice": 35,
+    "regularPrice": 35,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79186725"
   },
@@ -130,7 +130,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Ceramic Mug and a Bowl",
     "appointmentTypeId": 90210750,
     "city": "eugene",
-    "promoPrice": 25,
+    "promoPrice": 45,
     "regularPrice": 45,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=90210750"
@@ -141,7 +141,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "appointmentTypeId": 79181599,
     "city": "chicago",
     "promoPrice": 25,
-    "regularPrice": 45,
+    "regularPrice": 25,
     "priceUnit": "per person",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79181599",
     "flashSale": true,
@@ -152,8 +152,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Clay Pumpkin Lantern",
     "appointmentTypeId": 96889121,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 45,
+    "promoPrice": 35,
+    "regularPrice": 35,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96889121"
   },
@@ -162,7 +162,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Paint Your Own Pottery",
     "appointmentTypeId": 79183668,
     "city": "chicago",
-    "promoPrice": 25,
+    "promoPrice": 39,
     "regularPrice": 39,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79183668"
@@ -172,8 +172,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Mushroom Pottery",
     "appointmentTypeId": 79188019,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 45,
+    "promoPrice": 20,
+    "regularPrice": 20,
     "priceUnit": "per person",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79188019"
   },
@@ -182,7 +182,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Mushroom Pottery",
     "appointmentTypeId": 90532757,
     "city": "eugene",
-    "promoPrice": 25,
+    "promoPrice": 35,
     "regularPrice": 35,
     "priceUnit": "per person",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=90532757"
@@ -192,8 +192,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Matcha Bowl on the Wheel",
     "appointmentTypeId": 94782793,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 45,
+    "promoPrice": 30,
+    "regularPrice": 30,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782793"
   },
@@ -212,7 +212,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Ghost Pottery",
     "appointmentTypeId": 98180179,
     "city": "chicago",
-    "promoPrice": 25,
+    "promoPrice": 20,
     "regularPrice": 20,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98180179"
@@ -223,7 +223,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "appointmentTypeId": 97524789,
     "city": "chicago",
     "promoPrice": 25,
-    "regularPrice": 45,
+    "regularPrice": 25,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=97524789"
   },
@@ -242,7 +242,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Monster Lantern Pottery",
     "appointmentTypeId": 97573448,
     "city": "chicago",
-    "promoPrice": 25,
+    "promoPrice": 50,
     "regularPrice": 50,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=97573448"
@@ -252,8 +252,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Date Night Handbuilding",
     "appointmentTypeId": 94930972,
     "city": "chicago",
-    "promoPrice": 55,
-    "regularPrice": 75,
+    "promoPrice": 50,
+    "regularPrice": 50,
     "priceUnit": "for two",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94930972"
   },
@@ -262,8 +262,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Handbuilt Vase Making",
     "appointmentTypeId": 96491249,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 55,
+    "promoPrice": 35,
+    "regularPrice": 35,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96491249"
   },
@@ -272,7 +272,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Duck Soap Holder",
     "appointmentTypeId": 98334198,
     "city": "eugene",
-    "promoPrice": 25,
+    "promoPrice": 30,
     "regularPrice": 30,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98334198"
@@ -293,7 +293,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "appointmentTypeId": 94782668,
     "city": "chicago",
     "promoPrice": 25,
-    "regularPrice": 45,
+    "regularPrice": 25,
     "priceUnit": "per person",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782668"
   },
@@ -302,7 +302,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Pumpkin on the Wheel",
     "appointmentTypeId": 98548612,
     "city": "chicago",
-    "promoPrice": 25,
+    "promoPrice": 60,
     "regularPrice": 60,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98548612"
@@ -312,7 +312,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Date Night Ceramic Chess",
     "appointmentTypeId": 97861588,
     "city": "eugene",
-    "promoPrice": 55,
+    "promoPrice": 85,
     "regularPrice": 85,
     "priceUnit": "for two",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=97861588"
@@ -323,7 +323,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "appointmentTypeId": 94782880,
     "city": "chicago",
     "promoPrice": 25,
-    "regularPrice": 45,
+    "regularPrice": 25,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782880"
   },
@@ -332,8 +332,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Make & Paint on the Wheel",
     "appointmentTypeId": 95806344,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 75,
+    "promoPrice": 60,
+    "regularPrice": 60,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=95806344"
   },
@@ -342,8 +342,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Flash Sale Beginner Wheel",
     "appointmentTypeId": 96113161,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 35,
+    "promoPrice": 15,
+    "regularPrice": 15,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96113161"
   },
@@ -352,8 +352,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Ceramic Bunny Cup - Chicago",
     "appointmentTypeId": 79186489,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 45,
+    "promoPrice": 20,
+    "regularPrice": 20,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79186489"
   },
@@ -362,8 +362,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Wheel Throwing for Beginners -Make Your Own Plate Set",
     "appointmentTypeId": 94782610,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 45,
+    "promoPrice": 30,
+    "regularPrice": 30,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=94782610"
   },
@@ -372,8 +372,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Wheel Throwing for Beginners - Fat Belly Mugs",
     "appointmentTypeId": 96474464,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 55,
+    "promoPrice": 45,
+    "regularPrice": 45,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96474464"
   },
@@ -382,7 +382,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Touch-n-Clay PlayDay",
     "appointmentTypeId": 97799262,
     "city": "chicago",
-    "promoPrice": 25,
+    "promoPrice": 55,
     "regularPrice": 55,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=97799262"
@@ -392,7 +392,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Date Night Chix",
     "appointmentTypeId": 97904101,
     "city": "chicago",
-    "promoPrice": 55,
+    "promoPrice": 50,
     "regularPrice": 50,
     "priceUnit": "for two",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=97904101"
@@ -402,8 +402,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Make a Jar! — Wheel Throwing + Lid Workshop.",
     "appointmentTypeId": 98139196,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 80,
+    "promoPrice": 50,
+    "regularPrice": 50,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98139196"
   },
@@ -412,7 +412,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "MAKE YOUR PET  IN CLAY",
     "appointmentTypeId": 98323116,
     "city": "chicago",
-    "promoPrice": 25,
+    "promoPrice": 45,
     "regularPrice": 45,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98323116"
@@ -422,7 +422,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Eugene Make Your Own Matcha Bowl",
     "appointmentTypeId": 91154739,
     "city": "eugene",
-    "promoPrice": 25,
+    "promoPrice": 45,
     "regularPrice": 45,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=91154739"
@@ -432,7 +432,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Mothers Day Wheel Share",
     "appointmentTypeId": 92719840,
     "city": "eugene",
-    "promoPrice": 25,
+    "promoPrice": 45,
     "regularPrice": 45,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=92719840"
@@ -452,7 +452,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Eugene: Mothers Day Pottery Hand-building",
     "appointmentTypeId": 92720069,
     "city": "eugene",
-    "promoPrice": 25,
+    "promoPrice": 50,
     "regularPrice": 50,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=92720069"
@@ -462,7 +462,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Private Appointment for One (Pottery Wheel)",
     "appointmentTypeId": 79003968,
     "city": "chicago",
-    "promoPrice": 25,
+    "promoPrice": 90,
     "regularPrice": 90,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79003968"
@@ -472,8 +472,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Pipe & Ashtray Making",
     "appointmentTypeId": 79188421,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 55,
+    "promoPrice": 35,
+    "regularPrice": 35,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79188421"
   },
@@ -482,7 +482,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Pipe & Ashtray Making",
     "appointmentTypeId": 90211026,
     "city": "eugene",
-    "promoPrice": 25,
+    "promoPrice": 45,
     "regularPrice": 45,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=90211026"
@@ -492,8 +492,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Boobs Coffee Mug",
     "appointmentTypeId": 79187550,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 45,
+    "promoPrice": 30,
+    "regularPrice": 30,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79187550"
   },
@@ -502,8 +502,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Dildos Pottery",
     "appointmentTypeId": 79186927,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 45,
+    "promoPrice": 35,
+    "regularPrice": 35,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79186927"
   },
@@ -512,8 +512,8 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Pussy Pottery",
     "appointmentTypeId": 79188691,
     "city": "chicago",
-    "promoPrice": 25,
-    "regularPrice": 45,
+    "promoPrice": 35,
+    "regularPrice": 35,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79188691"
   },
@@ -522,7 +522,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "The Royal Mold Dildo Making Workshop",
     "appointmentTypeId": 96857633,
     "city": "chicago",
-    "promoPrice": 25,
+    "promoPrice": 35,
     "regularPrice": 35,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=96857633"
@@ -532,7 +532,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
     "workshopName": "Live Online Cauldron Pottery",
     "appointmentTypeId": 98770334,
     "city": "chicago",
-    "promoPrice": 25,
+    "promoPrice": 29,
     "regularPrice": 29,
     "priceUnit": "per ticket",
     "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98770334"
@@ -543,9 +543,7 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
  * Checks whether the promotional pricing test is currently active.
  */
 export function isPromotionActive(timestamp: number = Date.now()): boolean {
-  const start = Date.parse(PROMOTION_START_ISO);
-  const end = Date.parse(PROMOTION_END_ISO);
-  return timestamp >= start && timestamp <= end;
+  return false;
 }
 
 /**
