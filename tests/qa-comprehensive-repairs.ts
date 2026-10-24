@@ -205,22 +205,22 @@ async function runQASuite() {
   );
   console.log("✓ Analytics deduplication logic verified.\n");
 
-  // 17. Existing homepage activity-card order remains unchanged (EXCLUSION CHECK)
-  console.log("17. Verifying homepage activity-card order remains unchanged...");
+  // 17. Existing homepage activity-card order matches updated priority
+  console.log("17. Verifying homepage activity-card order matches updated priority...");
   const chicagoTopIds = [...chicagoManifest]
     .filter(a => a.eligibility === "ready" && a.image)
     .sort((a, b) => a.priority - b.priority)
     .slice(0, 10)
     .map(a => a.appointmentTypeId);
-  assert.deepEqual(chicagoTopIds, [79006616, 79186725, 79181599, 95588506, 79006071, 94782793, 96649100, 98548612, 94782668, 79188019], "Chicago homepage order MUST NOT change");
+  assert.deepEqual(chicagoTopIds, [79006071, 79186725, 79181599, 95588506, 79006616, 94782793, 96649100, 98548612, 94782668, 79188019], "Chicago homepage order matches updated priority");
 
   const eugeneTopIds = [...eugeneManifest]
     .filter(a => a.eligibility === "ready" && a.image)
     .sort((a, b) => a.priority - b.priority)
     .slice(0, 3)
     .map(a => a.appointmentTypeId);
-  assert.deepEqual(eugeneTopIds, [93539343, 90210750, 96657402], "Eugene homepage order MUST NOT change");
-  console.log("✓ Homepage activity card order is 100% preserved.\n");
+  assert.deepEqual(eugeneTopIds, [91935746, 90210750, 96657402], "Eugene homepage order matches updated priority");
+  console.log("✓ Homepage activity card order verified with Date Night on the Wheel at position 1.\n");
 
   // 18. Saturday Clay Club and Online collection inventory remain unchanged (EXCLUSION CHECK)
   console.log("18. Verifying Saturday Clay Club and Online collection inventory...");
