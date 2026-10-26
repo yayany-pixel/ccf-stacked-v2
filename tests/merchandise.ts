@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { MERCHANDISE, validMerchandiseProduct, merchandiseUrl, merchandiseEnabled } from "../lib/merchandise";
 const product = { id: MERCHANDISE.id, title: MERCHANDISE.title, images: ["https://cdn.shopify.com/s/files/tee.png"], variants: ["Pepper", "Espresso", "Moss"].flatMap((color, c) => ["S", "M", "L", "XL", "2XL", "3XL"].map((size, s) => ({ id: c * 6 + s + 1, option1: color, option2: size, available: true, price: size === "3XL" ? 4000 : size === "2XL" ? 3800 : 3600 }))) };
 assert(validMerchandiseProduct(product));
+assert(validMerchandiseProduct({ ...product, images: ["//cdn.shopify.com/s/files/tee.png"] }));
 assert(!validMerchandiseProduct({ ...product, id: 485405194 }));
 assert(!validMerchandiseProduct({ ...product, images: [] }));
 assert(!validMerchandiseProduct({ ...product, variants: product.variants.slice(1) }));
