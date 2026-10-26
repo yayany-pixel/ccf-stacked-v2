@@ -26,7 +26,7 @@ export function validMerchandiseProduct(value: unknown): value is MerchandisePro
   const colors = ["Pepper", "Espresso", "Moss"];
   const sizes = ["S", "M", "L", "XL", "2XL", "3XL"];
   return !!p && p.id === MERCHANDISE.id && typeof p.title === "string" &&
-    Array.isArray(p.images) && p.images.length > 0 && p.images.every(src => typeof src === "string" && /^https:\/\/cdn\.shopify\.com\//.test(src)) &&
+    Array.isArray(p.images) && p.images.length > 0 && p.images.every(src => typeof src === "string" && /^(https:)?\/\/cdn\.shopify\.com\//.test(src)) &&
     Array.isArray(p.variants) && p.variants.length === 18 &&
     colors.every(color => sizes.every(size => p.variants.filter(v =>
       v.option1 === color && v.option2 === size && Number.isSafeInteger(v.id) &&
