@@ -1,3 +1,5 @@
+> Implementation update (23 October 2026): see [Advertising activation](advertising-activation.md) for the current code and required configuration. Historical deployment and environment statements below are not a current credential audit.
+
 # Controlled Meta dataset migration — 21 October 2026
 
 Status: PREPARED, NOT ACTIVATED. This audit supersedes conflicting historical status claims in meta-analytics.md. Do not merge/deploy as a completed tracking migration.

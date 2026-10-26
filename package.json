@@ -13,9 +13,9 @@
     "test:homepage:browser": "node tests/homepage-browser.cjs",
     "test:homepage:booking": "node tests/homepage-booking.cjs",
     "test": "node --import tsx tests/selftest.ts && node --import tsx tests/askccf-regression.ts && node --import tsx tests/acuity-mcp.ts && node --import tsx tests/site-repairs.ts && node --import tsx tests/qa-comprehensive-repairs.ts && node --import tsx tests/live-pricing-parity.ts",
-    "test:analytics": "node --import tsx tests/analytics.ts && node --import tsx tests/analytics-components.tsx && node --import tsx tests/analytics-webhook.ts && node --import tsx tests/visitor-comparison.tsx",
+    "test:analytics": "node --import tsx tests/analytics.ts && node --import tsx tests/analytics-components.tsx && node --import tsx tests/analytics-webhook.ts && node --import tsx tests/visitor-comparison.tsx && node --import tsx tests/acuity-purchase-delivery.ts && node --import tsx tests/analytics-access.ts",
     "test:analytics:browser": "node tests/analytics-browser.cjs",
-    "test:meta": "node --import tsx tests/meta.ts && node --import tsx tests/meta-ads-intelligence.ts && node --import tsx tests/meta-form-lead.ts",
+    "test:meta": "node --import tsx tests/meta.ts && node --import tsx tests/meta-ads-intelligence.ts && node --import tsx tests/meta-form-lead.ts && node --import tsx tests/meta-dashboard.ts",
     "test:meta:browser": "node tests/analytics-browser.cjs && node tests/meta-navigation.cjs",
     "test:meta:migration:browser": "node tests/meta-navigation.cjs && node tests/meta-consent-browser.cjs && node tests/meta-form-browser.cjs"
   },

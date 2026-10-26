@@ -1,4 +1,5 @@
 /** SERVER ONLY. Never imported by the browser analytics layer. */
+import { resolveMetaDatasetId } from "./metaConfig";
 import { sql } from "drizzle-orm";
 import { getDb } from "../db/index";
 import {
@@ -51,7 +52,7 @@ export async function sendMetaConversion(
 > {
   const { env } = deps;
   const token = env("META_CAPI_ACCESS_TOKEN");
-  const pixel = env("NEXT_PUBLIC_META_PIXEL_ID");
+  const pixel = resolveMetaDatasetId(env("NEXT_PUBLIC_META_PIXEL_ID"));
   const version = env("META_GRAPH_API_VERSION");
   if (
     env("META_CAPI_ENABLED") !== "true" ||

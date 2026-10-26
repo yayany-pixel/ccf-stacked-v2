@@ -1,3 +1,5 @@
+import MetaPerformance from "@/components/analytics/MetaPerformance";
+import { resolveMetaDatasetId } from "@/lib/metaConfig";
 import type { Metadata } from "next";
 import Link from "next/link";
 import GlassCard from "@/components/ui/GlassCard";
@@ -68,7 +70,7 @@ export default async function AnalyticsPage() {
                 <div className="text-4xl">📱</div>
                 <h2 className="mt-3 text-xl font-bold text-white">Meta Pixel</h2>
                 <p className="mt-2 text-sm text-white/70">Facebook/Instagram insights</p>
-                <div className="mt-4 text-xs font-mono text-cyan-300">1554498828184467</div>
+                <div className="mt-4 text-xs font-mono text-cyan-300">{resolveMetaDatasetId(process.env.NEXT_PUBLIC_META_PIXEL_ID)}</div>
               </GlassCard>
             </a>
           </Reveal>
@@ -89,6 +91,8 @@ export default async function AnalyticsPage() {
             </a>
           </Reveal>
         </section>
+
+        <MetaPerformance />
 
         {/* Live Visitor Comparison Section */}
         <section className="mt-14">
