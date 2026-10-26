@@ -1,5 +1,6 @@
 "use client";
 
+import MerchandisePromotion from "@/components/MerchandisePromotion";
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -612,6 +613,8 @@ export default function ActivityDetailView({
           </div>
         </div>
       </div>
+
+      <MerchandisePromotion category={activity.category} title={activity.title} />
 
       {/* Mobile Sticky Booking Bar */}
       <div className="fixed bottom-4 left-4 right-4 z-40 sm:hidden">
