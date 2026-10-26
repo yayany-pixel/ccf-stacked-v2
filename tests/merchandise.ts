@@ -1,0 +1,13 @@
+import assert from "node:assert/strict";
+import { MERCHANDISE, validMerchandiseProduct, merchandiseUrl, merchandiseEnabled } from "../lib/merchandise";
+const product = { id: MERCHANDISE.id, title: MERCHANDISE.title, images: ["https://cdn.shopify.com/s/files/tee.png"], variants: ["Pepper", "Espresso", "Moss"].flatMap((color, c) => ["S", "M", "L", "XL", "2XL", "3XL"].map((size, s) => ({ id: c * 6 + s + 1, option1: color, option2: size, available: true, price: size === "3XL" ? 4000 : size === "2XL" ? 3800 : 3600 }))) };
+assert(validMerchandiseProduct(product));
+assert(!validMerchandiseProduct({ ...product, id: 485405194 }));
+assert(!validMerchandiseProduct({ ...product, images: [] }));
+assert(!validMerchandiseProduct({ ...product, variants: product.variants.slice(1) }));
+assert(!validMerchandiseProduct({ ...product, variants: product.variants.map(v => v.option2 === "3XL" ? { ...v, price: 3900 } : v) }));
+assert(!validMerchandiseProduct({ ...product, images: ["https://untrusted.example/art.png"] }));
+assert.equal(new URL(merchandiseUrl("post-class")).searchParams.get("utm_medium"), "email");
+assert.equal(new URL(merchandiseUrl("product")).pathname, "/products/good-with-my-hands-vintage-pottery-tee");
+assert.equal(merchandiseEnabled, process.env.NEXT_PUBLIC_MERCHANDISE_ENABLED === "true");
+console.log("Merchandise identity, variants, prices, images, campaign links and launch gate verified.");
