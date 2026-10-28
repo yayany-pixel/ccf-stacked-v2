@@ -3,6 +3,7 @@ import BrandLogo from "@/components/BrandLogo";
 import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import PrivacyPreferencesButton from "@/components/PrivacyPreferencesButton";
+import GlobalMerchBanner from "@/components/GlobalMerchBanner";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -12,6 +13,8 @@ export default function Footer() {
       <div className="sparkle-noise absolute inset-0 opacity-10" />
       
       <div className="relative z-10 mx-auto max-w-7xl px-6 py-16">
+        <GlobalMerchBanner />
+
         {/* Private Party CTA - Prominent placement */}
         <div className="mb-12">
           <PrivatePartyCTA variant="footer" />

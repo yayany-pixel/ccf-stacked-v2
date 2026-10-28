@@ -7,6 +7,8 @@ import GlassCard from "@/components/ui/GlassCard";
 import TagPill from "@/components/ui/TagPill";
 import Reveal from "@/components/motion/Reveal";
 import LocationModal from "@/components/LocationModal";
+import MerchandiseCard from "@/components/MerchandiseCard";
+
 import PotteryFinishingSection from "@/components/PotteryFinishingSection";
 import type { ActivityDetail } from "@/lib/activityRegistry";
 import type { ActivityPricing } from "@/lib/pricing";
@@ -557,6 +559,9 @@ export default function ActivityDetailView({
                   </Link>
                 )}
               </GlassCard>
+              
+
+              <MerchandiseCard />
 
               {/* Related Activities */}
               {relatedActivities.length > 0 && (
