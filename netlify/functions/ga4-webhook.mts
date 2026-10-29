@@ -232,6 +232,26 @@ export default async function handler(req: Request): Promise<Response> {
       return new Response(`Meta delivery: ${metaResult}`, {
         status: metaResult === "review" ? 502 : 200,
       });
+    // A later booking edit is not a new sale. Verify the payment transactions
+    // and retain the provider payment time for GA4's 72-hour delivery window.
+    const paymentResponse = await fetch(
+      `https://acuityscheduling.com/api/v1/appointments/${id}/payments`,
+      {
+        headers: {
+          Authorization:
+            "Basic " + Buffer.from(`${user}:${apiKey}`).toString("base64"),
+        },
+        signal: AbortSignal.timeout(5000),
+      },
+    );
+    if (!paymentResponse.ok)
+      return new Response("Payment verification unavailable", { status: 502 });
+    const paidAt = verifiedPaymentTime(await paymentResponse.json(), amount);
+    const nowSeconds = Math.floor(Date.now() / 1000);
+    if (paidAt === null || paidAt > nowSeconds)
+      return new Response("Verified payment time unavailable", { status: 202 });
+    if (nowSeconds - paidAt > 72 * 60 * 60)
+      return new Response("Historical payment; not a new purchase", { status: 202 });
     const db = getDb();
     // Atomic insert prevents concurrent deliveries. Ambiguous sends are held for
     // operator reconciliation, never automatically replayed into double revenue.
@@ -250,6 +270,7 @@ export default async function handler(req: Request): Promise<Response> {
         signal: AbortSignal.timeout(10000),
         body: JSON.stringify({
           client_id: `${createHmac("sha256", apiKey).update(transactionId).digest("hex").slice(0, 16)}.1`,
+          timestamp_micros: paidAt * 1_000_000,
           events: [
             {
               name: "purchase",
