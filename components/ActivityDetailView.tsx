@@ -86,6 +86,18 @@ export default function ActivityDetailView({
     } catch {}
   }, [availableCities]);
 
+  // Keep the hero and booking card aligned with the selected city's live price.
+  // Multi-option workshops retain their aggregate "From" pricing.
+  const cityPrice = pricing.variants?.length ? undefined : pricing.destinations[preferredCity];
+  const displayPricing = cityPrice ? {
+    ...pricing,
+    displayPrice: cityPrice.formattedPrice,
+    wasPrice: cityPrice.wasPrice,
+    hasSaleBadge: cityPrice.wasPrice !== null || Boolean(cityPrice.isFlashSale),
+    isFlashSale: cityPrice.isFlashSale,
+    flashSaleLabel: cityPrice.flashSaleLabel,
+  } : pricing;
+
   // Server-render links for the city in the URL so search crawlers and users
   // receive Eugene-only content immediately, without waiting for hydration.
   const visibleLocalGuides = relatedLocalGuides
@@ -131,11 +143,11 @@ export default function ActivityDetailView({
               <div className="flex flex-wrap items-center gap-2">
                 <TagPill>{activity.categoryIcon} {activity.categoryLabel}</TagPill>
                 <TagPill>{activity.locationsOffered}</TagPill>
-                {pricing.isFlashSale || activity.slug === "cat-vase" ? (
+                {displayPricing.isFlashSale || activity.slug === "cat-vase" ? (
                   <span className="rounded-full border border-amber-400/40 bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-200">
-                    ⚡ {pricing.flashSaleLabel || "Flash Sale — $25"}
+                    ⚡ {displayPricing.flashSaleLabel || "Flash Sale — $25"}
                   </span>
-                ) : pricing.hasSaleBadge ? (
+                ) : displayPricing.hasSaleBadge ? (
                   <span className="rounded-full border border-amber-400/40 bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-200">
                     ⚡ Limited-Time Sale
                   </span>
@@ -159,13 +171,13 @@ export default function ActivityDetailView({
 
               {/* Price & Coverage Highlight */}
               <div className="mt-6 flex flex-wrap items-baseline gap-3">
-                {pricing.wasPrice && pricing.displayPrice !== "See price at checkout" && (
+                {displayPricing.wasPrice && displayPricing.displayPrice !== "See price at checkout" && (
                   <del className="font-serif text-xl sm:text-2xl text-white/50" aria-label="Original price">
-                    ${pricing.wasPrice}{" "}
+                    ${displayPricing.wasPrice}{" "}
                   </del>
                 )}
                 <span className="font-serif text-2xl sm:text-3xl font-bold text-amber-300">
-                  {pricing.displayPrice}
+                  {displayPricing.displayPrice}
                 </span>
                 {activity.coversNote && (
                   <span className="rounded-full border border-pink-400/40 bg-pink-500/20 px-3 py-1 text-xs font-semibold text-pink-200">
@@ -500,12 +512,12 @@ export default function ActivityDetailView({
                   {activity.title}
                 </h3>
                 <div className="mt-2 text-sm text-white/75 flex items-center justify-center gap-2">
-                  {pricing.wasPrice && pricing.displayPrice !== "See price at checkout" && (
-                    <del className="text-white/50 text-xs" aria-label="Original price">${pricing.wasPrice}</del>
+                  {displayPricing.wasPrice && displayPricing.displayPrice !== "See price at checkout" && (
+                    <del className="text-white/50 text-xs" aria-label="Original price">${displayPricing.wasPrice}</del>
                   )}
-                  <span className="font-semibold text-amber-300">{pricing.displayPrice}</span>
+                  <span className="font-semibold text-amber-300">{displayPricing.displayPrice}</span>
                 </div>
-                {pricing.hasSaleBadge && (
+                {displayPricing.hasSaleBadge && (
                   <div className="mt-2">
                     <span className="inline-block rounded-full border border-amber-400/40 bg-amber-500/20 px-2.5 py-0.5 text-[11px] font-bold text-amber-200">
                       ⚡ Limited-Time Sale
