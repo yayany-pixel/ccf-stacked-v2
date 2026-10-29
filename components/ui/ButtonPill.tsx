@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useSyncExternalStore } from "react";
+import { bookingReferenceHref, referenceRevision, subscribeBookingReference } from "@/lib/bookingReference";
 import { cn } from "@/lib/utils";
 
 type Variant = "primary" | "secondary" | "ghost" | "romanceCta";
@@ -23,6 +25,8 @@ export default function ButtonPill({
     city: string;
   };
 }) {
+  useSyncExternalStore(subscribeBookingReference, referenceRevision, () => 0);
+  const referencedHref = bookingReferenceHref(href);
   const base =
     "btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20";
 
@@ -39,7 +43,7 @@ export default function ButtonPill({
 
   return (
     <Link 
-      href={href} 
+      href={referencedHref} 
       className={cn(base, styles[variant], full ? "w-full" : "", className)}
       data-class-name={trackingData?.activityName}
       data-city={trackingData?.city}
@@ -49,3 +53,4 @@ export default function ButtonPill({
     </Link>
   );
 }
+

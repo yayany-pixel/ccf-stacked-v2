@@ -1,6 +1,7 @@
 "use client";
 import { trackMetaContact } from "@/lib/metaPixel";
 import { useEffect } from "react";
+import { startBookingReferences } from "@/lib/bookingReference";
 import {
   currentCity,
   detectBookingProvider,
@@ -9,6 +10,7 @@ import {
 } from "@/lib/analytics";
 /** Covers legacy public booking links; explicitly instrumented links opt out. */
 export default function BookingAnalytics() {
+  useEffect(() => startBookingReferences(), []);
   useEffect(() => {
     const click = (event: MouseEvent) => {
       const link = (event.target as Element)?.closest<HTMLAnchorElement>(
@@ -52,3 +54,4 @@ export default function BookingAnalytics() {
   }, []);
   return null;
 }
+

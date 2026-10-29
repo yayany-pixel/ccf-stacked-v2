@@ -21,6 +21,8 @@ function fixture({ paid = 'yes', canceled = false, amount = 55, paymentAmount = 
     Netlify: { env: { get: key => env[key] } },
     ACTIVITY_MANIFEST: [{ appointmentTypeId: 79006071, calendarIds: [12216179], city: 'chicago', title: 'Date Night for Two' }],
     acuityMetaMatch: () => null, console,
+    resolveBookingReference: async () => null, appointmentReference: () => null,
+    purchaseReferenceParams: () => ({}), privacyStore: { read: async () => null },
     sql: (strings, ...values) => ({ strings: strings.join('?'), values }),
     getDb: () => ({ execute: async query => {
       if (query.strings.startsWith('insert')) {
@@ -68,3 +70,4 @@ function fixture({ paid = 'yes', canceled = false, amount = 55, paymentAmount = 
   assert.equal((await valid.request()).status, 200); assert.equal(valid.sent.length, 1, 'duplicate notification must not send again');
   console.log('PASS: 12 payment, authentication, timestamp and duplicate-delivery scenarios; no live requests.');
 })().catch(error => { console.error(error); process.exitCode = 1; });
+

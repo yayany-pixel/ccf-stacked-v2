@@ -9,6 +9,8 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { sql } from "drizzle-orm";
 import { getDb } from "../../db/index";
 import { ACTIVITY_MANIFEST } from "../../lib/homepage/manifest";
+import { appointmentReference, purchaseReferenceParams, resolveBookingReference } from "../../lib/bookingReference.server";
+import { privacyStore } from "../../lib/privacy.server";
 
 /** Acuity native webhook: authenticate exact body, then verify payment via API.
  * Never accept client-submitted purchase values, names, or arbitrary events.
@@ -252,6 +254,14 @@ export default async function handler(req: Request): Promise<Response> {
       return new Response("Verified payment time unavailable", { status: 202 });
     if (nowSeconds - paidAt > 72 * 60 * 60)
       return new Response("Historical payment; not a new purchase", { status: 202 });
+    const bookingReference = await resolveBookingReference(
+      appointmentReference(appointment, env("ACUITY_GA4_REFERENCE_FIELD_ID")),
+      apiKey, nowSeconds, id => privacyStore.read(id),
+    );
+    // An authenticated provider record supplies this reference, never a public
+    // purchase request. Consent is checked again before matching to the visitor.
+    const matchedReference = bookingReference && paidAt >= bookingReference.issuedAt - 60
+      ? bookingReference : null;
     const db = getDb();
     // Atomic insert prevents concurrent deliveries. Ambiguous sends are held for
     // operator reconciliation, never automatically replayed into double revenue.
@@ -269,12 +279,17 @@ export default async function handler(req: Request): Promise<Response> {
         headers: { "Content-Type": "application/json" },
         signal: AbortSignal.timeout(10000),
         body: JSON.stringify({
-          client_id: `${createHmac("sha256", apiKey).update(transactionId).digest("hex").slice(0, 16)}.1`,
+          client_id: matchedReference?.clientId ?? `${createHmac("sha256", apiKey).update(transactionId).digest("hex").slice(0, 16)}.1`,
           timestamp_micros: paidAt * 1_000_000,
+          consent: {
+            ad_user_data: matchedReference?.marketing ? "GRANTED" : "DENIED",
+            ad_personalization: matchedReference?.marketing ? "GRANTED" : "DENIED",
+          },
           events: [
             {
               name: "purchase",
               params: {
+                ...purchaseReferenceParams(matchedReference, paidAt, nowSeconds),
                 transaction_id: transactionId,
                 value: amount,
                 currency: "USD",
@@ -314,3 +329,4 @@ export default async function handler(req: Request): Promise<Response> {
     );
   }
 }
+
