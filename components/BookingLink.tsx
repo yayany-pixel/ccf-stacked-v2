@@ -1,9 +1,10 @@
 "use client";
 
-import { type ReactNode } from 'react';
+import { type ReactNode, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { trackBeginCheckout } from '@/lib/analytics';
 import { useCTATracking } from '@/lib/analyticsHooks';
+import { bookingReferenceHref, referenceRevision, subscribeBookingReference } from '@/lib/bookingReference';
 
 export interface BookingLinkProps {
   href: string;
@@ -84,9 +85,11 @@ export default function BookingLink({
   ctaType = 'primary',
 }: BookingLinkProps) {
   const trackCTA = useCTATracking();
+  useSyncExternalStore(subscribeBookingReference, referenceRevision, () => 0);
+  const referencedHref = bookingReferenceHref(href);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const destinationUrl = getAttributedHref(href);
+    const destinationUrl = bookingReferenceHref(getAttributedHref(href));
 
     // Track begin_checkout event (existing)
     trackBeginCheckout({
@@ -128,7 +131,7 @@ export default function BookingLink({
 
   return (
     <Link
-      href={href} data-analytics-booking="true"
+      href={referencedHref} data-analytics-booking="true"
       className={className}
       onClick={handleClick}
       target={linkTarget}
@@ -139,3 +142,4 @@ export default function BookingLink({
     </Link>
   );
 }
+
