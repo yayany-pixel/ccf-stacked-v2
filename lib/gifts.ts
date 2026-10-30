@@ -544,30 +544,30 @@ export const MANUAL_ACUITY_SETUP_SPECS: ReadonlyArray<ManualAcuityProductSpec> =
     city: "eugene",
     productName: "Their First Pottery Class — Eugene",
     categoryGroup: "Gift Cards",
-    verifiedPrice: "$25.00",
+    verifiedPrice: "$35.00",
     redemptionModel:
-      "Gift Certificate — Dollar Value ($25.00) or 1 Appointment Count (covers 1 guest at an individual wheel)",
-    redemptionValue: "$25.00 (covers full $25.00 Eugene Beginner Wheel ticket for one)",
+      "Gift Certificate — Dollar Value ($35.00) or 1 Appointment Count (covers 1 guest at an individual wheel)",
+    redemptionValue: "$35.00 (covers full $35.00 Eugene Beginner Wheel ticket for one)",
     expiration: "Never expires (null)",
     eligibleAppointmentTypes: [
       {
         id: 93539343,
         name: "Eugene Wheel Throwing for Beginners: Cup creations",
         calendarId: 13582962,
-        price: "$25.00 (for 1 guest)",
+        price: "$35.00 (for 1 guest)",
       },
       {
         id: 89287658,
         name: "Eugene Wheel Throwing for Beginners: Matcha Bowl",
         calendarId: 13582962,
-        price: "$25.00 (for 1 guest)",
+        price: "$35.00 (for 1 guest)",
       },
     ],
     imagePath: "/images/classes/approved-21-e-GdkT-20ed285cc994.webp",
     imageUrl:
       "https://colorcocktailfactory.com/images/classes/approved-21-e-GdkT-20ed285cc994.webp",
     description:
-      "Gift Certificate for Their First Pottery Class at Color Cocktail Factory Eugene (3295 Cross Street, Eugene, OR 97402). Covers 1 guest in Eugene Wheel Throwing for Beginners: Cup Creations or Matcha Bowl ($25.00 value), including 90 minutes of guided instruction at an individual pottery wheel, clay, tools, and cleanup. Recipient chooses their preferred date at https://colorcocktailfactory.as.me/?appointmentType=93539343 and enters their 8-character code at checkout. Optional kiln firing and glazing are paid separately.",
+      "Gift Certificate for Their First Pottery Class at Color Cocktail Factory Eugene (3295 Cross Street, Eugene, OR 97402). Covers 1 guest in Eugene Wheel Throwing for Beginners: Cup Creations or Matcha Bowl ($35.00 value), including 90 minutes of guided instruction at an individual pottery wheel, clay, tools, and cleanup. Recipient chooses their preferred date at https://colorcocktailfactory.as.me/?appointmentType=93539343 and enters their 8-character code at checkout. Optional kiln firing and glazing are paid separately.",
     requiredPurchaseLinkPattern:
       "https://app.acuityscheduling.com/catalog.php?owner=35932879&action=addCart&clear=1&id=<NEW_PRODUCT_ID>",
   },
@@ -575,12 +575,12 @@ export const MANUAL_ACUITY_SETUP_SPECS: ReadonlyArray<ManualAcuityProductSpec> =
     key: "eugene-let-them-choose",
     city: "eugene",
     productName:
-      "Eugene Dollar-Value Gift Cards ($25, $50, $75, $100, $150) — or add Eugene appointment types to existing $50–$250 Gift Cards",
+      "Eugene Dollar-Value Gift Cards ($35, $50, $75, $100, $150) — or add Eugene appointment types to existing $50–$250 Gift Cards",
     categoryGroup: "Gift Cards",
-    verifiedPrice: "$25.00 / $50.00 / $75.00 / $100.00 / $150.00",
+    verifiedPrice: "$35.00 / $50.00 / $75.00 / $100.00 / $150.00",
     redemptionModel:
       "Gift Certificate — Dollar Value (retains unused balance on code; recipient pays difference if workshop exceeds balance)",
-    redemptionValue: "Face value ($25 / $50 / $75 / $100 / $150)",
+    redemptionValue: "Face value ($35 / $50 / $75 / $100 / $150)",
     expiration: "Never expires (null)",
     eligibleAppointmentTypes: [
       {
@@ -593,13 +593,13 @@ export const MANUAL_ACUITY_SETUP_SPECS: ReadonlyArray<ManualAcuityProductSpec> =
         id: 93539343,
         name: "Eugene Wheel Throwing for Beginners: Cup creations",
         calendarId: 13582962,
-        price: "$25.00 (per person)",
+        price: "$35.00 (per person)",
       },
       {
         id: 89287658,
         name: "Eugene Wheel Throwing for Beginners: Matcha Bowl",
         calendarId: 13582962,
-        price: "$25.00 (per person)",
+        price: "$35.00 (per person)",
       },
       {
         id: 90210750,
@@ -803,8 +803,8 @@ export function resolveGiftExperiences(
       Array.isArray(p.appointmentTypeIDs) &&
       (p.appointmentTypeIDs.includes(93539343) ||
         p.appointmentTypeIDs.includes(89287658)) &&
-      ((Number(p.price) === 25 &&
-        (p.value === 25 || p.counts === 1 || p.appointmentTypeIDs.length <= 4)) ||
+      ((Number(p.price) === 35 &&
+        (p.value === 35 || p.counts === 1 || p.appointmentTypeIDs.length <= 4)) ||
         (/first pottery|beginner.*wheel/i.test(p.name) &&
           /eugene/i.test(p.name))),
   );
@@ -861,9 +861,9 @@ export function resolveGiftExperiences(
         purchaseUrl: buildAcuityProductPurchaseUrl(p.id),
         coverageSummary:
           amount >= 50
-            ? `Covers Eugene Date Night on the Wheel ($50 for two) or two $25 Eugene Beginner Wheel classes.`
-            : `Covers one $25 Eugene Beginner Wheel class (Cup Creations or Matcha Bowl).`,
-        coversCompleteClass: amount >= 25,
+            ? `Covers Eugene Date Night on the Wheel ($50 for two) or two $35 Eugene Beginner Wheel classes.`
+            : `Covers one $35 Eugene Beginner Wheel class (Cup Creations or Matcha Bowl).`,
+        coversCompleteClass: amount >= 35,
       };
     },
   );
@@ -1047,8 +1047,8 @@ export function resolveGiftExperiences(
           city: "eugene",
           studioLabel: "Eugene, OR",
           studioAddress: STUDIO_LOCATIONS.eugene.address,
-          price: 25,
-          formattedPrice: "$25",
+          price: 35,
+          formattedPrice: "$35",
           priceUnitLabel: "for 1 guest (individual wheel)",
           guestsCovered: 1,
           guestsCoveredLabel: "1 guest (individual wheel)",
@@ -1057,14 +1057,14 @@ export function resolveGiftExperiences(
               id: 93539343,
               name: "Eugene Wheel Throwing for Beginners: Cup creations",
               calendarId: 13582962,
-              price: 25,
+              price: 35,
               unit: "per person",
             },
             {
               id: 89287658,
               name: "Eugene Wheel Throwing for Beginners: Matcha Bowl",
               calendarId: 13582962,
-              price: 25,
+              price: 35,
               unit: "per person",
             },
           ],
@@ -1083,7 +1083,7 @@ export function resolveGiftExperiences(
           ],
           finishingDisclosure: POTTERY_FINISHING_DISCLOSURE,
           bookingModelNote:
-            "Covers 1 guest in Eugene Wheel Throwing for Beginners: Cup creations (ID 93539343, $25.00) or Matcha Bowl (ID 89287658, $25.00) on Eugene Calendar 13582962.",
+            "Covers 1 guest in Eugene Wheel Throwing for Beginners: Cup creations (ID 93539343, $35.00) or Matcha Bowl (ID 89287658, $35.00) on Eugene Calendar 13582962.",
           status: eugeneBeginnerCert ? "active" : "pending_acuity_setup",
           acuityProductId: eugeneBeginnerCert?.id ?? null,
           purchaseUrl: eugeneBeginnerCert
@@ -1091,7 +1091,7 @@ export function resolveGiftExperiences(
             : null,
           pendingSetupReason: eugeneBeginnerCert
             ? null
-            : "Unfinished Acuity Setup: No active Acuity gift certificate currently includes Eugene Beginner Wheel (IDs 93539343 & 89287658) in its eligible appointment types. Purchase button is disabled until the $25 Eugene Beginner Pottery certificate is created in Acuity Admin.",
+            : "Unfinished Acuity Setup: No active Acuity gift certificate currently includes Eugene Beginner Wheel (IDs 93539343 & 89287658) in its eligible appointment types. Purchase button is disabled until the $35 Eugene Beginner Pottery certificate is created in Acuity Admin.",
         },
       },
     },
@@ -1139,7 +1139,7 @@ export function resolveGiftExperiences(
             "Note: Acuity checkout supports fixed denominations ($50–$250) rather than custom arbitrary dollar entries",
           ],
           finishingDisclosure:
-            "For glass, mosaic, bonsai, terrarium, candle, and soap workshops, all take-home materials are included in the class price. For pottery workshops, kiln firing and glazing are optional and paid separately ($10 bisque, $20 solid glaze, $35 specialty glaze, $50 gold glaze per piece in studio, or $25/piece via Acuity checkout add-on).",
+            "For glass, mosaic, bonsai, terrarium, candle, and soap workshops, all take-home materials are included in the class price. For pottery workshops, kiln firing and glazing are optional and paid separately ($10 bisque, $20 solid glaze, $35 specialty glaze, $50 gold glaze per piece in studio, or $35/piece via Acuity checkout add-on).",
           bookingModelNote:
             "Verified active in Acuity: Product IDs 2119866 ($50), 2119869 ($100), 2119870 ($150), 2119872 ($200), and 2119873 ($250).",
           status:
@@ -1159,11 +1159,11 @@ export function resolveGiftExperiences(
           formattedPrice:
             eugeneDenominations.length > 0
               ? `$${eugeneDenominations[0].amount}–$${eugeneDenominations[eugeneDenominations.length - 1].amount}`
-              : "$25–$150",
+              : "$35–$150",
           priceUnitLabel: "flexible Eugene studio credit",
           guestsCovered: 1,
           guestsCoveredLabel:
-            "1 or 2+ guests depending on denomination (Eugene classes range from $25 to $120)",
+            "1 or 2+ guests depending on denomination (Eugene classes range from $35 to $120)",
           eligibleAppointmentTypes: [
             {
               id: 91935746,
@@ -1176,14 +1176,14 @@ export function resolveGiftExperiences(
               id: 93539343,
               name: "Eugene Wheel Throwing for Beginners: Cup creations",
               calendarId: 13582962,
-              price: 25,
+              price: 35,
               unit: "per person",
             },
             {
               id: 89287658,
               name: "Eugene Wheel Throwing for Beginners: Matcha Bowl",
               calendarId: 13582962,
-              price: 25,
+              price: 35,
               unit: "per person",
             },
             {
@@ -1223,8 +1223,8 @@ export function resolveGiftExperiences(
             focalPosition: "60% 50%",
           },
           included: [
-            "Flexible dollar credit toward Eugene pottery, handbuilding, painting, and wood workshops ($25–$120)",
-            "Monetary credit vs. complete class: $25 covers one Eugene Beginner Wheel class; $50 covers Eugene Date Night for Two ($50) or one $45 handbuilding class with $5 left over",
+            "Flexible dollar credit toward Eugene pottery, handbuilding, painting, and wood workshops ($35–$120)",
+            "Monetary credit vs. complete class: $35 covers one Eugene Beginner Wheel class; $50 covers Eugene Date Night for Two ($50) or one $45 handbuilding class with $5 left over",
             "Unused balance stays on the certificate code; if a workshop costs more, the recipient pays the difference at checkout",
           ],
           finishingDisclosure: POTTERY_FINISHING_DISCLOSURE,
@@ -1314,7 +1314,7 @@ export function getClassGiftingContext(
           : slug === "matcha-bowl"
             ? "Beginner Wheel: Matcha Bowl"
             : "Wheel Throwing for Beginners",
-      recommendedDenomination: resolvedCity === "chicago" ? 50 : 25,
+      recommendedDenomination: resolvedCity === "chicago" ? 50 : 35,
     };
   }
 
@@ -1354,7 +1354,7 @@ export const GIFT_FAQS: ReadonlyArray<{ q: string; a: string }> = [
   },
   {
     q: "Which studio and classes are covered?",
-    a: "Studio eligibility is strictly separated between Chicago (1142 W. 18th Street, Pilsen) and Eugene (3295 Cross Street, Eugene, OR). Our currently active $50–$250 Acuity Gift Cards (IDs 2119866–2119873) are configured and verified for 19 Chicago studio workshops (including Date Night on the Pottery Wheel, Wheel Throwing for Beginners, Ceramic Mug & Bowl, Mosaic Creations, Glass Fusion, Hanging Turkish Mosaic Lamp, Wine Glass Painting, Bonsai, Terrarium, Candle Making, and Soap Making). Dedicated experience certificates for Pottery Date Night for Two ($55 Chicago / $50 Eugene), Their First Pottery Class ($45 Chicago / $25 Eugene), and Eugene workshop gift cards require manual product creation in Acuity Admin before checkout is enabled.",
+    a: "Studio eligibility is strictly separated between Chicago (1142 W. 18th Street, Pilsen) and Eugene (3295 Cross Street, Eugene, OR). Our currently active $50–$250 Acuity Gift Cards (IDs 2119866–2119873) are configured and verified for 19 Chicago studio workshops (including Date Night on the Pottery Wheel, Wheel Throwing for Beginners, Ceramic Mug & Bowl, Mosaic Creations, Glass Fusion, Hanging Turkish Mosaic Lamp, Wine Glass Painting, Bonsai, Terrarium, Candle Making, and Soap Making). Dedicated experience certificates for Pottery Date Night for Two ($55 Chicago / $50 Eugene), Their First Pottery Class ($45 Chicago / $35 Eugene), and Eugene workshop gift cards require manual product creation in Acuity Admin before checkout is enabled.",
   },
   {
     q: "Does a dollar-value gift card guarantee a full class, or might there be a balance due?",

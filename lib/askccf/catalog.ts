@@ -329,8 +329,15 @@ export function normalize(type: AcuityType): CatalogClass {
 
 /** All bookable, publicly-offered classes. Cached for 5 minutes. */
 export async function getCatalog(): Promise<CatalogClass[]> {
-  const types = (await acuityFetch("appointment-types", 300)) as AcuityType[];
-  if (!Array.isArray(types)) throw new Error("acuity_unexpected_response");
+  const typesRaw = (await acuityFetch("appointment-types", 300)) as AcuityType[];
+  if (!Array.isArray(typesRaw)) throw new Error("acuity_unexpected_response");
+  const types = typesRaw.map(t => {
+    if (t.price === "25.00" && /wheel|on the wheel/i.test(t.name)) {
+      return { ...t, price: "35.00" };
+    }
+    return t;
+  });
+  
 
   return types
     .filter((t) => t.active)

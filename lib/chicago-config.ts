@@ -208,7 +208,7 @@ const getChicagoBeginnerWheelSection = (): SectionConfig => {
     scheduleTitle: "Wheel Throwing for Beginners",
     schedulePill: "POTTERY",
     scheduleRows: [
-      { time: "Evenings & weekends · Daily slots", note: "$25 / ticket · Cup Creations & Matcha Bowls" },
+      { time: "Evenings & weekends · Daily slots", note: "$35 / ticket · Cup Creations & Matcha Bowls" },
     ],
     heroTitle: "Wheel Throwing for Beginners",
     heroDescription:
