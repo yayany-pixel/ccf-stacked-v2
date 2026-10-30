@@ -6,9 +6,9 @@ ID: 97804677, Price: 150.00, Name: Date night Art Session
 ID: 97840100, Price: 450.00, Name: UChicago CEO Teambuilding
 ID: 97932409, Price: 45.00, Name: Charlotte’s 8th birthday
 ID: 98918350, Price: 45.00, Name: Mercy Home for Boys and Girls
-ID: 94782668, Price: 25.00, Name: Wheel Throwing for Beginners -Cup Creations
+ID: 94782668, Price: 35.00, Name: Wheel Throwing for Beginners -Cup Creations
 ID: 94782793, Price: 30.00, Name: Wheel Throwing for Beginners -Make Your Own Matcha Bowl
-ID: 94782880, Price: 25.00, Name: Wheel Throwing for Beginners -Vase Making
+ID: 94782880, Price: 35.00, Name: Wheel Throwing for Beginners -Vase Making
 ID: 94930972, Price: 50.00, Name: Chicago Date Night Pottery
 ID: 94935292, Price: 75.00, Name: Date Night Watercolor Painting for Two - Chicago
 ID: 95023345, Price: 200.00, Name: Date Night On Fire - VIP EXPERIENCE
@@ -18,7 +18,7 @@ ID: 95588506, Price: 45.00, Name: Spin A Spell- Make your Own Clay Cauldron
 ID: 95806344, Price: 60.00, Name: Make And Paint - Wheel throwing
 ID: 95840864, Price: 30.00, Name: Private Event Emily's Bachelorette Make Your Own Matcha Bowl
 ID: 95894050, Price: 90.00, Name: Date Night Turkish Mosaic Lamp - Chicago
-ID: 95911163, Price: 25.00, Name: Open Studio Wheel throwing
+ID: 95911163, Price: 35.00, Name: Open Studio Wheel throwing
 ID: 95947521, Price: 50.00, Name: Water Color For Beginners
 ID: 96113161, Price: 15.00, Name: FLASH SALE BEGINNERS WHEEL THROWING
 ID: 96474464, Price: 45.00, Name: Wheel Throwing for Beginners - Fat Belly Mugs
@@ -49,7 +49,7 @@ ID: 98323116, Price: 45.00, Name: MAKE YOUR PET  IN CLAY
 ID: 98407830, Price: 300.00, Name: Elizabeths Bachlorette
 ID: 98548612, Price: 60.00, Name: Throw A Pumpkin On The Wheel
 ID: 98635104, Price: 45.00, Name: Ja’Mahria Celebration
-ID: 79006616, Price: 25.00, Name: Wheel Throwing for Beginners - Chicago
+ID: 79006616, Price: 35.00, Name: Wheel Throwing for Beginners - Chicago
 ID: 79006071, Price: 55.00, Name: Date Night on the Pottery Wheel - Chicago
 ID: 79186725, Price: 35.00, Name: Ceramic Mug and a Bowl - Chicago
 ID: 79188421, Price: 35.00, Name: Pipe and Ashtray Making Class - Chicago
@@ -70,7 +70,7 @@ ID: 79185767, Price: 35.00, Name: Candle Making - Chicago
 ID: 79274876, Price: 45.00, Name: Soap Making - Chicago
 ID: 91154739, Price: 45.00, Name: Eugene Make Your Own Matcha Bowl
 ID: 92719840, Price: 45.00, Name: Mothers Day Wheel Share
-ID: 92719951, Price: 25.00, Name: Mothers Day Wheel Throwing for Beginners
+ID: 92719951, Price: 35.00, Name: Mothers Day Wheel Throwing for Beginners
 ID: 92720069, Price: 50.00, Name: Eugene: Mothers Day Pottery Hand-building
 ID: 95909935, Price: 35.00, Name: Wine Glass Painting
 ID: 96478474, Price: 40.00, Name: Water Color for beginners
@@ -83,14 +83,14 @@ ID: 90210750, Price: 45.00, Name: Eugene: Ceramic Mug and a Bowl
 ID: 90211026, Price: 45.00, Name: Eugene Pipe and Ashtray Making Class
 ID: 90532757, Price: 35.00, Name: Eugene Mushroom Pottery
 ID: 91935746, Price: 50.00, Name: Eugene Date Night On The Wheel
-ID: 93539343, Price: 25.00, Name: Eugene Wheel Throwing for Beginners: Cup creations
+ID: 93539343, Price: 35.00, Name: Eugene Wheel Throwing for Beginners: Cup creations
 ID: 94058109, Price: 100.00, Name: VIP Date Night Paint Night
 ID: 94058299, Price: 120.00, Name: Date Night Bonsai VIP
 ID: 94932997, Price: 75.00, Name: Date Night Watercolor Painting for Two - Eugene
 ID: 96657402, Price: 45.00, Name: Spin A Spell- Make your Own Clay Cauldron
 ID: 97861588, Price: 85.00, Name: Date Night: Make Your Own Ceramic Chess Set ♟️
 ID: 98334198, Price: 30.00, Name: Eugene Duck Soap holder 
-ID: 89287658, Price: 25.00, Name: Eugene Wheel Throwing for Beginners: Matcha Bowl
+ID: 89287658, Price: 35.00, Name: Eugene Wheel Throwing for Beginners: Matcha Bowl
 ID: 89290193, Price: 50.00, Name: Eugene 🌿 Date Night Terrarium Workshop
 ID: 99467538, Price: 20.00, Name: Make Your Own Ghost Tic-Tac-Toe Game
 ID: 98770334, Price: 29.00, Name: Make a Clay Cauldron — Live Online Halloween Workshop

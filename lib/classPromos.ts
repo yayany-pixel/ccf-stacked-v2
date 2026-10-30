@@ -35,7 +35,7 @@ export const POPULAR_CROSS_CLASSES: ClassPromoLink[] = [
     title: "Wheel Throwing for Beginners: Matcha Bowl",
     category: "Pottery",
     acuityUrl: "https://colorcocktailfactory.as.me/eugenewheelthrowing",
-    price: "$25",
+    price: "$35",
     city: "Both",
   },
   {

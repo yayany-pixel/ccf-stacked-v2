@@ -56,7 +56,7 @@ const getEugeneBeginnerWheelSection = (): SectionConfig => {
     scheduleTitle: "Wheel Throwing for Beginners",
     schedulePill: "POTTERY",
     scheduleRows: [
-      { time: "Evenings & weekends · 7:00 PM", note: "$25 / person · Matcha Bowls & Cup Creations" },
+      { time: "Evenings & weekends · 7:00 PM", note: "$35 / person · Matcha Bowls & Cup Creations" },
     ],
     heroTitle: "Wheel Throwing for Beginners",
     heroDescription:

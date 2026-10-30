@@ -172,14 +172,14 @@ export const CCF_AD_BLUEPRINTS: MetaAdCreativeBlueprint[] = [
     classSlug: "matcha-bowl",
     category: "Pottery",
     targetCity: "both",
-    priceText: "$25/person",
+    priceText: "$35/person",
     primaryTexts: [
-      "Always wanted to try the pottery wheel without committing to an expensive 6-week course? Craft your very own ceramic matcha bowl for just $25! 🍵",
+      "Always wanted to try the pottery wheel without committing to an expensive 6-week course? Craft your very own ceramic matcha bowl for just $35! 🍵",
       "Learn centering, opening, and shaping on the wheel in a fun 90-minute workshop. Perfect for beginners who want a quick, affordable taste of wheel throwing.",
-      "Try the pottery wheel for $25. Spots in Eugene and Chicago are open now—grab yours before they're booked!",
+      "Try the pottery wheel for $35. Spots in Eugene and Chicago are open now—grab yours before they're booked!",
     ],
     headlines: [
-      "Wheel Throwing for $25 🍵",
+      "Wheel Throwing for $35 🍵",
       "Beginner Wheel: Craft a Matcha Bowl",
       "Try the Pottery Wheel for Under $30",
     ],
@@ -254,7 +254,7 @@ export function formatAdAccountId(rawId: string): string {
 
 /**
  * Dynamically computes a daily budget distribution plan across the blueprints
- * according to the provided daily budget (e.g. $5, $10, $15, $25).
+ * according to the provided daily budget (e.g. $5, $10, $15, $35).
  */
 export function generateDailyBudgetPlan(totalDailyBudget: number = 10) {
   const budget = Math.max(totalDailyBudget, 3);

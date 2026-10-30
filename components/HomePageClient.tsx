@@ -496,7 +496,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
             <article className={styles.giftFeatureCard}>
               <div>
                 <div className={styles.giftFeatureMeta}>
-                  {city === "chicago" ? "$45 per person · Chicago — Pilsen" : "$25 per person · Eugene, OR"} · Covers 1 Guest (Individual Wheel)
+                  {city === "chicago" ? "$45 per person · Chicago — Pilsen" : "$35 per person · Eugene, OR"} · Covers 1 Guest (Individual Wheel)
                 </div>
                 <h3>Their First Pottery Class (Beginner Pottery)</h3>
                 <p className={styles.giftFeatureCopy}>
