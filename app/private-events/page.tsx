@@ -6,6 +6,7 @@ import Reveal from "@/components/motion/Reveal";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
 import { cities } from "@/lib/links";
 import type { City } from "@/lib/config";
+import { CHICAGO_MILESTONES } from "@/lib/studioMilestones";
 
 export const metadata: Metadata = {
   title: "Private Events & Parties",
@@ -348,16 +349,16 @@ export default function PrivateEventsPage({
           <div className="mx-auto max-w-7xl px-6">
             <div className="grid gap-8 md:grid-cols-3">
               <div className="text-center">
-                <div className="text-4xl font-bold text-purple-300">500+</div>
-                <div className="mt-2 text-sm text-white/70">Private Events Hosted</div>
+                <div className="text-4xl font-bold text-purple-300">{CHICAGO_MILESTONES.customers}</div>
+                <div className="mt-2 text-sm text-white/70">Customers Served in Chicago</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-pink-300">4.9★</div>
-                <div className="mt-2 text-sm text-white/70">Average Group Rating</div>
+                <div className="text-4xl font-bold text-pink-300">{CHICAGO_MILESTONES.rating}★</div>
+                <div className="mt-2 text-sm text-white/70">Chicago Average Rating</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold text-cyan-300">15K+</div>
-                <div className="mt-2 text-sm text-white/70">Happy Guests Served</div>
+                <div className="text-4xl font-bold text-cyan-300">{CHICAGO_MILESTONES.since}</div>
+                <div className="mt-2 text-sm text-white/70">Serving Chicago Since</div>
               </div>
             </div>
           </div>

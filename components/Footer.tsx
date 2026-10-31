@@ -4,6 +4,7 @@ import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import PrivacyPreferencesButton from "@/components/PrivacyPreferencesButton";
 import GlobalMerchBanner from "@/components/GlobalMerchBanner";
+import { CHICAGO_MILESTONES } from "@/lib/studioMilestones";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -33,6 +34,9 @@ export default function Footer() {
             </div>
             <p className="mt-4 text-sm leading-relaxed text-white/70">
               Expert-led creative workshops in Chicago & Eugene. Pottery, glass art, mosaics, and more.
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-white/80">
+              {CHICAGO_MILESTONES.summary}
             </p>
           </div>
 

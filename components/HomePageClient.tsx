@@ -17,6 +17,7 @@ import styles from "./HomePageClient.module.css";
 import { HOMEPAGE_REVIEWS } from "@/lib/homepage/reviews";
 import { PRIVACY_EVENT } from "@/lib/privacy";
 import WorkshopSaleBanner from "@/components/WorkshopSaleBanner";
+import { CHICAGO_MILESTONES } from "@/lib/studioMilestones";
 
 function getActivityCardMeta(activity: HomepageActivity): {
   displayPrice: string;
@@ -369,6 +370,11 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
       </header>
       <main tabIndex={-1} id="main-content" className={styles.main}>
         <div className={styles.intro}><h1>The future is <em>handmade</em> in {studio.label}...</h1><p>Pottery &amp; creative workshops. Come make something together.</p></div>
+        {city === "chicago" && <section className={styles.studioMilestones} aria-label="Our Chicago studio at a glance">
+          <p><strong>{CHICAGO_MILESTONES.customers}</strong> customers served in Chicago</p>
+          <p><strong>{CHICAGO_MILESTONES.rating}<span aria-hidden="true"> ★</span></strong> average rating</p>
+          <p>Creating together since <strong>{CHICAGO_MILESTONES.since}</strong></p>
+        </section>}
         <WorkshopSaleBanner />
         <div className={styles.saleCalloutRow}>
           <button

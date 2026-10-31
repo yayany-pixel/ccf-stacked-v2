@@ -3,6 +3,7 @@
 import { useState } from "react";
 import GlassCard from "@/components/ui/GlassCard";
 import Reveal from "@/components/motion/Reveal";
+import { CHICAGO_MILESTONES } from "@/lib/studioMilestones";
 
 type Testimonial = {
   id: number;
@@ -54,13 +55,13 @@ export default function Testimonials() {
           <div className="text-center">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-xl">
               <span className="text-yellow-400">★★★★★</span>
-              <span>4.9/5 Rating</span>
+              <span>{CHICAGO_MILESTONES.rating}/5 Chicago average rating</span>
             </div>
             <h2 className="mt-6 font-serif text-4xl font-bold sm:text-5xl">
               What Our Customers Say
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-white/75">
-              Join 150,000+ happy customers who've discovered their creative side
+              {CHICAGO_MILESTONES.summary}
             </p>
           </div>
         </Reveal>
