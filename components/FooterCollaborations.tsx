@@ -45,13 +45,13 @@ export default function FooterCollaborations() {
         </p>
       </div>
 
-      <ul aria-label="Organizations that booked creative experiences" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <ul aria-label="Organizations that booked creative experiences" className="collaboration-grid grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         {WORKSHOP_ORGANIZATIONS.map((organization) => <OrganizationCard key={organization.name} organization={organization} />)}
       </ul>
 
       <div className="mt-8">
         <h3 className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.18em] text-white/70">Booking partners</h3>
-        <ul aria-label="Workshop booking partners" className="mx-auto grid max-w-2xl grid-cols-1 gap-3 min-[360px]:grid-cols-3">
+        <ul aria-label="Workshop booking partners" className="collaboration-grid mx-auto grid max-w-2xl grid-cols-1 gap-3 min-[360px]:grid-cols-3">
           {BOOKING_PARTNERS.map((organization) => <OrganizationCard key={organization.name} organization={organization} />)}
         </ul>
       </div>
