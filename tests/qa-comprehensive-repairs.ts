@@ -186,6 +186,8 @@ async function runQASuite() {
   // 16. Existing analytics events do not fire twice
   console.log("16. Verifying analytics deduplication...");
   const analyticsCalls: any[] = [];
+  const previousGaId = process.env.NEXT_PUBLIC_GA_ID_1;
+  process.env.NEXT_PUBLIC_GA_ID_1 = "G-TESTONLY";
   const prevWindow = (globalThis as any).window;
   (globalThis as any).document = { referrer: "", title: "Cup Creations" };
   (globalThis as any).location = new URL("https://colorcocktailfactory.com/activities/cup-creations");
@@ -204,6 +206,8 @@ async function runQASuite() {
     "Consecutive duplicate page_view events must be deduplicated"
   );
   console.log("✓ Analytics deduplication logic verified.\n");
+  if (previousGaId === undefined) delete process.env.NEXT_PUBLIC_GA_ID_1;
+  else process.env.NEXT_PUBLIC_GA_ID_1 = previousGaId;
 
   // 17. Existing homepage activity-card order matches updated priority
   console.log("17. Verifying homepage activity-card order matches updated priority...");

@@ -83,7 +83,7 @@ export function getPostUpdatedAt(post: BlogPost): string {
  * `image` should be left undefined until a unique image is available;
  * getPostImage() will fall back to DEFAULT_BLOG_IMAGE (/og-image.jpg).
  */
-const registeredBlogPosts: BlogPost[] = [
+const registeredBlogPosts: BlogPost[] = ([
   {
     slug: "japanese-warrior-cedar-bonsai",
     title: "Japanese Warrior Cedar Bonsai: Small Tree, Big Presence",
@@ -381,12 +381,12 @@ const registeredBlogPosts: BlogPost[] = [
       "pilsen-student-guide",
     ],
   },
-].map((post) => post.relatedActivitySlugs.includes("glass-blowing")
+] satisfies BlogPost[]).map((post) => post.relatedActivitySlugs.includes("glass-blowing")
   ? { ...post, indexable: false }
   : post);
 
 /** Missing posts are excluded; existing posts default to indexable. */
-export function isIndexable(post: BlogPost | undefined): post is BlogPost {
+export function isIndexable(post: BlogPost | undefined): boolean {
   return post !== undefined && post.indexable !== false;
 }
 
@@ -421,7 +421,7 @@ export function getBlogPostsByAuthor(authorSlug: string): BlogPost[] {
 export function getRelatedPosts(post: BlogPost): BlogPost[] {
   return post.relatedPostSlugs
     .map((s) => getBlogPostBySlug(s))
-    .filter(isIndexable);
+    .filter((post): post is BlogPost => post !== undefined && isIndexable(post));
 }
 
 /** Convenience: returns the author record for a post (or undefined). */

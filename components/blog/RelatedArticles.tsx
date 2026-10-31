@@ -21,7 +21,7 @@ export default function RelatedArticles({
 }: Props) {
   const items: BlogPost[] = slugs
     .map((s) => getBlogPostBySlug(s))
-    .filter(isIndexable);
+    .filter((post): post is BlogPost => post !== undefined && isIndexable(post));
 
   if (items.length === 0) return null;
 
