@@ -7,6 +7,8 @@ export type BlogCity = "chicago" | "eugene" | null;
 
 export type BlogPost = {
   slug: string;
+  /** Omitted means indexable. False keeps the URL live but out of discovery. */
+  indexable?: boolean;
   title: string;
   /**
    * Optional shorter title for <title> and search snippets. When set,
@@ -379,7 +381,14 @@ export const blogPosts: BlogPost[] = [
       "pilsen-student-guide",
     ],
   },
-];
+].map((post) => post.relatedActivitySlugs.includes("glass-blowing")
+  ? { ...post, indexable: false }
+  : post);
+
+/** Missing posts are excluded; existing posts default to indexable. */
+export function isIndexable(post: BlogPost | undefined): post is BlogPost {
+  return post !== undefined && post.indexable !== false;
+}
 
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
   return blogPosts.find((post) => post.slug === slug);
@@ -391,6 +400,10 @@ export function getAllBlogPosts(): BlogPost[] {
       new Date(getPostPublishedAt(b)).getTime() -
       new Date(getPostPublishedAt(a)).getTime()
   );
+}
+
+export function getIndexableBlogPosts(): BlogPost[] {
+  return getAllBlogPosts().filter(isIndexable);
 }
 
 export function getBlogPostsByAuthor(authorSlug: string): BlogPost[] {
