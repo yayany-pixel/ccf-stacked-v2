@@ -379,6 +379,7 @@ export default function AskCCFWidget() {
       {open ? (
         <div
           id="ask-ccf-panel"
+          data-clarity-mask="true"
           role="dialog"
           aria-label="Studio help — CCF AI assistant"
           style={mobileViewport ?? undefined}

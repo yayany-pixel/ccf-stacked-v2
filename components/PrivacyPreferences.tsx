@@ -96,7 +96,7 @@ export default function PrivacyPreferences() {
     }
   }
 
-  const explanation = "Essential features keep the site working. Optional analytics and advertising measurement stay off until your saved choices are loaded or you choose to enable them below. Your choices are saved for 180 days using an essential preference cookie and an anonymous record.";
+  const explanation = "Essential features keep the site working. Optional analytics (including Microsoft Clarity heatmaps and session replays) and advertising measurement stay off until your saved choices are loaded or you choose to enable them below. Your choices are saved for 180 days using an essential preference cookie and an anonymous record.";
 
   return (
     <>
@@ -120,12 +120,13 @@ export default function PrivacyPreferences() {
         <fieldset disabled={saving || signalDenied} className={styles.options}>
           <legend>Optional tracking</legend>
           <label><input type="checkbox" checked={choices.analytics} onChange={event => setChoices(previous => ({ ...previous, analytics: event.target.checked }))} />
-            <span><strong>Analytics</strong><span>Help us understand which workshops and pages visitors find useful.</span></span>
+            <span><strong>Analytics</strong><span>Help us understand which workshops and pages visitors find useful, including clicks, scrolling, and session replays with Microsoft Clarity. Form entries and studio chat content are masked.</span></span>
           </label>
           <label><input type="checkbox" checked={choices.marketing} onChange={event => setChoices(previous => ({ ...previous, marketing: event.target.checked }))} />
             <span><strong>Advertising</strong><span>Allow Google Ads and Meta to measure advertising and conversions.</span></span>
           </label>
         </fieldset>
+        <p>When you enable analytics, Microsoft Clarity receives website interaction data to help us improve the site. You can turn this off here anytime. Read the <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement</a>.</p>
         {error && <p role="alert" className={styles.error}>{error}</p>}
         <div className={styles.actions}>
           <button type="button" disabled={saving} onClick={() => save(choices)}>{saving ? "Saving…" : "Save choices"}</button>

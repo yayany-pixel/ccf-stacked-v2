@@ -127,7 +127,7 @@ export default function PrivateEventFormCard({
         </div>
       </div>}
 
-      <form 
+      <form data-clarity-mask="true"
         name="private-party" 
         method="POST" 
         data-netlify="true" 

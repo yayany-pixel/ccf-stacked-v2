@@ -53,7 +53,7 @@ export default function NewsletterSignup() {
               </p>
             </div>
 
-            <form 
+            <form data-clarity-mask="true"
               name="newsletter" 
               method="POST" 
               data-netlify="true" 

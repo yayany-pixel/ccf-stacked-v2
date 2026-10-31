@@ -120,7 +120,7 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
 
   // ── Form ───────────────────────────────────────────────────────────────────
   return (
-    <form
+    <form data-clarity-mask="true"
       name="birthday-party"
       method="POST"
       data-netlify="true"

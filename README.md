@@ -51,3 +51,19 @@ Update the destination inbox in:
 ```bash
 npm run test
 ```
+
+
+## Microsoft Clarity
+
+Project `z6g09sfgcy` records consenting visits on `colorcocktailfactory.com` and
+`www.colorcocktailfactory.com`. Preview/local domains do not load the tag.
+`MicrosoftClarity` listens to the existing privacy preference event and forwards
+analytics/advertising choices through Consent V2. Revocation also calls `stop`
+because denying cookie consent alone allows cookieless collection. Reconsent
+resumes the existing tracker without injecting a duplicate script.
+
+Keep Clarity Settings → Setup → Cookies **Off** so cookies require the explicit
+consent signal. Balanced masking remains enabled; forms and studio chat have
+additional masking. Analytics, instructor/recruitment, API, booking redirects,
+and thank-you routes are excluded. The external Acuity checkout is not recorded
+by this installation. Run `npm run test:clarity` for consent lifecycle checks.
