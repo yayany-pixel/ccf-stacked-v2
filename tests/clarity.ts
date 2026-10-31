@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { clarityPageAllowed, createClarityController, CLARITY_PROJECT_ID } from "../lib/clarity";
+import { cookieSettingsChoices } from "../lib/privacy";
 
 const tags: any[] = [];
 const fakeWindow = {
@@ -14,8 +15,14 @@ Object.defineProperty(globalThis, "document", { value: {
 }, configurable: true });
 
 const sync = createClarityController();
+assert.deepEqual(cookieSettingsChoices(null, false), { analytics: true, marketing: true });
+assert.deepEqual(cookieSettingsChoices(undefined, false), { analytics: false, marketing: false });
+assert.deepEqual(cookieSettingsChoices(null, true), { analytics: false, marketing: false });
+assert.deepEqual(cookieSettingsChoices({ analytics: false, marketing: false }, false), { analytics: false, marketing: false });
+assert.deepEqual(cookieSettingsChoices({ analytics: true, marketing: false }, false), { analytics: true, marketing: false });
 sync();
 assert.equal(tags.length, 0, "No tracker before consent");
+assert.deepEqual(fakeWindow.ccfPrivacyPreferences, { analytics: false, marketing: false }, "Draft preselection must not grant consent");
 fakeWindow.ccfPrivacyPreferences.analytics = true;
 sync();
 assert.equal(tags.length, 1);

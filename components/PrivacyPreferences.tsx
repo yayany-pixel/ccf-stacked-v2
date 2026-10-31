@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { updateAnalyticsConsent } from "@/lib/analytics";
 import {
   DENIED_PREFERENCES, OPEN_PRIVACY_EVENT, PRIVACY_EVENT,
-  currentPrivacyPreferences, googleConsentState, parsePrivacyPreferences, privacySignalDenied,
+  cookieSettingsChoices, googleConsentState, parsePrivacyPreferences, privacySignalDenied,
   type PrivacyPreferences as Preferences,
 } from "@/lib/privacy";
 import styles from "./PrivacyPreferences.module.css";
@@ -24,6 +24,12 @@ export default function PrivacyPreferences() {
   const [signalDenied, setSignalDenied] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const choiceVersion = useRef(0);
+  const savedPreferences = useRef<Preferences | null | undefined>(undefined);
+  const openSettings = useCallback(() => {
+    setError("");
+    setChoices(cookieSettingsChoices(savedPreferences.current, privacySignalDenied()));
+    if (!dialog.current?.open) dialog.current?.showModal();
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -39,11 +45,14 @@ export default function PrivacyPreferences() {
         const payload = await response.json();
         if (!active || choiceVersion.current !== 0) return;
         const saved = parsePrivacyPreferences(payload.preferences);
+        savedPreferences.current = saved;
         if (saved) {
           const effective = privacySignalDenied() ? { ...DENIED_PREFERENCES } : saved;
           setChoices(effective);
           applyPreferences(effective);
         } else {
+          // Preselection is a draft. Actual tracking remains denied until save.
+          setChoices(cookieSettingsChoices(null, privacySignalDenied()));
           setBanner(true);
         }
       })
@@ -58,14 +67,9 @@ export default function PrivacyPreferences() {
   }, []);
 
   useEffect(() => {
-    const open = () => {
-      setError("");
-      setChoices(currentPrivacyPreferences());
-      if (!dialog.current?.open) dialog.current?.showModal();
-    };
-    window.addEventListener(OPEN_PRIVACY_EVENT, open);
-    return () => window.removeEventListener(OPEN_PRIVACY_EVENT, open);
-  }, []);
+    window.addEventListener(OPEN_PRIVACY_EVENT, openSettings);
+    return () => window.removeEventListener(OPEN_PRIVACY_EVENT, openSettings);
+  }, [openSettings]);
 
   async function save(preferences: Preferences) {
     if (saving) return;
@@ -85,6 +89,7 @@ export default function PrivacyPreferences() {
       if (!response.ok) throw new Error("unavailable");
       const saved = parsePrivacyPreferences((await response.json()).preferences);
       if (!saved) throw new Error("invalid_preferences");
+      savedPreferences.current = saved;
       applyPreferences(saved);
       setChoices(saved);
       setBanner(false);
@@ -105,7 +110,7 @@ export default function PrivacyPreferences() {
         <div className={styles.actions}>
           <button type="button" disabled={saving} onClick={() => save(DENIED_PREFERENCES)}>Reject optional</button>
           <button type="button" disabled={saving || signalDenied} onClick={() => save({ analytics: true, marketing: true })}>Accept all</button>
-          <button type="button" disabled={saving} onClick={() => { setChoices(currentPrivacyPreferences()); dialog.current?.showModal(); }}>Settings</button>
+          <button type="button" disabled={saving} onClick={openSettings}>Settings</button>
         </div>
         {error && !dialog.current?.open && <p role="alert" className={styles.error}>{error}</p>}
       </section>}
