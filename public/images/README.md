@@ -103,3 +103,7 @@ Until real photos are added, you can:
 3. Use solid color placeholders with text overlays
 
 All images are lazy-loaded with Next.js Image optimization for performance.
+
+## Reusable editorial photos
+
+`reusable/` contains the owner-requested Halloween and pottery collection. Browse `/images/reusable/index.html`; use `/images/reusable/catalog.json` for names, tags, alt text, dimensions, sources and reusable URLs. See `docs/reusable-photos.md`.

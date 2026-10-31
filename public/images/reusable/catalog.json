@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "created": "2026-10-31",
+  "collection": "CCF Halloween and pottery reusable photos",
+  "assets": [
+    {
+      "id": "halloween-pumpkin-painting",
+      "title": "Halloween pumpkin painting",
+      "stem": "ccf-halloween-ceramic-pumpkin-painting",
+      "source": "IMG_2551.jpeg",
+      "alt": "A hand painting a ceramic jack-o-lantern orange at a wooden table.",
+      "tags": [
+        "Halloween",
+        "autumn",
+        "pottery painting",
+        "ceramic pumpkin",
+        "jack-o-lantern",
+        "paint your own pottery"
+      ],
+      "credit": null,
+      "sourceUrl": null,
+      "width": 1532,
+      "height": 1027,
+      "files": {
+        "webp": {
+          "path": "/images/reusable/ccf-halloween-ceramic-pumpkin-painting.webp",
+          "url": "https://colorcocktailfactory.com/images/reusable/ccf-halloween-ceramic-pumpkin-painting.webp",
+          "bytes": 63494,
+          "sha256": "7b5bd81e45a03ece45e353072ad35acefdb9b6cad47eae040fa1db3ab13da0e3"
+        },
+        "jpg": {
+          "path": "/images/reusable/ccf-halloween-ceramic-pumpkin-painting.jpg",
+          "url": "https://colorcocktailfactory.com/images/reusable/ccf-halloween-ceramic-pumpkin-painting.jpg",
+          "bytes": 161241,
+          "sha256": "05c25c9fef2a02ae22ad13be3bee47c9f6a64981b7941d7e4fcf814819ac7c2d"
+        }
+      },
+      "editing": "AI-assisted exposure, color and clarity refinement; preserve original in archive. Retouched derivative, not an unaltered documentary photo.",
+      "usage": "Reusable illustrative website and marketing asset. Do not label as a photograph of CCF premises, customers or a guaranteed class outcome.",
+      "rights": "User-supplied image; original photographer and license not provided."
+    },
+    {
+      "id": "pink-ghost-and-pumpkin",
+      "title": "Pink ghost and pumpkin",
+      "stem": "ccf-halloween-pink-ceramic-ghost-and-pumpkin",
+      "source": "IMG_2552.jpeg",
+      "alt": "A pink ceramic ghost beside a pierced pink pumpkin with a gold stem.",
+      "tags": [
+        "Halloween",
+        "autumn",
+        "ceramics",
+        "pink ghost",
+        "pumpkin",
+        "seasonal decor"
+      ],
+      "credit": null,
+      "sourceUrl": null,
+      "width": 1531,
+      "height": 1027,
+      "files": {
+        "webp": {
+          "path": "/images/reusable/ccf-halloween-pink-ceramic-ghost-and-pumpkin.webp",
+          "url": "https://colorcocktailfactory.com/images/reusable/ccf-halloween-pink-ceramic-ghost-and-pumpkin.webp",
+          "bytes": 90196,
+          "sha256": "90375a53c6068d80fc90267a00f814003996833a24e563a0aa5d71aafa34b871"
+        },
+        "jpg": {
+          "path": "/images/reusable/ccf-halloween-pink-ceramic-ghost-and-pumpkin.jpg",
+          "url": "https://colorcocktailfactory.com/images/reusable/ccf-halloween-pink-ceramic-ghost-and-pumpkin.jpg",
+          "bytes": 197269,
+          "sha256": "179456f98d5aa417032b3d9c35cc0f90d11be97cb1bca490f9b5643666821be8"
+        }
+      },
+      "editing": "AI-assisted exposure, color and clarity refinement; preserve original in archive. Retouched derivative, not an unaltered documentary photo.",
+      "usage": "Reusable illustrative website and marketing asset. Do not label as a photograph of CCF premises, customers or a guaranteed class outcome.",
+      "rights": "User-supplied image; original photographer and license not provided."
+    },
+    {
+      "id": "pottery-wheel-vase",
+      "title": "Pottery wheel vase",
+      "stem": "ccf-pottery-wheel-clay-vase-hands",
+      "source": "IMG_2553.jpeg screenshot; replaced by original Pexels photo 27162637",
+      "alt": "A narrow-neck clay vase on a pottery wheel beside clay-covered hands holding a cutting wire.",
+      "tags": [
+        "pottery",
+        "wheel throwing",
+        "clay vase",
+        "ceramics",
+        "hands",
+        "creative process"
+      ],
+      "credit": "Original photo by Sima Ghaffarzadeh / Pexels; AI-refined derivative.",
+      "sourceUrl": "https://www.pexels.com/photo/hands-of-artisan-working-in-clay-27162637/",
+      "width": 1536,
+      "height": 1024,
+      "files": {
+        "webp": {
+          "path": "/images/reusable/ccf-pottery-wheel-clay-vase-hands.webp",
+          "url": "https://colorcocktailfactory.com/images/reusable/ccf-pottery-wheel-clay-vase-hands.webp",
+          "bytes": 80944,
+          "sha256": "e36a84de5f8abc5881c565b8b18c9bd3245557995e85bc8788e6496f7d801d03"
+        },
+        "jpg": {
+          "path": "/images/reusable/ccf-pottery-wheel-clay-vase-hands.jpg",
+          "url": "https://colorcocktailfactory.com/images/reusable/ccf-pottery-wheel-clay-vase-hands.jpg",
+          "bytes": 187473,
+          "sha256": "c7ae5389d3f1ae4a6e39797b4859765bd807d112ae58fae11ce260a7ef4971b5"
+        }
+      },
+      "editing": "AI-assisted exposure, color and clarity refinement; preserve original in archive. Retouched derivative, not an unaltered documentary photo.",
+      "usage": "Reusable illustrative website and marketing asset. Do not label as a photograph of CCF premises, customers or a guaranteed class outcome.",
+      "rights": "Original listed under Pexels license; source and credit retained. https://www.pexels.com/license/"
+    }
+  ]
+}
