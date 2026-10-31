@@ -9,6 +9,7 @@ import {
 } from "./metaPixel";
 import type { MetaParameters } from "./metaEvents";
 import { currentPrivacyPreferences } from "./privacy";
+import { trackSimpleEvent } from "./simpleAnalytics";
 /** Central, PII-free analytics. Never pass form or chat objects to this module. */
 export type BookingProvider = "rezclick" | "eventbrite" | "acuity" | "unknown";
 const allowed = new Set(
@@ -119,6 +120,7 @@ export function trackEvent(
     city: currentCity(),
     ...params,
   });
+  trackSimpleEvent(name, clean);
   if (name === "ask_ccf_open")
     trackMetaCustom("CCF_AskCCFOpen", {
       city: clean.city,

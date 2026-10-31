@@ -6,8 +6,7 @@ import BrandLogo from "@/components/BrandLogo";
 import { classImageLoader } from "@/lib/classImageLoader";
 import Link from "next/link";
 import PrivateEventFormCard from "@/components/PrivateEventFormCard";
-import { useScrollDepth } from "@/lib/analyticsHooks";
-import { trackEvent, trackBeginCheckout, trackCardView, trackCardSelect, trackShowMore, trackCitySelection, metaContent, isGtagAvailable } from "@/lib/analytics";
+import { trackEvent, trackBeginCheckout, trackCardView, trackCardSelect, trackShowMore, trackCitySelection, metaContent } from "@/lib/analytics";
 import { trackMetaViewContent } from "@/lib/metaPixel";
 import { getCityByParam } from "@/lib/links";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
@@ -15,7 +14,7 @@ import { activitiesForCity, formatNextSession, priceLabel, HOMEPAGE_FILTERS, fil
 import type { HomepageActivity, HomepageCity, HomepageData } from "@/lib/homepage/types";
 import styles from "./HomePageClient.module.css";
 import { HOMEPAGE_REVIEWS } from "@/lib/homepage/reviews";
-import { PRIVACY_EVENT } from "@/lib/privacy";
+import { currentPrivacyPreferences, PRIVACY_EVENT } from "@/lib/privacy";
 import WorkshopSaleBanner from "@/components/WorkshopSaleBanner";
 import { CHICAGO_MILESTONES } from "@/lib/studioMilestones";
 
@@ -52,7 +51,7 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
     const node=ref.current; if(!node)return;
     const key=listCity + ':' + activity.key;
     const recordView = () => {
-      if (isGtagAvailable() && !seen.current.has(key)) {
+      if (currentPrivacyPreferences().analytics && !seen.current.has(key)) {
         seen.current.add(key);
         trackCardView(tracking);
       } else {
@@ -63,6 +62,7 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
       if(entries.some(e=>e.isIntersecting && e.intersectionRatio>=0.25)) recordView();
     },{threshold:0.25});
     const consentChanged = (event: Event) => {
+      if (!currentPrivacyPreferences().analytics) seen.current.delete(key);
       const box=node.getBoundingClientRect();
       const visibleHeight=Math.max(0,Math.min(box.bottom,window.innerHeight)-Math.max(box.top,0));
       if(box.height>0 && visibleHeight/box.height>=0.25) {
@@ -83,7 +83,7 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
     <article ref={ref} onClick={event => {
       const target=event.target as HTMLElement;
       if (target.closest('[data-variant-booking]')) return;
-      const click_target=target.closest('summary') ? 'details' : target.closest('a') ? 'explore_class_dates' : target.closest('h2') ? 'title' : target.closest('img') ? 'image' : 'card';
+      const click_target=target.closest('summary') ? 'details' : target.closest('img') ? 'image' : target.closest('h2') ? 'title' : target.closest('a') ? 'explore_class_dates' : 'card';
       trackCardSelect({...tracking,click_target, link_url: detailHref});
     }} className={styles.card} data-activity={activity.key} data-appointment-id={activity.bookingVariantIds?.length === 1 || !activity.bookingVariantIds ? activity.appointmentTypeId : undefined}>
       <div className={styles.photo}>
@@ -154,21 +154,8 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
                     <a
                       href={bookingUrl}
                       data-variant-booking=""
+                      data-analytics-booking="true"
                       onClick={() => {
-                        if (typeof window !== "undefined" && window.gtag) {
-                          window.gtag("event", "begin_workshop_checkout", {
-                            workshop_title: variant.title,
-                            city: listCity,
-                            price: variant.currentPrice ?? 0
-                          });
-                          window.dataLayer = window.dataLayer || [];
-                          window.dataLayer.push({
-                            event: "begin_workshop_checkout",
-                            workshop_title: variant.title,
-                            city: listCity,
-                            price: variant.currentPrice ?? 0
-                          });
-                        }
                         const vTracking = {
                           ...tracking,
                           class_name: variant.title,
@@ -203,23 +190,6 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
           href={detailHref}
           className={styles.bookButton}
           aria-label={`Explore class & dates for ${activity.title}`}
-          onClick={() => {
-            if (typeof window !== "undefined" && window.gtag) {
-              window.gtag("event", "begin_workshop_checkout", {
-                workshop_title: activity.title,
-                city: listCity,
-                price: activity.currentPrice ?? 0
-              });
-              window.dataLayer = window.dataLayer || [];
-              window.dataLayer.push({
-                event: "begin_workshop_checkout",
-                workshop_title: activity.title,
-                city: listCity,
-                price: activity.currentPrice ?? 0
-              });
-            }
-            trackCardSelect({ ...tracking, click_target: "explore_class_dates", link_url: detailHref });
-          }}
         >
           Explore Class &amp; Dates <span aria-hidden="true">→</span>
         </Link>
@@ -229,7 +199,6 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
 }
 
 export default function HomePageClient({ initialData, initialCity = "chicago" }: { initialData: HomepageData; initialCity?: HomepageCity }) {
-  useScrollDepth();
   const [city, setCity] = useState<HomepageCity>(initialCity);
   const [data, setData] = useState(initialData);
   const [visibleCount, setVisibleCount] = useState(10);
@@ -381,6 +350,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
             type="button"
             onClick={() => {
               setFilter("Under $40");
+              trackEvent("homepage_filter_selected", {city, placement: "sale_shortcut", class_category: "Under $40"});
               setVisibleCount(10);
               document.getElementById("workshops")?.scrollIntoView({ behavior: "smooth" });
             }}
