@@ -103,10 +103,10 @@ export const blogPosts: BlogPost[] = [
   },
   {
     slug: "what-is-colonoware-american-pottery-history",
-    title: "What Is Colonoware—and Why Does It Matter to American Pottery Today?",
-    seoTitle: "What Is Colonoware? Its Place in American Pottery",
+    title: "Colonoware and the American Pottery Story We Inherit",
+    seoTitle: "Colonoware and the American Pottery Story We Inherit",
     description:
-      "Explore colonoware, the African and Indigenous makers behind it, and why this history matters to how we understand American pottery today.",
+      "A broken pot. An unknown maker. A name scratched into clay. Discover how colonoware changes the way we see—and make—American pottery today.",
     authorSlug: DEFAULT_AUTHOR_SLUG,
     author: "Yahya Moosavi",
     publishedAt: "2026-10-31",
