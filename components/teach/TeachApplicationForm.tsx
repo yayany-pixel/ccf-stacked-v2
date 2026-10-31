@@ -37,7 +37,7 @@ export default function TeachApplicationForm() {
 
   return (
     <GlassCard className="p-8">
-      <form 
+      <form data-clarity-mask="true"
         name="instructor-application" 
         method="POST" 
         data-netlify="true" 
