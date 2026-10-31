@@ -83,6 +83,25 @@ export function getPostUpdatedAt(post: BlogPost): string {
  */
 export const blogPosts: BlogPost[] = [
   {
+    slug: "japanese-warrior-cedar-bonsai",
+    title: "Japanese Warrior Cedar Bonsai: Small Tree, Big Presence",
+    description:
+      "A tiny tree with the presence of a forest guardian. Explore the shape, patience, and everyday care behind a warrior-inspired Japanese cedar bonsai.",
+    authorSlug: DEFAULT_AUTHOR_SLUG,
+    author: "Yahya Moosavi",
+    publishedAt: "2026-10-31",
+    updatedAt: "2026-10-31",
+    date: "2026-10-31",
+    image: "/images/blog/japanese-warrior-cedar-bonsai-watercolor.png",
+    imageAlt: "Ink-and-watercolor illustration of a cedar bonsai in a charcoal pot, with misty mountains behind it",
+    category: "Bonsai & Botanical Arts",
+    readTime: "3 min read",
+    keywords: ["Japanese cedar bonsai", "Japanese warrior cedar bonsai", "sugi bonsai", "Cryptomeria japonica", "bonsai care", "bonsai styling"],
+    city: null,
+    relatedActivitySlugs: ["bonsai"],
+    relatedPostSlugs: [],
+  },
+  {
     slug: "what-is-colonoware-american-pottery-history",
     title: "What Is Colonoware—and Why Does It Matter to American Pottery Today?",
     seoTitle: "What Is Colonoware? Its Place in American Pottery",

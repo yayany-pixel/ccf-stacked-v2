@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import GlassCard from "@/components/ui/GlassCard";
 import { getAllBlogPosts } from "@/lib/blogPosts";
 import { getAllActivityDetails, getActivityDetailBySlug } from "@/lib/activityRegistry";
@@ -119,6 +120,16 @@ export default function BlogPage({ searchParams }: Props) {
                 <Link key={post.slug} href={`/blog/${post.slug}`} className="group block focus-visible:rounded-2xl focus-visible:outline-2 focus-visible:outline-purple-300">
                   <GlassCard interactive className="h-full">
                     <div className="flex h-full flex-col p-6">
+                      {post.image && (
+                        <Image
+                          src={post.image}
+                          alt={post.imageAlt || post.title}
+                          width={1672}
+                          height={941}
+                          sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                          className="mb-5 aspect-video w-full rounded-xl object-cover"
+                        />
+                      )}
                       <div className="flex flex-wrap items-center gap-2 text-xs text-white/60">
                         <span className="rounded-full bg-purple-500/20 px-3 py-1 font-semibold text-purple-200">
                           {post.category}

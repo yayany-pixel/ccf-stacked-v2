@@ -6,6 +6,7 @@ import ButtonPill from "@/components/ui/ButtonPill";
 import Reveal from "@/components/motion/Reveal";
 import BlogPostSchema from "@/components/blog/BlogPostSchema";
 import ColonowareArticle from "@/components/blog/ColonowareArticle";
+import CedarBonsaiArticle from "@/components/blog/CedarBonsaiArticle";
 import WorkshopGuidePage from "@/components/blog/WorkshopGuidePage";
 import LocalFeaturePage from "@/components/blog/LocalFeaturePage";
 import { getLocalFeatureBySlug } from "@/lib/localFeatures";
@@ -118,6 +119,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
   if (slug === "what-is-colonoware-american-pottery-history") {
     return <ColonowareArticle post={post} />;
   }
+  if (slug === "japanese-warrior-cedar-bonsai") return <CedarBonsaiArticle post={post} />;
 
   const discovery = getLocalDiscoveryGuideBySlug(slug);
   if (discovery) return <LocalDiscoveryArticle post={post} guide={discovery} />;
