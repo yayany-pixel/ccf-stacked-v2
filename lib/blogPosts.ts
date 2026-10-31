@@ -83,7 +83,7 @@ export function getPostUpdatedAt(post: BlogPost): string {
  * `image` should be left undefined until a unique image is available;
  * getPostImage() will fall back to DEFAULT_BLOG_IMAGE (/og-image.jpg).
  */
-export const blogPosts: BlogPost[] = [
+const registeredBlogPosts: BlogPost[] = [
   {
     slug: "japanese-warrior-cedar-bonsai",
     title: "Japanese Warrior Cedar Bonsai: Small Tree, Big Presence",
@@ -390,6 +390,14 @@ export function isIndexable(post: BlogPost | undefined): post is BlogPost {
   return post !== undefined && post.indexable !== false;
 }
 
+// Filter only navigation references, never the registry itself: direct URLs
+// and generateStaticParams must still resolve every registered article.
+const indexableSlugs = new Set(registeredBlogPosts.filter(isIndexable).map((post) => post.slug));
+export const blogPosts: BlogPost[] = registeredBlogPosts.map((post) => ({
+  ...post,
+  relatedPostSlugs: post.relatedPostSlugs.filter((slug) => indexableSlugs.has(slug)),
+}));
+
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
   return blogPosts.find((post) => post.slug === slug);
 }
@@ -407,13 +415,13 @@ export function getIndexableBlogPosts(): BlogPost[] {
 }
 
 export function getBlogPostsByAuthor(authorSlug: string): BlogPost[] {
-  return getAllBlogPosts().filter((p) => p.authorSlug === authorSlug);
+  return getIndexableBlogPosts().filter((p) => p.authorSlug === authorSlug);
 }
 
 export function getRelatedPosts(post: BlogPost): BlogPost[] {
   return post.relatedPostSlugs
     .map((s) => getBlogPostBySlug(s))
-    .filter((p): p is BlogPost => Boolean(p));
+    .filter(isIndexable);
 }
 
 /** Convenience: returns the author record for a post (or undefined). */

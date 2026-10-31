@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { sections } from "@/lib/config";
 import { getAllActivitySlugs } from "@/lib/activities";
-import { blogPosts, getPostUpdatedAt } from "@/lib/blogPosts";
+import { getIndexableBlogPosts, getPostUpdatedAt } from "@/lib/blogPosts";
 import { getAllAuthors } from "@/lib/authors";
 import { COLLECTIONS } from "@/lib/collections";
 
@@ -107,7 +107,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   ];
 
-  const blogPostPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+  const blogPostPages: MetadataRoute.Sitemap = getIndexableBlogPosts().map((post) => ({
     url: `${base}/blog/${post.slug}`,
     lastModified: new Date(getPostUpdatedAt(post)),
     changeFrequency: "monthly" as const,
