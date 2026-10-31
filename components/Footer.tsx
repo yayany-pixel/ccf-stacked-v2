@@ -4,6 +4,7 @@ import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 import NewsletterSignup from "@/components/NewsletterSignup";
 import PrivacyPreferencesButton from "@/components/PrivacyPreferencesButton";
 import GlobalMerchBanner from "@/components/GlobalMerchBanner";
+import FooterCollaborations from "@/components/FooterCollaborations";
 import { CHICAGO_MILESTONES } from "@/lib/studioMilestones";
 
 export default function Footer() {
@@ -20,6 +21,8 @@ export default function Footer() {
         <div className="mb-12">
           <PrivatePartyCTA variant="footer" />
         </div>
+
+        <FooterCollaborations />
 
         {/* Main Footer Grid */}
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
