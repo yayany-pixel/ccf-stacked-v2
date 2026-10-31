@@ -7,6 +7,7 @@ import Reveal from "@/components/motion/Reveal";
 import BlogPostSchema from "@/components/blog/BlogPostSchema";
 import ColonowareArticle from "@/components/blog/ColonowareArticle";
 import CedarBonsaiArticle from "@/components/blog/CedarBonsaiArticle";
+import HalloweenPotteryArticle from "@/components/blog/HalloweenPotteryArticle";
 import WorkshopGuidePage from "@/components/blog/WorkshopGuidePage";
 import LocalFeaturePage from "@/components/blog/LocalFeaturePage";
 import { getLocalFeatureBySlug } from "@/lib/localFeatures";
@@ -116,6 +117,7 @@ export default function BlogPostPage({ params }: Props) {
 }
 
 function renderBlogPostContent(slug: string, post: BlogPost) {
+  if (slug === "halloween-pottery-clay-fortune-telling") return <HalloweenPotteryArticle post={post} />;
   if (slug === "what-is-colonoware-american-pottery-history") {
     return <ColonowareArticle post={post} />;
   }

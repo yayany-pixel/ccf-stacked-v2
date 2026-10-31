@@ -83,6 +83,26 @@ export function getPostUpdatedAt(post: BlogPost): string {
  */
 export const blogPosts: BlogPost[] = [
   {
+    slug: "halloween-pottery-clay-fortune-telling",
+    title: "On Halloween, Choosing Clay Meant You Were Going to Die",
+    seoTitle: "Halloween & Pottery: Clay’s Surprisingly Dark Backstory",
+    description:
+      "Four bowls. One blindfold. A questionable party game. Discover the real folklore connecting Halloween and clay—and make something wonderfully strange.",
+    authorSlug: DEFAULT_AUTHOR_SLUG,
+    author: "Yahya Moosavi",
+    publishedAt: "2026-10-31",
+    updatedAt: "2026-10-31",
+    date: "2026-10-31",
+    image: "/images/blog/halloween-pink-ghost-pottery.jpg",
+    imageAlt: "A pink ceramic ghost beside a pink pumpkin lantern with a gold stem, with a green vase in the background",
+    category: "Pottery & Folklore",
+    readTime: "4 min read",
+    keywords: ["Halloween pottery", "Halloween clay ideas", "Irish Halloween folklore", "ceramic ghost", "pottery date night", "Halloween fortune telling"],
+    city: null,
+    relatedActivitySlugs: ["handbuilding", "beginner-wheel", "date-night-wheel"],
+    relatedPostSlugs: ["pottery-101-beginners-guide", "what-is-colonoware-american-pottery-history"],
+  },
+  {
     slug: "japanese-warrior-cedar-bonsai",
     title: "Japanese Warrior Cedar Bonsai: Small Tree, Big Presence",
     description:
