@@ -82,6 +82,26 @@ export function getPostUpdatedAt(post: BlogPost): string {
  * getPostImage() will fall back to DEFAULT_BLOG_IMAGE (/og-image.jpg).
  */
 export const blogPosts: BlogPost[] = [
+  {
+    slug: "what-is-colonoware-american-pottery-history",
+    title: "What Is Colonoware—and Why Does It Matter to American Pottery Today?",
+    seoTitle: "What Is Colonoware? Its Place in American Pottery",
+    description:
+      "Explore colonoware, the African and Indigenous makers behind it, and why this history matters to how we understand American pottery today.",
+    authorSlug: DEFAULT_AUTHOR_SLUG,
+    author: "Yahya Moosavi",
+    publishedAt: "2026-10-31",
+    updatedAt: "2026-10-31",
+    date: "2026-10-31",
+    category: "Pottery History",
+    readTime: "4 min read",
+    image: "/images/blog/colonoware/cooper-river-colonoware.jpg",
+    imageAlt: "Reconstructed eighteenth-century colonoware pot with incised lines and a missing section, from Cooper River, South Carolina.",
+    keywords: ["colonoware", "what is colonoware", "American pottery history", "African American pottery", "Indigenous pottery", "David Drake"],
+    city: null,
+    relatedActivitySlugs: ["handbuilding", "beginner-wheel"],
+    relatedPostSlugs: ["pottery-101-beginners-guide"],
+  },
   ...localDiscoveryBlogPosts,
   ...localFeaturePosts,
   ...workshopGuidePosts,
