@@ -48,7 +48,7 @@ export const paintingAndCraftSeries: ActivityEditorialSeries[] = [
   "Soap making is not one uniform method. Melt-and-pour uses a pre-made soap base, while cold-process and hot-process methods involve saponification and potentially hazardous lye handling. The actual class listing must define its process.",
   "Fragrance and color additives should be approved for the soap formulation and skin use. An oil that smells pleasant in a candle does not automatically have an appropriate concentration or application in soap.",
   "Soap molds determine shape and thickness. Simple designs with compatible colors and modest layering can produce satisfying results without introducing unfamiliar additives or extreme temperatures.",
-  "Handling and curing differ by process. Melt-and-pour can solidify relatively quickly, while cold-process soap requires additional curing and chemical safety expertise. Never invent a same-day-use promise based only on the phrase soap making.",
+  "Handling and curing differ by process. Melt-and-pour can solidify relatively quickly, while cold-process soap requires additional curing and chemical safety expertise. Follow the curing time specified for your soap process.",
   "Clean labeling and storage matter. Handmade soap may need protection from excessive moisture, heat or contamination; the exact advice depends on the ingredients and the method used in the workshop."
 ],
     ideas: [
@@ -68,7 +68,7 @@ export const paintingAndCraftSeries: ActivityEditorialSeries[] = [
   "A beginner painting is easier to organize around a focal subject, a simple composition and limited palette. Trying to include every detail from a photograph often creates frustration within a short studio session.",
   "Color and value serve different jobs. Hue gives emotional atmosphere, while the difference between light and dark forms helps viewers recognize the composition even when the drawing is deliberately loose.",
   "Acrylic paints behave differently from watercolor or oil paint. Acrylic can dry relatively quickly and form opaque layers, while water-based washes and other mediums have different working times and surfaces.",
-  "Painting outings can serve individuals, couples and groups, but the ticket structure and included materials must be verified for the actual scheduled activity. A broad department page is a browsing destination, not a confirmed reservation."
+  "Painting outings can serve individuals, couples and groups. Choose a medium and project that suit the group's interests and experience."
 ],
     ideas: [
       idea("painting-classes-adults-beginners", "Painting Classes for Adults: How to Pick a First Workshop", "Understand painting formats and choose a beginner-friendly subject.", "An adult painting class can be a relaxing creative outing or an introduction to sustained practice. The best first choice is a project that fits both your interest and available time.", "Start with a clear medium :: Acrylic, watercolor and other paints create different surfaces. Choose the format that matches the result you hope to explore.", "Choose one focal element :: A simple flower, urban silhouette or abstract field can teach composition without requiring intricate drawing.", "Read the actual listing :: A category page may group several sessions. Confirm the project, studio, time and materials before booking.", "Do all painting workshops use acrylic paint?", "No. Color Cocktail Factory has different painting formats, and the actual session determines the medium."),
