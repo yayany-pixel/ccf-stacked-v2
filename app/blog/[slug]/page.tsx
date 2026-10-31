@@ -21,6 +21,7 @@ import Breadcrumbs from "@/components/blog/Breadcrumbs";
 import {
   getBlogPostBySlug,
   getAllBlogPosts,
+  isIndexable,
   getPostImage,
   getPostImageAlt,
   getPostPublishedAt,
@@ -70,6 +71,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ? [{ name: author.name, url: getAuthorUrl(author.slug) }]
       : undefined,
     alternates: { canonical: url },
+    ...(!isIndexable(post) ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title: metaTitle,
       description: post.description,

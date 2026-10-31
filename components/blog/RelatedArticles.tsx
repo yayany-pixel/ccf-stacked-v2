@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   getBlogPostBySlug,
+  isIndexable,
   type BlogPost,
 } from "@/lib/blogPosts";
 import GlassCard from "@/components/ui/GlassCard";
@@ -12,7 +13,7 @@ type Props = {
 
 /**
  * Grid of related blog post cards. Silently drops slugs that don't
- * resolve to a real post.
+ * resolve to an indexable post.
  */
 export default function RelatedArticles({
   slugs,
@@ -20,7 +21,7 @@ export default function RelatedArticles({
 }: Props) {
   const items: BlogPost[] = slugs
     .map((s) => getBlogPostBySlug(s))
-    .filter((p): p is BlogPost => Boolean(p));
+    .filter((post): post is BlogPost => post !== undefined && isIndexable(post));
 
   if (items.length === 0) return null;
 

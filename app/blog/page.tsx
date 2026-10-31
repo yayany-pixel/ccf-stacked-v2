@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import GlassCard from "@/components/ui/GlassCard";
-import { getAllBlogPosts } from "@/lib/blogPosts";
+import { getIndexableBlogPosts, getBlogPostBySlug, isIndexable } from "@/lib/blogPosts";
 import { getAllActivityDetails, getActivityDetailBySlug } from "@/lib/activityRegistry";
 import { getWorkshopGuidesForActivity } from "@/lib/workshopGuides";
 
@@ -27,14 +27,15 @@ type Props = { searchParams?: { activity?: string; page?: string } };
 
 export default function BlogPage({ searchParams }: Props) {
   const activities = getAllActivityDetails()
-    .filter((activity) => getWorkshopGuidesForActivity(activity.slug).length > 0)
+    .filter((activity) => getWorkshopGuidesForActivity(activity.slug)
+      .some((guide) => isIndexable(getBlogPostBySlug(guide.slug))))
     .sort((a, b) => a.title.localeCompare(b.title));
   const validSlugs = new Set(activities.map((item) => item.slug));
   const selected = searchParams?.activity && validSlugs.has(searchParams.activity)
     ? searchParams.activity
     : "";
 
-  const posts = getAllBlogPosts().filter(
+  const posts = getIndexableBlogPosts().filter(
     (post) => !selected || post.relatedActivitySlugs.includes(selected),
   );
   const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));

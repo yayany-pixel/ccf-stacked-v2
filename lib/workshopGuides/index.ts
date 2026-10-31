@@ -52,6 +52,7 @@ export const workshopGuidePosts: BlogPost[] = workshopGuides.map((guide) => {
   const date = expandedSlugSet.has(guide.slug) ? "2026-10-23" : "2026-10-22";
   return {
     slug: guide.slug,
+    indexable: !expandedSlugSet.has(guide.slug) && guide.activitySlug !== "glass-blowing",
     title: guide.title,
     seoTitle: guide.title.length > 65 ? guide.title.slice(0, 62).replace(/\s+\S*$/, "") : guide.title,
     description: guide.description,

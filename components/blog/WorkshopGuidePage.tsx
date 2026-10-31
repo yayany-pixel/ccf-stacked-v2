@@ -13,6 +13,16 @@ type Props = {
   guide: WorkshopGuide;
 };
 
+/** Only the local activity-link syntax used by guide copy is supported. */
+function paragraphWithActivityLinks(paragraph: string) {
+  return paragraph.split(/(\[[^\]]+\]\(\/activities\/[a-z0-9-]+\))/g).map((part, index) => {
+    const link = part.match(/^\[([^\]]+)\]\((\/activities\/[a-z0-9-]+)\)$/);
+    return link
+      ? <Link key={index} href={link[2]} className="text-purple-200 underline hover:text-white">{link[1]}</Link>
+      : part;
+  });
+}
+
 export default function WorkshopGuidePage({ post, guide }: Props) {
   const activity = getActivityDetailBySlug(guide.activitySlug);
   const author = getAuthorBySlug(post.authorSlug);
@@ -133,7 +143,7 @@ export default function WorkshopGuidePage({ post, guide }: Props) {
                   {section.heading}
                 </h2>
                 <div className="space-y-4">
-                  {section.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+                  {section.paragraphs.map((paragraph, index) => <p key={index}>{paragraphWithActivityLinks(paragraph)}</p>)}
                 </div>
                 {section.tips && section.tips.length > 0 ? (
                   <ul className="mt-5 list-disc space-y-2 rounded-2xl border border-white/10 bg-white/5 py-5 pl-11 pr-6 text-sm leading-7 text-white/80">
