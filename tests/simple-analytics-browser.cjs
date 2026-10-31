@@ -59,7 +59,7 @@ const { chromium } = require('playwright');
     assert.equal(test.scripts(), 0, 'No script before a saved choice');
     await test.page.getByRole('button', { name: 'Reject optional', exact: true }).click();
     assert.equal(test.scripts(), 0, 'Reject must not load analytics');
-    await test.page.getByRole('button', { name: 'Privacy preferences', exact: true }).click();
+    await test.page.getByRole('button', { name: 'Cookie settings', exact: true }).click();
     await test.page.getByRole('checkbox', { name: /^Analytics/ }).check();
     await test.page.getByRole('button', { name: 'Save choices', exact: true }).click();
     await test.page.waitForFunction(() => typeof window.sa_pageview === 'function');
@@ -73,7 +73,7 @@ const { chromium } = require('playwright');
     await test.page.waitForTimeout(300);
     assert.equal(test.views().length, 2, 'Client navigation sends one new view');
     assert.equal(test.named('page_transition').length, 1, JSON.stringify(test.named('page_transition')));
-    await test.page.getByRole('button', { name: 'Privacy preferences', exact: true }).click();
+    await test.page.getByRole('button', { name: 'Cookie settings', exact: true }).click();
     await test.page.getByRole('button', { name: 'Reject optional', exact: true }).click();
     const beforeRevokedNavigation = test.events.length;
     await test.page.evaluate(() => {

@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { updateAnalyticsConsent } from "@/lib/analytics";
 import {
-  DEFAULT_PREFERENCES, DENIED_PREFERENCES, OPEN_PRIVACY_EVENT, PRIVACY_EVENT,
-  currentPrivacyPreferences, defaultVisitorPreferences, googleConsentState, parsePrivacyPreferences, privacySignalDenied,
+  DENIED_PREFERENCES, OPEN_PRIVACY_EVENT, PRIVACY_EVENT,
+  cookieSettingsChoices, googleConsentState, parsePrivacyPreferences, privacySignalDenied,
   type PrivacyPreferences as Preferences,
 } from "@/lib/privacy";
 import styles from "./PrivacyPreferences.module.css";
@@ -24,6 +24,12 @@ export default function PrivacyPreferences() {
   const [signalDenied, setSignalDenied] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const choiceVersion = useRef(0);
+  const savedPreferences = useRef<Preferences | null | undefined>(undefined);
+  const openSettings = useCallback(() => {
+    setError("");
+    setChoices(cookieSettingsChoices(savedPreferences.current, privacySignalDenied()));
+    if (!dialog.current?.open) dialog.current?.showModal();
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -39,11 +45,14 @@ export default function PrivacyPreferences() {
         const payload = await response.json();
         if (!active || choiceVersion.current !== 0) return;
         const saved = parsePrivacyPreferences(payload.preferences);
+        savedPreferences.current = saved;
         if (saved) {
           const effective = privacySignalDenied() ? { ...DENIED_PREFERENCES } : saved;
           setChoices(effective);
           applyPreferences(effective);
         } else {
+          // Preselection is a draft. Actual tracking remains denied until save.
+          setChoices(cookieSettingsChoices(null, privacySignalDenied()));
           setBanner(true);
         }
       })
@@ -58,14 +67,9 @@ export default function PrivacyPreferences() {
   }, []);
 
   useEffect(() => {
-    const open = () => {
-      setError("");
-      setChoices(currentPrivacyPreferences());
-      if (!dialog.current?.open) dialog.current?.showModal();
-    };
-    window.addEventListener(OPEN_PRIVACY_EVENT, open);
-    return () => window.removeEventListener(OPEN_PRIVACY_EVENT, open);
-  }, []);
+    window.addEventListener(OPEN_PRIVACY_EVENT, openSettings);
+    return () => window.removeEventListener(OPEN_PRIVACY_EVENT, openSettings);
+  }, [openSettings]);
 
   async function save(preferences: Preferences) {
     if (saving) return;
@@ -85,6 +89,7 @@ export default function PrivacyPreferences() {
       if (!response.ok) throw new Error("unavailable");
       const saved = parsePrivacyPreferences((await response.json()).preferences);
       if (!saved) throw new Error("invalid_preferences");
+      savedPreferences.current = saved;
       applyPreferences(saved);
       setChoices(saved);
       setBanner(false);
@@ -96,42 +101,44 @@ export default function PrivacyPreferences() {
     }
   }
 
-  const explanation = "Essential features keep the site working. Optional analytics (including Microsoft Clarity heatmaps and session replays) and advertising measurement stay off until your saved choices are loaded or you choose to enable them below. Your choices are saved for 180 days using an essential preference cookie and an anonymous record.";
-
   return (
     <>
       {banner && <section className={styles.banner} aria-labelledby="privacy-banner-title">
-        <p className={styles.eyebrow}>Your visit. Your choice.</p>
-        <h2 id="privacy-banner-title">A little about privacy.</h2>
-        <p>{explanation}</p>
-        {signalDenied && <p>We respect your browser’s privacy signal. Optional tracking stays off.</p>}
+        <h2 id="privacy-banner-title">Cookies</h2>
+        <p>Essential cookies keep the site working. Optional cookies and analytics help us improve your visit and measure ads.</p>
+        {signalDenied && <p>Your browser has asked us to keep optional tracking off.</p>}
         <div className={styles.actions}>
           <button type="button" disabled={saving} onClick={() => save(DENIED_PREFERENCES)}>Reject optional</button>
-          <button type="button" disabled={saving || signalDenied} onClick={() => save({ analytics: true, marketing: true })}>Accept optional</button>
-          <button type="button" disabled={saving} onClick={() => { setChoices(currentPrivacyPreferences()); dialog.current?.showModal(); }}>Customize</button>
+          <button type="button" disabled={saving || signalDenied} onClick={() => save({ analytics: true, marketing: true })}>Accept all</button>
+          <button type="button" disabled={saving} onClick={openSettings}>Settings</button>
         </div>
         {error && !dialog.current?.open && <p role="alert" className={styles.error}>{error}</p>}
       </section>}
       <dialog ref={dialog} className={styles.dialog} aria-labelledby="privacy-dialog-title" aria-describedby="privacy-dialog-description" onCancel={event => { if (saving) event.preventDefault(); }}>
-        <p className={styles.eyebrow}>Your visit. Your choice.</p>
-        <h2 id="privacy-dialog-title">Privacy preferences</h2>
-        <p id="privacy-dialog-description">{explanation} You can change your choices anytime using the footer’s Privacy preferences button.</p>
-        {signalDenied && <p>We respect your browser’s privacy signal. Optional tracking stays off.</p>}
+        <div className={styles.dialogHeader}>
+          <h2 id="privacy-dialog-title">Cookie settings</h2>
+          <button type="button" className={styles.close} disabled={saving} aria-label="Close cookie settings" onClick={() => dialog.current?.close()}>×</button>
+        </div>
+        <p id="privacy-dialog-description">Essential cookies are always on. You control the rest.</p>
+        {signalDenied && <p>Your browser has asked us to keep optional tracking off.</p>}
         <fieldset disabled={saving || signalDenied} className={styles.options}>
-          <legend>Optional tracking</legend>
+          <legend className={styles.srOnly}>Optional cookies and analytics</legend>
           <label><input type="checkbox" checked={choices.analytics} onChange={event => setChoices(previous => ({ ...previous, analytics: event.target.checked }))} />
-            <span><strong>Analytics</strong><span>Help us understand which workshops and pages visitors find useful, including clicks, scrolling, and session replays with Microsoft Clarity. Form entries and studio chat content are masked.</span></span>
+            <span><strong>Analytics</strong><span>Understand visits and improve the site.</span></span>
           </label>
           <label><input type="checkbox" checked={choices.marketing} onChange={event => setChoices(previous => ({ ...previous, marketing: event.target.checked }))} />
-            <span><strong>Advertising</strong><span>Allow Google Ads and Meta to measure advertising and conversions.</span></span>
+            <span><strong>Advertising</strong><span>Measure how our ads perform.</span></span>
           </label>
         </fieldset>
-        <p>When you enable analytics, Microsoft Clarity receives website interaction data to help us improve the site. You can turn this off here anytime. Read the <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement</a>.</p>
+        <details className={styles.details}>
+          <summary>Cookie details</summary>
+          <p>Optional cookies and similar tools stay off until you allow them. Analytics includes Microsoft Clarity heatmaps and session replays of clicks and scrolling; form entries and studio chat are masked. Advertising lets Google Ads and Meta measure ad results.</p>
+          <p>We remember your choice for 180 days. Change it anytime using Cookie settings in the footer. <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement</a>.</p>
+        </details>
         {error && <p role="alert" className={styles.error}>{error}</p>}
         <div className={styles.actions}>
           <button type="button" disabled={saving} onClick={() => save(choices)}>{saving ? "Saving…" : "Save choices"}</button>
           <button type="button" disabled={saving} onClick={() => save(DENIED_PREFERENCES)}>Reject optional</button>
-          <button type="button" disabled={saving} onClick={() => dialog.current?.close()}>Close</button>
         </div>
       </dialog>
     </>

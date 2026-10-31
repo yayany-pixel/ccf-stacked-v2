@@ -6,6 +6,12 @@ export const OPEN_PRIVACY_EVENT = "ccf-open-privacy";
 export const DEFAULT_PREFERENCES: PrivacyPreferences = { analytics: true, marketing: false };
 export const DENIED_PREFERENCES: PrivacyPreferences = { analytics: false, marketing: false };
 
+/** Draft checkbox values only; these must never be applied as tracking consent. */
+export function cookieSettingsChoices(saved: PrivacyPreferences | null | undefined, blocked: boolean): PrivacyPreferences {
+  if (blocked || saved === undefined) return { ...DENIED_PREFERENCES };
+  return saved === null ? { analytics: true, marketing: true } : { ...saved };
+}
+
 declare global {
   interface Window {
     ccfPrivacyPreferences?: PrivacyPreferences;
