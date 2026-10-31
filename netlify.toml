@@ -9,3 +9,4 @@
 [build.environment]
   NODE_VERSION = "22"
   ENABLE_SIMPLE_ANALYTICS = "false"
+# Keep platform injection off: components/SimpleAnalytics.tsx loads after consent.

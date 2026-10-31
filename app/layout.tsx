@@ -3,6 +3,7 @@ import "./globals.css";
 import { generateOrganizationSchema } from "@/lib/enhancedStructuredData";
 import BookingAnalytics from "@/components/BookingAnalytics";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import SimpleAnalytics from "@/components/SimpleAnalytics";
 import MetaPixel from "@/components/MetaPixel";
 import Footer from "@/components/Footer";
 import PrivatePartyCTA from "@/components/PrivatePartyCTA";
@@ -93,6 +94,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <GoogleAnalytics />
+        <SimpleAnalytics />
         <BookingAnalytics />
         <MetaPixel />
         {/* Skip to main content link for keyboard navigation */}
