@@ -47,6 +47,7 @@ export default function Footer() {
           <div>
             <h3 className="mb-4 text-sm font-bold uppercase tracking-wide text-white/90">Locations</h3>
             <ul className="space-y-2 text-sm text-white/70">
+              <li><Link href="/kids" className="hover:text-purple-300 transition">Kids Classes &amp; Birthday Parties</Link></li>
               <li>
                 <Link href="/chicago" className="hover:text-purple-300 transition">
                   Chicago (Pilsen)

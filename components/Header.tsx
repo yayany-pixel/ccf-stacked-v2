@@ -7,10 +7,12 @@ import ButtonPill from "@/components/ui/ButtonPill";
 import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 import type { City } from "@/lib/config";
 import { buildHomeBookLink } from "@/lib/links";
+import { CityHeaderSwitch } from "@/components/kids/KidsChrome";
 
 export default function Header({ city }: { city: City }) {
   // Navigation items for the header
   const navItems = [
+    { id: "kids", label: "Kids & Birthdays", href: "/kids" },
     { id: "blog", label: "Blog", href: "/blog" },
     { id: "pigment-lab", label: "Pigment Lab", href: `/${city.param}/paper-pigment` },
     { id: "activities", label: "All Classes", href: "/activities" },
@@ -21,6 +23,7 @@ export default function Header({ city }: { city: City }) {
   ];
 
   return (
+    <CityHeaderSwitch city={city.param}>
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 py-3">
         <div className="shimmer-drift rounded-2xl border border-white/10 bg-white/5 shadow-glass backdrop-blur-xl">
@@ -54,5 +57,6 @@ export default function Header({ city }: { city: City }) {
         </div>
       </div>
     </header>
+    </CityHeaderSwitch>
   );
 }

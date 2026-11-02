@@ -31,6 +31,9 @@
 .menu nav a { display: block; min-height: 44px; padding: 11px 12px; font-size: 15px; border-radius: 7px; }
 .menu nav a:hover { background: #f0eadf; }
 .main { max-width: 1060px; padding: 0 16px 48px; margin: auto; }
+.kidsCallout { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin-top: 20px; padding: 16px 20px; border: 1px solid #d4dac6; border-radius: 12px; background: #edf0e4; font-size: 14px; }
+.kidsCallout strong { font: 20px Georgia,serif; }
+.kidsCallout a { color: #7d3425; font-weight: bold; text-decoration: underline; text-underline-offset: 3px; margin-left: auto; }
 .intro { padding: 17px 0 18px; display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
 .intro h1 { font: 27px/1.15 Georgia, serif; letter-spacing: -.8px; }
 .intro h1 em { font-weight: normal; }
