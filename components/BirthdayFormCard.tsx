@@ -2,8 +2,8 @@
 
 import { metaMatchContext, newMetaEventId } from "@/lib/metaPixel";
 
-import { trackLead } from "@/lib/analytics";
-import { useState } from "react";
+import { trackPrivatePartyLead } from "@/lib/analytics";
+import { useEffect, useState } from "react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -60,12 +60,20 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
   const [form, setForm] = useState<FormState>(INITIAL);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
+  useEffect(() => {
+    const city = new URLSearchParams(window.location.search).get("city")?.toLowerCase();
+    if (city === "chicago" || city === "eugene") {
+      setForm((prev) => ({ ...prev, city: city === "chicago" ? "Chicago" : "Eugene" }));
+    }
+  }, []);
+
   function set(field: keyof FormState, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const honeypot = new FormData(e.currentTarget).get("bot-field");
     setStatus("sending");
     try {
       const metaEventId = newMetaEventId();
@@ -73,6 +81,7 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
       const body = new URLSearchParams({
         "form-name": "birthday-party",
         ...form,
+        "bot-field": String(honeypot || ""),
         ...(metaEventId && match ? { meta_form_name: "birthday-party", meta_event_id: metaEventId, meta_context: JSON.stringify(match) } : {}),
       }).toString();
       const res = await fetch("/netlify-forms.html", {
@@ -81,8 +90,11 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
         body,
       });
       if (!res.ok) throw new Error("Network response not ok");
-      // Fire GA4 conversion event — imported into Google Ads as a conversion action
-      trackLead({city:form.city.toLowerCase(),form_name:'birthday-party',lead_type:'birthday',activity:form.experience,group_size_range:form.guestCount}, metaEventId, false);
+      // Birthday inquiries use the same submitted-party goal imported into Google Ads.
+      // Verified Netlify submissions continue to own Meta Lead events.
+      if (!honeypot) {
+        trackPrivatePartyLead({city:form.city.toLowerCase(),form_name:'birthday-party',lead_type:'birthday',activity:form.experience,group_size_range:form.guestCount}, metaEventId);
+      }
       setStatus("success");
       setForm(INITIAL);
     } catch {
