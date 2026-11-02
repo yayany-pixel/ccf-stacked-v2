@@ -78,12 +78,12 @@ export default function KidsInquiryForm({ city, birthday }: { city: CityParam; b
         <option value="Help me choose">Help me choose</option>
       </select></label>
       {birthday && <>
-        <label>Total party budget <span>(optional)</span><input name="budget" placeholder="For example, $400 total" maxLength={60} /></label>
+        <label>Birthday package<select name="budget" required defaultValue=""><option value="" disabled>Choose a package</option><option value="$350 regular — up to 10 children, pieces go home unfired">$350 regular — take home unfired</option><option value="$450 with firing — up to 10 children, 10 pieces total max">$450 with firing — 10 pieces total max</option><option value="Custom quote — larger group or extra pieces">Larger group / extra pieces — request quote</option></select></label>
         <label>How did you hear about us? <span>(optional)</span><input name="referral" maxLength={120} /></label>
       </>}
       <label className={styles.full}>Anything else? <span>(optional)</span><textarea name="details" maxLength={2000} rows={3} placeholder={birthday ? "Share date flexibility, cake plans or questions. Please leave out children’s full names and sensitive personal details." : "Tell us which times or projects you’re interested in. Please leave out children’s full names and sensitive personal details."} /></label>
       {!birthday && <label className={`${styles.full} ${styles.check}`}><input type="checkbox" name="consent" value="Kids class announcements requested" required /><span>I’m a parent or guardian and would like emails about {label} kids classes. I can ask to stop these updates at any time.</span></label>}
-      <p className={`${styles.full} ${styles.note}`}>{birthday ? "This sends an inquiry, not a reservation. Your quote will confirm the project, age suitability, space, supervision, price and any firing or glazing charges." : "The schedule is proposed. Dates, prices and booking details will be confirmed before enrollment opens."}</p>
+      <p className={`${styles.full} ${styles.note}`}>{birthday ? "This sends an inquiry, not a reservation. Packages cover up to 10 children: $350 with pieces taken home unfired, or $450 with firing for up to 10 pieces total. We’ll confirm your date, project, duration, supervision and any requested extras before booking." : "The schedule is proposed. Dates, prices and booking details will be confirmed before enrollment opens."}</p>
       <button className={`${styles.button} ${styles.full}`} type="submit">{status === "sending" ? "Sending…" : birthday ? "Request a Birthday Date" : `Get ${label} Class Updates`}</button>
     </fieldset>
     {status === "error" && <p role="alert" className={styles.error}>Your request could not be sent. Please try again or email <a href="mailto:support@colorcocktailfactory.com">support@colorcocktailfactory.com</a>.</p>}
