@@ -62,3 +62,9 @@
 .srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
 @media(max-width:760px) { .hero { grid-template-columns: 1fr; padding-top: 32px; gap: 24px; } .photo { aspect-ratio: 1.5; border-radius: 70px 70px 12px 12px; } .grid,.split { grid-template-columns: 1fr; gap: 20px; } .inner { padding: 0 20px; } .hero h1 { letter-spacing: -1px; } .section { padding: 32px 0; } .header { padding: 14px 20px; } .card,.schedule { padding: 24px; } }
 @media(max-width:420px) { .form fieldset { grid-template-columns: 1fr; } .form { padding: 20px; } .header nav { gap: 14px; font-size: 13px; } .actions > a { width: 100%; } }
+
+.packageSummary { margin-top: 20px; line-height: 1.5; }
+.packageSummary strong { display: block; font-size: 22px; color: #9e3e2b; }
+.packageSummary span { display: block; margin-top: 6px; font-size: 14px; color: #62594c; }
+.card .price { font: 52px/1.1 Georgia,serif; color: #9e3e2b; margin: 20px 0; }
+.price span { display: block; font: 14px/1.5 "Trebuchet MS",sans-serif; color: #62594c; margin-top: 8px; }
