@@ -9,6 +9,7 @@ import {
   trackCitySelection,
   trackShowMore,
   trackLead,
+  trackPrivatePartyLead,
   trackSignup,
   trackPageView,
 } from "../lib/analytics";
@@ -91,6 +92,16 @@ assert.equal(new URL(safeUrl(adLanding)).searchParams.has("gad_campaignid"), fal
 assert.equal(currentCity(), "eugene", "the ad's selected city overrides an older saved city");
 (globalThis as any).window.location = new URL("https://colorcocktailfactory.com/chicago?city=eugene");
 assert.equal(currentCity(), "chicago", "a city-specific page retains its own city");
+const partyStart = calls.length;
+trackPrivatePartyLead({ city: "chicago", form_name: "private-party", lead_type: "private_party" });
+const partyCalls = calls.slice(partyStart);
+assert.deepEqual(partyCalls.map((call) => call[1]), ["private_party_lead_submit", "generate_lead"]);
+assert(partyCalls.every((call) => call[2].send_to === "G-TESTONLY"), "lead events target only GA4, not every configured Google destination");
+(globalThis as any).window.ccfPrivacyPreferences = { analytics: false, marketing: true };
+const deniedStart = calls.length;
+trackPrivatePartyLead({ city: "chicago", form_name: "private-party", lead_type: "private_party" });
+assert.equal(calls.length, deniedStart, "a present Google tag cannot bypass denied analytics consent");
+(globalThis as any).window.ccfPrivacyPreferences = { analytics: true, marketing: true };
 assert.deepEqual(
   sanitize({
     name: "Person",
