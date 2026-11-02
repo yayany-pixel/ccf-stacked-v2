@@ -299,6 +299,11 @@ export function trackLead(
   );
   trackEvent("generate_lead", p);
 }
+export function trackPrivatePartyLead(p: Parameters<typeof trackLead>[0], eventId?: string) {
+  trackEvent("private_party_lead_submit", p);
+  // Keep the generic reporting event; verified Netlify submissions own Meta Leads.
+  trackLead(p, eventId, false);
+}
 export function trackSignup(placement: string) {
   trackMetaCompleteRegistration({ placement, city: currentCity() });
   trackEvent("sign_up", { method: "newsletter", placement });
