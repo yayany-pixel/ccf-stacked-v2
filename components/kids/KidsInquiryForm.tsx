@@ -3,6 +3,7 @@
 import { useRef, useState, type FormEvent } from "react";
 import type { CityParam } from "@/lib/config";
 import { trackEvent, trackPrivatePartyLead, groupSizeRange } from "@/lib/analytics";
+import { metaMatchContext, newMetaEventId } from "@/lib/metaPixel";
 import { KIDS_SCHEDULE } from "@/lib/kids";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 import styles from "./Kids.module.css";
@@ -27,6 +28,13 @@ export default function KidsInquiryForm({ city, birthday }: { city: CityParam; b
       const value = query.get(param) ?? "";
       data.set(key, /^[a-zA-Z0-9_-]{1,80}$/.test(value) ? value : "direct");
     }
+    const metaEventId = birthday ? newMetaEventId() : undefined;
+    const match = birthday ? metaMatchContext() : null;
+    if (metaEventId && match) {
+      data.set("meta_form_name", formName);
+      data.set("meta_event_id", metaEventId);
+      data.set("meta_context", JSON.stringify(match));
+    }
     const body = new URLSearchParams();
     data.forEach((value, key) => { if (typeof value === "string") body.set(key, value); });
     try {
@@ -36,7 +44,7 @@ export default function KidsInquiryForm({ city, birthday }: { city: CityParam; b
       setStatus("success");
       if (!data.get("bot-field")) {
         trackEvent(birthday ? "kids_birthday_inquiry_submitted" : "kids_class_interest_submitted", { city, form_name: formName, placement: "kids_campaign" });
-        if (birthday) trackPrivatePartyLead({ city, form_name: formName, lead_type: "kids_birthday", placement: "kids_campaign", group_size_range: groupSizeRange(String(data.get("groupSize") ?? "")) });
+        if (birthday) trackPrivatePartyLead({ city, form_name: formName, lead_type: "kids_birthday", placement: "kids_campaign", group_size_range: groupSizeRange(String(data.get("groupSize") ?? "")) }, metaEventId);
       }
       requestAnimationFrame(() => resultRef.current?.focus());
     } catch {
