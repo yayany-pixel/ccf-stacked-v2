@@ -156,6 +156,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   return [
+    ...["/kids", "/chicago/kids-birthday-parties", "/eugene/kids-birthday-parties", "/chicago/kids-pottery-classes", "/eugene/kids-pottery-classes"].map(path => ({ url: `${base}${path}`, changeFrequency: "weekly" as const, priority: 0.9 })),
     ...homepage, 
     ...cityHomes, 
     ...giftCards,

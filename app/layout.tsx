@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 import AskCCFWidget from "@/components/askccf/AskCCFWidget";
 import PrivacyPreferences from "@/components/PrivacyPreferences";
+import { HideOnKids } from "@/components/kids/KidsChrome";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -107,9 +108,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to main content
         </a>
         {children}
-        <Footer />
-        <PrivatePartyCTA variant="sticky" />
-        <AskCCFWidget />
+        <HideOnKids>
+          <Footer />
+          <PrivatePartyCTA variant="sticky" />
+          <AskCCFWidget />
+        </HideOnKids>
         <PrivacyPreferences />
       </body>
     </html>

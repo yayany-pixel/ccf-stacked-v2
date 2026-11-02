@@ -320,7 +320,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
             <BrandLogo className={styles.brandMark} />
             <span>Color Cocktail <span>Factory</span></span>
           </Link>
-          <nav className={styles.desktopNav} aria-label="Main navigation"><a href="#classes">Classes</a><a href="#private-party">Private parties</a><Link href="/gift-cards">Gift cards</Link></nav>
+          <nav className={styles.desktopNav} aria-label="Main navigation"><a href="#classes">Classes</a><Link href="/kids">Kids &amp; Birthdays</Link><a href="#private-party">Private parties</a><Link href="/gift-cards">Gift cards</Link></nav>
           <div className={styles.headerActions}>
             <div className={styles.citySelector} role="group" aria-label="Choose your studio">
               {(["chicago", "eugene"] as const).map(option => <button key={option} type="button" disabled={!hydrated} aria-pressed={city === option} onClick={() => selectCity(option)}>{STUDIO_LOCATIONS[option].label}</button>)}
@@ -328,7 +328,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
             <details className={styles.menu}>
               <summary aria-label="Open navigation menu"><span aria-hidden="true">☰</span><span className={styles.menuLabel}>Menu</span></summary>
               <nav aria-label="More navigation" onClick={event => { if ((event.target as HTMLElement).closest("a")) event.currentTarget.closest("details")?.removeAttribute("open"); }}>
-                <a href="#classes">All classes</a><a href="#private-party">Private parties</a><Link href="/gift-cards">Gift cards</Link>
+                <a href="#classes">All classes</a><Link href="/kids">Kids &amp; Birthdays</Link><a href="#private-party">Private parties</a><Link href="/gift-cards">Gift cards</Link>
                 <Link href="/blog">Studio journal</Link><Link href="/teach">Teach with us</Link><Link href={`/${city}`}>{studio.label} studio</Link>
                 <Link href={`/${city}/paper-pigment`}>Pigment Lab</Link><Link href="/activities/date-night-wheel">Date night pottery</Link><Link href="/activities/mosaic">Mosaics & glass</Link><Link href="/activities/bonsai">Bonsai</Link>
                 <div id="home-help" />
@@ -338,6 +338,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
         </div>
       </header>
       <main tabIndex={-1} id="main-content" className={styles.main}>
+        <aside className={styles.kidsCallout} aria-label="Kids pottery and birthdays"><strong>Big ideas. Little hands.</strong><span>Kids pottery &amp; creative birthday parties</span><Link href="/kids">Explore Kids &amp; Birthdays →</Link></aside>
         <div className={styles.intro}><h1>The future is <em>handmade</em> in {studio.label}...</h1><p>Pottery &amp; creative workshops. Come make something together.</p></div>
         {city === "chicago" && <section className={styles.studioMilestones} aria-label="Our Chicago studio at a glance">
           <p><strong>{CHICAGO_MILESTONES.customers}</strong> customers served in Chicago</p>

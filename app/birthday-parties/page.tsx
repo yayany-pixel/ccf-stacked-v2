@@ -273,6 +273,7 @@ const localBusinessSchema = {
 export default function BirthdayPartiesPage() {
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen">
+      <aside className="bg-amber-100 px-6 py-5 text-center text-stone-900">Planning a child’s birthday? <Link href="/kids#birthdays" className="font-bold underline">Explore kids pottery birthday parties in Chicago and Eugene →</Link></aside>
       {/* Structured Data */}
       <script
         type="application/ld+json"
