@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import {
   sanitize,
+  safeUrl,
+  currentCity,
   trackBeginCheckout,
   trackCardView,
   trackCardSelect,
@@ -67,6 +69,28 @@ trackPageView(
 );
 assert.equal(calls.filter((x) => x[1] === "page_view").length, 1);
 assert(!JSON.stringify(calls).includes("private@example.com"));
+const adLanding = "https://colorcocktailfactory.com/activities/date-night-wheel" +
+  "?city=eugene&gclid=click-id&gbraid=ios-app-id&wbraid=ios-web-id" +
+  "&gad_source=1&gad_campaignid=24414775834&email=private@example.com" +
+  "&ccf_booking_ref=private-reference&field:19375784=private-reference";
+trackPageView(adLanding);
+const adPageView = calls.filter((x) => x[1] === "page_view").at(-1);
+const reportedLanding = new URL(adPageView[2].page_location);
+assert.equal(reportedLanding.searchParams.get("gbraid"), "ios-app-id");
+assert.equal(reportedLanding.searchParams.get("wbraid"), "ios-web-id");
+assert.equal(reportedLanding.searchParams.get("gad_source"), "1");
+assert.equal(reportedLanding.searchParams.get("gad_campaignid"), "24414775834");
+assert.equal(reportedLanding.searchParams.get("gclid"), "click-id");
+assert.equal(reportedLanding.searchParams.get("city"), "eugene");
+assert(!adPageView[2].page_location.includes("private"));
+assert.equal(new URL(safeUrl(adLanding)).searchParams.has("gclid"), false);
+assert.equal(new URL(safeUrl(adLanding)).searchParams.has("gbraid"), false);
+assert.equal(new URL(safeUrl(adLanding)).searchParams.has("gad_campaignid"), false);
+(globalThis as any).window.location = new URL(adLanding);
+(globalThis as any).localStorage = { getItem: () => "chicago" };
+assert.equal(currentCity(), "eugene", "the ad's selected city overrides an older saved city");
+(globalThis as any).window.location = new URL("https://colorcocktailfactory.com/chicago?city=eugene");
+assert.equal(currentCity(), "chicago", "a city-specific page retains its own city");
 assert.deepEqual(
   sanitize({
     name: "Person",

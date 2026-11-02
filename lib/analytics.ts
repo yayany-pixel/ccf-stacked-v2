@@ -35,8 +35,13 @@ export function safeUrl(value: string, marketing = false): string {
           "utm_content",
           "utm_term",
           "gclid",
+          "gbraid",
+          "wbraid",
+          "gad_source",
+          "gad_campaignid",
           "fbclid",
           "location",
+          "city",
         ]
       : [
           "appointmentType",
@@ -94,9 +99,12 @@ export function sanitize(params: Record<string, any>): Record<string, any> {
 }
 export function currentCity(): string {
   if (typeof window === "undefined") return "unknown";
+  const query = new URLSearchParams(window.location.search);
   const city =
     window.location.pathname.match(/^\/(chicago|eugene)/)?.[1] ||
-    new URLSearchParams(window.location.search).get("location");
+    [query.get("city"), query.get("location")].find(
+      (value) => value === "chicago" || value === "eugene",
+    );
   if (city === "chicago" || city === "eugene") return city;
   try {
     return (
