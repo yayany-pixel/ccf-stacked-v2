@@ -66,8 +66,8 @@ export default function PrivateEventsPage({
     "offers": {
       "@type": "AggregateOffer",
       "priceCurrency": "USD",
-      "lowPrice": "45",
-      "highPrice": "85",
+      "lowPrice": "35",
+      "highPrice": "120",
       "priceSpecification": {
         "@type": "UnitPriceSpecification",
         "price": "55",
@@ -111,7 +111,7 @@ export default function PrivateEventsPage({
         "name": "How much does a private event cost?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pricing ranges from $45-$85 per person depending on the activity chosen. Pottery wheel throwing, handbuilding, mosaics, and terrariums are on the lower end, while glass fusion and Turkish lamp making are premium experiences."
+          "text": "Adult group packages for 10 or 20 guests range from $35 to $120 per person, depending on activity, group size, and pottery finishing. See our adult group pricing page for exact totals and inclusions. Other group sizes receive a custom quote."
         }
       },
       {
@@ -212,25 +212,25 @@ export default function PrivateEventsPage({
     {
       title: "Pottery Wheel Throwing",
       duration: "2 hours",
-      price: "$55-65",
+      price: "$45-50",
       description: "Learn to center clay and create bowls, cups, or vases on the pottery wheel. Our most popular group activity!",
       skill: "Beginner-friendly",
-      takeHome: "Fired & glazed in 2-3 weeks",
-      link: "/activities/date-night-wheel"
+      takeHome: "Optional firing & glaze; approx. 3 weeks",
+      link: "/activities/beginner-wheel"
     },
     {
       title: "Handbuilding Pottery",
       duration: "2 hours",
-      price: "$45-55",
+      price: "$40-45",
       description: "No wheel needed! Use pinching, coiling, and slab techniques to create unique sculptural pieces.",
       skill: "All ages welcome",
-      takeHome: "Fired & glazed in 2-3 weeks",
+      takeHome: "Optional firing & glaze; approx. 3 weeks",
       link: "/activities/handbuilding"
     },
     {
       title: "Turkish Lamp Mosaics",
       duration: "2-3 hours",
-      price: "$75-85",
+      price: "$55-95",
       description: "Design stunning mosaic lamps using colorful glass pieces. A premium, show-stopping experience.",
       skill: "Beginner-friendly",
       takeHome: "Same day",
@@ -239,16 +239,16 @@ export default function PrivateEventsPage({
     {
       title: "Glass Fusion Art",
       duration: "1.5-2 hours",
-      price: "$65-75",
+      price: "$60-65",
       description: "Create fused glass coasters, jewelry dishes, or suncatchers. Modern and vibrant.",
       skill: "Beginner-friendly",
-      takeHome: "Fired & ready in 1 week",
+      takeHome: "Kiln processing included; later pickup",
       link: "/activities/glass-fusion"
     },
     {
       title: "Mosaic Art",
       duration: "2 hours",
-      price: "$55-65",
+      price: "$45-50",
       description: "Design colorful mosaic artwork on tiles or frames. Great for team building and group creativity.",
       skill: "All ages",
       takeHome: "Same day",
@@ -257,7 +257,7 @@ export default function PrivateEventsPage({
     {
       title: "Terrarium Building",
       duration: "1.5 hours",
-      price: "$45-55",
+      price: "$50-55",
       description: "Assemble lush mini gardens in glass vessels. Calming, meditative, and everyone succeeds.",
       skill: "Perfect for all",
       takeHome: "Same day",
@@ -266,7 +266,7 @@ export default function PrivateEventsPage({
     {
       title: "Bonsai Workshop",
       duration: "2 hours",
-      price: "$55-65",
+      price: "$70-75",
       description: "Learn the ancient art of bonsai cultivation. Take home a living work of art.",
       skill: "Beginner-friendly",
       takeHome: "Same day",
@@ -275,7 +275,7 @@ export default function PrivateEventsPage({
     {
       title: "Candle Making",
       duration: "1.5 hours",
-      price: "$45-55",
+      price: "$45-50",
       description: "Pour custom-scented candles with unique vessels and fragrance blends.",
       skill: "All ages",
       takeHome: "Same day",
@@ -332,7 +332,8 @@ export default function PrivateEventsPage({
 
             {/* CTA to inquiry form */}
             <Reveal delay={200} variant="fade-up">
-              <div className="text-center">
+              <div className="flex flex-wrap justify-center gap-3">
+                <ButtonPill href="/group-pricing" variant="primary">Adult Group Prices: 10 &amp; 20 Guests</ButtonPill>
                 <ButtonPill href="#inquiry-form" variant="primary">
                   Plan Your Event
                 </ButtonPill>
@@ -397,7 +398,7 @@ export default function PrivateEventsPage({
             <div className="mb-12 text-center">
               <h2 className="font-serif text-4xl font-bold">Choose Your Experience</h2>
               <p className="mt-4 text-lg text-white/75">
-                All activities are beginner-friendly, instructor-led, and designed for maximum fun and creativity.
+                Adult group rates below are per person for 10 or 20 guests. Pottery finishing is extra unless selected. See the full menu for exact totals and project options.
               </p>
             </div>
 
@@ -487,32 +488,10 @@ export default function PrivateEventsPage({
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-pink-200">Pricing Tiers</h3>
-                  <div className="mt-4 space-y-3 text-sm">
-                    <div className="flex justify-between rounded-lg bg-white/5 p-3">
-                      <span className="text-white/75">Budget-Friendly</span>
-                      <span className="font-semibold text-white">$45-55/person</span>
-                    </div>
-                    <div className="text-xs text-white/60 pl-3">
-                      Handbuilding, candles, terrariums
-                    </div>
-
-                    <div className="flex justify-between rounded-lg bg-white/5 p-3">
-                      <span className="text-white/75">Popular Tier</span>
-                      <span className="font-semibold text-white">$55-65/person</span>
-                    </div>
-                    <div className="text-xs text-white/60 pl-3">
-                      Pottery wheel, mosaics, bonsai
-                    </div>
-
-                    <div className="flex justify-between rounded-lg bg-white/5 p-3">
-                      <span className="text-white/75">Premium</span>
-                      <span className="font-semibold text-white">$65-85/person</span>
-                    </div>
-                    <div className="text-xs text-white/60 pl-3">
-                      Glass fusion, Turkish lamps
-                    </div>
-                  </div>
+                  <h3 className="text-xl font-semibold text-pink-200">Adult groups of 10 or 20</h3>
+                  <p className="mt-4 text-sm leading-relaxed text-white/75">Compare exact totals for every activity, with separate pottery prices before and after firing and glazing.</p>
+                  <p className="mt-3 text-sm text-white/75">Nude Painting: $1,200 for 10 adults or $2,000 for 20 adults.</p>
+                  <Link href="/group-pricing" className="mt-5 inline-block rounded-full bg-purple-200 px-5 py-3 font-semibold text-slate-950">View all adult group prices →</Link>
                 </div>
               </div>
 

@@ -62,6 +62,7 @@ export default function Footer() {
             
             <h3 className="mb-4 mt-6 text-sm font-bold uppercase tracking-wide text-white/90">Group Events</h3>
             <ul className="space-y-2 text-sm text-white/70">
+              <li><Link href="/group-pricing" className="hover:text-purple-300 transition">Adult Group Pricing</Link></li>
               <li>
                 <Link href="/team-building" className="hover:text-purple-300 transition">
                   Team Building

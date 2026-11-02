@@ -36,6 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Private events - high priority (conversion page)
   const privateEvents: MetadataRoute.Sitemap = [
+    { url: `${base}/group-pricing`, changeFrequency: "monthly", priority: 0.9 },
     {
       url: `${base}/private-events`,
       changeFrequency: "weekly",

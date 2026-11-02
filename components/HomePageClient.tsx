@@ -385,6 +385,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
               <h2 id="private-party-title">Make it a <em>private party.</em></h2>
               <p className={styles.partySummary}>Birthdays, team-building, bachelorettes, and creative get-togethers in {studio.label}.</p>
               <p className={styles.partyDetailText}>Planning for 8–50+ guests? Share your city, preferred date, group size, and activity. Studio staff confirm the space, options, and quote for your event.</p>
+              <p className={styles.partyDetailText}><Link href="/group-pricing" className="underline underline-offset-4">See adult group prices for 10 or 20 guests →</Link></p>
               <div className={styles.partyToggleRow}>
                 <button
                   type="button"
