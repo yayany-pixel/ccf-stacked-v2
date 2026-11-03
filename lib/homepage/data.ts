@@ -2,7 +2,7 @@ import type { CatalogClass, PublicClassSlot } from "@/lib/askccf/catalog";
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { ACTIVITY_MANIFEST } from "./manifest";
 import type { HomepageActivity, HomepageCity, HomepageData } from "./types";
-import { getPromotionalOverride } from "@/lib/promotions";
+import { getVerifiedPromotion } from "@/lib/promotions";
 
 export const AVAILABILITY_WINDOW_DAYS = 30;
 
@@ -15,8 +15,15 @@ export function buildHomepageData(
   const windowEnd = now.getTime() + AVAILABILITY_WINDOW_DAYS * 86400000;
   const activities: HomepageActivity[] = ACTIVITY_MANIFEST.map(definition => {
     const live = classes.get(definition.appointmentTypeId);
-    const matches = live && live.location === definition.city && live.title === definition.acuityTitle &&
-      (!live.calendarIds?.length || definition.calendarIds.every(calendar => live.calendarIds?.includes(calendar)));
+    const matches = live && live.location === definition.city &&
+      definition.calendarIds.every(calendar => live.calendarIds?.includes(calendar));
+    if (matches && live.title !== definition.acuityTitle) {
+      console.warn("acuity_title_mismatch", {
+        appointmentTypeId: definition.appointmentTypeId,
+        expected: definition.acuityTitle,
+        actual: live.title,
+      });
+    }
     const upcoming = (slots ?? []).filter(slot =>
       slot.appointmentTypeID === definition.appointmentTypeId &&
       definition.calendarIds.includes(slot.calendarID) &&
@@ -24,21 +31,14 @@ export function buildHomepageData(
       new Date(slot.time).getTime() > now.getTime() &&
       new Date(slot.time).getTime() <= windowEnd,
     ).sort((left, right) => new Date(left.time).getTime() - new Date(right.time).getTime());
-    const promo = catalog !== null && (catalog.length > 0 || matches) ? getPromotionalOverride(definition.appointmentTypeId, now.getTime()) : null;
     const rawPrice = matches ? live.pricing.price : null;
     const currentPrice = typeof rawPrice === "number" && Number.isFinite(rawPrice) && rawPrice >= 0
       ? rawPrice
-      : promo
-      ? promo.promoPrice
       : null;
+    const promo = getVerifiedPromotion(definition.appointmentTypeId, currentPrice, now.getTime());
     let formerPrice: { amount: number; evidence: string } | null = null;
     if (promo && promo.regularPrice > promo.promoPrice) {
       formerPrice = { amount: promo.regularPrice, evidence: "Original verified price" };
-    } else if (!promo && currentPrice !== null) {
-      const formerAmount = Math.round((currentPrice * 1.42) / 5) * 5;
-      if (formerAmount > currentPrice) {
-        formerPrice = { amount: formerAmount, evidence: "Original price" };
-      }
     }
     return {
       ...definition,

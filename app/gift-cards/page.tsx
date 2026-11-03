@@ -4,16 +4,16 @@ import type { CityParam } from "@/lib/config";
 import {
   fetchLiveAcuityProducts,
   GIFT_FAQS,
-  resolveGiftExperiences,
-  type GiftExperienceId,
+  resolveGiftCatalog,
 } from "@/lib/gifts";
 import { faqJsonLd, breadcrumbJsonLd } from "@/lib/structuredData";
 
 export const metadata: Metadata = {
-  title:
-    "Gift Experiences & Pottery Gift Cards | Chicago & Eugene | Color Cocktail Factory",
+  title: {
+    absolute: "Gift Experiences & Gift Cards | Color Cocktail Factory",
+  },
   description:
-    "Give them something to look forward to. Gift Pottery Date Night for Two, Their First Pottery Class, or Choose Your Gift Card Amount ($50–$250) at Color Cocktail Factory in Chicago and Eugene. Let them choose the date.",
+    "Explore the current Acuity gift catalog for Chicago, Eugene, and online experiences. Browse live gift descriptions and prices, then buy securely in Acuity.",
   alternates: {
     canonical: "https://colorcocktailfactory.com/gift-cards",
   },
@@ -46,22 +46,11 @@ export default async function GiftCardsPage({
   };
 }) {
   const rawProducts = await fetchLiveAcuityProducts();
-  const experiences = resolveGiftExperiences(rawProducts);
+  const groups = resolveGiftCatalog(rawProducts);
 
   const rawCity = searchParams?.city || searchParams?.location;
-  const initialCity: CityParam = rawCity === "eugene" ? "eugene" : "chicago";
-
-  const rawGift = searchParams?.gift;
-  const initialGiftId: GiftExperienceId | null =
-    rawGift === "pottery-date-night-for-two" ||
-    rawGift === "their-first-pottery-class" ||
-    rawGift === "let-them-choose"
-      ? rawGift
-      : null;
-
-  const initialWorkshopSlug = searchParams?.workshop ?? null;
-  const parsedAmount = searchParams?.amount ? Number(searchParams.amount) : NaN;
-  const initialAmount = Number.isFinite(parsedAmount) ? parsedAmount : null;
+  const initialCity: CityParam | undefined =
+    rawCity === "eugene" || rawCity === "chicago" ? rawCity : undefined;
 
   const faqSchema = faqJsonLd([...GIFT_FAQS]);
   const breadcrumbs = breadcrumbJsonLd([
@@ -89,11 +78,8 @@ export default async function GiftCardsPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }}
       />
       <GiftCardsStorefront
-        experiences={experiences}
+        groups={groups}
         initialCity={initialCity}
-        initialGiftId={initialGiftId}
-        initialWorkshopSlug={initialWorkshopSlug}
-        initialAmount={initialAmount}
       />
     </main>
   );

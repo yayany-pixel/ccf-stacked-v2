@@ -687,7 +687,7 @@ export const ACTIVITY_MANIFEST: ActivityDefinition[] = [
     "key": "chicago-terrarium",
     "title": "Terrarium Workshop",
     "description": "Build a little living garden with plants, moss, and decorative details.",
-    "acuityTitle": "Terrarium Workshop - Chicago",
+    "acuityTitle": "Terrarium Workshop",
     "appointmentTypeId": 79189013,
     "calendarIds": [
       12216179

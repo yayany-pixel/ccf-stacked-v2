@@ -43,7 +43,7 @@ Update the destination inbox in:
 ## Edit content
 
 - Sections, colors, videos, schedules, FAQs, booking keywords: `lib/config.ts`
-- RezClick bases per city: `lib/links.ts`
+- Acuity booking links per city: `lib/links.ts`
 - Domain for SEO/OG + JSON-LD: `app/layout.tsx` and `lib/structuredData.ts`
 
 ## Run lightweight self-tests

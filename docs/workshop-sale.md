@@ -1,13 +1,16 @@
 # Workshop sale banner
 
-The shared Chicago/Eugene homepage banner displays a live countdown timer for active flash sales.
+The shared Chicago/Eugene homepage banner appears only for a verified promotion on an active offering in the selected city's live catalog.
 
-## Timing and cycle schedule
+## Verification and deadline
 
-By default, the sale banner follows the recurring offer cycle synchronized with `/countdown.html`:
-- Time zone: `America/Chicago`
-- Anchor date: `October 11, 2026`
-- Cycle length: `3 days` (resets at 12:00 AM Central time)
+`lib/promotions.ts` is the only source of promotion windows and verified regular prices. A promotion is displayed only when:
+
+- The current time is inside `PROMOTION_START_ISO` / `PROMOTION_END_ISO`.
+- Acuity returned a valid current price equal to the configured `promoPrice`.
+- The configured `regularPrice` is strictly greater than that live price.
+
+The current price is never replaced by a promotion or a fallback. Missing live prices show "See price at checkout" without a sale or crossed-out price. The banner counts down to `PROMOTION_END_ISO` and disappears at expiry.
 
 When the remaining time is 24 hours or more, the banner displays days, hours, minutes, and seconds:
 `[ 02 ] DAYS : [ 09 ] HOURS : [ 26 ] MINUTES : [ 31 ] SECONDS`
@@ -15,22 +18,8 @@ When the remaining time is 24 hours or more, the banner displays days, hours, mi
 When the remaining time is under 24 hours, the banner displays hours, minutes, and seconds:
 `[ 07 ] HOURS : [ 42 ] MINUTES : [ 18 ] SECONDS`
 
-## Configurable campaign deadline
-
-To set an explicit deadline for a specific campaign instead of using the recurring cycle:
-- `NEXT_PUBLIC_WORKSHOP_SALE_MODE`: `campaign`
-- `NEXT_PUBLIC_WORKSHOP_SALE_DEADLINE`: ISO 8601 deadline with timezone, e.g. `2026-12-01T23:59:59-06:00`.
-
-If no campaign deadline is provided or if `NEXT_PUBLIC_WORKSHOP_SALE_MODE` is left unset, it automatically operates on the shared 3-day recurring cycle.
-
-## Optional visitor-specific offer
-
-- `NEXT_PUBLIC_WORKSHOP_SALE_MODE`: `random-start`
-- `NEXT_PUBLIC_WORKSHOP_SALE_VISITOR_SPECIFIC`: `true`
-- `NEXT_PUBLIC_WORKSHOP_SALE_OFFER_ID`: stable offer identifier
-- `NEXT_PUBLIC_WORKSHOP_SALE_MIN_HOURS`: default `3`
-- `NEXT_PUBLIC_WORKSHOP_SALE_MAX_HOURS`: default `12`
+There is no recurring cycle, random deadline, visitor-specific persistence or environment-variable deadline override. The former standalone countdown page has been removed.
 
 ## Validation
 
-Run `node --import tsx tests/workshop-sale.ts` for deadline calculations, countdown units formatting, cycle behavior, and persistence checks.
+Run `node --import tsx tests/workshop-sale.ts` for live-price verification, the fixed promotion deadline, expiry, equal-price rejection and countdown formatting. `npm run test:audit` also runs these checks.

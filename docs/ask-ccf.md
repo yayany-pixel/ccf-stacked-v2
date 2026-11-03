@@ -62,7 +62,7 @@ Entries currently carrying a conflict flag:
 | Entry | What disagrees |
 | --- | --- |
 | `hours` | Only the homepage publishes hours; individual listings vary. |
-| `booking-how` | The Chicago header still links to RezClick while listings book through Acuity. |
+| `booking-how` | Both studios use Acuity; recommend the live per-class booking URL, never RezClick. |
 | `ages` | Only the private-events page states a minimum age. |
 | `pickup-general` | Pickup timelines are given as 2–3 weeks, 3 weeks, 30 days and "a few days" on different pages. |
 | `cancellation` | 7-day, 48-hour and "no refunds or rescheduling" wording all appear on the site. |

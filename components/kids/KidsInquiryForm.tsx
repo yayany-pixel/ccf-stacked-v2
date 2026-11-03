@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { appendPartyAttribution, capturePartyAttribution } from "@/lib/partyFormAttribution";
 import type { CityParam } from "@/lib/config";
 import { trackEvent, trackPrivatePartyLead, groupSizeRange } from "@/lib/analytics";
 import { metaMatchContext, newMetaEventId } from "@/lib/metaPixel";
@@ -16,6 +17,7 @@ export default function KidsInquiryForm({ city, birthday }: { city: CityParam; b
   const resultRef = useRef<HTMLDivElement>(null);
   const label = STUDIO_LOCATIONS[city].label;
   const formName = birthday ? "private-party" : "kids-class-interest";
+  useEffect(() => { capturePartyAttribution(); }, []);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (sending.current) return;
@@ -23,11 +25,7 @@ export default function KidsInquiryForm({ city, birthday }: { city: CityParam; b
     setStatus("sending");
     const data = new FormData(event.currentTarget);
     // Keep attribution separate from family details; never send form values to analytics.
-    const query = new URLSearchParams(window.location.search);
-    for (const [key, param] of [["source", "utm_source"], ["campaign", "utm_campaign"]]) {
-      const value = query.get(param) ?? "";
-      data.set(key, /^[a-zA-Z0-9_-]{1,80}$/.test(value) ? value : "direct");
-    }
+    appendPartyAttribution(data);
     const metaEventId = birthday ? newMetaEventId() : undefined;
     const match = birthday ? metaMatchContext() : null;
     if (metaEventId && match) {
@@ -72,9 +70,9 @@ export default function KidsInquiryForm({ city, birthday }: { city: CityParam; b
       <label>Email<input type="email" name="email" autoComplete="email" maxLength={200} required /></label>
       {birthday && <>
         <label>Phone <span>(optional)</span><input name="phone" type="tel" autoComplete="tel" maxLength={40} /></label>
-        <label>Preferred date<input name="date" type="date" required /></label>
-        <label>Alternate date <span>(optional)</span><input name="alternateDate" type="date" /></label>
-        <label>Preferred time <span>(optional, {KIDS_SCHEDULE[city].zone})</span><input name="preferredTime" type="time" /></label>
+        <label className="min-w-0">Preferred date<input className="min-w-0 w-full" name="date" type="date" required /></label>
+        <label className="min-w-0">Alternate date <span>(optional)</span><input className="min-w-0 w-full" name="alternateDate" type="date" /></label>
+        <label className="min-w-0">Preferred time <span>(optional, {KIDS_SCHEDULE[city].zone})</span><input className="min-w-0 w-full" name="preferredTime" type="time" /></label>
         <label>Number of children<input name="groupSize" type="number" min="1" max="50" required /></label>
         <label>Number of adults attending<input name="adultCount" type="number" min="1" max="50" required /></label>
       </>}

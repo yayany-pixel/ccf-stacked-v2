@@ -20,6 +20,7 @@ async function submit({ ok = true, honeypot = '' } = {}) {
   const exports = {};
   const deps = name => name === 'react' ? React : name === '@/lib/analytics'
     ? { trackPrivatePartyLead: (...args) => events.push(args) }
+    : name === '@/lib/partyFormAttribution' ? { capturePartyAttribution() {}, appendPartyAttribution(data) { data.set('source', '/birthday-parties?utm_source=facebook&utm_medium=paid_social'); data.set('campaign', 'birthday'); data.set('utm_source', 'facebook'); data.set('utm_medium', 'paid_social'); } }
     : { metaMatchContext: () => null, newMetaEventId: () => 'test-only-event' };
   const fetch = async (...args) => { posts.push(args); return { ok }; };
   const FormData = class { get() { return honeypot; } };
@@ -36,6 +37,11 @@ async function submit({ ok = true, honeypot = '' } = {}) {
   assert.equal(success.events[0][0].lead_type, 'birthday');
   assert.equal(success.events[0][0].city, 'chicago');
   assert.equal(success.states[1], 'success');
+  const body = new URLSearchParams(success.posts[0][1].body);
+  assert.equal(body.get('source'), '/birthday-parties?utm_source=facebook&utm_medium=paid_social');
+  assert.equal(body.get('campaign'), 'birthday');
+  assert.equal(body.get('utm_source'), 'facebook');
+  assert.equal(body.get('utm_medium'), 'paid_social');
   assert.equal((await submit({ ok: false })).events.length, 0, 'failed submissions do not count');
   const spam = await submit({ honeypot: 'bot' });
   assert.equal(spam.events.length, 0, 'honeypot submissions do not count');

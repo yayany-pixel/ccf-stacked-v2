@@ -17,6 +17,7 @@ function resolveHref(
   kind: "booking" | "detail" | "custom",
   href?: string
 ) {
+  if (section.slug === "private-parties") return `/private-events?city=${city.param}#inquiry-form`;
   if (kind === "custom" && href) return href;
   if (kind === "detail") return `/${city.param}/${section.slug}`;
   return buildBookingLink(city, section);
@@ -181,14 +182,14 @@ export default function StackedSection({
                     <div className="mt-7 border-t border-white/10 pt-5 text-sm text-white/60">
                       <span className="text-white/70">Want details?</span>{" "}
                       <Link
-                        href={`/activities/${section.slug}`}
+                        href={section.slug === "private-parties" ? `/private-events?city=${city.param}#inquiry-form` : `/activities/${section.slug}`}
                         className="inline-block py-2 font-semibold underline decoration-white/30 underline-offset-4 hover:text-white"
                       >
                         Learn more about {section.heroTitle}
                       </Link>{" "}
                       or{" "}
                       <Link
-                        href={`/${city.param}/${section.slug}`}
+                        href={section.slug === "private-parties" ? `/private-events?city=${city.param}#inquiry-form` : `/${city.param}/${section.slug}`}
                         className="inline-block py-2 underline decoration-white/25 underline-offset-4 hover:text-white"
                       >
                         view {city.label}-specific schedule

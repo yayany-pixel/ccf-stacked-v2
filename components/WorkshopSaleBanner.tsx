@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { resolveSaleDeadline, saleSecondsRemaining, saleTimeUnits, WORKSHOP_SALE_CONFIG, type WorkshopSaleConfig } from "@/lib/homepage/sale";
+import { resolveSaleDeadline, saleSecondsRemaining, saleTimeUnits } from "@/lib/homepage/sale";
+import type { HomepageActivity } from "@/lib/homepage/types";
 import styles from "./HomePageClient.module.css";
 
-export default function WorkshopSaleBanner({ config = WORKSHOP_SALE_CONFIG }: { config?: WorkshopSaleConfig }) {
+export default function WorkshopSaleBanner({ activities }: { activities: HomepageActivity[] }) {
   const [secondsRemaining, setSecondsRemaining] = useState<number | null>(null);
 
   useEffect(() => {
-    const deadline = resolveSaleDeadline(config, Date.now());
+    const deadline = resolveSaleDeadline(activities, Date.now());
     if (deadline === null) {
       setSecondsRemaining(null);
       return;
@@ -35,11 +36,12 @@ export default function WorkshopSaleBanner({ config = WORKSHOP_SALE_CONFIG }: { 
       document.removeEventListener("visibilitychange", update);
       window.removeEventListener("focus", update);
     };
-  }, [config]);
+  }, [activities]);
 
   const active = secondsRemaining !== null && secondsRemaining > 0;
   const units = active ? saleTimeUnits(secondsRemaining) : [];
   const accessibleText = units.map(u => `${Number(u.value)} ${u.label.toLowerCase()}`).join(", ");
+  if (!active) return null;
 
   return (
     <aside className={styles.saleBanner} aria-label={active ? "Flash studio sale notice" : "Workshop offers"}>
@@ -58,7 +60,6 @@ export default function WorkshopSaleBanner({ config = WORKSHOP_SALE_CONFIG }: { 
             </span>
           </span>}
         </p>
-        <span className={styles.saleBannerNote}>Discount applied automatically at checkout · Strikethrough shows original price</span>
       </div>
     </aside>
   );

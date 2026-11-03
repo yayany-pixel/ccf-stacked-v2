@@ -4,6 +4,7 @@ import HolidayOverlay from "@/components/HolidayOverlay";
 import { getCityByParam } from "@/lib/links";
 import { buildCityMetadata } from "@/lib/seo";
 import { localBusinessJsonLd } from "@/lib/structuredData";
+import CityPageChrome from "@/components/CityPageChrome";
 
 export async function generateMetadata({
   params
@@ -25,8 +26,10 @@ export default function CityLayout({
 
   return (
     <>
-      <HolidayOverlay />
-      <Header city={city} />
+      <CityPageChrome>
+        <HolidayOverlay />
+        <Header city={city} />
+      </CityPageChrome>
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

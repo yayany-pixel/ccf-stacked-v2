@@ -43,15 +43,12 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
-  async rewrites() {
-    return [
-      { source: '/eugene', destination: '/?city=eugene' },
-      { source: '/chicago', destination: '/?city=chicago' },
-    ];
-  },
   // Preserve links from the former site with permanent, relevant destinations.
   async redirects() {
     return [
+      { source: '/activities/private-parties', destination: '/private-events', statusCode: 301 },
+      { source: '/chicago/private-parties', destination: '/private-events?city=chicago', statusCode: 301 },
+      { source: '/eugene/private-parties', destination: '/private-events?city=eugene', statusCode: 301 },
       { source: '/wheel-throwing', destination: '/activities/beginner-wheel', permanent: true },
       { source: '/datenight', destination: '/activities/date-night-wheel', permanent: true },
       { source: '/mosaics', destination: '/activities/mosaic', permanent: true },

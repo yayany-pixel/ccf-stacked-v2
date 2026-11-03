@@ -5,10 +5,14 @@ import { metaMatchContext, newMetaEventId } from "@/lib/metaPixel";
 import * as React from "react";
 import type { City } from "@/lib/config";
 import { trackPrivatePartyLead, groupSizeRange } from "@/lib/analytics";
+import { appendPartyAttribution, capturePartyAttribution } from "@/lib/partyFormAttribution";
 
 type FormState = {
   name: string;
   email: string;
+  phone: string;
+  alternateDate: string;
+  preferredTime: string;
   city: string;
   date: string;
   groupSize: string;
@@ -28,6 +32,9 @@ function getDateString(daysFromNow: number): string {
 const initial: FormState = {
   name: "",
   email: "",
+  phone: "",
+  alternateDate: "",
+  preferredTime: "",
   city: "Chicago",
   date: getDateString(7), // Default to 7 days from today
   groupSize: "",
@@ -63,6 +70,16 @@ export default function PrivateEventFormCard({
     setS(previous => ({ ...previous, city: city.label }));
   }, [city.label]);
 
+  React.useEffect(() => {
+    capturePartyAttribution();
+    const query = new URLSearchParams(window.location.search);
+    setS(previous => ({
+      ...previous,
+      occasion: query.get("occasion") || previous.occasion,
+      preferredProject: query.get("project") || previous.preferredProject,
+    }));
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -70,6 +87,7 @@ export default function PrivateEventFormCard({
 
     const form = e.currentTarget;
     const formData = new FormData(form);
+    appendPartyAttribution(formData);
     const metaEventId = newMetaEventId();
     const match = metaMatchContext();
     if (metaEventId && match) {
@@ -122,7 +140,7 @@ export default function PrivateEventFormCard({
         <input type="hidden" name="form-name" value="private-party" />
         <input type="hidden" name="bot-field" style={{ display: 'none' }} aria-hidden="true" />
 
-        <div className="mt-5 grid gap-3 md:grid-cols-2">
+        <div className="mt-5 grid min-w-0 gap-3 md:grid-cols-2 [&_label]:min-w-0 [&_input]:min-w-0 [&_input]:w-full [&_select]:min-w-0 [&_select]:w-full">
           <label className="grid gap-1">
             <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Name</span>
             <input
@@ -218,9 +236,21 @@ export default function PrivateEventFormCard({
             />
           </label>
 
-          <details open={variant !== "homepage"} className="md:col-span-2">
-          <summary className={variant === "homepage" ? undefined : "hidden"}>Project, budget & other details (optional)</summary>
-          <div className="grid gap-3 md:grid-cols-2">
+          <label className="grid gap-1">
+            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Phone (optional)</span>
+            <input type="tel" name="phone" autoComplete="tel" className="min-w-0 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm" value={s.phone} onChange={e => setS(p => ({ ...p, phone: e.target.value }))} disabled={isSubmitting} />
+          </label>
+          <details className="min-w-0 md:col-span-2">
+          <summary className="cursor-pointer py-2 text-sm text-white/80">Project, budget & other details (optional)</summary>
+          <div className="grid min-w-0 gap-3 md:grid-cols-2">
+          <label className="grid min-w-0 gap-1">
+            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Alternate date</span>
+            <input type="date" name="alternateDate" className="min-w-0 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm" value={s.alternateDate} onChange={e => setS(p => ({ ...p, alternateDate: e.target.value }))} disabled={isSubmitting} />
+          </label>
+          <label className="grid min-w-0 gap-1">
+            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Preferred time ({s.city === "Eugene" ? "Pacific" : "Central"})</span>
+            <input type="time" name="preferredTime" className="min-w-0 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm" value={s.preferredTime} onChange={e => setS(p => ({ ...p, preferredTime: e.target.value }))} disabled={isSubmitting} />
+          </label>
           <label className="grid gap-1">
             <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Budget Per Person</span>
             <select
@@ -232,11 +262,7 @@ export default function PrivateEventFormCard({
               aria-label="Budget per person"
             >
               <option value="">Select a budget</option>
-              <option value="$45">$45</option>
-              <option value="$55">$55</option>
-              <option value="$65">$65</option>
-              <option value="$75">$75</option>
-              <option value="$85">$85</option>
+              {["Under $45", "$45–60", "$60–80", "$80–100", "$100+", "Not sure"].map(value => <option key={value} value={value}>{value}</option>)}
             </select>
           </label>
 
@@ -253,11 +279,17 @@ export default function PrivateEventFormCard({
               <option value="Choose or leave blank">Choose or leave blank</option>
               <option value="Wheel throwing / Date Night">Wheel throwing / Date Night</option>
               <option value="Handbuilt pottery (Cups, bowls, Vases, etc)">Handbuilt pottery (Cups, bowls, Vases, etc)</option>
-              <option value="Mosaics / Turkish lamp">Mosaics / Turkish lamp</option>
+              <option value="Mosaics">Mosaics</option>
+              <option value="Turkish lamp">Turkish lamp</option>
+              <option value="Candle making">Candle making</option>
+              <option value="Painting">Painting</option>
+              <option value="Paint Your Own Pottery">Paint Your Own Pottery</option>
               <option value="Glass fusion">Glass fusion</option>
               <option value="Terrariums">Terrariums</option>
               <option value="Bonsai">Bonsai</option>
               <option value="Other / Not sure yet">Other / Not sure yet</option>
+              <option value="Not sure">Not sure</option>
+              {s.preferredProject && !["Choose or leave blank", "Wheel throwing / Date Night", "Handbuilt pottery (Cups, bowls, Vases, etc)", "Mosaics", "Turkish lamp", "Candle making", "Painting", "Paint Your Own Pottery", "Glass fusion", "Terrariums", "Bonsai", "Other / Not sure yet", "Not sure"].includes(s.preferredProject) && <option value={s.preferredProject}>{s.preferredProject}</option>}
             </select>
           </label>
 
@@ -278,7 +310,7 @@ export default function PrivateEventFormCard({
         </div>
 
         {variant !== "homepage" && <p className="mt-4 text-xs text-white/55">
-          We typically reply within 24 hours with dates/options, project ideas, and a commitment.
+          We typically reply within 24 hours with available dates, project ideas, and a custom quote.
         </p>}
 
         {error && (

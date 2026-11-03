@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
-import { sections } from "@/lib/config";
 import { getAllActivitySlugs } from "@/lib/activities";
 import { blogPosts, getPostUpdatedAt } from "@/lib/blogPosts";
 import { getAllAuthors } from "@/lib/authors";
 import { COLLECTIONS } from "@/lib/collections";
+import { isBlogPostIndexable } from "@/lib/blogIndexing";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = "https://colorcocktailfactory.com";
@@ -67,23 +67,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // Individual activity pages - high priority for SEO
-  const activitySlugs = getAllActivitySlugs();
+  const activitySlugs = getAllActivitySlugs().filter(slug => slug !== "private-parties");
   const activityPages: MetadataRoute.Sitemap = activitySlugs.map((slug) => ({
     url: `${base}/activities/${slug}`,
     changeFrequency: "weekly",
-    lastModified: new Date(),
     priority: 0.85
   }));
-
-  // City-specific activity pages - medium-high priority
-  const cityActivityPages: MetadataRoute.Sitemap = cities.flatMap((c) =>
-    sections.map((s) => ({
-      url: `${base}/${c}/${s.slug}`,
-      changeFrequency: "weekly",
-      lastModified: new Date(),
-      priority: 0.8
-    }))
-  );
 
   // Teach pages
   const teachPages: MetadataRoute.Sitemap = [
@@ -108,7 +97,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   ];
 
-  const blogPostPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+  const blogPostPages: MetadataRoute.Sitemap = blogPosts.filter(post => isBlogPostIndexable(post.slug)).map((post) => ({
     url: `${base}/blog/${post.slug}`,
     lastModified: new Date(getPostUpdatedAt(post)),
     changeFrequency: "monthly" as const,
@@ -167,7 +156,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...collectionPages,
     ...activitiesIndex,
     ...activityPages,
-    ...cityActivityPages,
     ...teachPages,
     ...blogIndex,
     ...blogPostPages,

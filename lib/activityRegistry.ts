@@ -755,7 +755,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         ],
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=79189013",
         "priceUnit": "per person",
-        "verifiedTitle": "Terrarium Workshop - Chicago"
+        "verifiedTitle": "Terrarium Workshop"
       }
     }
   },
@@ -4548,123 +4548,6 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
         "bookingUrl": "https://colorcocktailfactory.as.me/?appointmentType=98770334",
         "priceUnit": "per ticket",
         "verifiedTitle": "Make a Clay Cauldron — Live Online Halloween Workshop"
-      }
-    }
-  },
-  "private-parties": {
-    "slug": "private-parties",
-    "title": "Request a Private Event",
-    "navLabel": "Private Events",
-    "heroTitle": "Request a Private Event",
-    "heroDescription": "Tell us what you're planning and we'll reply with workshop options, pricing, and available dates.",
-    "shortDescription": "Tell us what you're planning and we'll reply with workshop options, pricing, and available dates.",
-    "category": "special",
-    "categoryLabel": "Special Events",
-    "categoryIcon": "🎉",
-    "categoryColorClass": "category-private",
-    "overlayClass": "bg-gradient-to-br from-emerald-900/55 via-slate-900/30 to-amber-900/45",
-    "isPottery": false,
-    "coversTwo": false,
-    "duration": "90–120 minutes",
-    "ticketUnit": "per person",
-    "beginnerFriendly": true,
-    "locationsOffered": "Chicago & Eugene",
-    "image": {
-      "filename": "Bonsai for Beginners: Hands-On Workshop - Chicago.webp",
-      "driveFileId": "1313Zo8PU-B93TPrRK2BtgSa1PoHsW-Hv",
-      "path": "/images/classes/approved-01-HsW-Hv-48dba9a4f983.webp",
-      "width": 1200,
-      "height": 900,
-      "alt": "Two workshop guests holding their finished bonsai trees",
-      "focalPosition": "50% 42%"
-    },
-    "whatYouMake": "Request a Private Event",
-    "theExperience": [
-      {
-        "title": "Creative Experience",
-        "body": "Tell us what you're planning and we'll reply with workshop options, pricing, and available dates."
-      }
-    ],
-    "included": [
-      "All required materials",
-      "Expert instruction"
-    ],
-    "practicalInfo": [
-      {
-        "label": "Locations",
-        "text": "Offered in Chicago and Eugene studios."
-      }
-    ],
-    "faqs": [
-      {
-        "q": "How far ahead should we book?",
-        "a": "Earlier is better for weekends, but we can often fit you in."
-      },
-      {
-        "q": "Can we bring food/drinks?",
-        "a": "Often yes (depending on format). Ask in the inquiry and we'll confirm."
-      },
-      {
-        "q": "What group sizes work best?",
-        "a": "Small squads to full teams — we'll recommend the right setup."
-      },
-      {
-        "q": "Can we choose the workshop theme?",
-        "a": "Yes. We'll tailor the project and pacing to your crew."
-      },
-      {
-        "q": "Do you do corporate invoices?",
-        "a": "Yes — we can provide invoices/receipts for company reimbursements."
-      }
-    ],
-    "tags": [
-      "Team-building",
-      "Birthdays",
-      "Bachelorettes",
-      "Custom formats",
-      "Easy planning"
-    ],
-    "valueCards": [
-      {
-        "label": "SPACE",
-        "title": "Room to celebrate",
-        "body": "We'll match you with the best room + vibe."
-      },
-      {
-        "label": "FORMAT",
-        "title": "Pick your craft",
-        "body": "Pottery, mosaics, candles, painting, more."
-      },
-      {
-        "label": "EASE",
-        "title": "Simple booking",
-        "body": "Fast confirmations and clear expectations."
-      }
-    ],
-    "scheduleRows": [
-      {
-        "time": "Sat · 2:30–5:00 PM",
-        "note": "Best overall slot"
-      },
-      {
-        "time": "Fri · 5:30–7:30 PM",
-        "note": "After-work win"
-      },
-      {
-        "time": "Sun · 1:00–4:30 PM",
-        "note": "Easy daytime"
-      }
-    ],
-    "destinations": {
-      "chicago": {
-        "city": "chicago",
-        "appointmentTypeId": 79006616,
-        "calendarIds": [
-          12216179
-        ],
-        "bookingUrl": "https://colorcocktailfactory.as.me/",
-        "priceUnit": "per person",
-        "verifiedTitle": "Request a Private Event"
       }
     }
   },

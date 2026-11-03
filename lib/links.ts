@@ -32,7 +32,7 @@ export function getCityByParam(param: string): City {
 
 export function buildBookingLink(city: City, section: SectionConfig) {
   if (section.booking?.customUrl) return section.booking.customUrl;
-  if (section.id === "private") return "/private-events";
+  if (section.id === "private") return `/private-events?city=${city.param}#inquiry-form`;
   return activityBookingUrl(city.param, section.slug);
 }
 

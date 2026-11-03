@@ -3,6 +3,8 @@ import Link from "next/link";
 import Reveal from "@/components/motion/Reveal";
 import GlassCard from "@/components/ui/GlassCard";
 import BirthdayFormCard from "@/components/BirthdayFormCard";
+import PartyPhoto from "@/components/party/PartyPhoto";
+import PartyPricingNote from "@/components/party/PartyPricingNote";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CONFIG
@@ -58,12 +60,12 @@ const UPGRADES = [
 export const metadata: Metadata = {
   title: "Adult Birthday Party Venue Chicago & Eugene",
   description:
-    "Private, guided art birthday experiences for adults in Chicago (Pilsen) and Eugene, OR. Pottery wheel, paint, mosaics, candles & more. BYOB. 21+ friendly. Milestone-worthy. $55–$95/person.",
+    "Private, guided art birthday experiences for adults in Chicago (Pilsen) and Eugene, OR. Pottery wheel, paint, mosaics, candles & more. BYOB. Compare exact adult group totals.",
   alternates: { canonical: "https://colorcocktailfactory.com/birthday-parties" },
   openGraph: {
     title: "Adult Birthday Party Venue | Creative Experiences — Color Cocktail Factory",
     description:
-      "Private art birthday parties for adults in Chicago & Eugene. Pottery, paint, mosaics & more. BYOB welcome. Milestone-worthy. $55–$95/person.",
+      "Private art birthday parties for adults in Chicago & Eugene. Pottery, paint, mosaics & more. BYOB welcome. Compare exact adult group totals.",
     url: "https://colorcocktailfactory.com/birthday-parties",
     type: "website",
     images: ["/og-image.jpg"],
@@ -72,7 +74,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Adult Birthday Party Venue | CCF Creative Parties",
     description:
-      "Private art birthday parties for adults in Chicago & Eugene. BYOB. Milestone-worthy. $55–$95/person.",
+      "Private art birthday parties for adults in Chicago & Eugene. BYOB. Compare exact adult group totals.",
   },
 };
 
@@ -182,11 +184,11 @@ const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What's included in the price?",
-    a: "All materials, a private studio session for your group, and professional instruction from start to finish. Pottery pieces can optionally be glazed and kiln-fired for a small additional fee (ready ~3 weeks later). For all other activities guests take their finished piece home the same day.",
+    a: "Standard materials and professional instruction are included. Pottery firing and glazing are optional, with pickup about three weeks later when selected. Glass fusion includes kiln processing and later pickup. See the adult group pricing menu for exact inclusions and totals for each project.",
   },
   {
     q: "How much does an adult birthday party cost?",
-    a: "Birthday party packages start at $55 per person and go up to $95 depending on your chosen experience and preferences. You select a budget tier when you submit your inquiry — higher tiers include premium materials and elevated extras. We'll send you a custom quote within 24 hours.",
+    a: "Compare exact totals for 10 or 20 adults on our adult group pricing page, including pottery with or without optional firing and glazing. Other group sizes receive a custom quote. We'll reply to your inquiry with available dates, project options, and a quote.",
   },
   {
     q: "What's the minimum and maximum guest count?",
@@ -341,7 +343,7 @@ export default function BirthdayPartiesPage() {
       {/* ──────────────────────────────────────────────────────────────
           1. HERO
       ────────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950 pb-28 pt-32">
+      <section className="relative overflow-hidden bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950 py-4 sm:py-20 [&_h1]:max-[374px]:text-3xl [&_.mt-10]:max-[374px]:mt-5">
         {/* Rotating ring accent */}
         <div aria-hidden="true" className="shimmer-ring pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3">
           <svg width="640" height="640" viewBox="0 0 640 640" fill="none" className="text-purple-500/15">
@@ -373,7 +375,7 @@ export default function BirthdayPartiesPage() {
               birthdays — pottery, paint, mosaics, candles, and more.
             </p>
             <p className="mx-auto mt-2 max-w-xl text-sm text-white/50">
-              21+ friendly. Milestone-worthy. BYOB welcome. $55–$95/person.
+              21+ friendly. Milestone-worthy. BYOB welcome.
               Chicago (Pilsen) &amp; Eugene, OR.
             </p>
           </Reveal>
@@ -403,11 +405,10 @@ export default function BirthdayPartiesPage() {
           </Reveal>
 
           <Reveal delay={320} variant="fade-up">
-            <div className="mx-auto mt-14 flex max-w-2xl flex-wrap justify-center gap-10">
+            <div className="mx-auto mt-8 hidden max-w-2xl flex-wrap justify-center gap-10 sm:flex">
               {[
                 { stat: "2 hrs", label: "private session" },
                 { stat: "Up to 60", label: "guests" },
-                { stat: "$55–$95", label: "per person" },
                 { stat: "21+", label: "friendly vibe" },
               ].map(({ stat, label }) => (
                 <div key={stat} className="text-center">
@@ -417,6 +418,15 @@ export default function BirthdayPartiesPage() {
               ))}
             </div>
           </Reveal>
+          <PartyPhoto kind="lamp" hero />
+          <PartyPricingNote />
+        </div>
+      </section>
+
+      <section id="birthday-form" className="scroll-mt-24 bg-gradient-to-br from-purple-950 via-pink-950/50 to-indigo-950 py-8 sm:py-12">
+        <div className="mx-auto max-w-2xl px-6">
+          <h2 className="mb-4 font-serif text-3xl">Get My Birthday Quote</h2>
+          <BirthdayFormCard byobEnabled={BYOB_ENABLED} />
         </div>
       </section>
 
@@ -470,7 +480,7 @@ export default function BirthdayPartiesPage() {
                 <span className="italic text-pink-300">Adult Party Mode</span>
               </h2>
               <p className="mt-4 text-white/65">
-                Three approaches to a birthday they'll actually remember. All run 2 hours, starting at $55/person.
+                Three approaches to a birthday they'll actually remember. Compare the adult group menu for exact totals and inclusions.
               </p>
             </div>
           </Reveal>
@@ -620,26 +630,6 @@ export default function BirthdayPartiesPage() {
       {/* ──────────────────────────────────────────────────────────────
           7. FORM
       ────────────────────────────────────────────────────────────── */}
-      <section id="birthday-form" className="bg-gradient-to-br from-purple-950 via-pink-950/50 to-indigo-950 py-24">
-        <div className="mx-auto max-w-2xl px-6">
-          <Reveal variant="fade-up">
-            <div className="mb-10 text-center">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-pink-400/25 bg-pink-500/10 px-4 py-1.5 text-xs font-semibold text-pink-300">
-                ✦ Birthday Inquiry
-              </div>
-              <h2 className="font-serif text-3xl font-light tracking-wide sm:text-4xl">
-                Get My <span className="italic text-pink-300">Birthday Quote</span>
-              </h2>
-              <p className="mx-auto mt-3 max-w-md text-sm text-white/55">
-                We reply within 24 hours. No deposit to inquire.
-              </p>
-            </div>
-          </Reveal>
-          <Reveal delay={100} variant="fade-up">
-            <BirthdayFormCard byobEnabled={BYOB_ENABLED} />
-          </Reveal>
-        </div>
-      </section>
 
       {/* ──────────────────────────────────────────────────────────────
           8. TESTIMONIALS

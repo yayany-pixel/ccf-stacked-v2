@@ -16,7 +16,9 @@ type Props = {
 export default function WorkshopGuidePage({ post, guide }: Props) {
   const activity = getActivityDetailBySlug(guide.activitySlug);
   const author = getAuthorBySlug(post.authorSlug);
-  const activityHref = `/activities/${guide.activitySlug}${guide.city ? `?city=${guide.city}` : ""}`;
+  const activityHref = guide.activitySlug === "private-parties"
+    ? `/private-events${guide.city ? `?city=${guide.city}` : ""}#inquiry-form`
+    : `/activities/${guide.activitySlug}${guide.city ? `?city=${guide.city}` : ""}`;
   const activityName = activity?.title || "this creative workshop";
   const isProgramHub = ["paper-pigment", "painting", "handbuilding", "parent-and-me"].includes(guide.activitySlug);
   const action = guide.activitySlug === "glass-blowing"

@@ -2,6 +2,8 @@
 
 The public Acuity catalog and approved Google Drive folder were inspected on 2026-10-05. This document is a review snapshot; the homepage reads prices and upcoming sessions from the authenticated server integration at runtime. It does not use the figures below as fallback prices or dates.
 
+The November 2 audit repairs match offerings by appointment type, studio and calendar, not title. A title mismatch is logged for review while the manifest's public title stays visible. Current prices are always the Acuity response; missing prices display "See price at checkout" and are omitted from structured data. Crossed-out prices and sale countdowns require an active window in `lib/promotions.ts`, a strictly higher configured regular price and an exact match between the live price and `promoPrice`. Countdown deadlines never roll forward or vary by visitor.
+
 The manifest retained 77 offerings and all 50 approved image records. There were 54 distinct eligible offerings: 37 Chicago in-person offerings, 16 Eugene in-person offerings, and one Live Online Cauldron offering. The online offering appeared at the end of both city feeds, giving 38 Chicago-mode cards and 17 Eugene-mode cards.
 
 ## Booking mappings
@@ -274,4 +276,3 @@ Acuity explicitly supported two-person coverage for eight displayed offerings. T
 The Eugene Date Night Terrarium listing (89290193) also described ages 5–12. The homepage retained the confirmed product identity and did not infer ticket coverage or a numeric restriction from that conflicting copy. Audience and ticket coverage should be reviewed before launch.
 
 Eugene Oogie Boogie (98908868) was verified against calendar 13582962. Its Acuity description still contained Chicago wording; the homepage used Eugene-specific routing and neutral project copy. No Acuity records were modified.
-
