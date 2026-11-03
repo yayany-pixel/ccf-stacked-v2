@@ -122,6 +122,7 @@ export function getActivitiesByCategory() {
 
   // Group sections by category
   sections.forEach(section => {
+    if (section.slug === "private-parties") return;
     if (seenSlugs.has(section.slug)) return;
     seenSlugs.add(section.slug);
     
@@ -167,6 +168,7 @@ export function getRelatedActivities(section: SectionConfig, limit = 5): Section
   // Use explicit related slugs if provided
   if (section.relatedSlugs && section.relatedSlugs.length > 0) {
     const related = section.relatedSlugs
+      .filter(slug => slug !== "private-parties")
       .map(slug => sections.find(s => s.slug === slug))
       .filter((s): s is SectionConfig => s !== undefined)
       .slice(0, limit);
@@ -201,6 +203,7 @@ export function getRelatedActivities(section: SectionConfig, limit = 5): Section
  * Get activity by slug
  */
 export function getActivityBySlug(slug: string): SectionConfig | undefined {
+  if (slug === "private-parties") return undefined;
   return sections.find(s => s.slug === slug);
 }
 
@@ -211,7 +214,7 @@ export function getAllActivitySlugs(): string[] {
   // Combine registry slugs and sections slugs
   const allSlugs = new Set<string>();
   getRegistrySlugs().forEach(slug => allSlugs.add(slug));
-  sections.forEach(s => allSlugs.add(s.slug));
+  sections.filter(s => s.slug !== "private-parties").forEach(s => allSlugs.add(s.slug));
   return Array.from(allSlugs);
 }
 

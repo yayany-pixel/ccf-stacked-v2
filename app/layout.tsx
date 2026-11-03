@@ -11,6 +11,7 @@ import PrivatePartyCTA from "@/components/PrivatePartyCTA";
 import AskCCFWidget from "@/components/askccf/AskCCFWidget";
 import PrivacyPreferences from "@/components/PrivacyPreferences";
 import { HideOnKids } from "@/components/kids/KidsChrome";
+import PartyAttributionCapture from "@/components/party/PartyAttributionCapture";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -95,6 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <PartyAttributionCapture />
         <GoogleAnalytics />
         <SimpleAnalytics />
         <MicrosoftClarity />

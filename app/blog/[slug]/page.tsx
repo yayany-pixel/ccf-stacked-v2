@@ -29,6 +29,7 @@ import {
   type BlogPost,
 } from "@/lib/blogPosts";
 import { getAuthorBySlug, getAuthorUrl } from "@/lib/authors";
+import { isBlogPostIndexable } from "@/lib/blogIndexing";
 
 type Props = {
   params: { slug: string };
@@ -66,6 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: metaTitle,
     description: post.description,
+    robots: { index: isBlogPostIndexable(post.slug), follow: true },
     keywords: post.keywords,
     authors: author
       ? [{ name: author.name, url: getAuthorUrl(author.slug) }]
@@ -228,7 +230,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
                       <strong className="text-white">For Couples:</strong> Our <Link href="/chicago/date-night-wheel" className="text-purple-300 underline">Date Night Pottery</Link> is the perfect introduction - fun, romantic, and no pressure!
                     </p>
                     <p>
-                      <strong className="text-white">For Groups:</strong> Book a <Link href="/chicago/private-parties" className="text-cyan-300 underline">private pottery party</Link> for birthdays, team building, or celebrations.
+                      <strong className="text-white">For Groups:</strong> Book a <Link href="/private-events?city=chicago#inquiry-form" className="text-cyan-300 underline">private pottery party</Link> for birthdays, team building, or celebrations.
                     </p>
                   </div>
                 </div>
@@ -408,7 +410,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-white">10. Private Workshop</h3>
-                      <p className="mt-1">Want the whole studio to yourselves? Book a <Link href="/chicago/private-parties" className="text-purple-300 underline">private pottery party</Link> for an intimate, customized experience.</p>
+                      <p className="mt-1">Want the whole studio to yourselves? Book a <Link href="/private-events?city=chicago#inquiry-form" className="text-purple-300 underline">private pottery party</Link> for an intimate, customized experience.</p>
                     </div>
                   </div>
                 </div>
@@ -588,7 +590,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold text-white">10. Private Workshop Experience</h3>
-                      <p className="mt-1">Want the whole studio to yourselves? Book a <Link href="/eugene/private-parties" className="text-purple-300 underline">private creative session</Link> for an intimate, customized date night.</p>
+                      <p className="mt-1">Want the whole studio to yourselves? Book a <Link href="/private-events?city=eugene#inquiry-form" className="text-purple-300 underline">private creative session</Link> for an intimate, customized date night.</p>
                     </div>
                   </div>
                 </div>
@@ -1463,7 +1465,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
                         Book the studio for a group — birthdays, showers,
                         team outings, or a small celebration.{" "}
                         <Link
-                          href="/chicago/private-parties"
+                          href="/private-events?city=chicago#inquiry-form"
                           className="text-orange-300 underline"
                         >
                           See Private Party options
@@ -2175,7 +2177,7 @@ function renderBlogPostContent(slug: string, post: BlogPost) {
                       </h3>
                       <p className="mt-2 text-white/80">
                         Consider a{" "}
-                        <Link href="/chicago/private-parties" className="text-green-300 underline">
+                        <Link href="/private-events?city=chicago#inquiry-form" className="text-green-300 underline">
                           private pottery event
                         </Link>
                         . Private sessions make it easier to seat a group

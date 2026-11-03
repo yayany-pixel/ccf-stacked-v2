@@ -4,6 +4,7 @@ import { metaMatchContext, newMetaEventId } from "@/lib/metaPixel";
 
 import { trackPrivatePartyLead } from "@/lib/analytics";
 import { useEffect, useState } from "react";
+import { appendPartyAttribution, capturePartyAttribution } from "@/lib/partyFormAttribution";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -32,7 +33,7 @@ const INITIAL: FormState = {
 };
 
 const INPUT =
-  "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/35 backdrop-blur-sm transition focus:border-purple-400/60 focus:bg-white/8 focus:outline-none focus:ring-2 focus:ring-purple-500/20";
+  "min-w-0 w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/35 backdrop-blur-sm transition focus:border-purple-400/60 focus:bg-white/8 focus:outline-none focus:ring-2 focus:ring-purple-500/20";
 
 const LABEL = "mb-1.5 block text-xs font-semibold uppercase tracking-wider text-white/55";
 
@@ -61,6 +62,7 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   useEffect(() => {
+    capturePartyAttribution();
     const city = new URLSearchParams(window.location.search).get("city")?.toLowerCase();
     if (city === "chicago" || city === "eugene") {
       setForm((prev) => ({ ...prev, city: city === "chicago" ? "Chicago" : "Eugene" }));
@@ -83,11 +85,12 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
         ...form,
         "bot-field": String(honeypot || ""),
         ...(metaEventId && match ? { meta_form_name: "birthday-party", meta_event_id: metaEventId, meta_context: JSON.stringify(match) } : {}),
-      }).toString();
+      });
+      appendPartyAttribution(body);
       const res = await fetch("/netlify-forms.html", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body,
+        body: body.toString(),
       });
       if (!res.ok) throw new Error("Network response not ok");
       // Birthday inquiries use the same submitted-party goal imported into Google Ads.
@@ -138,7 +141,7 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
       data-netlify="true"
       data-netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
-      className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl"
+      className="min-w-0 rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-xl sm:p-8 [&_div]:min-w-0"
     >
       {/* Netlify hidden fields */}
       <input type="hidden" name="form-name" value="birthday-party" />
@@ -181,21 +184,8 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
           </div>
         </div>
 
-        {/* Row 2: Phone + City */}
+        {/* City and date stay in the short inquiry. */}
         <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label htmlFor="bf-phone" className={LABEL}>Phone</label>
-            <input
-              id="bf-phone"
-              name="phone"
-              type="tel"
-              autoComplete="tel"
-              placeholder="(312) 555-0123"
-              value={form.phone}
-              onChange={(e) => set("phone", e.target.value)}
-              className={INPUT}
-            />
-          </div>
           <div>
             <label htmlFor="bf-city" className={LABEL}>Studio Location *</label>
             <select
@@ -211,10 +201,6 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
               <option value="Eugene">Eugene, OR</option>
             </select>
           </div>
-        </div>
-
-        {/* Row 3: Preferred Date + Alternate */}
-        <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label htmlFor="bf-date" className={LABEL}>Preferred Date *</label>
             <input
@@ -224,17 +210,6 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
               required
               value={form.preferredDate}
               onChange={(e) => set("preferredDate", e.target.value)}
-              className={INPUT}
-            />
-          </div>
-          <div>
-            <label htmlFor="bf-alt-date" className={LABEL}>Alternate Date</label>
-            <input
-              id="bf-alt-date"
-              name="alternateDate"
-              type="date"
-              value={form.alternateDate}
-              onChange={(e) => set("alternateDate", e.target.value)}
               className={INPUT}
             />
           </div>
@@ -260,12 +235,23 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
               <option value="36-60">36–60 guests</option>
             </select>
           </div>
+        </div>
           <div>
-            <label htmlFor="bf-exp" className={LABEL}>Experience *</label>
+            <label htmlFor="bf-phone" className={LABEL}>Phone</label>
+            <input id="bf-phone" name="phone" type="tel" autoComplete="tel" value={form.phone} onChange={e => set("phone", e.target.value)} className={INPUT} />
+          </div>
+        <details>
+          <summary className="cursor-pointer py-2 text-sm text-white/80">Project &amp; other details (optional)</summary>
+          <div className="mt-3 grid gap-4 sm:grid-cols-2">
+          <div>
+            <label htmlFor="bf-alt-date" className={LABEL}>Alternate Date</label>
+            <input id="bf-alt-date" name="alternateDate" type="date" value={form.alternateDate} onChange={e => set("alternateDate", e.target.value)} className={INPUT} />
+          </div>
+          <div>
+            <label htmlFor="bf-exp" className={LABEL}>Experience (optional)</label>
             <select
               id="bf-exp"
               name="experience"
-              required
               value={form.experience}
               onChange={(e) => set("experience", e.target.value)}
               className={INPUT}
@@ -291,6 +277,7 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
             className={INPUT + " resize-none"}
           />
         </div>
+        </details>
       </div>
 
       {/* Error */}

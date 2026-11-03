@@ -1,7 +1,6 @@
 import { getCatalog, type CatalogClass } from "@/lib/askccf/catalog";
-import { ACTIVITY_MANIFEST } from "@/lib/homepage/manifest";
 import type { ActivityDetail } from "@/lib/activityRegistry";
-import { getPromotionalOverride } from "@/lib/promotions";
+import { getVerifiedPromotion } from "@/lib/promotions";
 
 export type PriceUnit = "for two" | "per person" | "per ticket";
 
@@ -86,18 +85,21 @@ export async function getLivePrice(
   appointmentTypeId: number | string,
   city: string,
   cachedCatalog?: CatalogClass[] | null,
+  calendarIds?: number[],
 ): Promise<LivePriceInfo> {
   const numId = Number(appointmentTypeId);
   let catalog = cachedCatalog;
   if (catalog === undefined) {
     try {
       catalog = await getCatalog();
-    } catch {
+    } catch (error) {
+      console.error("acuity_pricing_unavailable", error);
       catalog = null;
     }
   }
 
-  const live = catalog ? catalog.find((c) => Number(c.id) === numId) : null;
+  const live = catalog ? catalog.find((c) => Number(c.id) === numId && c.location === city &&
+    (!calendarIds?.length || calendarIds.every(id => c.calendarIds?.includes(id)))) : null;
   if (!live && catalog !== undefined) {
     return {
       currentPrice: null,
@@ -107,13 +109,11 @@ export async function getLivePrice(
     };
   }
 
-  const promo = getPromotionalOverride(numId);
   const rawPrice = live?.pricing.price;
   const currentPrice = typeof rawPrice === "number" && Number.isFinite(rawPrice) && rawPrice >= 0
     ? rawPrice
-    : promo
-    ? promo.promoPrice
     : null;
+  const promo = getVerifiedPromotion(numId, currentPrice);
 
   // Determine ticket unit from live catalog covers count
   const priceUnit: PriceUnit =
@@ -126,11 +126,6 @@ export async function getLivePrice(
   let wasPrice: number | null = null;
   if (promo && promo.regularPrice > promo.promoPrice) {
     wasPrice = promo.regularPrice;
-  } else if (!promo && currentPrice !== null) {
-    const formerAmount = Math.round((currentPrice * 1.42) / 5) * 5;
-    if (formerAmount > currentPrice) {
-      wasPrice = formerAmount;
-    }
   }
 
   const formattedPrice =
@@ -158,7 +153,8 @@ export async function getActivityPricing(
   if (catalog === undefined) {
     try {
       catalog = await getCatalog();
-    } catch {
+    } catch (error) {
+      console.error("acuity_pricing_unavailable", error);
       catalog = null;
     }
   }
@@ -167,7 +163,7 @@ export async function getActivityPricing(
   if (activity.slug === "turkish-lamp") {
     const variants: VariantPricing[] = [];
     for (const opt of TURKISH_LAMP_OPTIONS) {
-      const priceInfo = await getLivePrice(opt.id, opt.city, catalog);
+      const priceInfo = await getLivePrice(opt.id, opt.city, catalog, opt.calendarIds);
       variants.push({
         id: opt.id,
         title: opt.title,
@@ -221,7 +217,7 @@ export async function getActivityPricing(
 
   for (const [city, dest] of destEntries) {
     if (!dest) continue;
-    const priceInfo = await getLivePrice(dest.appointmentTypeId, city, catalog);
+    const priceInfo = await getLivePrice(dest.appointmentTypeId, city, catalog, dest.calendarIds);
     destinations[city] = {
       city,
       appointmentTypeId: dest.appointmentTypeId,
@@ -241,8 +237,8 @@ export async function getActivityPricing(
     (d): d is DestinationPricing => Boolean(d),
   );
 
-  const isFlashSale = activity.slug === "cat-vase" || destList.some((d) => d.isFlashSale);
-  const flashSaleLabel = isFlashSale ? "Flash Sale — $25" : undefined;
+  const isFlashSale = destList.some((d) => d.isFlashSale);
+  const flashSaleLabel = destList.find((d) => d.isFlashSale)?.flashSaleLabel;
 
   if (destList.length === 0) {
     return {
@@ -290,10 +286,7 @@ export async function getActivityPricing(
     const sameUnit = chicago.priceUnit === eugene.priceUnit;
 
     if (samePrice && sameUnit) {
-      const wasPrice =
-        chicago.wasPrice && eugene.wasPrice && chicago.wasPrice === eugene.wasPrice
-          ? chicago.wasPrice
-          : chicago.wasPrice ?? eugene.wasPrice ?? null;
+      const wasPrice = chicago.wasPrice;
       return {
         displayPrice: `$${chicago.currentPrice} ${chicago.priceUnit}`,
         wasPrice,
@@ -307,12 +300,8 @@ export async function getActivityPricing(
     // Use Chicago price as default, without city label
     const displayPrice = `$${chicago.currentPrice} ${chicago.priceUnit}`;
 
-    const wasPrice =
-      chicago.wasPrice && eugene.wasPrice && chicago.wasPrice === eugene.wasPrice
-        ? chicago.wasPrice
-        : chicago.wasPrice ?? eugene.wasPrice ?? null;
-
-    const hasSaleBadge = Boolean(chicago.wasPrice || eugene.wasPrice || isFlashSale);
+    const wasPrice = chicago.wasPrice;
+    const hasSaleBadge = wasPrice !== null;
 
     return {
       displayPrice,

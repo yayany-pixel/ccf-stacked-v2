@@ -71,6 +71,18 @@ const removed = buildHomepageData(catalog.filter(activity => activity.id !== "95
 assert.ok(!activitiesForCity(removed.activities, "chicago").some(activity => activity.appointmentTypeId === 95588506));
 const wrongCity = buildHomepageData(catalog.map(activity => activity.id === "95588506" ? { ...activity, location: "eugene" as const } : activity), slots, now);
 assert.ok(!activitiesForCity(wrongCity.activities, "chicago").some(activity => activity.appointmentTypeId === 95588506));
+const renamed = buildHomepageData(catalog.map(activity => activity.id === "95588506" ? { ...activity, title: "Renamed clay workshop" } : activity), slots, now);
+const renamedCard = activitiesForCity(renamed.activities, "chicago").find(activity => activity.appointmentTypeId === 95588506)!;
+assert.equal(renamedCard.offeringState, "active");
+assert.equal(renamedCard.title, ACTIVITY_MANIFEST.find(activity => activity.appointmentTypeId === 95588506)!.title);
+assert.equal(renamedCard.nextAvailability, chicago[3].nextAvailability);
+const wrongCalendar = buildHomepageData(catalog.map(activity => activity.id === "95588506" ? { ...activity, calendarIds: [13582962] } : activity), slots, now);
+assert.ok(!activitiesForCity(wrongCalendar.activities, "chicago").some(activity => activity.appointmentTypeId === 95588506));
+assert.ok(data.activities.every(activity => activity.formerPrice === null && !activity.flashSale), "No verified promotion means no crossed-out prices or sale badges");
+for (const activity of data.activities) {
+  assert.equal(activity.currentPrice, activity.offeringState === "active"
+    ? catalog.find(item => Number(item.id) === activity.appointmentTypeId)?.pricing.price : null);
+}
 assert.notEqual(ACTIVITY_MANIFEST.find(activity => activity.key === "chicago-date-night-wheel")?.appointmentTypeId, ACTIVITY_MANIFEST.find(activity => activity.key === "chicago-date-night-handbuilding")?.appointmentTypeId);
 assert.equal(ACTIVITY_MANIFEST.find(activity => activity.appointmentTypeId === 97020385)?.title, "VIP Date Night Painting");
 assert.equal(chicago.find(activity => activity.mode === "online")?.appointmentTypeId, 98770334);

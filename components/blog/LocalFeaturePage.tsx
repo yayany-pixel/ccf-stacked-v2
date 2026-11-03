@@ -119,7 +119,7 @@ export default function LocalFeaturePage({ post, feature }: Props) {
               </p>
               <Link href="/activities" className="mt-5 inline-flex rounded-full bg-pink-600 px-6 py-3 text-sm font-semibold text-white hover:bg-pink-500">Explore workshops →</Link>
               {feature.relatedActivitySlugs.includes("private-parties") && (
-                <Link href="/private-events" className="ml-3 mt-5 inline-flex rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">Request a group event →</Link>
+                <Link href={`/private-events${feature.city ? `?city=${feature.city}` : ""}#inquiry-form`} className="ml-3 mt-5 inline-flex rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">Request a group event →</Link>
               )}
             </section>
           </article>
@@ -129,6 +129,9 @@ export default function LocalFeaturePage({ post, feature }: Props) {
               <h2 className="font-serif text-xl font-bold text-white">Related workshops</h2>
               <p className="mt-2 text-sm leading-6 text-white/65">Learn more and check the correct studio's current dates.</p>
               <div className="mt-4 space-y-3">
+                {feature.relatedActivitySlugs.includes("private-parties") && (
+                  <Link href={`/private-events${feature.city ? `?city=${feature.city}` : ""}#inquiry-form`} className="block rounded-xl border border-white/15 p-3 text-sm font-semibold text-purple-100 transition hover:border-purple-300/40 hover:bg-white/10">Request a private event →</Link>
+                )}
                 {relatedActivities.map(activity => (
                   <Link
                     key={activity.slug}

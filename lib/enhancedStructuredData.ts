@@ -195,14 +195,14 @@ export function generateWorkshopEventSchema(
         "addressCountry": "US"
       }
     },
-    "offers": {
+    ...(typeof price === "number" && Number.isFinite(price) && price >= 0 ? { "offers": {
       "@type": "Offer",
       "url": `https://colorcocktailfactory.com/${city.param}/${section.slug}`,
-      "price": price || "50",
+      "price": price,
       "priceCurrency": "USD",
       "availability": "https://schema.org/InStock",
       "validFrom": new Date().toISOString()
-    },
+    } } : {}),
     "performer": {
       "@type": "Organization",
       "name": "Color Cocktail Factory"

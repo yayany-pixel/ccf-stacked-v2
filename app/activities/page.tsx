@@ -192,7 +192,7 @@ export default function ActivitiesIndexPage() {
               Shop Gift Cards
             </Link>
             <Link
-              href="/activities/private-parties"
+              href="/private-events#inquiry-form"
               className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/10 px-6 py-3 font-semibold text-white hover:bg-white/15"
             >
               Plan a Private Event

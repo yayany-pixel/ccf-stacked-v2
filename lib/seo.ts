@@ -4,17 +4,15 @@ import type { City, SectionConfig } from "@/lib/config";
 export function buildCityMetadata(city: City): Metadata {
   const isChicago = city.param === "chicago";
   const locationText = isChicago ? "Pilsen, Chicago" : "Eugene, Oregon";
-  const nearbyAreas = isChicago 
-    ? "West Loop, South Loop, Bridgeport, Chinatown"
-    : "Whiteaker, Downtown, University District";
   const fullTitle = `${city.label} Creative Workshops & Pottery Classes | Color Cocktail Factory`;
+  const description = `Explore pottery and creative workshops in ${locationText} at ${city.address}. Choose a class, check the current schedule and plan a creative outing with Color Cocktail Factory.`;
   
   return {
     title: { absolute: fullTitle },
-    description: `Top-rated creative workshops in ${locationText}. Expert pottery classes, wheel throwing, Turkish lamps, glass fusion, mosaics. Perfect for date nights, birthdays, team building. Walk-ins welcome! Serving ${nearbyAreas}. Book online today.`,
+    description,
     openGraph: {
       title: `Color Cocktail Factory — Creative Workshops in ${city.label}`,
-      description: `Join us in ${locationText} for pottery, glass art, and creative workshops. Perfect for beginners, couples, and groups. Book today!`,
+      description,
       url: `https://colorcocktailfactory.com/${city.param}`,
       type: "website",
       locale: "en_US",
@@ -24,7 +22,7 @@ export function buildCityMetadata(city: City): Metadata {
     twitter: {
       card: "summary_large_image",
       title: `Creative Workshops in ${city.label}`,
-      description: `Pottery, glass art & more in ${locationText}`
+      description
     },
     alternates: {
       canonical: `https://colorcocktailfactory.com/${city.param}`

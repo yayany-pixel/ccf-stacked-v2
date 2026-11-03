@@ -178,31 +178,49 @@ async function runQASuite() {
 
   // 15. The city selector continues working
   console.log("15. Verifying city routing...");
-  // const cityHomeFile = fs.readFileSync(path.join(__dirname, "../app/[city]/page.tsx"), "utf8");
-  // assert.ok(cityHomeFile.includes('generateStaticParams'));
-  // assert.ok(cityHomeFile.includes('city.param === "eugene" ? STUDIO_LOCATIONS.eugene : STUDIO_LOCATIONS.chicago'));
+  const cityHomeFile = fs.readFileSync(path.join(__dirname, "../app/[city]/page.tsx"), "utf8");
+  assert.ok(cityHomeFile.includes('generateStaticParams'));
+  assert.ok(cityHomeFile.includes('initialCity={city}'));
   console.log("✓ City landing pages verified for Chicago and Eugene.\n");
 
   // 16. Existing analytics events do not fire twice
   console.log("16. Verifying analytics deduplication...");
   const analyticsCalls: any[] = [];
-  const prevWindow = (globalThis as any).window;
-  (globalThis as any).document = { referrer: "", title: "Cup Creations" };
-  (globalThis as any).location = new URL("https://colorcocktailfactory.com/activities/cup-creations");
-  (globalThis as any).window = {
-    ...(prevWindow || {}),
-    ccfPrivacyPreferences: { analytics: true, marketing: true },
-    gtag: (...args: any[]) => analyticsCalls.push(args),
-    location: new URL("https://colorcocktailfactory.com/activities/cup-creations"),
-  };
-  const { trackPageView } = await import("../lib/analytics");
-  trackPageView("https://colorcocktailfactory.com/activities/cup-creations");
-  trackPageView("https://colorcocktailfactory.com/activities/cup-creations");
-  assert.equal(
-    analyticsCalls.filter((x) => x[1] === "page_view").length,
-    1,
-    "Consecutive duplicate page_view events must be deduplicated"
-  );
+  const globals = ["window", "document", "location", "navigator"] as const;
+  const previousGlobals = globals.map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)] as const);
+  const previousGaId = process.env.NEXT_PUBLIC_GA_ID_1;
+  try {
+    const url = new URL("https://colorcocktailfactory.com/activities/cup-creations");
+    const mocks = {
+      document: { referrer: "", title: "Cup Creations" },
+      location: url,
+      navigator: { doNotTrack: "0", globalPrivacyControl: false },
+      window: {
+        ccfPrivacyPreferences: { analytics: true, marketing: false },
+        gtag: (...args: any[]) => analyticsCalls.push(args),
+        location: url,
+      },
+    };
+    for (const key of globals) {
+      Object.defineProperty(globalThis, key, { configurable: true, writable: true, value: mocks[key] });
+    }
+    process.env.NEXT_PUBLIC_GA_ID_1 = "G-QA-TEST";
+    const { trackPageView } = await import("../lib/analytics");
+    trackPageView(url.href);
+    trackPageView(url.href);
+    assert.equal(
+      analyticsCalls.filter((x) => x[0] === "event" && x[1] === "page_view").length,
+      1,
+      "Consecutive duplicate page_view events must emit exactly once with analytics consent"
+    );
+  } finally {
+    for (const [key, descriptor] of previousGlobals) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
+      else delete (globalThis as any)[key];
+    }
+    if (previousGaId === undefined) delete process.env.NEXT_PUBLIC_GA_ID_1;
+    else process.env.NEXT_PUBLIC_GA_ID_1 = previousGaId;
+  }
   console.log("✓ Analytics deduplication logic verified.\n");
 
   // 17. Existing homepage activity-card order matches updated priority

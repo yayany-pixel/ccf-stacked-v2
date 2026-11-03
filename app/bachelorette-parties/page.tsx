@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import PartyPhoto from "@/components/party/PartyPhoto";
+import PartyPricingNote from "@/components/party/PartyPricingNote";
+import MobileQuoteLink from "@/components/party/MobileQuoteLink";
 import Reveal from "@/components/motion/Reveal";
 import { sections } from "@/lib/config";
 import PrivatePartyCTA from "@/components/PrivatePartyCTA";
@@ -39,6 +42,7 @@ export default function BachelorettePartiesPage() {
 
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <MobileQuoteLink href="/private-events?occasion=Bachelorette&project=Not%20sure#inquiry-form" />
       {/* FAQ Schema */}
       <script
         type="application/ld+json"
@@ -109,7 +113,7 @@ export default function BachelorettePartiesPage() {
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
                   <div className="text-4xl mb-3">🍾</div>
                   <h3 className="font-bold text-lg mb-2">BYOB Vibes</h3>
-                  <p className="text-sm text-white/80">Bring champagne, wine, or cocktails to sip while you create</p>
+                  <p className="text-sm text-white/80">Bring champagne, wine, or cocktails, plus your own cups, ice, and mixers</p>
                 </div>
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
                   <div className="text-4xl mb-3">📸</div>
@@ -125,7 +129,7 @@ export default function BachelorettePartiesPage() {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link 
-                  href="/private-events"
+                  href="/private-events?occasion=Bachelorette&project=Not%20sure#inquiry-form"
                   className="bg-white text-pink-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
                   Plan Your Bachelorette 💍
@@ -137,6 +141,8 @@ export default function BachelorettePartiesPage() {
                   See Workshop Ideas
                 </Link>
               </div>
+              <PartyPhoto kind="lamp" hero />
+              <PartyPricingNote />
             </div>
           </Reveal>
         </div>
@@ -229,7 +235,7 @@ export default function BachelorettePartiesPage() {
                     <div className="space-y-3">
                       {/* Chicago Link */}
                       <Link
-                        href={`/chicago/${workshop.slug}`}
+                        href={`/private-events?city=chicago&occasion=Bachelorette&project=${encodeURIComponent(workshop.navLabel)}#inquiry-form`}
                         className="block w-full bg-pink-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-pink-600 transition-colors"
                       >
                         Book in Chicago (Pilsen)
@@ -237,7 +243,7 @@ export default function BachelorettePartiesPage() {
                       
                       {/* Eugene Link */}
                       <Link
-                        href={`/eugene/${workshop.slug}`}
+                        href={`/private-events?city=eugene&occasion=Bachelorette&project=${encodeURIComponent(workshop.navLabel)}#inquiry-form`}
                         className="block w-full bg-purple-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-purple-600 transition-colors"
                       >
                         Book in Eugene, OR
@@ -252,7 +258,7 @@ export default function BachelorettePartiesPage() {
           <Reveal delay={0.3}>
             <div className="text-center mt-12">
               <Link
-                href="/private-events"
+                href="/private-events?occasion=Bachelorette&project=Not%20sure#inquiry-form"
                 className="inline-block bg-gradient-to-r from-pink-500 to-purple-600 text-white px-10 py-5 rounded-full font-bold text-lg hover:shadow-xl transition-all transform hover:scale-105"
               >
                 Book Your Bachelorette Workshop
@@ -331,8 +337,8 @@ export default function BachelorettePartiesPage() {
                   <p className="text-gray-600">Intimate bachelorette groups</p>
                 </div>
                 <div className="text-center mb-6">
-                  <div className="text-5xl font-bold text-pink-600 mb-2">$55-$85</div>
-                  <div className="text-gray-600">per person</div>
+                  <div className="text-3xl font-bold text-pink-600 mb-2">Choose your project</div>
+                  <PartyPricingNote />
                 </div>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-start">
@@ -357,7 +363,7 @@ export default function BachelorettePartiesPage() {
                   </li>
                 </ul>
                 <p className="text-sm text-gray-500 italic">
-                  * Exact pricing varies by workshop. Popular choices: pottery wheel ($75-85), mosaics ($65), glass fusion ($70).
+                  Exact totals and project inclusions are listed in the adult group pricing menu.
                 </p>
               </div>
             </Reveal>
@@ -395,7 +401,7 @@ export default function BachelorettePartiesPage() {
                   </li>
                 </ul>
                 <Link
-                  href="/private-events"
+                  href="/private-events?occasion=Bachelorette&project=Not%20sure#inquiry-form"
                   className="block w-full bg-white text-pink-600 text-center py-4 rounded-lg font-bold hover:bg-gray-100 transition-all"
                 >
                   Get Your Custom Quote
@@ -527,7 +533,7 @@ export default function BachelorettePartiesPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
-                href="/private-events"
+                href="/private-events?occasion=Bachelorette&project=Not%20sure#inquiry-form"
                 className="bg-white text-pink-600 px-10 py-5 rounded-full font-bold text-lg hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 Book Your Bachelorette Workshop

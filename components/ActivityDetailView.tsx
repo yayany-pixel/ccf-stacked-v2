@@ -143,9 +143,9 @@ export default function ActivityDetailView({
               <div className="flex flex-wrap items-center gap-2">
                 <TagPill>{activity.categoryIcon} {activity.categoryLabel}</TagPill>
                 <TagPill>{activity.locationsOffered}</TagPill>
-                {displayPricing.isFlashSale || activity.slug === "cat-vase" ? (
+                {displayPricing.isFlashSale ? (
                   <span className="rounded-full border border-amber-400/40 bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-200">
-                    ⚡ {displayPricing.flashSaleLabel || "Flash Sale — $25"}
+                    ⚡ {displayPricing.flashSaleLabel || "Limited-Time Sale"}
                   </span>
                 ) : displayPricing.hasSaleBadge ? (
                   <span className="rounded-full border border-amber-400/40 bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-200">

@@ -100,7 +100,7 @@ function ActivityCard({ activity: rawActivity, position, listCity, first }: { ac
       <div className={styles.cardBody}>
         <div className={styles.badgeRow}>
           {activity.flashSale ? (
-            <span className={styles.badgeSale}>⚡ {activity.flashSaleLabel || "Flash Sale — $25"}</span>
+            <span className={styles.badgeSale}>⚡ {activity.flashSaleLabel || "Limited-Time Sale"}</span>
           ) : activity.formerPrice && activity.currentPrice !== null && activity.formerPrice.amount > activity.currentPrice ? (
             <span className={styles.badgeSale}>⚡ Limited-Time Sale</span>
           ) : null}
@@ -280,7 +280,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
       } catch {
         if (active && controller === requestController) {
           setRefreshFailed(true);
-          setData(previous => ({ ...previous, activities: previous.activities.map(activity => ({ ...activity, currentPrice: null, nextAvailability: null, upcomingSessions: [], availabilityState: "unavailable" })) }));
+          setData(previous => ({ ...previous, activities: previous.activities.map(activity => ({ ...activity, currentPrice: null, formerPrice: null, flashSale: false, flashSaleLabel: null, nextAvailability: null, upcomingSessions: [], availabilityState: "unavailable" })) }));
         }
       } finally {
         window.clearTimeout(timeout);
@@ -297,6 +297,8 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
   const activities = filterHomepageActivities(cityActivities, filter);
   const visible = activities.slice(0, visibleCount);
   const studio = STUDIO_LOCATIONS[city];
+  const dateNightGiftClass = cityActivities.find(activity => activity.key === `${city}-date-night-wheel`);
+  const beginnerGiftClass = cityActivities.find(activity => activity.key === (city === "chicago" ? "chicago-beginner-wheel" : "eugene-cup-creations"));
 
   useEffect(() => {
     if (!revealAnchor.current) return;
@@ -345,7 +347,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
           <p><strong>{CHICAGO_MILESTONES.rating}<span aria-hidden="true"> ★</span></strong> average rating</p>
           <p>Creating together since <strong>{CHICAGO_MILESTONES.since}</strong></p>
         </section>}
-        <WorkshopSaleBanner />
+        <WorkshopSaleBanner activities={cityActivities} />
         <div className={styles.saleCalloutRow}>
           <button
             type="button"
@@ -357,7 +359,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
             }}
             className={styles.saleLink}
           >
-            Creative Workshops Starting at $25 →
+            Explore lower-priced creative workshops →
           </button>
         </div>
         <div id="workshops" style={{ scrollMarginTop: "100px" }} className={styles.filters} role="group" aria-label="Filter workshops">
@@ -442,7 +444,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
             <article className={styles.giftFeatureCard}>
               <div>
                 <div className={styles.giftFeatureMeta}>
-                  {city === "chicago" ? "$55 for two · Chicago — Pilsen" : "$50 for two · Eugene, OR"} · Covers 2 Guests (Shared Wheel)
+                  {dateNightGiftClass ? priceLabel(dateNightGiftClass) : "See price at checkout"} · {studio.label}
                 </div>
                 <h3>Pottery Date Night for Two</h3>
                 <p className={styles.giftFeatureCopy}>
@@ -474,7 +476,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
             <article className={styles.giftFeatureCard}>
               <div>
                 <div className={styles.giftFeatureMeta}>
-                  {city === "chicago" ? "$45 per person · Chicago — Pilsen" : "$35 per person · Eugene, OR"} · Covers 1 Guest (Individual Wheel)
+                  {beginnerGiftClass ? priceLabel(beginnerGiftClass) : "See price at checkout"} · {studio.label}
                 </div>
                 <h3>Their First Pottery Class (Beginner Pottery)</h3>
                 <p className={styles.giftFeatureCopy}>
@@ -506,7 +508,7 @@ export default function HomePageClient({ initialData, initialCity = "chicago" }:
           </div>
           <div className={styles.giftCollectionRow}>
             <p className={styles.dataStatus} style={{ margin: 0 }}>
-              Unsure which workshop they’ll pick? Explore flexible dollar-value certificates ($50–$250) and printable keepsake cards.
+              Unsure which workshop they’ll pick? Explore live dollar-value gift cards and printable keepsake cards.
             </p>
             <Link
               href={`/gift-cards?city=${city}`}

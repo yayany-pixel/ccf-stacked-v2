@@ -5,6 +5,9 @@ import ButtonPill from "@/components/ui/ButtonPill";
 import Reveal from "@/components/motion/Reveal";
 import { sections } from "@/lib/config";
 import { audiencePageBreadcrumbs } from "@/lib/breadcrumbs";
+import PartyPhoto from "@/components/party/PartyPhoto";
+import PartyPricingNote from "@/components/party/PartyPricingNote";
+import MobileQuoteLink from "@/components/party/MobileQuoteLink";
 
 export const metadata: Metadata = {
   title: "Team Building Workshops | Corporate Events in Chicago & Eugene",
@@ -58,7 +61,7 @@ export default function TeamBuildingPage() {
         "name": "How much does team building cost?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Pricing starts at $55-$85 per person depending on the workshop. Volume discounts available for groups of 20+. Contact us for a custom quote."
+          "text": "See our adult group pricing menu for exact totals for 10 or 20 adults, including pottery with or without optional firing and glazing. Other group sizes receive a custom quote."
         }
       },
       {
@@ -66,7 +69,7 @@ export default function TeamBuildingPage() {
         "name": "Can we bring food and drinks?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes! We're BYOB-friendly. Bring wine, beer, snacks, or even cater a meal. We provide all creative materials and instruction."
+          "text": "Yes! We're BYOB-friendly. Bring wine, beer, snacks, or even cater a meal, plus your own cups, ice, and mixers. We provide all creative materials and instruction."
         }
       },
       {
@@ -92,6 +95,7 @@ export default function TeamBuildingPage() {
 
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900/40 to-slate-900">
+      <MobileQuoteLink href="/private-events?occasion=Team%20building&project=Not%20sure#inquiry-form" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -131,7 +135,7 @@ export default function TeamBuildingPage() {
                   <span className="text-2xl">🍷</span>
                   <div>
                     <div className="font-semibold">BYOB Welcome</div>
-                    <div className="text-sm text-white/70">Bring drinks, snacks, or catering</div>
+                    <div className="text-sm text-white/70">Bring drinks, snacks, cups, ice &amp; mixers</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -144,13 +148,15 @@ export default function TeamBuildingPage() {
               </div>
 
               <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <ButtonPill href="/private-events" variant="primary">
+                <ButtonPill href="/private-events?occasion=Team%20building&project=Not%20sure#inquiry-form" variant="primary">
                   Request a Quote →
                 </ButtonPill>
                 <ButtonPill href="#workshops" variant="secondary">
                   See Workshop Options
                 </ButtonPill>
               </div>
+              <PartyPhoto kind="candle" hero />
+              <PartyPricingNote />
             </div>
           </Reveal>
         </div>
@@ -178,13 +184,13 @@ export default function TeamBuildingPage() {
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <Link 
-                        href={`/chicago/${workshop.slug}`}
+                        href={`/private-events?city=chicago&occasion=Team%20building&project=${encodeURIComponent(workshop.navLabel)}#inquiry-form`}
                         className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-semibold text-purple-300 hover:bg-purple-500/30"
                       >
                         Chicago
                       </Link>
                       <Link 
-                        href={`/eugene/${workshop.slug}`}
+                        href={`/private-events?city=eugene&occasion=Team%20building&project=${encodeURIComponent(workshop.navLabel)}#inquiry-form`}
                         className="rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-300 hover:bg-cyan-500/30"
                       >
                         Eugene
@@ -197,7 +203,7 @@ export default function TeamBuildingPage() {
           </div>
 
           <div className="mt-12 text-center">
-            <ButtonPill href="/private-events" variant="primary">
+            <ButtonPill href="/private-events?occasion=Team%20building&project=Not%20sure#inquiry-form" variant="primary">
               Request Custom Team Event →
             </ButtonPill>
           </div>
@@ -247,8 +253,8 @@ export default function TeamBuildingPage() {
                   <p className="mt-2 text-sm text-white/70">
                     Perfect for departments or close-knit groups
                   </p>
-                  <div className="mt-4 text-3xl font-bold">$55-$85</div>
-                  <div className="text-sm text-white/60">per person</div>
+                  <div className="mt-4 text-xl font-bold">Choose your project</div>
+                  <PartyPricingNote />
                   <ul className="mt-6 space-y-2 text-sm text-white/75">
                     <li className="flex items-center gap-2">
                       <span className="text-green-400">✓</span>
@@ -305,7 +311,7 @@ export default function TeamBuildingPage() {
 
           <div className="mt-8 text-center">
             <p className="text-sm italic text-white/60">
-              *Prices vary by workshop type. Contact us for exact quote based on group size and date.
+              Compare the adult group menu for exact project totals. Contact us for a quote based on your group size and date.
             </p>
           </div>
         </div>
@@ -390,7 +396,7 @@ export default function TeamBuildingPage() {
                   Fill out our private event form and we'll get back to you within 24 hours with a custom quote.
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-4">
-                  <ButtonPill href="/private-events" variant="primary">
+                  <ButtonPill href="/private-events?occasion=Team%20building&project=Not%20sure#inquiry-form" variant="primary">
                     Request a Quote →
                   </ButtonPill>
                   <ButtonPill href="/activities" variant="secondary">

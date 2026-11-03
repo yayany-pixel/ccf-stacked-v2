@@ -37,8 +37,8 @@ async function runLivePricingTests() {
         "Turkish lamp must cover table, hanging, and date night appointment types",
       );
       const validPrices = pricing.variants.map((v) => v.currentPrice).filter((p): p is number => p !== null);
-      const minPrice = Math.min(...validPrices);
-      assert.equal(pricing.displayPrice, `From $${minPrice}`, "Turkish lamp headline must show lowest live price");
+      const expectedHeadline = validPrices.length ? `From $${Math.min(...validPrices)}` : "See price at checkout";
+      assert.equal(pricing.displayPrice, expectedHeadline, "Turkish lamp headline must show lowest live price or explicit unavailable state");
       assert.equal(pricing.wasPrice, null, "Turkish lamp must have no wasPrice");
       continue;
     }
@@ -50,15 +50,16 @@ async function runLivePricingTests() {
 
     for (const [city, dest] of destEntries) {
       const catalogItem: CatalogClass | undefined = catalog.find(
-        (c: CatalogClass) => Number(c.id) === dest.appointmentTypeId,
+        (c: CatalogClass) => Number(c.id) === dest.appointmentTypeId && c.location === city &&
+          (!dest.calendarIds?.length || dest.calendarIds.every(id => c.calendarIds?.includes(id))),
       );
       const promo = getPromotionalOverride(dest.appointmentTypeId);
       if (catalogItem && catalogItem.pricing.price !== null) {
-        const expectedPrice: number | null = promo ? promo.promoPrice : catalogItem.pricing.price;
+        const expectedPrice: number | null = catalogItem.pricing.price;
         assert.equal(
           dest.currentPrice,
           expectedPrice,
-          `${activity.slug} (${city}) price must match live Acuity catalog or active promotional price`,
+          `${activity.slug} (${city}) price must match live Acuity catalog`,
         );
 
         const expectedUnit: "for two" | "per person" | "per ticket" =
@@ -73,16 +74,14 @@ async function runLivePricingTests() {
           `${activity.slug} (${city}) unit must match Acuity coverage`,
         );
 
-        // Check was price rule: strictly higher (using verified promotional regular price or dynamic 1.42 formula)
-        const former = promo
-          ? (promo.regularPrice > (dest.currentPrice ?? 0) ? promo.regularPrice : null)
-          : (dest.currentPrice !== null ? Math.round((dest.currentPrice * 1.42) / 5) * 5 : null);
+        const former = promo && promo.promoPrice === dest.currentPrice && promo.regularPrice > dest.currentPrice
+          ? promo.regularPrice : null;
 
         if (former !== null && former > dest.currentPrice!) {
           assert.equal(
             dest.wasPrice,
             former,
-            `${activity.slug} (${city}) was price must equal dynamically calculated price`,
+            `${activity.slug} (${city}) was price must equal verified promotion regular price`,
           );
         } else {
           assert.equal(
@@ -91,6 +90,10 @@ async function runLivePricingTests() {
             `${activity.slug} (${city}) must NOT show wasPrice when former <= current or undefined`,
           );
         }
+      } else {
+        assert.equal(dest.currentPrice, null, `${activity.slug} (${city}) unmatched/unpriced offering must not invent a price`);
+        assert.equal(dest.wasPrice, null);
+        assert.equal(dest.formattedPrice, "See price at checkout");
       }
     }
   }

@@ -543,7 +543,17 @@ export const PROMOTIONAL_WORKSHOPS: PromotionalWorkshop[] = [
  * Checks whether the promotional pricing test is currently active.
  */
 export function isPromotionActive(timestamp: number = Date.now()): boolean {
-  return false;
+  return timestamp >= Date.parse(PROMOTION_START_ISO) && timestamp < Date.parse(PROMOTION_END_ISO);
+}
+
+export function getVerifiedPromotion(
+  appointmentTypeId: number | string,
+  livePrice: number | null,
+  timestamp: number = Date.now(),
+): PromotionalWorkshop | null {
+  const promo = getPromotionalOverride(appointmentTypeId, timestamp);
+  return promo && livePrice !== null && Number.isFinite(livePrice) &&
+    livePrice === promo.promoPrice && promo.regularPrice > livePrice ? promo : null;
 }
 
 /**

@@ -1,258 +1,189 @@
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
-import path from "node:path";
+import { readFileSync } from "node:fs";
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import GiftCardsStorefront from "../components/GiftCardsStorefront";
 import {
+  ACUITY_GIFT_CARDS_CATALOG_URL,
   buildAcuityProductPurchaseUrl,
+  fetchLiveAcuityProducts,
   getClassGiftingContext,
-  GIFT_FAQS,
-  MANUAL_ACUITY_SETUP_SPECS,
-  resolveGiftExperiences,
-  VERIFIED_ACUITY_PRODUCTS,
-  VERIFIED_CHICAGO_GIFT_WORKSHOPS,
+  resolveGiftCatalog,
+  type AcuityRawProduct,
 } from "../lib/gifts";
-import { safeUrl, trackBeginCheckout, trackCardSelect } from "../lib/analytics";
-import { contentIdentity, classCategory } from "../lib/analyticsIdentity";
+import { safeUrl } from "../lib/analytics";
+import { contentIdentity } from "../lib/analyticsIdentity";
 
-function runGiftCardTests() {
-  console.log("=== Running Gift Card Storefront & Acuity Verification Tests ===");
+Object.assign(globalThis, { React });
 
-  // 1. Experience cards precede dollar-value cards & match exact copy
-  const cards = resolveGiftExperiences(VERIFIED_ACUITY_PRODUCTS);
-  assert.equal(cards.length, 3);
-  assert.equal(cards[0].id, "pottery-date-night-for-two");
-  assert.equal(cards[0].title, "Pottery Date Night for Two");
-  assert.equal(
-    cards[0].supportingCopy,
-    "Give your favorite couple a little clay, a little laughter, and time together.",
-  );
-  assert.equal(cards[0].buttonLabel, "Gift a Date Night");
-  assert.equal(cards[0].isExperienceCard, true);
-
-  assert.equal(cards[1].id, "their-first-pottery-class");
-  assert.equal(cards[1].title, "Their First Pottery Class");
-  assert.equal(
-    cards[1].supportingCopy,
-    "For the person who keeps saying, ‘I’ve always wanted to try that.’",
-  );
-  assert.equal(cards[1].buttonLabel, "Gift Their First Spin");
-  assert.equal(cards[1].isExperienceCard, true);
-
-  assert.equal(cards[2].id, "let-them-choose");
-  assert.equal(cards[2].title, "Let Them Choose");
-  assert.equal(
-    cards[2].supportingCopy,
-    "Know they’ll love making something, but unsure what? Give them the choice.",
-  );
-  assert.equal(cards[2].buttonLabel, "Choose a Gift Amount");
-  assert.equal(cards[2].isExperienceCard, false);
-
-  // 2. Verified prices, guest counts, studio eligibility, and photos exist on disk
-  const dnChi = cards[0].offerings.chicago;
-  const dnEug = cards[0].offerings.eugene;
-  assert.equal(dnChi.price, 55);
-  assert.equal(dnChi.guestsCovered, 2);
-  assert.equal(dnChi.eligibleAppointmentTypes[0].id, 79006071);
-  assert.equal(dnEug.price, 50);
-  assert.equal(dnEug.guestsCovered, 2);
-  assert.equal(dnEug.eligibleAppointmentTypes[0].id, 91935746);
-
-  const fpChi = cards[1].offerings.chicago;
-  const fpEug = cards[1].offerings.eugene;
-  assert.equal(fpChi.price, 45);
-  assert.equal(fpChi.guestsCovered, 1);
-  assert.equal(fpChi.eligibleAppointmentTypes[0].id, 79006616);
-  assert.equal(fpEug.price, 25);
-  assert.equal(fpEug.guestsCovered, 1);
-  assert.deepEqual(
-    fpEug.eligibleAppointmentTypes.map((a) => a.id),
-    [93539343, 89287658],
-  );
-
-  for (const card of cards) {
-    for (const city of ["chicago", "eugene"] as const) {
-      const photoPath = card.offerings[city].photo.path;
-      const diskPath = path.join(process.cwd(), "public", photoPath);
-      assert.ok(
-        existsSync(diskPath),
-        `Studio photo must exist on disk: ${photoPath}`,
-      );
-    }
-  }
-
-  // 3. Uncreated experience products and Eugene gift cards do NOT expose a primary purchaseUrl
-  assert.equal(dnChi.status, "pending_acuity_setup");
-  assert.equal(dnChi.purchaseUrl, null);
-  assert.equal(dnEug.status, "pending_acuity_setup");
-  assert.equal(dnEug.purchaseUrl, null);
-  assert.equal(fpChi.status, "pending_acuity_setup");
-  assert.equal(fpChi.purchaseUrl, null);
-  assert.equal(fpEug.status, "pending_acuity_setup");
-  assert.equal(fpEug.purchaseUrl, null);
-
-  // Chicago dollar-value gift cards ARE active and link to exact Acuity product IDs
-  const ltcChi = cards[2].offerings.chicago;
-  const ltcEug = cards[2].offerings.eugene;
-  assert.equal(ltcChi.status, "active");
-  assert.equal(ltcChi.denominations?.length, 5);
-  assert.deepEqual(
-    ltcChi.denominations?.map((d) => d.productId),
-    [2119866, 2119869, 2119870, 2119872, 2119873],
-  );
-  assert.equal(
-    ltcChi.denominations?.[0].purchaseUrl,
-    "https://app.acuityscheduling.com/catalog.php?owner=35932879&action=addCart&clear=1&id=2119866",
-  );
-  // Eugene dollar-value gift cards are pending until Eugene appointmentTypeIDs are added in Acuity
-  assert.equal(ltcEug.status, "pending_acuity_setup");
-  assert.equal(ltcEug.purchaseUrl, null);
-
-  // 4. Dynamic activation when experience products ARE added to Acuity GET /products
-  const withNewProducts = resolveGiftExperiences([
-    ...VERIFIED_ACUITY_PRODUCTS,
-    {
-      id: 9900001,
-      name: "Pottery Date Night for Two — Chicago",
-      description: "Covers 2 guests sharing 1 wheel in Chicago Date Night.",
-      price: "55.00",
-      type: "value",
-      kind: "certificate",
-      hidden: false,
-      expires: null,
-      appointmentTypeIDs: [79006071],
-      counts: null,
-      minutes: null,
-      value: 55,
-      group: "Gift Cards",
-      isGiftCertificate: true,
-    },
-    {
-      id: 9900002,
-      name: "Pottery Date Night for Two — Eugene",
-      description: "Covers 2 guests sharing 1 wheel in Eugene Date Night.",
-      price: "50.00",
-      type: "value",
-      kind: "certificate",
-      hidden: false,
-      expires: null,
-      appointmentTypeIDs: [91935746],
-      counts: null,
-      minutes: null,
-      value: 50,
-      group: "Gift Cards",
-      isGiftCertificate: true,
-    },
-  ]);
-  assert.equal(withNewProducts[0].offerings.chicago.status, "active");
-  assert.equal(
-    withNewProducts[0].offerings.chicago.purchaseUrl,
-    buildAcuityProductPurchaseUrl(9900001),
-  );
-  assert.equal(withNewProducts[0].offerings.eugene.status, "active");
-  assert.equal(
-    withNewProducts[0].offerings.eugene.purchaseUrl,
-    buildAcuityProductPurchaseUrl(9900002),
-  );
-
-  // 5. Context-preserving class gifting links
-  const dnGiftChi = getClassGiftingContext("date-night-wheel", "chicago", [
-    "chicago",
-    "eugene",
-  ]);
-  assert.ok(dnGiftChi);
-  assert.equal(dnGiftChi.label, "Give this class as a gift");
-  assert.equal(
-    dnGiftChi.href,
-    "/gift-cards?city=chicago&gift=pottery-date-night-for-two&workshop=date-night-wheel#pottery-date-night-for-two",
-  );
-
-  const dnGiftEug = getClassGiftingContext("date-night-wheel", "eugene", [
-    "chicago",
-    "eugene",
-  ]);
-  assert.ok(dnGiftEug);
-  assert.equal(
-    dnGiftEug.href,
-    "/gift-cards?city=eugene&gift=pottery-date-night-for-two&workshop=date-night-wheel#pottery-date-night-for-two",
-  );
-
-  const bwGiftChi = getClassGiftingContext("beginner-wheel", "chicago", [
-    "chicago",
-    "eugene",
-  ]);
-  assert.ok(bwGiftChi);
-  assert.equal(
-    bwGiftChi.href,
-    "/gift-cards?city=chicago&gift=their-first-pottery-class&workshop=beginner-wheel#their-first-pottery-class",
-  );
-
-  const mugGiftChi = getClassGiftingContext("mug-and-bowl", "chicago", [
-    "chicago",
-    "eugene",
-  ]);
-  assert.ok(mugGiftChi);
-  assert.equal(
-    mugGiftChi.href,
-    "/gift-cards?city=chicago&gift=let-them-choose&workshop=mug-and-bowl&amount=100#let-them-choose",
-  );
-
-  // Online and private classes must not advertise gift redemption
-  assert.equal(getClassGiftingContext("online-cauldron", "chicago"), null);
-  assert.equal(getClassGiftingContext("private-parties", "chicago"), null);
-
-  // 6. Manual setup specs & FAQs completeness
-  assert.equal(MANUAL_ACUITY_SETUP_SPECS.length, 5);
-  assert.ok(GIFT_FAQS.length >= 6);
-  assert.equal(VERIFIED_CHICAGO_GIFT_WORKSHOPS.length, 19);
-
-  // 7. Analytics & URL sanitization for Acuity gift card checkout links (never fires purchase on click)
-  const giftCheckoutUrl = buildAcuityProductPurchaseUrl(2119869);
-  const cleaned = safeUrl(giftCheckoutUrl);
-  assert.ok(cleaned.includes("id=2119869"), "safeUrl preserves product ID");
-  assert.ok(cleaned.includes("owner=35932879"), "safeUrl preserves owner ID");
-  const identity = contentIdentity("2119869", giftCheckoutUrl);
-  assert.equal(identity.id, "2119869");
-  assert.equal(identity.type, "product");
-  assert.equal(classCategory("$100 Gift Card"), "gift_card");
-
-  process.env.NEXT_PUBLIC_GA_ID_1 = "G-TESTONLY";
-  const events: Array<{ name: string; params: Record<string, any> }> = [];
-  Object.assign(globalThis, {
-    location: new URL("https://colorcocktailfactory.com/gift-cards?city=chicago"),
-    document: { referrer: "" },
-    localStorage: { getItem: () => null },
-    window: {
-      ccfPrivacyPreferences: { analytics: true, marketing: true },
-      location: new URL("https://colorcocktailfactory.com/gift-cards?city=chicago"),
-      innerWidth: 1280,
-      dataLayer: [],
-      gtag: (_cmd: string, name: string, params: Record<string, any>) => {
-        events.push({ name, params });
-      },
-    },
-  });
-  trackCardSelect({
-    city: "chicago",
-    class_name: "$100 Gift Card",
-    class_id: "2119869",
-    class_category: "gift_card",
-    displayed_price: 100,
-    click_target: "select_denomination",
-  });
-  trackBeginCheckout({
-    city: "chicago",
-    class_name: "$100 Gift Card",
-    class_id: "2119869",
-    displayed_price: 100,
-    link_url: giftCheckoutUrl,
-  });
-  assert.ok(events.some((e) => e.name === "select_item"));
-  assert.ok(events.some((e) => e.name === "begin_checkout"));
-  assert.ok(
-    !events.some((e) => e.name === "purchase"),
-    "Clicks and checkout starts must NEVER emit a purchase event",
-  );
-
-  console.log("✓ All Gift Card Storefront & Acuity verification tests passed!");
+function product(
+  id: number,
+  overrides: Partial<AcuityRawProduct> = {},
+): AcuityRawProduct {
+  return {
+    id,
+    name: `Live gift ${id}`,
+    description: `Live description ${id}`,
+    price: "67.43",
+    group: "Chicago",
+    hidden: false,
+    ...overrides,
+  };
 }
 
-runGiftCardTests();
+function render(products: AcuityRawProduct[], initialCity?: "chicago" | "eugene") {
+  return renderToStaticMarkup(
+    React.createElement(GiftCardsStorefront, {
+      groups: resolveGiftCatalog(products),
+      initialCity,
+    }),
+  );
+}
+
+async function runGiftCardTests() {
+  const live = [
+    product(90001),
+    product(90002, { group: "Eugene experiences", kind: "package" }),
+    product(90003, { group: "Online", kind: "subscription" }),
+    product(90004, {
+      group: "Gift Cards",
+      name: "Flexible Gift Card",
+      type: "value",
+      price: "103.29",
+    }),
+    product(90005, { group: "New category", name: "A brand new gift" }),
+    product(90006, { hidden: true }),
+    product(90007, { active: false }),
+    product(90008, { status: "inactive" }),
+  ];
+  const groups = resolveGiftCatalog(live);
+  assert.deepEqual(groups.map((group) => group.category), [
+    "Chicago", "Eugene", "Online", "Dollar-value gift cards", "More gifts",
+  ]);
+  assert.deepEqual(
+    groups.flatMap((group) => group.products.map((item) => item.id)),
+    live.slice(0, 5).map((item) => item.id),
+    "Every active public product is shown, including packages, online, and unknown categories",
+  );
+  assert.equal(groups[0].products[0].name, live[0].name);
+  assert.equal(groups[0].products[0].description, live[0].description);
+  assert.equal(groups[0].products[0].formattedPrice, "$67.43");
+  assert.equal(groups[3].products[0].formattedPrice, "$103.29");
+  assert.equal(
+    groups[0].products[0].purchaseUrl,
+    "https://app.acuityscheduling.com/catalog.php?owner=35932879&action=addCart&clear=1&id=90001",
+  );
+
+  const markup = render(live);
+  for (const item of live.slice(0, 5)) {
+    assert.ok(markup.includes(item.name));
+    assert.ok(markup.includes(`id=${item.id}`));
+  }
+  for (const id of [90006, 90007, 90008, 2119866, 2119869]) {
+    assert.ok(!markup.includes(`id=${id}`), `No checkout for absent/hidden product ${id}`);
+  }
+  assert.equal((markup.match(/>Buy gift<\/a>/g) ?? []).length, 5);
+  assert.doesNotMatch(markup, /pending|Acuity Admin|manual-acuity-setup|VERIFIED|19 workshops/i);
+  assert.doesNotMatch(markup, />Buy[^<]*9000/);
+  assert.ok(render(live, "eugene").indexOf("Eugene experiences") < render(live, "eugene").indexOf("Live gift 90001"));
+
+  const changed = render([product(90001, { price: "218.76" })]);
+  assert.ok(changed.includes("$218.76"));
+  assert.ok(!changed.includes("$67.43"), "Price updates come exclusively from the response");
+  assert.ok(!changed.includes("$55") && !changed.includes("$45") && !changed.includes("$50"));
+  const removed = render(live.slice(1));
+  assert.ok(!removed.includes("Live gift 90001"));
+  assert.ok(!removed.includes("id=90001"), "Removed products cannot survive the next response");
+  assert.deepEqual(resolveGiftCatalog([]), []);
+  assert.deepEqual(resolveGiftCatalog([
+    product(1, { price: "" }),
+    product(2, { price: "NaN" }),
+    product(3, { price: "-1" }),
+    product(4, { price: "Infinity" }),
+    product(-1),
+    product(5, { name: "" }),
+  ]), []);
+  assert.equal(resolveGiftCatalog([product(1), product(1)])[0].products.length, 1);
+  assert.equal(resolveGiftCatalog([product(1, { price: "0" })])[0].products[0].price, 0);
+  assert.equal((render(live.slice(5)).match(/<a\b/g) ?? []).length, 1);
+  const unsafeDescription = render([product(1, { description: "<script>alert(1)</script>" })]);
+  assert.ok(!unsafeDescription.includes("<script>"), "API copy must not execute HTML");
+
+  const oldFetch = globalThis.fetch;
+  const oldUserId = process.env.ACUITY_USER_ID;
+  const oldApiKey = process.env.ACUITY_API_KEY;
+  const requests: Array<{ url: string; init?: RequestInit }> = [];
+  let response = new Response(JSON.stringify(live));
+  let throwNetworkError = false;
+  globalThis.fetch = async (input, init) => {
+    requests.push({ url: String(input), init });
+    if (throwNetworkError) throw new Error("network unavailable");
+    return response;
+  };
+  try {
+    delete process.env.ACUITY_USER_ID;
+    delete process.env.ACUITY_API_KEY;
+    assert.deepEqual(await fetchLiveAcuityProducts(), []);
+    assert.equal(requests.length, 0, "Missing credentials cannot use a canned catalog");
+    process.env.ACUITY_USER_ID = "test-user";
+    process.env.ACUITY_API_KEY = "test-key";
+    assert.deepEqual(await fetchLiveAcuityProducts(), live);
+    response = new Response(JSON.stringify([product(90003, { price: "312.18" })]));
+    const refreshedMarkup = render(await fetchLiveAcuityProducts());
+    assert.ok(refreshedMarkup.includes("$312.18"));
+    assert.ok(!refreshedMarkup.includes("id=90001"), "A fetched subset cannot reuse earlier products");
+    for (response of [
+      new Response("[]"),
+      new Response('{"error":"unavailable"}'),
+      new Response("invalid JSON"),
+      new Response("denied", { status: 401 }),
+      new Response("unavailable", { status: 503 }),
+    ]) {
+      const products = await fetchLiveAcuityProducts();
+      assert.deepEqual(products, [], "Empty and failed responses never resurrect historical products");
+      const emptyMarkup = render(products);
+      assert.equal((emptyMarkup.match(/<a\b/g) ?? []).length, 1);
+      assert.ok(emptyMarkup.includes(ACUITY_GIFT_CARDS_CATALOG_URL.replaceAll("&", "&amp;")));
+      assert.doesNotMatch(emptyMarkup, /action=addCart|\$\d|>Buy gift</);
+    }
+    throwNetworkError = true;
+    assert.deepEqual(await fetchLiveAcuityProducts(), []);
+    for (const request of requests) {
+      assert.equal(request.url, "https://acuityscheduling.com/api/v1/products");
+      assert.equal(request.init?.method, "GET", "Acuity access must be read only");
+      assert.equal(request.init?.cache, "no-store", "No stale products after an outage");
+      assert.ok(request.init?.signal);
+    }
+  } finally {
+    globalThis.fetch = oldFetch;
+    if (oldUserId === undefined) delete process.env.ACUITY_USER_ID;
+    else process.env.ACUITY_USER_ID = oldUserId;
+    if (oldApiKey === undefined) delete process.env.ACUITY_API_KEY;
+    else process.env.ACUITY_API_KEY = oldApiKey;
+  }
+
+  assert.equal(getClassGiftingContext("beginner-wheel", "eugene")?.href, "/gift-cards?city=eugene");
+  assert.equal(getClassGiftingContext("private-parties"), null);
+  assert.equal(getClassGiftingContext("online-cauldron"), null);
+  const href = buildAcuityProductPurchaseUrl(90001);
+  assert.ok(safeUrl(href).includes("id=90001"));
+  assert.equal(contentIdentity("90001", href).type, "product");
+
+  for (const file of ["app/gift-cards/page.tsx", "app/[city]/[slug]/page.tsx"]) {
+    const source = readFileSync(file, "utf8");
+    assert.match(source, /fetchLiveAcuityProducts\(\)/);
+    assert.match(source, /resolveGiftCatalog\(rawProducts\)/);
+    assert.match(source, /absolute:/, "Gift titles must not duplicate the layout's brand suffix");
+    assert.doesNotMatch(source, /\$50|\$250|resolveGiftExperiences/);
+  }
+  for (const file of ["lib/gifts.ts", "components/GiftCardsStorefront.tsx"]) {
+    const source = readFileSync(file, "utf8");
+    assert.doesNotMatch(source, /VERIFIED_|pending_acuity_setup|MANUAL_ACUITY_SETUP|\$\d/);
+  }
+  console.log("✓ Live gift catalog grouping, rendering, prices, removals, failure states, and read-only GET tests passed");
+}
+
+runGiftCardTests().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

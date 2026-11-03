@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { potteryGroups, otherGroups, specialGroups, requestPotteryGroups, usd, type GroupActivity } from "@/lib/adultGroupPricing";
+import PartyPhoto from "@/components/party/PartyPhoto";
 
 export const metadata: Metadata = {
   title: "Adult Group Pricing for 10 & 20 Guests",
@@ -30,6 +31,7 @@ export default function AdultGroupPricingPage() {
         <p className="text-sm font-semibold uppercase tracking-widest text-purple-200">Chicago &amp; Eugene · Adults only</p>
         <h1 className="mt-4 font-serif text-4xl leading-tight sm:text-6xl">Your people. Your project. Your private party.</h1>
         <p className="mt-6 text-lg leading-relaxed text-white/80">Straightforward group quotes for 10 or 20 adults. Pick a creative experience, compare the total, and tell us your preferred city and date.</p>
+        <PartyPhoto kind="handbuilding" hero />
         <p className="mt-4 text-sm leading-relaxed text-white/65">All prices are in USD for in-studio private workshops. Activities vary by city. We confirm your project, space, instructor, equipment, and availability before booking. These are adult packages; individual activities may have additional age requirements.</p>
         <div className="mt-6 flex flex-wrap gap-3"><Link href="/private-events?city=chicago#inquiry-form" className="rounded-full bg-purple-200 px-5 py-3 font-semibold text-slate-950">Request Chicago dates</Link><Link href="/private-events?city=eugene#inquiry-form" className="rounded-full border border-white/30 px-5 py-3 font-semibold">Request Eugene dates</Link></div>
       </header>

@@ -7,6 +7,15 @@ import PrivateEventFormCard from "@/components/PrivateEventFormCard";
 import { cities } from "@/lib/links";
 import type { City } from "@/lib/config";
 import { CHICAGO_MILESTONES } from "@/lib/studioMilestones";
+import PartyPhoto, { type PartyPhotoKind } from "@/components/party/PartyPhoto";
+import MobileQuoteLink from "@/components/party/MobileQuoteLink";
+import { potteryGroups, otherGroups, specialGroups, requestPotteryGroups, usd } from "@/lib/adultGroupPricing";
+
+const adultRates = [...potteryGroups, ...otherGroups, ...specialGroups, ...requestPotteryGroups].flatMap(item => [item.ten, item.twenty]);
+const priceRange = (names: string[]) => {
+  const rates = [...potteryGroups, ...otherGroups].filter(item => names.includes(item.name)).flatMap(item => [item.ten, item.twenty]);
+  return `${usd(Math.min(...rates))}–${usd(Math.max(...rates))}`;
+};
 
 export const metadata: Metadata = {
   title: "Private Events & Parties",
@@ -66,14 +75,8 @@ export default function PrivateEventsPage({
     "offers": {
       "@type": "AggregateOffer",
       "priceCurrency": "USD",
-      "lowPrice": "35",
-      "highPrice": "120",
-      "priceSpecification": {
-        "@type": "UnitPriceSpecification",
-        "price": "55",
-        "priceCurrency": "USD",
-        "unitText": "per person"
-      }
+      "lowPrice": String(Math.min(...adultRates)),
+      "highPrice": String(Math.max(...adultRates))
     },
     "description": "Private creative events and parties including pottery, mosaics, glass fusion, and more. Perfect for team building, weddings, birthdays, and corporate events."
   };
@@ -87,7 +90,7 @@ export default function PrivateEventsPage({
         "name": "Can we bring our own food and drinks?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes! Our private events are BYOB-friendly. Bring any food, drinks, wine, beer, or cocktails you'd like. We provide tables and space for your refreshments."
+          "text": "Yes! Our private events are BYOB-friendly. Bring any food, drinks, wine, beer, or cocktails you'd like, plus your own cups, ice, and mixers. We provide tables and space for your refreshments."
         }
       },
       {
@@ -111,7 +114,7 @@ export default function PrivateEventsPage({
         "name": "How much does a private event cost?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Adult group packages for 10 or 20 guests range from $35 to $120 per person, depending on activity, group size, and pottery finishing. See our adult group pricing page for exact totals and inclusions. Other group sizes receive a custom quote."
+          "text": "See our adult group pricing page for exact totals and inclusions for 10 or 20 adults, with separate pottery prices before and after optional firing and glazing. Other group sizes receive a custom quote."
         }
       },
       {
@@ -119,7 +122,7 @@ export default function PrivateEventsPage({
         "name": "Is this suitable for kids?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes! We offer age-appropriate activities for kids as young as 6 years old. Popular options include handbuilding pottery, painting, and simple mosaics. Parent supervision is required for children under 10."
+          "text": "Explore our city kids pages for Clay Creatures handbuilding for ages 5–8 with a caregiver, and kids wheel pottery for ages 9–13 with a guardian staying at the studio. Use the kids birthday inquiry for your city so we can confirm the project and supervision details."
         }
       },
       {
@@ -127,7 +130,7 @@ export default function PrivateEventsPage({
         "name": "Do guests take their creations home?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Most projects go home the same day! Pottery pieces need to be fired and glazed, so those are ready for pickup 2-3 weeks later. Glass fusion items are fired and ready in about 1 week. Terrariums, bonsai, candles, and painted items go home immediately."
+          "text": "Pottery firing and glazing are optional; when selected, pickup is about three weeks later. Unfired clay is fragile and not food-safe. Glass fusion includes kiln processing and later pickup. Terrariums, bonsai, and candles go home the same day."
         }
       },
       {
@@ -167,6 +170,16 @@ export default function PrivateEventsPage({
 
   const eventTypes = [
     {
+      icon: "🎉",
+      title: "Birthday Parties",
+      description: "Adults and kids alike love hands-on creative celebrations"
+    },
+    {
+      icon: "💼",
+      title: "Corporate Team Building",
+      description: "Foster creativity, collaboration, and connection"
+    },
+    {
       icon: "💍",
       title: "Weddings & Engagement Parties",
       description: "Create unforgettable guest experiences or couple activities"
@@ -175,16 +188,6 @@ export default function PrivateEventsPage({
       icon: "👰",
       title: "Bachelorette & Bridal Showers",
       description: "Celebrate with pottery, champagne, and lifelong memories"
-    },
-    {
-      icon: "💼",
-      title: "Corporate Team Building",
-      description: "Foster creativity, collaboration, and connection"
-    },
-    {
-      icon: "🎉",
-      title: "Birthday Parties",
-      description: "Adults and kids alike love hands-on creative celebrations"
     },
     {
       icon: "👨‍👩‍👧‍👦",
@@ -212,7 +215,8 @@ export default function PrivateEventsPage({
     {
       title: "Pottery Wheel Throwing",
       duration: "2 hours",
-      price: "$45-50",
+      price: priceRange(["Beginner Wheel Throwing"]),
+      photo: "wheel",
       description: "Learn to center clay and create bowls, cups, or vases on the pottery wheel. Our most popular group activity!",
       skill: "Beginner-friendly",
       takeHome: "Optional firing & glaze; approx. 3 weeks",
@@ -221,7 +225,8 @@ export default function PrivateEventsPage({
     {
       title: "Handbuilding Pottery",
       duration: "2 hours",
-      price: "$40-45",
+      price: priceRange(["General Handbuilding"]),
+      photo: "handbuilding",
       description: "No wheel needed! Use pinching, coiling, and slab techniques to create unique sculptural pieces.",
       skill: "All ages welcome",
       takeHome: "Optional firing & glaze; approx. 3 weeks",
@@ -230,7 +235,8 @@ export default function PrivateEventsPage({
     {
       title: "Turkish Lamp Mosaics",
       duration: "2-3 hours",
-      price: "$55-95",
+      price: priceRange(["Hanging Turkish Mosaic Lamp", "Table Turkish Mosaic Lamp"]),
+      photo: "lamp",
       description: "Design stunning mosaic lamps using colorful glass pieces. A premium, show-stopping experience.",
       skill: "Beginner-friendly",
       takeHome: "Same day",
@@ -239,7 +245,8 @@ export default function PrivateEventsPage({
     {
       title: "Glass Fusion Art",
       duration: "1.5-2 hours",
-      price: "$60-65",
+      price: priceRange(["Glass Fusion"]),
+      photo: "mosaic",
       description: "Create fused glass coasters, jewelry dishes, or suncatchers. Modern and vibrant.",
       skill: "Beginner-friendly",
       takeHome: "Kiln processing included; later pickup",
@@ -248,7 +255,8 @@ export default function PrivateEventsPage({
     {
       title: "Mosaic Art",
       duration: "2 hours",
-      price: "$45-50",
+      price: priceRange(["Mosaic Creations"]),
+      photo: "mosaic",
       description: "Design colorful mosaic artwork on tiles or frames. Great for team building and group creativity.",
       skill: "All ages",
       takeHome: "Same day",
@@ -257,7 +265,8 @@ export default function PrivateEventsPage({
     {
       title: "Terrarium Building",
       duration: "1.5 hours",
-      price: "$50-55",
+      price: priceRange(["Terrarium"]),
+      photo: "terrarium",
       description: "Assemble lush mini gardens in glass vessels. Calming, meditative, and everyone succeeds.",
       skill: "Perfect for all",
       takeHome: "Same day",
@@ -266,7 +275,8 @@ export default function PrivateEventsPage({
     {
       title: "Bonsai Workshop",
       duration: "2 hours",
-      price: "$70-75",
+      price: priceRange(["Bonsai"]),
+      photo: "bonsai",
       description: "Learn the ancient art of bonsai cultivation. Take home a living work of art.",
       skill: "Beginner-friendly",
       takeHome: "Same day",
@@ -275,7 +285,8 @@ export default function PrivateEventsPage({
     {
       title: "Candle Making",
       duration: "1.5 hours",
-      price: "$45-50",
+      price: priceRange(["Candle Making"]),
+      photo: "candle",
       description: "Pour custom-scented candles with unique vessels and fragrance blends.",
       skill: "All ages",
       takeHome: "Same day",
@@ -294,7 +305,8 @@ export default function PrivateEventsPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      <main id="main-content" tabIndex={-1} className="min-h-screen">
+      <main id="main-content" tabIndex={-1} className="min-h-screen pb-20 md:pb-0">
+        <MobileQuoteLink />
         <aside className="mx-auto max-w-6xl px-6 pt-24 text-center">
           <Link href="/kids#birthdays" className="inline-block rounded-2xl bg-amber-50 px-6 py-4 font-semibold text-stone-900">Planning a child’s birthday? Explore kids pottery parties in Chicago &amp; Eugene →</Link>
         </aside>
@@ -302,7 +314,7 @@ export default function PrivateEventsPage({
         <section className="gradient-breathing relative overflow-hidden bg-gradient-to-br from-indigo-900/40 via-purple-900/50 to-pink-900/40">
           <div className="sparkle-noise absolute inset-0  opacity-20" />
 
-          <div className="relative z-10 mx-auto max-w-4xl px-6 py-16 sm:py-24">
+          <div className="relative z-10 mx-auto max-w-4xl px-6 py-8 sm:py-16">
             {/* Heading */}
             <div className="mb-10 text-center">
               <Reveal variant="fade-up">
@@ -316,7 +328,7 @@ export default function PrivateEventsPage({
               </Reveal>
 
               <Reveal delay={100} variant="fade-up">
-                <h1 className="mt-6 font-serif text-5xl font-light leading-relaxed tracking-wide sm:text-7xl sm:leading-relaxed" style={{ letterSpacing: '0.05em' }}>
+                <h1 className="mt-6 font-serif text-4xl font-light leading-tight tracking-wide sm:text-7xl sm:leading-tight" style={{ letterSpacing: '0.05em' }}>
                   Private Events &
                   <br />
                   <span className="italic font-normal">Creative Parties</span>
@@ -345,6 +357,14 @@ export default function PrivateEventsPage({
               {" · "}
               <a href="mailto:support@colorcocktailfactory.com" className="font-semibold text-purple-300 hover:text-purple-200">support@colorcocktailfactory.com</a></p>
             </div>
+            <PartyPhoto kind="candle" hero />
+          </div>
+        </section>
+
+        <section id="inquiry-form" className="scroll-mt-24 py-8 sm:py-12">
+          <div className="mx-auto max-w-4xl px-6">
+            <h2 className="mb-4 font-serif text-3xl">Tell Us About Your Event</h2>
+            <PrivateEventFormCard city={selectedCity} timeWindows={[]} />
           </div>
         </section>
 
@@ -406,6 +426,7 @@ export default function PrivateEventsPage({
               {experiences.map((exp, idx) => (
                 <Reveal key={exp.title} delay={idx * 50} variant="fade-up">
                   <GlassCard className="flex h-full flex-col p-6">
+                    <PartyPhoto kind={exp.photo as PartyPhotoKind} />
                     <div className="flex items-start justify-between">
                       <h3 className="font-serif text-xl font-semibold">{exp.title}</h3>
                       <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-semibold text-purple-200">
@@ -433,10 +454,10 @@ export default function PrivateEventsPage({
                     </div>
 
                     <Link 
-                      href={exp.link}
+                      href="/group-pricing"
                       className="mt-4 inline-block text-sm font-semibold text-purple-300 hover:text-purple-200"
                     >
-                      Learn more about {exp.title} →
+                      Exact totals for {exp.title} →
                     </Link>
                   </GlassCard>
                 </Reveal>
@@ -490,7 +511,7 @@ export default function PrivateEventsPage({
                 <div>
                   <h3 className="text-xl font-semibold text-pink-200">Adult groups of 10 or 20</h3>
                   <p className="mt-4 text-sm leading-relaxed text-white/75">Compare exact totals for every activity, with separate pottery prices before and after firing and glazing.</p>
-                  <p className="mt-3 text-sm text-white/75">Nude Painting: $1,200 for 10 adults or $2,000 for 20 adults.</p>
+                  {specialGroups.filter(item => item.name === "Naughty Night Nude Painting").map(item => <p key={item.name} className="mt-3 text-sm text-white/75">Nude Painting: {usd(item.ten * 10)} for 10 adults or {usd(item.twenty * 20)} for 20 adults.</p>)}
                   <Link href="/group-pricing" className="mt-5 inline-block rounded-full bg-purple-200 px-5 py-3 font-semibold text-slate-950">View all adult group prices →</Link>
                 </div>
               </div>
@@ -506,22 +527,6 @@ export default function PrivateEventsPage({
         </section>
 
         {/* Inquiry Form */}
-        <section id="inquiry-form" className="scroll-mt-28 py-20">
-          <div className="mx-auto max-w-4xl px-6">
-            <div className="mb-10 text-center">
-              <h2 className="font-serif text-4xl font-bold">Tell Us About Your Event</h2>
-              <p className="mt-4 text-lg text-white/75">
-                Share a few details and we'll get back to you within 24 hours.
-              </p>
-            </div>
-            <Reveal variant="fade-up">
-              <PrivateEventFormCard
-                city={selectedCity}
-                timeWindows={[]}
-              />
-            </Reveal>
-          </div>
-        </section>
 
         {/* How It Works */}
         <section className="border-y border-white/10 bg-gradient-to-br from-pink-900/20 to-purple-900/30 py-20">
@@ -613,6 +618,7 @@ export default function PrivateEventsPage({
           <div className="mx-auto max-w-4xl px-6">
             <div className="mb-12 text-center">
               <h2 className="font-serif text-4xl font-bold">Frequently Asked Questions</h2>
+              <p className="mt-4 flex flex-wrap justify-center gap-4 text-sm"><Link href="/chicago/kids" className="text-purple-200 underline">Chicago kids activities</Link><Link href="/eugene/kids" className="text-purple-200 underline">Eugene kids activities</Link></p>
             </div>
 
             <div className="space-y-6">

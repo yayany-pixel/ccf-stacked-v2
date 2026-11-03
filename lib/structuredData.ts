@@ -50,8 +50,10 @@ export function localBusinessJsonLd(city: City) {
         }
       : {
           "@type": "PostalAddress",
+          streetAddress: "3295 Cross Street",
           addressLocality: "Eugene",
           addressRegion: "OR",
+          postalCode: "97402",
           addressCountry: "US"
         },
     geo: isChicago
@@ -69,7 +71,7 @@ export function localBusinessJsonLd(city: City) {
     email: "support@colorcocktailfactory.com",
     hasMap: isChicago
       ? "https://maps.google.com/?q=1142+W+18th+Street+Chicago+IL"
-      : "https://maps.google.com/?q=Eugene+OR",
+      : "https://maps.google.com/?q=3295+Cross+Street+Eugene+OR",
     amenityFeature: [
       {
         "@type": "LocationFeatureSpecification",

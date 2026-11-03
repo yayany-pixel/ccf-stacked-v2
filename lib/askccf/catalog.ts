@@ -12,8 +12,8 @@
 
 import { STUDIO_LOCATIONS } from "@/lib/locations";
 import { getClassPhoto } from "@/lib/classPhotos";
+import { ACTIVITY_MANIFEST } from "@/lib/homepage/manifest";
 import { formatClassTime, localDateAndTime, studioTimeZone } from "./schedule";
-import { getPromotionalOverride } from "@/lib/promotions";
 export type CatalogLocation = "chicago" | "eugene" | "online" | "unknown";
 
 export type PriceUnit = "per_couple" | "per_ticket";
@@ -113,6 +113,9 @@ const PRIVATE_EVENT_PATTERNS: RegExp[] = [
   /['’]s\s+(birthday|bachelorette|bachlorette|party|playtime|dirty|garden|\d)/i,
   /\b(annual|team ?building|outing)\b/i,
 ];
+const MANIFEST_APPOINTMENT_IDS = new Set(ACTIVITY_MANIFEST
+  .filter(activity => activity.eligibility === "ready")
+  .map(activity => activity.appointmentTypeId));
 
 function isOneOffPrivateEvent(name: string): boolean {
   if (PRIVATE_EVENT_PATTERNS.some((re) => re.test(name))) return true;
@@ -208,7 +211,7 @@ export function derivePricing(name: string, description: string, price: string |
   // A title like "… for Two" is itself a studio statement about coverage.
   const titleSaysTwo = /\bfor two\b/i.test(name);
 
-  const money = numeric != null ? `$${numeric.toFixed(2).replace(/\.00$/, "")}` : "price not published";
+  const money = numeric != null ? `$${numeric.toFixed(2).replace(/\.00$/, "")}` : "See price at checkout";
 
   if (evidence || titleSaysTwo) {
     return {
@@ -331,19 +334,11 @@ export function normalize(type: AcuityType): CatalogClass {
 export async function getCatalog(): Promise<CatalogClass[]> {
   const typesRaw = (await acuityFetch("appointment-types", 300)) as AcuityType[];
   if (!Array.isArray(typesRaw)) throw new Error("acuity_unexpected_response");
-  const types = typesRaw.map(t => {
-    if (t.price === "25.00" && /wheel|on the wheel/i.test(t.name)) {
-      return { ...t, price: "35.00" };
-    }
-    return t;
-  });
-  
-
-  return types
+  return typesRaw
     .filter((t) => t.active)
     .filter((t) => !t.private)
     .filter((t) => !MANUALLY_HIDDEN_IDS.has(String(t.id)))
-    .filter((t) => !isOneOffPrivateEvent(t.name))
+    .filter((t) => MANIFEST_APPOINTMENT_IDS.has(t.id) || !isOneOffPrivateEvent(t.name))
     .map(normalize);
 }
 

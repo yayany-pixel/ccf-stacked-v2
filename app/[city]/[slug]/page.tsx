@@ -18,7 +18,7 @@ import { generateFAQSchema, generateCourseSchema, generateBreadcrumbSchema } fro
 import {
   fetchLiveAcuityProducts,
   getClassGiftingContext,
-  resolveGiftExperiences,
+  resolveGiftCatalog,
 } from "@/lib/gifts";
 
 function getSection(slug: string): SectionConfig | undefined {
@@ -48,6 +48,23 @@ export async function generateMetadata({
     // 200 before the page body can call notFound()).
     notFound();
   }
+
+  if (section.slug === "gift-cards") {
+    const title = `Gift Cards & Experiences in ${city.label} | Color Cocktail Factory`;
+    const description =
+      "Browse current Acuity gift descriptions and live prices for Chicago, Eugene, and online experiences. Review eligibility and buy securely in Acuity.";
+    return {
+      title: { absolute: title },
+      description,
+      alternates: { canonical: "https://colorcocktailfactory.com/gift-cards" },
+      openGraph: {
+        title,
+        description,
+        url: "https://colorcocktailfactory.com/gift-cards",
+        type: "website",
+      },
+    };
+  }
   
   const metadata = buildActivityMetadata(city, section);
   
@@ -56,10 +73,7 @@ export async function generateMetadata({
   return {
     ...metadata,
     alternates: {
-      canonical:
-        section.slug === "gift-cards"
-          ? "https://colorcocktailfactory.com/gift-cards"
-          : `https://colorcocktailfactory.com/activities/${section.slug}`
+      canonical: `https://colorcocktailfactory.com/activities/${section.slug}`
     }
   };
 }
@@ -74,7 +88,7 @@ export default async function DetailPage({ params }: { params: { city: string; s
 
   if (section.slug === "gift-cards") {
     const rawProducts = await fetchLiveAcuityProducts();
-    const experiences = resolveGiftExperiences(rawProducts);
+    const groups = resolveGiftCatalog(rawProducts);
     return (
       <main
         id="main-content"
@@ -87,7 +101,7 @@ export default async function DetailPage({ params }: { params: { city: string; s
           city={city.param}
         />
         <GiftCardsStorefront
-          experiences={experiences}
+          groups={groups}
           initialCity={city.param}
         />
       </main>
@@ -164,7 +178,7 @@ export default async function DetailPage({ params }: { params: { city: string; s
                     🎁 {giftContext.label}
                   </ButtonPill>
                 )}
-                <ButtonPill href={`/${city.param}/private-parties`} variant="ghost">
+                <ButtonPill href={`/private-events?city=${city.param}#inquiry-form`} variant="ghost">
                   Private events
                 </ButtonPill>
               </div>

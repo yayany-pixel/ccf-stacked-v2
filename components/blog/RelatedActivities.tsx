@@ -25,7 +25,8 @@ export default function RelatedActivities({
   if (items.length === 0) return null;
 
   const hrefFor = (slug: string) =>
-    city ? `/${city}/${slug}` : `/activities/${slug}`;
+    slug === "private-parties" ? `/private-events${city ? `?city=${city}` : ""}#inquiry-form` :
+      city ? `/${city}/${slug}` : `/activities/${slug}`;
 
   return (
     <GlassCard>

@@ -79,7 +79,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
     source: "https://colorcocktailfactory.as.me/, /public/llms.txt",
     verifiedOn: "2026-09-12",
     conflict:
-      "The site header's generic 'Book a Class' button for Chicago still points at a RezClick calendar (lib/links.ts), while llms.txt and the class listings use Acuity. Always use the per-class Acuity link returned by class search, and flag the RezClick link to staff.",
+      "Chicago and Eugene bookings use Acuity. Always use the per-class Acuity link returned by class search.",
   },
   {
     id: "pricing-units",
@@ -155,7 +155,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
     source: "https://colorcocktailfactory.com/private-events, /birthday-parties, /team-building, /corporate",
     verifiedOn: "2026-09-12",
     conflict:
-      "Published per-person ranges differ by page ($45–$85 on the private-events page, $55–$85 with volume discounts for 20+ on the team-building page). Quote it as a range that depends on activity and group size, and let staff confirm the actual quote.",
+      "Group and private-party prices come only from /group-pricing. Link to that menu rather than repeating an unverified range, and let staff confirm the quote.",
   },
   {
     id: "private-events-inquiry",
@@ -185,7 +185,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
     topics: ["online", "virtual", "at home", "remote", "zoom", "kit", "shipping", "supplies", "membership"],
     cities: ["online", "all"],
     content:
-      "Online offerings are live, taught remotely, and separate from the in-studio classes. The 6-week live online pottery course includes six Saturday sessions, a tabletop wheel and tools to keep, and clay for session one; there is a registration deadline for kit delivery, more air-dry clay is needed before session two, one registration covers one student and one kit, and projects are air-dry — decorative, not food safe or waterproof. The live online watercolor class is supply-your-own: watercolor paints, 140 lb cold-press paper, small and medium round brushes, two water containers, paper towels, pencil, eraser and masking tape; expensive supplies are not required. The online pottery course is six sessions for $150, not a three-month membership. It needs a sturdy table, a towel, water access and cleanup space, and no kiln. Online cauldrons are a separate 90-minute workshop: $29 class only, with optional clay delivery for $20; allow 5–7 days for delivery and order 10+ days before class. The direct cauldron booking is https://colorcocktailfactory.as.me/?appointmentType=98770334. Always confirm the current cohort dates, deadlines and prices from the live booking page.",
+      "Online offerings are live, taught remotely, and separate from the in-studio classes. The 6-week live online pottery course includes six Saturday sessions, a tabletop wheel and tools to keep, and clay for session one; there is a registration deadline for kit delivery, more air-dry clay is needed before session two, one registration covers one student and one kit, and projects are air-dry — decorative, not food safe or waterproof. The live online watercolor class is supply-your-own: watercolor paints, 140 lb cold-press paper, small and medium round brushes, two water containers, paper towels, pencil, eraser and masking tape; expensive supplies are not required. The online pottery course is six sessions, not a three-month membership. It needs a sturdy table, a towel, water access and cleanup space, and no kiln. Online cauldrons are a separate 90-minute workshop with optional clay delivery; allow 5–7 days for delivery and order 10+ days before class. The direct cauldron booking is https://colorcocktailfactory.as.me/?appointmentType=98770334. Quote prices only from live Acuity; if unavailable, say See price at checkout. Always confirm the current cohort dates and deadlines from the live booking page.",
     source: "Acuity 'Online Class Series' listings; https://colorcocktailfactory.com/pottery-membership",
     verifiedOn: "2026-09-12",
   },

@@ -12,7 +12,7 @@ export default function HomepageStructuredData({ data }: { data: HomepageData })
         : { name: "Color Cocktail Factory - Eugene", address: { "@type": "PostalAddress", streetAddress: "3295 Cross Street", addressLocality: "Eugene", addressRegion: "OR", postalCode: "97402", addressCountry: "US" } };
 
       const url = `https://colorcocktailfactory.com${activity.detailUrl || `/activities/${activity.key.replace(/^(chicago|eugene|online)-/, "")}`}`;
-      const price = activity.currentPrice ?? 35; // fallback
+      const price = activity.currentPrice;
       
       return {
         "@context": "https://schema.org",
@@ -26,7 +26,7 @@ export default function HomepageStructuredData({ data }: { data: HomepageData })
           "@type": "Place",
           ...cityData
         },
-        offers: {
+        ...(price !== null ? { offers: {
           "@type": "Offer",
           url,
           price: price,
@@ -43,7 +43,7 @@ export default function HomepageStructuredData({ data }: { data: HomepageData })
               unitCode: "C62"
             }
           }
-        }
+        } } : {})
       };
     });
   });

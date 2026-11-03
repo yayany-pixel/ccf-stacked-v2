@@ -1,5 +1,67 @@
 # Color Cocktail Factory - Website Structure Documentation
 
+## Search indexing policy (November 2026)
+
+`/chicago` and `/eugene` are real homepage routes, not rewrites. Both reuse
+the homepage design, city-aware H1 and inquiry form, with the corresponding
+city preselected and a self canonical. Nested city activity URLs remain
+available but canonicalize to the primary activity URL and are omitted from
+the sitemap; the four city-specific kids pages remain in the sitemap.
+`/activities/private-parties` redirects with HTTP 301 to `/private-events`;
+`/{city}/private-parties` redirects to `/private-events?city={city}`.
+All three redirects explicitly use HTTP 301 rather than Next.js's default
+308 for `permanent: true`. Incoming query parameters, including `city`, are
+preserved on the activity redirect; city-specific redirects override any
+conflicting incoming `city` while preserving the other query parameters.
+
+After a production build, run `node tests/city-build-artifacts.mjs` before
+starting or deploying it. This verifies production manifests and compiled
+modules for city homepages, nested activity/gift pages and both kids routes.
+Do not run development compilation against the same `.next` directory as
+a build or production server: a manifest can otherwise reference deleted
+modules even though route source and static parameters are correct.
+With that production server running, execute
+`node tests/city-routes-http.mjs http://127.0.0.1:3000` to check both city
+homepages and the nested activity, gift-card and kids routes over HTTP.
+
+Only blog articles carry a sitemap `lastModified`, using their recorded
+editorial update date. No runtime timestamps are assigned to activities.
+
+The 205 expanded workshop articles remain accessible with `noindex, follow`
+and are excluded from the sitemap. Review of the 35 local guides introduced
+by `7a3b4de` and `07a40c1` retains these 22 indexed articles:
+
+- west-loop-to-pilsen-creative-date-itinerary
+- bridgeport-to-pilsen-art-culture-afternoon
+- chinatown-pilsen-food-art-itinerary
+- things-to-do-near-uic-creative-guide
+- chicago-pink-line-art-food-creative-stops
+- eugene-date-ideas-beyond-coffee-15-experiences
+- eugene-uo-student-family-weekend-things-to-do
+- springfield-to-eugene-creative-half-day
+- adult-birthday-party-ideas-eugene-groups
+- eugene-family-school-break-activities
+- what-do-creative-workshops-cost-comparison
+- one-day-art-classes-vs-pottery-firing-comparison
+- pilsen-restaurants-before-after-pottery
+- chicago-paint-and-sip-alternatives
+- byob-activities-chicago-guide
+- chicago-date-nights-under-100
+- chicago-winter-date-nights-indoors
+- chicago-team-building-cost-10-20-50
+- eugene-bachelorette-party-ideas-8-to-20
+- rainy-day-things-to-do-eugene-oregon
+- university-of-oregon-visiting-student-eugene-weekend
+- holiday-party-ideas-chicago-eugene-2026
+
+These retain distinct neighborhood routes, named local destinations,
+city-specific booking logistics or substantive workshop buying guidance.
+The remaining 13 local features mostly repeat generic activity lists
+or overlapping seasonal roundups; they are `noindex, follow`, remain
+internally linked, and are excluded from the sitemap. Their exact slugs are
+maintained in `lib/blogIndexing.ts`, shared by article metadata and sitemap.
+No article was deleted and no new price or venue claim was introduced.
+
 ## Page 1: Site Structure Map
 
 ```mermaid
