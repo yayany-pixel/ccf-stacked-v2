@@ -47,6 +47,7 @@ export default function ActivityDetailView({
   relatedLocalGuides?: RelatedLocalGuideCard[];
   initialCity?: CityParam;
 }) {
+  const isDateNight = activity.slug === "date-night-wheel";
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
 
   const availableCities = useMemo<CityParam[]>(() => {
@@ -142,12 +143,12 @@ export default function ActivityDetailView({
             <div className="lg:col-span-7">
               <div className="flex flex-wrap items-center gap-2">
                 <TagPill>{activity.categoryIcon} {activity.categoryLabel}</TagPill>
-                <TagPill>{activity.locationsOffered}</TagPill>
-                {displayPricing.isFlashSale || activity.slug === "cat-vase" ? (
+                <TagPill>{isDateNight ? (preferredCity === "chicago" ? "Pilsen, Chicago" : "Eugene, Oregon") : activity.locationsOffered}</TagPill>
+                {!isDateNight && (displayPricing.isFlashSale || activity.slug === "cat-vase") ? (
                   <span className="rounded-full border border-amber-400/40 bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-200">
                     ⚡ {displayPricing.flashSaleLabel || "Flash Sale — $25"}
                   </span>
-                ) : displayPricing.hasSaleBadge ? (
+                ) : !isDateNight && displayPricing.hasSaleBadge ? (
                   <span className="rounded-full border border-amber-400/40 bg-amber-500/20 px-3 py-1 text-xs font-bold text-amber-200">
                     ⚡ Limited-Time Sale
                   </span>
@@ -157,8 +158,8 @@ export default function ActivityDetailView({
                     🔞 21+ Adults Only
                   </span>
                 )}
-                {activity.beginnerFriendly && <TagPill>✨ Beginner Friendly</TagPill>}
-                {activity.coversTwo && <TagPill>💕 Ticket for Two</TagPill>}
+                {activity.beginnerFriendly && <TagPill>{isDateNight ? "Beginner-friendly" : "✨ Beginner Friendly"}</TagPill>}
+                {isDateNight ? <TagPill>BYOB</TagPill> : activity.coversTwo && <TagPill>💕 Ticket for Two</TagPill>}
               </div>
 
               <h1 className="mt-4 font-serif text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
@@ -171,7 +172,7 @@ export default function ActivityDetailView({
 
               {/* Price & Coverage Highlight */}
               <div className="mt-6 flex flex-wrap items-baseline gap-3">
-                {displayPricing.wasPrice && displayPricing.displayPrice !== "See price at checkout" && (
+                {!isDateNight && displayPricing.wasPrice && displayPricing.displayPrice !== "See price at checkout" && (
                   <del className="font-serif text-xl sm:text-2xl text-white/50" aria-label="Original price">
                     ${displayPricing.wasPrice}{" "}
                   </del>
@@ -179,7 +180,7 @@ export default function ActivityDetailView({
                 <span className="font-serif text-2xl sm:text-3xl font-bold text-amber-300">
                   {displayPricing.displayPrice}
                 </span>
-                {activity.coversNote && (
+                {!isDateNight && activity.coversNote && (
                   <span className="rounded-full border border-pink-400/40 bg-pink-500/20 px-3 py-1 text-xs font-semibold text-pink-200">
                     {activity.coversNote}
                   </span>
@@ -315,12 +316,12 @@ export default function ActivityDetailView({
             </section>
 
             {/* Pottery Kiln & Glazing Section (Only for pottery workshops) */}
-            {activity.isPottery && (
+            {activity.isPottery && !isDateNight && (
               <PotteryFinishingSection />
             )}
 
             {/* Key Practical Info Grid */}
-            <section aria-labelledby="practical-heading" className="space-y-6">
+            {!isDateNight && <section aria-labelledby="practical-heading" className="space-y-6">
               <div className="border-b border-white/10 pb-4">
                 <h2 id="practical-heading" className="font-serif text-2xl sm:text-3xl font-bold text-white">
                   Good to Know
@@ -364,7 +365,7 @@ export default function ActivityDetailView({
                   </div>
                 ))}
               </div>
-            </section>
+            </section>}
 
             {/* Included in Workshop */}
             <section aria-labelledby="included-heading" className="space-y-4">
@@ -388,11 +389,30 @@ export default function ActivityDetailView({
               <section aria-labelledby="faqs-heading" className="space-y-6">
                 <div className="border-b border-white/10 pb-4">
                   <h2 id="faqs-heading" className="font-serif text-2xl sm:text-3xl font-bold text-white">
-                    Frequently Asked Questions
+                    {isDateNight ? "Good to know" : "Frequently Asked Questions"}
                   </h2>
                 </div>
+                {isDateNight && <div className="space-y-4">
+                  <details className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                    <summary className="cursor-pointer font-semibold">What are the finishing options?</summary>
+                    <div className="mt-5"><PotteryFinishingSection /></div>
+                  </details>
+                  <details className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                    <summary className="cursor-pointer font-semibold">Timing, admission and studio details</summary>
+                    <div className="mt-4 space-y-3 text-sm text-white/75">
+                      <p><strong>Duration:</strong> {activity.duration}</p>
+                      <p><strong>Admission:</strong> Admits 2 Guests</p>
+                      {activity.practicalInfo.map(info => <p key={info.label}><strong>{info.label}:</strong> {info.label === "Location" ? (preferredCity === "chicago" ? "Pilsen, Chicago — 1142 W. 18th St." : "Eugene, Oregon — 3295 Cross St.") : info.text}</p>)}
+                    </div>
+                  </details>
+                </div>}
                 <div className="space-y-4">
-                  {activity.faqs.map((faq, idx) => (
+                  {activity.faqs.map((faq, idx) => isDateNight ? (
+                    <details key={idx} className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                      <summary className="cursor-pointer font-semibold">{faq.q}</summary>
+                      <p className="mt-3 text-sm leading-relaxed text-white/75">{faq.a}</p>
+                    </details>
+                  ) : (
                     <div key={idx} className="rounded-2xl border border-white/10 bg-white/5 p-6">
                       <h3 className="font-serif text-base sm:text-lg font-bold text-white">
                         {faq.q}
@@ -466,7 +486,7 @@ export default function ActivityDetailView({
                 Ready to Create?
               </h2>
               <p className="mx-auto mt-3 max-w-xl text-base text-white/80">
-                Pick your studio location and reserve your spot in minutes. Direct studio booking with zero convenience fees.
+                {isDateNight ? `Make time for a little clay and a lot of laughter. Pick your date in ${preferredCity === "chicago" ? "Pilsen, Chicago" : "Eugene, Oregon"}.` : "Pick your studio location and reserve your spot in minutes. Direct studio booking with zero convenience fees."}
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <button
@@ -512,12 +532,12 @@ export default function ActivityDetailView({
                   {activity.title}
                 </h3>
                 <div className="mt-2 text-sm text-white/75 flex items-center justify-center gap-2">
-                  {displayPricing.wasPrice && displayPricing.displayPrice !== "See price at checkout" && (
+                  {!isDateNight && displayPricing.wasPrice && displayPricing.displayPrice !== "See price at checkout" && (
                     <del className="text-white/50 text-xs" aria-label="Original price">${displayPricing.wasPrice}</del>
                   )}
                   <span className="font-semibold text-amber-300">{displayPricing.displayPrice}</span>
                 </div>
-                {displayPricing.hasSaleBadge && (
+                {!isDateNight && displayPricing.hasSaleBadge && (
                   <div className="mt-2">
                     <span className="inline-block rounded-full border border-amber-400/40 bg-amber-500/20 px-2.5 py-0.5 text-[11px] font-bold text-amber-200">
                       ⚡ Limited-Time Sale

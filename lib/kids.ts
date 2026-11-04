@@ -16,7 +16,7 @@ export function kidsMetadata(city: CityParam, birthday: boolean): Metadata {
   const label = STUDIO_LOCATIONS[city].label;
   const title = birthday ? `Kids Pottery Birthday Parties in ${label}` : `Kids Pottery Classes in ${label}`;
   const description = birthday
-    ? `Kids pottery birthday parties in ${label}: $350 regular or $450 with firing for up to 10 pieces total. Both packages cover up to 10 children. Request a date.`
+    ? `A little clay, a lot of birthday imagination. Kids pottery parties in ${city === "chicago" ? "Pilsen, Chicago" : "Eugene, Oregon"} from $350. Clay, tools and instruction included.`
     : `Explore kids wheel throwing and creative clay classes in ${label}. See our proposed after-school schedule and sign up for class announcements.`;
   const url = `https://colorcocktailfactory.com/${city}/kids-${birthday ? "birthday-parties" : "pottery-classes"}`;
   return { title, description, alternates: { canonical: url }, openGraph: { title, description, url, type: "website", images: [{ url: KIDS_PHOTO, width: 1536, height: 1024, alt: "Hands working with clay in the Color Cocktail Factory studio" }] }, twitter: { card: "summary_large_image", title, description, images: [KIDS_PHOTO] } };

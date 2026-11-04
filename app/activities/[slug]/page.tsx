@@ -22,9 +22,11 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({
-  params
+  params,
+  searchParams,
 }: {
   params: { slug: string };
+  searchParams?: { city?: string; location?: string };
 }): Promise<Metadata> {
   const activity = getActivityDetailBySlug(params.slug);
 
@@ -36,7 +38,10 @@ export async function generateMetadata({
   }
 
   const fullTitle = `${activity.heroTitle} | Color Cocktail Factory`;
-  const description = activity.heroDescription;
+  const city = searchParams?.city || searchParams?.location;
+  const description = activity.slug === "date-night-wheel" && (city === "chicago" || city === "eugene")
+    ? `Make something one of a kind at a BYOB pottery date night in ${city === "chicago" ? "Pilsen, Chicago. $55" : "Eugene, Oregon. $50"} for two. Beginners welcome; clay, tools and instruction included.`
+    : activity.heroDescription;
   const url = `https://colorcocktailfactory.com/activities/${activity.slug}`;
 
   return {

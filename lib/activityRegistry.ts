@@ -178,8 +178,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
     "slug": "date-night-wheel",
     "title": "Date Night on the Wheel",
     "navLabel": "Date Night",
-    "heroTitle": "Date Night on the Wheel",
-    "heroDescription": "Two people, one wheel, and a hilariously fun learning curve. Guided step-by-step. Leave with real memories (and maybe a lopsided masterpiece).",
+    "heroTitle": "Make Something Together",
+    "heroDescription": "Skip dinner and a movie. Get your hands in the clay, laugh together and create a one-of-a-kind masterpiece to remember the night. Beginners welcome — clay, tools and instruction included. BYOB.",
     "shortDescription": "Share one wheel, make two pieces together.",
     "category": "romance-room",
     "categoryLabel": "Romance Room",
@@ -210,7 +210,7 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       },
       {
         "title": "Materials & Equipment Provided",
-        "body": "All materials, tools, and personalized artist coaching are provided for the duration of the workshop. For wheel throwing, this class focuses on the craft and attempt of shaping clay without guaranteeing a finished piece on your first try."
+        "body": "Clay, tools and friendly, step-by-step instruction are included. Bring your curiosity and enjoy making something together."
       }
     ],
     "included": [
@@ -229,13 +229,14 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       }
     ],
     "faqs": [
+      { "q": "How does the wheel session work?", "a": "One ticket admits two guests sharing one pottery wheel. Our instructors guide you through the basics. Wheel throwing is a learning experience, so a finished piece on your first try is not guaranteed." },
       {
         "q": "Do we need experience?",
         "a": "Nope. We teach from zero and keep it fun."
       },
       {
         "q": "Do we keep what we make?",
-        "a": "Your ticket covers instruction, clay, and tools. Optional bisque firing is $10/piece and glazing is available from $20/piece (approx. three-week turnaround)."
+        "a": "Your ticket includes instruction, clay and tools. Same-day decorative take-home is an option. Optional bisque firing is $10 per piece, and glazing starts at $20 per piece. Finished pieces are generally ready for pickup in about three weeks; timing is an estimate. See the finishing options above for the full price list."
       },
       {
         "q": "What should we wear?",
@@ -265,8 +266,8 @@ export const ACTIVITY_REGISTRY: Record<string, ActivityDetail> = {
       },
       {
         "label": "RESULT",
-        "title": "Take-home options",
-        "body": "Same-day decorative, or optional bisque firing ($10) & glazing (from $20) ready in about 3 weeks."
+        "title": "Uniquely yours",
+        "body": "Explore the clay and give your creation a personality all its own."
       },
       {
         "label": "VIBE",
