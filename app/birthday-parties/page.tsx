@@ -55,7 +55,7 @@ const UPGRADES = [
 // METADATA
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const metadata: Metadata = {
+const defaultMetadata: Metadata = {
   title: "Adult Birthday Party Venue Chicago & Eugene",
   description:
     "Private, guided art birthday experiences for adults in Chicago (Pilsen) and Eugene, OR. Pottery wheel, paint, mosaics, candles & more. BYOB. 21+ friendly. Milestone-worthy. $55–$95/person.",
@@ -79,6 +79,13 @@ export const metadata: Metadata = {
 // ─────────────────────────────────────────────────────────────────────────────
 // STATIC DATA
 // ─────────────────────────────────────────────────────────────────────────────
+
+type BirthdayPageProps = { searchParams?: { city?: string } };
+export function generateMetadata({ searchParams }: BirthdayPageProps): Metadata {
+  if (searchParams?.city !== "chicago") return defaultMetadata;
+  const description = "Make birthday memories and a one-of-a-kind masterpiece in Pilsen, Chicago. Private art parties from $55 per person. Beginner-friendly and BYOB.";
+  return { ...defaultMetadata, description, openGraph: { ...defaultMetadata.openGraph, description }, twitter: { ...defaultMetadata.twitter, description } };
+}
 
 const packages = [
   {
@@ -132,6 +139,14 @@ const packages = [
     bestFor: "Creative groups · bachelorette crossovers · milestone celebrations",
     duration: "2 hours",
   },
+];
+
+const PARTY_STEPS = [
+  { step: "01", icon: "📝", title: "Pick a date + experience", desc: "Fill out the short form with your preferred date, activity, and guest count." },
+  { step: "02", icon: "📬", title: "We reply in 24 hrs", desc: "Custom quote, available dates, and every detail you need to say yes." },
+  { step: "03", icon: "👥", title: "Invite your guests", desc: "We send a registration link so each guest books their own spot individually." },
+  { step: "04", icon: "✨", title: "Add your upgrades", desc: "Photographer, champagne toast, cake styling — opt in before the day." },
+  { step: "05", icon: "🎂", title: "Celebrate + create", desc: "Walk in, set your drinks on the table, and let us handle everything from there." },
 ];
 
 const testimonials = [
@@ -270,14 +285,30 @@ const localBusinessSchema = {
 // PAGE COMPONENT
 // ─────────────────────────────────────────────────────────────────────────────
 
-export default function BirthdayPartiesPage() {
+export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps) {
+  const isChicago = searchParams?.city === "chicago";
+  const copyReplacements: Record<string, string> = {
+    "Every guest leaves with the art they made — not a party favor": "Create a one-of-a-kind masterpiece to remember your celebration",
+    "Everyone at their own wheel — centering clay, shaping bowls, cups, or freeform pieces. The most immersive experience we offer. Pairs perfectly with your BYOB setup.": "Get your hands in the clay and explore bowls, cups or a shape all your own. Laugh, learn and create with your favorite people. BYOB welcome.",
+    "Optional glaze & kiln fire (small fee, ~3-week pickup)": "Clay, tools and instruction included",
+    "Take your finished piece home the same day": "Make a canvas or wine glass that feels like you",
+    "Bold Take-Home": "Full of Personality",
+    "Choose from crafted glass mosaic art, hand-assembled Turkish lamps, scented candle pours, or living terrariums. Striking finished pieces — same-day take-home.": "Make glass mosaic art, assemble a Turkish lamp, pour a scented candle or build a living terrarium. Choose a project with as much personality as your crew.",
+    "Finished piece goes home with every guest": "Create something one of a kind",
+    "No kiln wait — done the same night": "Explore color, texture and your own style"
+};
+  const localCopy = (text: string) => isChicago ? (copyReplacements[text] ?? text) : text;
+  const visiblePackages = packages.map(pkg => ({ ...pkg, badge: localCopy(pkg.badge), description: localCopy(pkg.description), bullets: pkg.bullets.map(localCopy) }));
+  const visibleFaqs = isChicago ? [...faqs, { q: "How is the pottery party set up?", a: "The Wheel Night Party uses a wheel for each guest. We confirm the setup for your group when preparing your quote." }] : faqs;
+  const visibleFaqSchema = { ...faqSchema, mainEntity: visibleFaqs.map(f => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) };
+
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen">
       <aside className="bg-amber-100 px-6 py-5 text-center text-stone-900">Planning a child’s birthday? <Link href="/kids#birthdays" className="font-bold underline">Explore kids pottery birthday parties in Chicago and Eugene →</Link></aside>
       {/* Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(visibleFaqSchema) }}
       />
       <script
         type="application/ld+json"
@@ -355,26 +386,22 @@ export default function BirthdayPartiesPage() {
         <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
           <Reveal variant="scale">
             <div className="badge-glow mb-6 inline-flex items-center gap-2 rounded-full border border-purple-400/30 bg-purple-500/10 px-4 py-2 text-sm font-semibold text-purple-300 backdrop-blur-xl">
-              ✦ Adult Birthday Party Venue · Chicago &amp; Eugene
+              ✦ {isChicago ? "Birthday Art Parties · Pilsen, Chicago" : "Adult Birthday Party Venue · Chicago & Eugene"}
             </div>
           </Reveal>
 
           <Reveal delay={80} variant="fade-up">
             <h1 className="mx-auto max-w-4xl font-serif text-4xl font-light leading-tight tracking-wide sm:text-6xl sm:leading-[1.1]">
-              The{" "}
-              <span className="shimmer-text font-normal italic">Adult Birthday Party Venue</span>
-              {" "}Near You
+              {isChicago ? <>Your People. <span className="shimmer-text font-normal italic">Your Birthday Masterpiece.</span></> : <>The <span className="shimmer-text font-normal italic">Adult Birthday Party Venue</span> Near You</>}
             </h1>
           </Reveal>
 
           <Reveal delay={160} variant="fade-up">
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/75">
-              Date-night energy for your whole crew. Private, guided creative experiences for
-              birthdays — pottery, paint, mosaics, candles, and more.
+              {isChicago ? "Gather your favorite people, try something new and create a one-of-a-kind masterpiece to remember your birthday. Private, beginner-friendly art parties in Chicago’s Pilsen neighborhood." : "Date-night energy for your whole crew. Private, guided creative experiences for birthdays — pottery, paint, mosaics, candles, and more."}
             </p>
             <p className="mx-auto mt-2 max-w-xl text-sm text-white/50">
-              21+ friendly. Milestone-worthy. BYOB welcome. $55–$95/person.
-              Chicago (Pilsen) &amp; Eugene, OR.
+              {isChicago ? "From $55 per person · BYOB welcome · Materials, tools and instruction included" : "21+ friendly. Milestone-worthy. BYOB welcome. $55–$95/person. Chicago (Pilsen) & Eugene, OR."}
             </p>
           </Reveal>
 
@@ -402,6 +429,7 @@ export default function BirthdayPartiesPage() {
             </div>
           </Reveal>
 
+{!isChicago && (
           <Reveal delay={320} variant="fade-up">
             <div className="mx-auto mt-14 flex max-w-2xl flex-wrap justify-center gap-10">
               {[
@@ -417,6 +445,7 @@ export default function BirthdayPartiesPage() {
               ))}
             </div>
           </Reveal>
+)}
         </div>
       </section>
 
@@ -450,7 +479,7 @@ export default function BirthdayPartiesPage() {
               <Reveal key={i} delay={i * 60} variant="fade-up">
                 <div className="flex items-start gap-4 rounded-2xl border border-white/8 bg-white/4 p-5 backdrop-blur-sm">
                   <span className="mt-0.5 shrink-0 text-2xl">{item.icon}</span>
-                  <p className="text-sm leading-relaxed text-white/75">{item.text}</p>
+                  <p className="text-sm leading-relaxed text-white/75">{localCopy(item.text)}</p>
                 </div>
               </Reveal>
             ))}
@@ -470,13 +499,13 @@ export default function BirthdayPartiesPage() {
                 <span className="italic text-pink-300">Adult Party Mode</span>
               </h2>
               <p className="mt-4 text-white/65">
-                Three approaches to a birthday they'll actually remember. All run 2 hours, starting at $55/person.
+                {isChicago ? "Choose the way your crew loves to create. Birthday art parties from $55 per person." : "Three approaches to a birthday they'll actually remember. All run 2 hours, starting at $55/person."}
               </p>
             </div>
           </Reveal>
 
           <div className="mt-14 grid gap-8 lg:grid-cols-3">
-            {packages.map((pkg, i) => (
+            {visiblePackages.map((pkg, i) => (
               <Reveal key={pkg.title} delay={i * 100} variant="fade-up">
                 <GlassCard className="card-lift flex h-full flex-col p-8 hover:border-purple-400/25">
                   <div className="mb-3 flex items-start justify-between">
@@ -497,7 +526,7 @@ export default function BirthdayPartiesPage() {
                     ))}
                   </ul>
                   <div className="mt-5 space-y-1 text-xs text-white/40">
-                    <div>⏱ {pkg.duration}</div>
+                    {!isChicago && <div>⏱ {pkg.duration}</div>}
                     <div>👥 Best for: {pkg.bestFor}</div>
                   </div>
                   <a
@@ -522,6 +551,7 @@ export default function BirthdayPartiesPage() {
       {/* ──────────────────────────────────────────────────────────────
           4. PREMIUM UPGRADES
       ────────────────────────────────────────────────────────────── */}
+{!isChicago && (<>
       <section className="bg-gradient-to-br from-slate-900 via-indigo-900/15 to-slate-900 py-20">
         <div className="mx-auto max-w-5xl px-6">
           <Reveal variant="fade-up">
@@ -595,13 +625,7 @@ export default function BirthdayPartiesPage() {
           </Reveal>
 
           <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-            {[
-              { step: "01", icon: "📝", title: "Pick a date + experience", desc: "Fill out the short form with your preferred date, activity, and guest count." },
-              { step: "02", icon: "📬", title: "We reply in 24 hrs", desc: "Custom quote, available dates, and every detail you need to say yes." },
-              { step: "03", icon: "👥", title: "Invite your guests", desc: "We send a registration link so each guest books their own spot individually." },
-              { step: "04", icon: "✨", title: "Add your upgrades", desc: "Photographer, champagne toast, cake styling — opt in before the day." },
-              { step: "05", icon: "🎂", title: "Celebrate + create", desc: "Walk in, set your drinks on the table, and let us handle everything from there." },
-            ].map((item, i) => (
+            {PARTY_STEPS.map((item, i) => (
               <Reveal key={item.step} delay={i * 80} variant="fade-up">
                 <div className="text-center">
                   <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-purple-400/30 bg-gradient-to-br from-purple-600/25 to-pink-600/25 text-xl">
@@ -617,6 +641,8 @@ export default function BirthdayPartiesPage() {
         </div>
       </section>
 
+</>)}
+
       {/* ──────────────────────────────────────────────────────────────
           7. FORM
       ────────────────────────────────────────────────────────────── */}
@@ -631,7 +657,7 @@ export default function BirthdayPartiesPage() {
                 Get My <span className="italic text-pink-300">Birthday Quote</span>
               </h2>
               <p className="mx-auto mt-3 max-w-md text-sm text-white/55">
-                We reply within 24 hours. No deposit to inquire.
+                {isChicago ? "Tell us about the birthday you’re imagining. We’ll help you choose a creative celebration for your crew." : "We reply within 24 hours. No deposit to inquire."}
               </p>
             </div>
           </Reveal>
@@ -696,14 +722,28 @@ export default function BirthdayPartiesPage() {
           <Reveal variant="fade-up">
             <div className="mb-12 text-center">
               <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">
-                Questions? <span className="italic text-pink-300">Answered.</span>
+                {isChicago ? "Good to know" : <>Questions? <span className="italic text-pink-300">Answered.</span></>}
               </h2>
               <p className="mt-3 text-white/55">Everything you need to know before you book.</p>
             </div>
           </Reveal>
 
           <div className="space-y-2.5">
-            {faqs.map((faq, i) => (
+            {isChicago && <>
+              <details className="rounded-2xl border border-white/10 bg-white/5">
+                <summary className="cursor-pointer px-6 py-4 font-semibold">Optional celebration extras</summary>
+                <div className="space-y-4 px-6 pb-5 text-sm text-white/65"><p>Paid add-ons available on request. Ask about pricing in your birthday inquiry.</p>{UPGRADES.map(u => <div key={u.label}><h3 className="font-semibold text-white/90">{u.icon} {u.label}</h3><p>{u.detail}</p><a href="#birthday-form" className="underline">Ask in inquiry</a></div>)}</div>
+              </details>
+              <details className="rounded-2xl border border-white/10 bg-white/5">
+                <summary className="cursor-pointer px-6 py-4 font-semibold">What should we bring?</summary>
+                <ul className="space-y-2 px-6 pb-5 text-sm text-white/65">{BYOB_RULES.map(rule => <li key={rule}>✓ {rule}</li>)}</ul>
+              </details>
+              <details className="rounded-2xl border border-white/10 bg-white/5">
+                <summary className="cursor-pointer px-6 py-4 font-semibold">How do we arrange our party?</summary>
+                <ol className="space-y-4 px-6 pb-5 text-sm text-white/65">{PARTY_STEPS.map(item => <li key={item.step}><h3 className="font-semibold text-white/90">{item.step} · {item.title}</h3><p>{item.desc}</p></li>)}</ol>
+              </details>
+            </>}
+            {visibleFaqs.map((faq, i) => (
               <Reveal key={i} delay={i * 25} variant="fade-up">
                 <details className="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4">
@@ -818,8 +858,7 @@ export default function BirthdayPartiesPage() {
           </Reveal>
           <Reveal delay={160} variant="fade-up">
             <p className="mx-auto mt-4 max-w-md text-white/65">
-              Send a quick inquiry — we reply within 24 hours with availability, pricing, and everything you
-              need. No deposit required to get started.
+              {isChicago ? "Make this birthday a story your crew will keep telling. Share your preferred date and let’s plan something one of a kind." : "Send a quick inquiry — we reply within 24 hours with availability, pricing, and everything you need. No deposit required to get started."}
             </p>
           </Reveal>
           <Reveal delay={240} variant="fade-up">
