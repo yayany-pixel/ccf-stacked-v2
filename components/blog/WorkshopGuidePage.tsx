@@ -75,16 +75,16 @@ export default function WorkshopGuidePage({ post, guide }: Props) {
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900">
       <div className="mx-auto max-w-6xl px-5 pb-20 pt-10 sm:px-6 sm:pt-16">
-        <nav className="text-sm text-white/60" aria-label="Breadcrumb">
-          <Link href="/" className="hover:text-white">Home</Link>
+        <nav className="text-sm text-primary/60" aria-label="Breadcrumb">
+          <Link href="/" className="hover:text-primary">Home</Link>
           <span className="mx-2" aria-hidden="true">/</span>
-          <Link href="/blog" className="hover:text-white">Blog</Link>
+          <Link href="/blog" className="hover:text-primary">Blog</Link>
           <span className="mx-2" aria-hidden="true">/</span>
-          <span className="text-white/90">{guide.category}</span>
+          <span className="text-primary/90">{guide.category}</span>
         </nav>
 
         <header className="mt-9 max-w-4xl">
-          <div className="flex flex-wrap items-center gap-3 text-sm text-white/60">
+          <div className="flex flex-wrap items-center gap-3 text-sm text-primary/60">
             <span className="rounded-full border border-purple-400/30 bg-purple-400/10 px-3 py-1 font-semibold text-purple-200">{guide.category}</span>
             {activity?.adultThemed ? (
               <span className="rounded-full border border-rose-400/30 px-3 py-1 text-rose-200">{activity.ageRestriction || "Adults only"}</span>
@@ -93,11 +93,11 @@ export default function WorkshopGuidePage({ post, guide }: Props) {
             <span aria-hidden="true">•</span>
             <span>{post.readTime}</span>
           </div>
-          <h1 className="mt-5 font-serif text-4xl font-bold leading-tight text-white sm:text-5xl">{guide.title}</h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-white/75">{guide.description}</p>
+          <h1 className="mt-5 font-serif text-4xl font-bold leading-tight text-primary sm:text-5xl">{guide.title}</h1>
+          <p className="mt-5 max-w-3xl text-lg leading-8 text-primary/75">{guide.description}</p>
         </header>
 
-        <div className="mt-9 max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+        <div className="mt-9 max-w-5xl overflow-hidden rounded-3xl border border-border bg-surface-secondary">
           <Image
             src={getPostImage(post)}
             alt={getPostImageAlt(post)}
@@ -109,81 +109,81 @@ export default function WorkshopGuidePage({ post, guide }: Props) {
         </div>
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px] lg:gap-14">
-          <article className="min-w-0 text-base leading-8 text-white/85">
+          <article className="min-w-0 text-base leading-8 text-primary/85">
             <div className="space-y-5 text-lg leading-9">
               {guide.intro.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
             </div>
 
-            <div className="my-9 rounded-2xl border border-purple-400/25 bg-purple-500/10 p-6">
+            <div className="my-9 rounded-2xl border border-purple-400/25 bg-btn/10 p-6">
               <p className="text-sm font-semibold uppercase tracking-wider text-purple-200">{action.eyebrow}</p>
-              <p className="mt-2 font-serif text-xl font-semibold text-white">
+              <p className="mt-2 font-serif text-xl font-semibold text-primary">
                 {action.headline}
               </p>
-              <p className="mt-2 text-sm leading-7 text-white/75">
+              <p className="mt-2 text-sm leading-7 text-primary/75">
                 {action.description}
               </p>
-              <Link href={activityHref} className="mt-4 inline-flex rounded-full bg-purple-600 px-5 py-3 text-sm font-semibold text-white hover:bg-purple-500">
+              <Link href={activityHref} className="mt-4 inline-flex rounded-full bg-btn px-5 py-3 text-sm font-semibold text-primary hover:bg-btn">
                 {action.button}
               </Link>
             </div>
 
             {guide.sections.map((section, index) => (
               <section key={section.heading} className="mb-11" aria-labelledby={`workshop-guide-section-${index}`}>
-                <h2 id={`workshop-guide-section-${index}`} className="mb-4 font-serif text-2xl font-bold leading-snug text-white sm:text-3xl">
+                <h2 id={`workshop-guide-section-${index}`} className="mb-4 font-serif text-2xl font-bold leading-snug text-primary sm:text-3xl">
                   {section.heading}
                 </h2>
                 <div className="space-y-4">
                   {section.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
                 </div>
                 {section.tips && section.tips.length > 0 ? (
-                  <ul className="mt-5 list-disc space-y-2 rounded-2xl border border-white/10 bg-white/5 py-5 pl-11 pr-6 text-sm leading-7 text-white/80">
+                  <ul className="mt-5 list-disc space-y-2 rounded-2xl border border-border bg-surface-secondary py-5 pl-11 pr-6 text-sm leading-7 text-primary/80">
                     {section.tips.map((tip) => <li key={tip}>{tip}</li>)}
                   </ul>
                 ) : null}
               </section>
             ))}
 
-            <section aria-labelledby="workshop-guide-faq" className="border-t border-white/10 pt-9">
-              <h2 id="workshop-guide-faq" className="font-serif text-2xl font-bold text-white sm:text-3xl">
+            <section aria-labelledby="workshop-guide-faq" className="border-t border-border pt-9">
+              <h2 id="workshop-guide-faq" className="font-serif text-2xl font-bold text-primary sm:text-3xl">
                 Frequently Asked Questions
               </h2>
               <div className="mt-5 divide-y divide-white/10">
                 {guide.faqs.map((faq) => (
                   <div key={faq.question} className="py-5">
-                    <h3 className="font-semibold text-white">{faq.question}</h3>
-                    <p className="mt-2 text-white/75">{faq.answer}</p>
+                    <h3 className="font-semibold text-primary">{faq.question}</h3>
+                    <p className="mt-2 text-primary/75">{faq.answer}</p>
                   </div>
                 ))}
               </div>
             </section>
 
             <section className="mt-10 rounded-3xl border border-pink-400/20 bg-gradient-to-r from-pink-900/40 to-purple-900/40 p-7 sm:p-9">
-              <h2 className="font-serif text-2xl font-bold text-white">{action.bottomHeading}</h2>
-              <p className="mt-3 leading-7 text-white/80">
+              <h2 className="font-serif text-2xl font-bold text-primary">{action.bottomHeading}</h2>
+              <p className="mt-3 leading-7 text-primary/80">
                 {action.bottomDescription}
               </p>
-              <Link href={activityHref} className="mt-5 inline-flex rounded-full bg-pink-600 px-6 py-3 text-sm font-semibold text-white hover:bg-pink-500">
+              <Link href={activityHref} className="mt-5 inline-flex rounded-full bg-btn px-6 py-3 text-sm font-semibold text-primary hover:bg-btn">
                 {action.button}
               </Link>
             </section>
           </article>
 
           <aside className="space-y-6 lg:self-start lg:sticky lg:top-24" aria-label="Workshop booking and related resources">
-            <div className="rounded-2xl border border-white/15 bg-white/5 p-6">
+            <div className="rounded-2xl border border-white/15 bg-surface-secondary p-6">
               <p className="text-xs font-semibold uppercase tracking-wider text-purple-200">Related workshop</p>
-              <h2 className="mt-2 font-serif text-xl font-bold text-white">{activityName}</h2>
-              <p className="mt-2 text-sm leading-6 text-white/70">
+              <h2 className="mt-2 font-serif text-xl font-bold text-primary">{activityName}</h2>
+              <p className="mt-2 text-sm leading-6 text-primary/70">
                 {action.sidebarDescription}
               </p>
-              <Link href={activityHref} className="mt-5 block rounded-xl bg-purple-600 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-purple-500">
+              <Link href={activityHref} className="mt-5 block rounded-xl bg-btn px-4 py-3 text-center text-sm font-semibold text-primary hover:bg-btn">
                 Visit activity page →
               </Link>
-              {guide.city ? <p className="mt-3 text-xs text-white/50">This article focuses on {guide.city === "chicago" ? "Chicago" : "Eugene"}.</p> : null}
+              {guide.city ? <p className="mt-3 text-xs text-primary/50">This article focuses on {guide.city === "chicago" ? "Chicago" : "Eugene"}.</p> : null}
             </div>
             {guide.category.includes("Group") || guide.category.includes("Bachelorette") ? (
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                <h2 className="font-semibold text-white">Planning a group?</h2>
-                <p className="mt-2 text-sm text-white/70">Ask about a private event instead of assuming a public session can hold everyone.</p>
+              <div className="rounded-2xl border border-border bg-surface-secondary p-5">
+                <h2 className="font-semibold text-primary">Planning a group?</h2>
+                <p className="mt-2 text-sm text-primary/70">Ask about a private event instead of assuming a public session can hold everyone.</p>
                 <Link href="/private-events" className="mt-3 inline-block text-sm font-semibold text-purple-200 underline">Explore private events →</Link>
               </div>
             ) : null}

@@ -32,9 +32,9 @@ const INITIAL: FormState = {
 };
 
 const INPUT =
-  "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/35 backdrop-blur-sm transition focus:border-purple-400/60 focus:bg-white/8 focus:outline-none focus:ring-2 focus:ring-purple-500/20";
+  "w-full rounded-xl border border-white/15 bg-surface-secondary px-4 py-3 text-sm text-primary placeholder-white/35 backdrop-blur-sm transition focus:border-purple-400/60 focus:bg-white/8 focus:outline-none focus:ring-2 focus:ring-purple-500/20";
 
-const LABEL = "mb-1.5 block text-xs font-semibold uppercase tracking-wider text-white/55";
+const LABEL = "mb-1.5 block text-xs font-semibold uppercase tracking-wider text-primary/55";
 
 const EXPERIENCES = [
   "Pottery Wheel Night",
@@ -107,22 +107,22 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
     return (
       <div className="rounded-3xl border border-emerald-400/25 bg-emerald-500/10 p-10 text-center backdrop-blur-xl">
         <div className="mb-3 text-4xl">🎉</div>
-        <h3 className="font-serif text-2xl font-light text-white">
+        <h3 className="font-serif text-2xl font-light text-primary">
           Your inquiry is in!
         </h3>
-        <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-white/65">
+        <p className="mx-auto mt-3 max-w-sm text-sm leading-relaxed text-primary/65">
           We'll reply within 24 hours with availability and your custom quote. Keep an eye on your inbox.
           {byobEnabled && " Don't forget — BYOB is welcome, so start planning your drink list."}
         </p>
-        <p className="mt-5 text-xs text-white/40">
+        <p className="mt-5 text-xs text-primary/40">
           Questions right now?{" "}
-          <a href="tel:3128819929" className="text-purple-400 hover:text-purple-300">
+          <a href="tel:3128819929" className="text-accent hover:text-purple-300">
             (312) 881-9929
           </a>
         </p>
         <button
           onClick={() => setStatus("idle")}
-          className="mt-6 rounded-full border border-white/15 bg-white/5 px-6 py-2.5 text-sm font-semibold text-white/70 transition hover:bg-white/10"
+          className="mt-6 rounded-full border border-white/15 bg-surface-secondary px-6 py-2.5 text-sm font-semibold text-primary/70 transition hover:bg-surface-secondary"
         >
           Submit another inquiry
         </button>
@@ -138,7 +138,7 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
       data-netlify="true"
       data-netlify-honeypot="bot-field"
       onSubmit={handleSubmit}
-      className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl"
+      className="rounded-3xl border border-border bg-surface-secondary p-8 backdrop-blur-xl"
     >
       {/* Netlify hidden fields */}
       <input type="hidden" name="form-name" value="birthday-party" />
@@ -304,12 +304,12 @@ export default function BirthdayFormCard({ byobEnabled = true }: BirthdayFormCar
       <button
         type="submit"
         disabled={status === "sending"}
-        className="mt-6 w-full rounded-full bg-gradient-to-r from-pink-500 to-purple-600 py-4 text-base font-bold text-white shadow-lg shadow-purple-600/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-500/30 disabled:opacity-60 disabled:cursor-not-allowed"
+        className="mt-6 w-full rounded-full bg-gradient-to-r from-pink-500 to-purple-600 py-4 text-base font-bold text-primary shadow-lg shadow-purple-600/25 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-500/30 disabled:opacity-60 disabled:cursor-not-allowed"
       >
         {status === "sending" ? "Sending…" : "Get My Birthday Quote →"}
       </button>
 
-      <p className="mt-3 text-center text-xs text-white/35">
+      <p className="mt-3 text-center text-xs text-primary/35">
         No deposit required · We reply within 24 hours
       </p>
     </form>

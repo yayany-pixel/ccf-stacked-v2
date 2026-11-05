@@ -1,25 +1,25 @@
 export default function SkeletonCard() {
   return (
-    <div className="animate-pulse rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
+    <div className="animate-pulse rounded-2xl border border-border bg-surface-secondary p-6 backdrop-blur-xl">
       <div className="flex items-center justify-between">
-        <div className="h-4 w-24 rounded-full bg-white/10" />
-        <div className="h-4 w-16 rounded-full bg-white/10" />
+        <div className="h-4 w-24 rounded-full bg-surface-secondary" />
+        <div className="h-4 w-16 rounded-full bg-surface-secondary" />
       </div>
       
       <div className="mt-4 space-y-3">
-        <div className="h-6 w-3/4 rounded bg-white/10" />
-        <div className="h-6 w-1/2 rounded bg-white/10" />
+        <div className="h-6 w-3/4 rounded bg-surface-secondary" />
+        <div className="h-6 w-1/2 rounded bg-surface-secondary" />
       </div>
       
       <div className="mt-4 space-y-2">
-        <div className="h-4 w-full rounded bg-white/10" />
-        <div className="h-4 w-full rounded bg-white/10" />
-        <div className="h-4 w-2/3 rounded bg-white/10" />
+        <div className="h-4 w-full rounded bg-surface-secondary" />
+        <div className="h-4 w-full rounded bg-surface-secondary" />
+        <div className="h-4 w-2/3 rounded bg-surface-secondary" />
       </div>
       
       <div className="mt-6 flex gap-2">
-        <div className="h-10 w-32 rounded-xl bg-white/10" />
-        <div className="h-10 w-28 rounded-xl bg-white/10" />
+        <div className="h-10 w-32 rounded-xl bg-surface-secondary" />
+        <div className="h-10 w-28 rounded-xl bg-surface-secondary" />
       </div>
     </div>
   );
@@ -41,7 +41,7 @@ export function SkeletonText({ lines = 3 }: { lines?: number }) {
       {Array.from({ length: lines }).map((_, i) => (
         <div
           key={i}
-          className="h-4 rounded bg-white/10"
+          className="h-4 rounded bg-surface-secondary"
           style={{ width: i === lines - 1 ? "66%" : "100%" }}
         />
       ))}
@@ -50,5 +50,5 @@ export function SkeletonText({ lines = 3 }: { lines?: number }) {
 }
 
 export function SkeletonButton() {
-  return <div className="h-10 w-32 animate-pulse rounded-xl bg-white/10" />;
+  return <div className="h-10 w-32 animate-pulse rounded-xl bg-surface-secondary" />;
 }

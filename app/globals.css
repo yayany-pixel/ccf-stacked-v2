@@ -2,9 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { 
-  color-scheme: dark;
+:root, [data-theme="earthy"] { 
+  color-scheme: light;
   
+  --theme-bg: #F7F4ED;
+  --theme-surface: #FFFCF7;
+  --theme-surface-secondary: #E8DFCF;
+  --theme-text: #292B24;
+  --theme-text-secondary: #5A5D4D;
+  --theme-btn: #414B35;
+  --theme-btn-text: #F7F4ED;
+  --theme-accent: #A64B35;
+  --theme-border: #DCD4C6;
+  --theme-badge-bg: #FDF0ED;
+  --theme-badge-text: #A5402B;
+  --theme-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  --theme-glow: none;
+
   /* Vibrant Category Colors */
   --color-mud: 191 90% 55%; /* amber/terracotta */
   --color-glass: 189 85% 60%; /* cyan/aqua */
@@ -14,6 +28,23 @@
   --color-romance: 350 85% 65%; /* rose/passion */
   --color-family: 45 90% 60%; /* yellow/sunshine */
   --color-private: 260 75% 65%; /* indigo/event */
+}
+
+[data-theme="cyberpunk"] {
+  color-scheme: dark;
+  --theme-bg: #090A10;
+  --theme-surface: #171822;
+  --theme-surface-secondary: #1F202E;
+  --theme-text: #F5F3FA;
+  --theme-text-secondary: #BBB7CA;
+  --theme-btn: #FF4FA3;
+  --theme-btn-text: #090A10;
+  --theme-accent: #58E8F2;
+  --theme-border: rgba(255, 255, 255, 0.1);
+  --theme-badge-bg: rgba(255, 79, 163, 0.15);
+  --theme-badge-text: #FF4FA3;
+  --theme-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+  --theme-glow: 0 0 15px rgba(255, 79, 163, 0.4);
 }
 
 html, body { height: 100%; }
@@ -30,7 +61,7 @@ body:has(.studio-home) > footer .sparkle-noise { display: none; }
 html { scroll-behavior: smooth; }
 
 body { 
-  @apply bg-[#080A10] text-white antialiased;
+  @apply bg-background text-primary antialiased;
 }
 
 /* Brush cursor (desktop only, fine pointers) */

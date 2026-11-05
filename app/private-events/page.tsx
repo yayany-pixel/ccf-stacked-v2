@@ -306,7 +306,7 @@ export default function PrivateEventsPage({
             {/* Heading */}
             <div className="mb-10 text-center">
               <Reveal variant="fade-up">
-                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-xl">
+                <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-secondary px-4 py-2 text-sm font-semibold backdrop-blur-xl">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
@@ -324,7 +324,7 @@ export default function PrivateEventsPage({
               </Reveal>
 
               <Reveal delay={150} variant="fade-up">
-                <p className="mx-auto mt-4 max-w-2xl text-base text-white/70">
+                <p className="mx-auto mt-4 max-w-2xl text-base text-primary/70">
                   BYOB-friendly, expert-led pottery, mosaics, glass art & more — for groups of 8–50+.
                 </p>
               </Reveal>
@@ -340,7 +340,7 @@ export default function PrivateEventsPage({
               </div>
             </Reveal>
 
-            <div className="mt-6 text-center text-sm text-white/50">
+            <div className="mt-6 text-center text-sm text-primary/50">
               <p>Prefer to call? <a href="tel:+13128819929" className="font-semibold text-purple-300 hover:text-purple-200">312-881-9929</a>
               {" · "}
               <a href="mailto:support@colorcocktailfactory.com" className="font-semibold text-purple-300 hover:text-purple-200">support@colorcocktailfactory.com</a></p>
@@ -349,20 +349,20 @@ export default function PrivateEventsPage({
         </section>
 
         {/* Social Proof Section */}
-        <section className="border-y border-white/10 bg-gradient-to-br from-purple-900/20 to-pink-900/20 py-12">
+        <section className="border-y border-border bg-gradient-to-br from-purple-900/20 to-pink-900/20 py-12">
           <div className="mx-auto max-w-7xl px-6">
             <div className="grid gap-8 md:grid-cols-3">
               <div className="text-center">
                 <div className="text-4xl font-bold text-purple-300">{CHICAGO_MILESTONES.customers}</div>
-                <div className="mt-2 text-sm text-white/70">Customers Served in Chicago</div>
+                <div className="mt-2 text-sm text-primary/70">Customers Served in Chicago</div>
               </div>
               <div className="text-center">
                 <div className="text-4xl font-bold text-pink-300">{CHICAGO_MILESTONES.rating}★</div>
-                <div className="mt-2 text-sm text-white/70">Chicago Average Rating</div>
+                <div className="mt-2 text-sm text-primary/70">Chicago Average Rating</div>
               </div>
               <div className="text-center">
                 <div className="text-4xl font-bold text-cyan-300">{CHICAGO_MILESTONES.since}</div>
-                <div className="mt-2 text-sm text-white/70">Serving Chicago Since</div>
+                <div className="mt-2 text-sm text-primary/70">Serving Chicago Since</div>
               </div>
             </div>
           </div>
@@ -373,7 +373,7 @@ export default function PrivateEventsPage({
           <div className="mx-auto max-w-7xl px-6">
             <div className="mb-12 text-center">
               <h2 className="font-serif text-4xl font-bold">Perfect For Every Occasion</h2>
-              <p className="mt-4 text-lg text-white/75">
+              <p className="mt-4 text-lg text-primary/75">
                 Whether you're celebrating a milestone or building team connections, we create experiences your group will love.
               </p>
             </div>
@@ -384,7 +384,7 @@ export default function PrivateEventsPage({
                   <GlassCard className="p-6 text-center">
                     <div className="text-5xl">{event.icon}</div>
                     <h3 className="mt-4 font-serif text-xl font-semibold">{event.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-white/70">{event.description}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-primary/70">{event.description}</p>
                   </GlassCard>
                 </Reveal>
               ))}
@@ -393,11 +393,11 @@ export default function PrivateEventsPage({
         </section>
 
         {/* Experiences Menu */}
-        <section id="experiences" className="border-y border-white/10 bg-gradient-to-br from-slate-900/60 to-purple-900/30 py-20">
+        <section id="experiences" className="border-y border-border bg-gradient-to-br from-slate-900/60 to-purple-900/30 py-20">
           <div className="mx-auto max-w-7xl px-6">
             <div className="mb-12 text-center">
               <h2 className="font-serif text-4xl font-bold">Choose Your Experience</h2>
-              <p className="mt-4 text-lg text-white/75">
+              <p className="mt-4 text-lg text-primary/75">
                 Adult group rates below are per person for 10 or 20 guests. Pottery finishing is extra unless selected. See the full menu for exact totals and project options.
               </p>
             </div>
@@ -408,27 +408,27 @@ export default function PrivateEventsPage({
                   <GlassCard className="flex h-full flex-col p-6">
                     <div className="flex items-start justify-between">
                       <h3 className="font-serif text-xl font-semibold">{exp.title}</h3>
-                      <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-semibold text-purple-200">
+                      <span className="rounded-full bg-btn/20 px-3 py-1 text-xs font-semibold text-purple-200">
                         {exp.price}
                       </span>
                     </div>
                     
-                    <p className="mt-3 flex-1 text-sm leading-relaxed text-white/75">
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-primary/75">
                       {exp.description}
                     </p>
 
-                    <div className="mt-4 space-y-2 border-t border-white/10 pt-4 text-xs text-white/60">
+                    <div className="mt-4 space-y-2 border-t border-border pt-4 text-xs text-primary/60">
                       <div className="flex justify-between">
                         <span>Duration:</span>
-                        <span className="text-white/80">{exp.duration}</span>
+                        <span className="text-primary/80">{exp.duration}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Skill Level:</span>
-                        <span className="text-white/80">{exp.skill}</span>
+                        <span className="text-primary/80">{exp.skill}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Take Home:</span>
-                        <span className="text-white/80">{exp.takeHome}</span>
+                        <span className="text-primary/80">{exp.takeHome}</span>
                       </div>
                     </div>
 
@@ -450,7 +450,7 @@ export default function PrivateEventsPage({
           <div className="mx-auto max-w-5xl px-6">
             <div className="mb-12 text-center">
               <h2 className="font-serif text-4xl font-bold">Simple, Transparent Pricing</h2>
-              <p className="mt-4 text-lg text-white/75">
+              <p className="mt-4 text-lg text-primary/75">
                 Pricing varies by activity. Share your budget and we'll craft the perfect experience.
               </p>
             </div>
@@ -459,7 +459,7 @@ export default function PrivateEventsPage({
               <div className="grid gap-8 md:grid-cols-2">
                 <div>
                   <h3 className="text-xl font-semibold text-purple-200">What's Included</h3>
-                  <ul className="mt-4 space-y-3 text-sm text-white/75">
+                  <ul className="mt-4 space-y-3 text-sm text-primary/75">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400">✓</span>
                       <span>Expert instruction from professional artists</span>
@@ -489,14 +489,14 @@ export default function PrivateEventsPage({
 
                 <div>
                   <h3 className="text-xl font-semibold text-pink-200">Adult groups of 10 or 20</h3>
-                  <p className="mt-4 text-sm leading-relaxed text-white/75">Compare exact totals for every activity, with separate pottery prices before and after firing and glazing.</p>
-                  <p className="mt-3 text-sm text-white/75">Nude Painting: $1,200 for 10 adults or $2,000 for 20 adults.</p>
+                  <p className="mt-4 text-sm leading-relaxed text-primary/75">Compare exact totals for every activity, with separate pottery prices before and after firing and glazing.</p>
+                  <p className="mt-3 text-sm text-primary/75">Nude Painting: $1,200 for 10 adults or $2,000 for 20 adults.</p>
                   <Link href="/group-pricing" className="mt-5 inline-block rounded-full bg-purple-200 px-5 py-3 font-semibold text-slate-950">View all adult group prices →</Link>
                 </div>
               </div>
 
-              <div className="mt-8 rounded-lg border border-purple-500/30 bg-purple-500/10 p-4 text-center">
-                <p className="text-sm text-white/80">
+              <div className="mt-8 rounded-lg border border-purple-500/30 bg-btn/10 p-4 text-center">
+                <p className="text-sm text-primary/80">
                   💡 <strong>Pro Tip:</strong> Mix and match activities for variety! We can create custom packages 
                   combining 2-3 experiences to fit your budget and keep everyone engaged.
                 </p>
@@ -510,7 +510,7 @@ export default function PrivateEventsPage({
           <div className="mx-auto max-w-4xl px-6">
             <div className="mb-10 text-center">
               <h2 className="font-serif text-4xl font-bold">Tell Us About Your Event</h2>
-              <p className="mt-4 text-lg text-white/75">
+              <p className="mt-4 text-lg text-primary/75">
                 Share a few details and we'll get back to you within 24 hours.
               </p>
             </div>
@@ -524,11 +524,11 @@ export default function PrivateEventsPage({
         </section>
 
         {/* How It Works */}
-        <section className="border-y border-white/10 bg-gradient-to-br from-pink-900/20 to-purple-900/30 py-20">
+        <section className="border-y border-border bg-gradient-to-br from-pink-900/20 to-purple-900/30 py-20">
           <div className="mx-auto max-w-5xl px-6">
             <div className="mb-12 text-center">
               <h2 className="font-serif text-4xl font-bold">How It Works</h2>
-              <p className="mt-4 text-lg text-white/75">
+              <p className="mt-4 text-lg text-primary/75">
                 Booking your private event is simple and stress-free.
               </p>
             </div>
@@ -559,10 +559,10 @@ export default function PrivateEventsPage({
                 <Reveal key={item.step} delay={idx * 100} variant="fade-up">
                   <GlassCard className="p-6 text-center">
                     <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-purple-500/30 to-pink-500/30">
-                      <span className="font-serif text-3xl font-bold text-white">{item.step}</span>
+                      <span className="font-serif text-3xl font-bold text-primary">{item.step}</span>
                     </div>
                     <h3 className="mt-4 font-semibold">{item.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-white/70">{item.description}</p>
+                    <p className="mt-2 text-sm leading-relaxed text-primary/70">{item.description}</p>
                   </GlassCard>
                 </Reveal>
               ))}
@@ -575,7 +575,7 @@ export default function PrivateEventsPage({
           <div className="mx-auto max-w-7xl px-6">
             <div className="mb-12 text-center">
               <h2 className="font-serif text-4xl font-bold">Two Locations to Serve You</h2>
-              <p className="mt-4 text-lg text-white/75">
+              <p className="mt-4 text-lg text-primary/75">
                 Host your private event at either of our creative studios.
               </p>
             </div>
@@ -585,9 +585,9 @@ export default function PrivateEventsPage({
                 <Reveal key={city.param} delay={idx * 100} variant="fade-up">
                   <GlassCard className="p-8">
                     <h3 className="font-serif text-2xl font-semibold">{city.label}, {city.param === 'chicago' ? 'Illinois' : 'Oregon'}</h3>
-                    <p className="mt-2 text-sm text-white/70">{city.address}</p>
+                    <p className="mt-2 text-sm text-primary/70">{city.address}</p>
                     
-                    <div className="mt-6 space-y-2 text-sm text-white/75">
+                    <div className="mt-6 space-y-2 text-sm text-primary/75">
                       <p><strong>Perfect for:</strong> {city.param === 'chicago' ? 'Pilsen, West Loop, South Loop, and greater Chicago area groups' : 'Downtown Eugene, Whiteaker, and greater Eugene area groups'}</p>
                       <p><strong>Capacity:</strong> Up to 50 guests</p>
                       <p><strong>Parking:</strong> {city.param === 'chicago' ? 'Street parking and nearby lots' : 'Free street parking available'}</p>
@@ -609,7 +609,7 @@ export default function PrivateEventsPage({
         </section>
 
         {/* FAQs */}
-        <section className="border-y border-white/10 bg-gradient-to-br from-slate-900/60 to-indigo-900/30 py-20">
+        <section className="border-y border-border bg-gradient-to-br from-slate-900/60 to-indigo-900/30 py-20">
           <div className="mx-auto max-w-4xl px-6">
             <div className="mb-12 text-center">
               <h2 className="font-serif text-4xl font-bold">Frequently Asked Questions</h2>
@@ -620,7 +620,7 @@ export default function PrivateEventsPage({
                 <Reveal key={idx} delay={idx * 30} variant="fade-up">
                   <GlassCard className="p-6">
                     <h3 className="font-semibold text-purple-200">{faq.name}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white/75">{faq.acceptedAnswer.text}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-primary/75">{faq.acceptedAnswer.text}</p>
                   </GlassCard>
                 </Reveal>
               ))}
@@ -629,38 +629,38 @@ export default function PrivateEventsPage({
         </section>
 
         {/* From the Blog */}
-        <section className="border-t border-white/10 py-16">
+        <section className="border-t border-border py-16">
           <div className="mx-auto max-w-4xl px-6">
             <div className="mb-6 text-center">
               <h2 className="font-serif text-2xl font-bold">From the Blog</h2>
-              <p className="mt-2 text-sm text-white/60">Creative date-night and group inspiration in each city.</p>
+              <p className="mt-2 text-sm text-primary/60">Creative date-night and group inspiration in each city.</p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <Link
                 href="/blog/chicago-date-night-ideas"
-                className="block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-white/25 hover:bg-white/10"
+                className="block rounded-2xl border border-border bg-surface-secondary p-5 transition hover:border-white/25 hover:bg-surface-secondary"
               >
                 <div className="text-xs font-semibold uppercase tracking-wide text-purple-300">Chicago</div>
-                <div className="mt-1 font-semibold text-white">10 Unique Date Night Ideas in Chicago</div>
-                <p className="mt-1 text-sm text-white/70">Beyond dinner and a movie — creative workshops that make great group events too.</p>
+                <div className="mt-1 font-semibold text-primary">10 Unique Date Night Ideas in Chicago</div>
+                <p className="mt-1 text-sm text-primary/70">Beyond dinner and a movie — creative workshops that make great group events too.</p>
               </Link>
               <Link
                 href="/blog/eugene-date-night-ideas"
-                className="block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-white/25 hover:bg-white/10"
+                className="block rounded-2xl border border-border bg-surface-secondary p-5 transition hover:border-white/25 hover:bg-surface-secondary"
               >
                 <div className="text-xs font-semibold uppercase tracking-wide text-purple-300">Eugene</div>
-                <div className="mt-1 font-semibold text-white">10 Romantic Date Night Ideas in Eugene, Oregon</div>
-                <p className="mt-1 text-sm text-white/70">Hands-on creative experiences perfect for couples and small groups.</p>
+                <div className="mt-1 font-semibold text-primary">10 Romantic Date Night Ideas in Eugene, Oregon</div>
+                <p className="mt-1 text-sm text-primary/70">Hands-on creative experiences perfect for couples and small groups.</p>
               </Link>
             </div>
           </div>
         </section>
 
         {/* Final CTA */}
-        <section className="gradient-breathing border-t border-white/10 bg-gradient-to-br from-purple-900/40 to-pink-900/40 py-16">
+        <section className="gradient-breathing border-t border-border bg-gradient-to-br from-purple-900/40 to-pink-900/40 py-16">
           <div className="mx-auto max-w-3xl px-6 text-center">
             <h2 className="font-serif text-3xl font-bold">Ready to Create Something Unforgettable?</h2>
-            <p className="mt-4 text-lg text-white/80">
+            <p className="mt-4 text-lg text-primary/80">
               Whether it's a team outing, celebration, or gathering with friends, we'll make it memorable.
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-4">

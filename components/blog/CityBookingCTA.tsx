@@ -23,7 +23,7 @@ export default function CityBookingCTA({
     <GlassCard className="bg-gradient-to-br from-purple-500/20 to-pink-500/20">
       <div className="p-8 text-center">
         <h2 className="font-serif text-2xl font-bold">{headline}</h2>
-        <p className="mx-auto mt-3 max-w-2xl leading-relaxed text-white/85">
+        <p className="mx-auto mt-3 max-w-2xl leading-relaxed text-primary/85">
           {message}
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">

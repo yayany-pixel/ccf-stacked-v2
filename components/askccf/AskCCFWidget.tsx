@@ -365,7 +365,7 @@ export default function AskCCFWidget() {
       aria-label={open ? "Close studio help" : "Open studio help, the CCF AI assistant"}
       className={pathname === "/"
         ? "inline-flex min-h-11 w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-semibold text-stone-800 hover:bg-stone-100 focus-visible:outline focus-visible:outline-2"
-        : "fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-4 z-40 inline-flex items-center gap-2 rounded-full border border-white/15 bg-gradient-to-br from-purple-600 to-cyan-600 px-4 py-3 text-sm font-semibold text-white shadow-2xl backdrop-blur-xl transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:left-6"}
+        : "fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom))] left-4 z-40 inline-flex items-center gap-2 rounded-full border border-white/15 bg-gradient-to-br from-purple-600 to-cyan-600 px-4 py-3 text-sm font-semibold text-primary shadow-2xl backdrop-blur-xl transition hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:left-6"}
     >
       <span aria-hidden="true">💬</span>
       <span>{open ? "Close" : "Need a hand?"}</span>
@@ -383,18 +383,18 @@ export default function AskCCFWidget() {
           role="dialog"
           aria-label="Studio help — CCF AI assistant"
           style={mobileViewport ?? undefined}
-          className="fixed inset-x-0 bottom-0 z-50 flex h-[85vh] flex-col supports-[height:1dvh]:h-[85dvh] rounded-t-3xl border border-white/10 bg-[#12101f]/95 shadow-2xl backdrop-blur-xl sm:inset-x-auto sm:bottom-24 sm:left-6 sm:h-[32rem] sm:max-h-[calc(100dvh-7rem)] sm:w-[24rem] sm:rounded-3xl"
+          className="fixed inset-x-0 bottom-0 z-50 flex h-[85vh] flex-col supports-[height:1dvh]:h-[85dvh] rounded-t-3xl border border-border bg-[#12101f]/95 shadow-2xl backdrop-blur-xl sm:inset-x-auto sm:bottom-24 sm:left-6 sm:h-[32rem] sm:max-h-[calc(100dvh-7rem)] sm:w-[24rem] sm:rounded-3xl"
         >
-          <header className="flex items-start justify-between gap-2 border-b border-white/10 px-4 py-3">
+          <header className="flex items-start justify-between gap-2 border-b border-border px-4 py-3">
             <div>
-              <h2 className="text-sm font-semibold text-white">Studio help</h2>
-              <p className="text-xs font-normal text-white/50">AI-powered help from CCF</p>
+              <h2 className="text-sm font-semibold text-primary">Studio help</h2>
+              <p className="text-xs font-normal text-primary/50">AI-powered help from CCF</p>
             </div>
             <div className="flex items-center gap-1">
               <button
                 type="button"
                 onClick={startNewConversation}
-                className="min-h-11 rounded-full border border-white/15 px-3 py-2 text-xs text-white/80 transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="min-h-11 rounded-full border border-white/15 px-3 py-2 text-xs text-primary/80 transition hover:bg-surface-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 Start over
               </button>
@@ -402,7 +402,7 @@ export default function AskCCFWidget() {
                 type="button"
                 onClick={closePanel}
                 aria-label="Close studio help"
-                className="min-h-11 min-w-11 rounded-full border border-white/15 px-3 py-2 text-xs text-white/80 transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="min-h-11 min-w-11 rounded-full border border-white/15 px-3 py-2 text-xs text-primary/80 transition hover:bg-surface-secondary focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 ✕
               </button>
@@ -410,7 +410,7 @@ export default function AskCCFWidget() {
           </header>
 
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-3">
-            <div className="rounded-2xl bg-white/5 p-3 text-sm text-white/85">{OPENING_MESSAGE}</div>
+            <div className="rounded-2xl bg-surface-secondary p-3 text-sm text-primary/85">{OPENING_MESSAGE}</div>
 
             {showSuggestions ? (
               <ul className="mt-3 flex flex-wrap gap-2" aria-label="Suggested actions">
@@ -419,7 +419,7 @@ export default function AskCCFWidget() {
                     <button
                       type="button"
                       onClick={() => send(suggestion.message)}
-                      className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-white/80 transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                      className="rounded-full border border-white/15 bg-surface-secondary px-3 py-1.5 text-xs text-primary/80 transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                     >
                       {suggestion.label}
                     </button>
@@ -434,8 +434,8 @@ export default function AskCCFWidget() {
                   <div
                     className={
                       message.role === "user"
-                        ? "ml-auto w-fit max-w-[85%] rounded-2xl bg-purple-500/25 px-3 py-2 text-sm text-white"
-                        : "w-fit max-w-[95%] rounded-2xl bg-white/5 px-3 py-2 text-sm text-white/85"
+                        ? "ml-auto w-fit max-w-[85%] rounded-2xl bg-btn/25 px-3 py-2 text-sm text-primary"
+                        : "w-fit max-w-[95%] rounded-2xl bg-surface-secondary px-3 py-2 text-sm text-primary/85"
                     }
                   >
                     <span className="sr-only">
@@ -466,14 +466,14 @@ export default function AskCCFWidget() {
                         <button
                           type="button"
                           onClick={() => send(lastUserMessage.current || lastCustomerMessage())}
-                          className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-white/80 transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                          className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-primary/80 transition hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                         >
                           Try again
                         </button>
                       ) : null}
                       <a
                         href={`mailto:${STAFF_EMAIL}`}
-                        className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-white/80 underline-offset-2 transition hover:bg-white/15 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                        className="rounded-full border border-white/15 px-3 py-1.5 text-xs text-primary/80 underline-offset-2 transition hover:bg-white/15 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                       >
                         Email the studio
                       </a>
@@ -484,7 +484,7 @@ export default function AskCCFWidget() {
             </ol>
 
             {sending ? (
-              <p className="mt-3 text-xs text-white/50">Checking with the studio…</p>
+              <p className="mt-3 text-xs text-primary/50">Checking with the studio…</p>
             ) : null}
             <div ref={logEndRef} />
           </div>
@@ -495,7 +495,7 @@ export default function AskCCFWidget() {
           </p>
 
           <form
-            className="shrink-0 border-t border-white/10 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
+            className="shrink-0 border-t border-border p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
             onSubmit={(event) => {
               event.preventDefault();
               send(input);
@@ -519,17 +519,17 @@ export default function AskCCFWidget() {
                   }
                 }}
                 placeholder="Type your question…"
-                className="max-h-24 min-h-11 min-w-0 flex-1 resize-none rounded-2xl border border-white/15 bg-white/5 px-3 py-2 text-base text-white placeholder:text-white/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400"
+                className="max-h-24 min-h-11 min-w-0 flex-1 resize-none rounded-2xl border border-white/15 bg-surface-secondary px-3 py-2 text-base text-primary placeholder:text-primary/60 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-400"
               />
               <button
                 type="submit"
                 disabled={!sessionId || sending || input.trim().length === 0}
-                className="min-h-11 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                className="min-h-11 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 text-sm font-semibold text-primary transition hover:brightness-110 disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
               >
                 Send
               </button>
             </div>
-            <p className="mt-2 text-[11px] leading-relaxed text-white/70">AI processes this chat. Avoid payment or sensitive details. <a className="underline" href={`mailto:${STAFF_EMAIL}`}>Email the studio</a></p>
+            <p className="mt-2 text-[11px] leading-relaxed text-primary/70">AI processes this chat. Avoid payment or sensitive details. <a className="underline" href={`mailto:${STAFF_EMAIL}`}>Email the studio</a></p>
           </form>
         </div>
       ) : null}

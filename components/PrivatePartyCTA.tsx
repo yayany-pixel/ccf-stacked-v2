@@ -45,7 +45,7 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
         href={destination}
         onClick={handleClick}
         data-analytics-private-party="true"
-        className={`inline-flex items-center gap-2 rounded-full border border-purple-400/30 bg-purple-500/10 px-4 py-2 text-sm font-semibold text-purple-300 transition hover:bg-purple-500/20 ${className}`}
+        className={`inline-flex items-center gap-2 rounded-full border border-purple-400/30 bg-btn/10 px-4 py-2 text-sm font-semibold text-purple-300 transition hover:bg-btn/20 ${className}`}
         aria-label="Request a private party"
       >
         <span className="hidden sm:inline">🎉</span>
@@ -68,7 +68,7 @@ export default function PrivatePartyCTA({ variant = "header", className = "" }: 
           <span className="text-2xl">🎉</span>
           <span>Plan Your Private Event →</span>
         </Link>
-        <p className="mt-3 text-sm text-white/60">
+        <p className="mt-3 text-sm text-primary/60">
           Team building • Birthdays • Bachelorettes • Corporate events
         </p>
       </div>

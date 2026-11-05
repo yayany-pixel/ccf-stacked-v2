@@ -27,13 +27,13 @@ export default async function AnalyticsPage() {
       <div className="relative mx-auto max-w-7xl px-6 py-20">
         <Reveal variant="fade-up">
           <div className="text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-secondary px-4 py-2 text-sm font-semibold backdrop-blur-xl">
               📊 Analytics Hub
             </div>
-            <h1 className="mt-6 font-serif text-5xl font-bold text-white">
+            <h1 className="mt-6 font-serif text-5xl font-bold text-primary">
               Performance Dashboard
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-white/75">
+            <p className="mx-auto mt-4 max-w-2xl text-lg text-primary/75">
               Your centralized analytics, metrics, and insights
             </p>
           </div>
@@ -50,8 +50,8 @@ export default async function AnalyticsPage() {
             >
               <GlassCard interactive className="h-full p-6 text-center transition-all hover:scale-105">
                 <div className="text-4xl">📈</div>
-                <h2 className="mt-3 text-xl font-bold text-white">Google Analytics</h2>
-                <p className="mt-2 text-sm text-white/70">Real-time traffic &amp; conversions</p>
+                <h2 className="mt-3 text-xl font-bold text-primary">Google Analytics</h2>
+                <p className="mt-2 text-sm text-primary/70">Real-time traffic &amp; conversions</p>
                 <div className="mt-4 text-xs font-mono text-purple-300">G-CPKCDF56W2</div>
               </GlassCard>
             </a>
@@ -66,8 +66,8 @@ export default async function AnalyticsPage() {
             >
               <GlassCard interactive className="h-full p-6 text-center transition-all hover:scale-105">
                 <div className="text-4xl">📱</div>
-                <h2 className="mt-3 text-xl font-bold text-white">Meta Pixel</h2>
-                <p className="mt-2 text-sm text-white/70">Facebook/Instagram insights</p>
+                <h2 className="mt-3 text-xl font-bold text-primary">Meta Pixel</h2>
+                <p className="mt-2 text-sm text-primary/70">Facebook/Instagram insights</p>
                 <div className="mt-4 text-xs font-mono text-cyan-300">1554498828184467</div>
               </GlassCard>
             </a>
@@ -82,8 +82,8 @@ export default async function AnalyticsPage() {
             >
               <GlassCard interactive className="h-full p-6 text-center transition-all hover:scale-105">
                 <div className="text-4xl">🚀</div>
-                <h2 className="mt-3 text-xl font-bold text-white">Netlify Analytics</h2>
-                <p className="mt-2 text-sm text-white/70">Deployment &amp; bandwidth</p>
+                <h2 className="mt-3 text-xl font-bold text-primary">Netlify Analytics</h2>
+                <p className="mt-2 text-sm text-primary/70">Deployment &amp; bandwidth</p>
                 <div className="mt-4 text-xs text-green-300">Production stats</div>
               </GlassCard>
             </a>
@@ -100,7 +100,7 @@ export default async function AnalyticsPage() {
         {/* Key Metrics to Track */}
         <section className="mt-16">
           <Reveal>
-            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-white">Daily Metrics Checklist</h2>
+            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-primary">Daily Metrics Checklist</h2>
           </Reveal>
 
           <div className="grid gap-8 md:grid-cols-2">
@@ -110,28 +110,28 @@ export default async function AnalyticsPage() {
                 <div className="p-6">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">👥</span>
-                    <h3 className="text-xl font-bold text-white">Traffic Metrics</h3>
+                    <h3 className="text-xl font-bold text-primary">Traffic Metrics</h3>
                   </div>
-                  <ul className="mt-4 space-y-2 text-sm text-white/75">
+                  <ul className="mt-4 space-y-2 text-sm text-primary/75">
                     <li className="flex items-center gap-2">
-                      <span className="text-purple-400">▸</span>
-                      <strong className="text-white">Daily Users:</strong> Unique visitors today
+                      <span className="text-accent">▸</span>
+                      <strong className="text-primary">Daily Users:</strong> Unique visitors today
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-purple-400">▸</span>
-                      <strong className="text-white">Sessions:</strong> Total visits
+                      <span className="text-accent">▸</span>
+                      <strong className="text-primary">Sessions:</strong> Total visits
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-purple-400">▸</span>
-                      <strong className="text-white">Pageviews:</strong> Total pages viewed
+                      <span className="text-accent">▸</span>
+                      <strong className="text-primary">Pageviews:</strong> Total pages viewed
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-purple-400">▸</span>
-                      <strong className="text-white">Bounce Rate:</strong> Target: 40-60%
+                      <span className="text-accent">▸</span>
+                      <strong className="text-primary">Bounce Rate:</strong> Target: 40-60%
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-purple-400">▸</span>
-                      <strong className="text-white">Avg. Session Duration:</strong> Target: 1-3 min
+                      <span className="text-accent">▸</span>
+                      <strong className="text-primary">Avg. Session Duration:</strong> Target: 1-3 min
                     </li>
                   </ul>
                 </div>
@@ -144,28 +144,28 @@ export default async function AnalyticsPage() {
                 <div className="p-6">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">🎯</span>
-                    <h3 className="text-xl font-bold text-white">Engagement Metrics</h3>
+                    <h3 className="text-xl font-bold text-primary">Engagement Metrics</h3>
                   </div>
-                  <ul className="mt-4 space-y-2 text-sm text-white/75">
+                  <ul className="mt-4 space-y-2 text-sm text-primary/75">
                     <li className="flex items-center gap-2">
                       <span className="text-cyan-400">▸</span>
-                      <strong className="text-white">Top Pages:</strong> Most visited content
+                      <strong className="text-primary">Top Pages:</strong> Most visited content
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-cyan-400">▸</span>
-                      <strong className="text-white">RezClick Conversions:</strong> Booking clicks
+                      <strong className="text-primary">RezClick Conversions:</strong> Booking clicks
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-cyan-400">▸</span>
-                      <strong className="text-white">Traffic Sources:</strong> Where users come from
+                      <strong className="text-primary">Traffic Sources:</strong> Where users come from
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-cyan-400">▸</span>
-                      <strong className="text-white">Device Breakdown:</strong> Mobile vs Desktop
+                      <strong className="text-primary">Device Breakdown:</strong> Mobile vs Desktop
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-cyan-400">▸</span>
-                      <strong className="text-white">City Preference:</strong> Chicago vs Eugene clicks
+                      <strong className="text-primary">City Preference:</strong> Chicago vs Eugene clicks
                     </li>
                   </ul>
                 </div>
@@ -178,28 +178,28 @@ export default async function AnalyticsPage() {
                 <div className="p-6">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">💰</span>
-                    <h3 className="text-xl font-bold text-white">Conversion Events</h3>
+                    <h3 className="text-xl font-bold text-primary">Conversion Events</h3>
                   </div>
-                  <ul className="mt-4 space-y-2 text-sm text-white/75">
+                  <ul className="mt-4 space-y-2 text-sm text-primary/75">
                     <li className="flex items-center gap-2">
                       <span className="text-green-400">▸</span>
-                      <strong className="text-white">Book Now Clicks:</strong> Primary CTA
+                      <strong className="text-primary">Book Now Clicks:</strong> Primary CTA
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-green-400">▸</span>
-                      <strong className="text-white">Gift Card Clicks:</strong> Revenue opportunity
+                      <strong className="text-primary">Gift Card Clicks:</strong> Revenue opportunity
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-green-400">▸</span>
-                      <strong className="text-white">Private Event Inquiries:</strong> Form submissions
+                      <strong className="text-primary">Private Event Inquiries:</strong> Form submissions
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-green-400">▸</span>
-                      <strong className="text-white">Newsletter Signups:</strong> Email list growth
+                      <strong className="text-primary">Newsletter Signups:</strong> Email list growth
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-green-400">▸</span>
-                      <strong className="text-white">Outbound Clicks:</strong> Social media, Eventbrite
+                      <strong className="text-primary">Outbound Clicks:</strong> Social media, Eventbrite
                     </li>
                   </ul>
                 </div>
@@ -212,28 +212,28 @@ export default async function AnalyticsPage() {
                 <div className="p-6">
                   <div className="flex items-center gap-3">
                     <span className="text-3xl">⚡</span>
-                    <h3 className="text-xl font-bold text-white">Performance Metrics</h3>
+                    <h3 className="text-xl font-bold text-primary">Performance Metrics</h3>
                   </div>
-                  <ul className="mt-4 space-y-2 text-sm text-white/75">
+                  <ul className="mt-4 space-y-2 text-sm text-primary/75">
                     <li className="flex items-center gap-2">
                       <span className="text-orange-400">▸</span>
-                      <strong className="text-white">Page Load Speed:</strong> Target: &lt;3s
+                      <strong className="text-primary">Page Load Speed:</strong> Target: &lt;3s
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-orange-400">▸</span>
-                      <strong className="text-white">Core Web Vitals:</strong> LCP, FID, CLS scores
+                      <strong className="text-primary">Core Web Vitals:</strong> LCP, FID, CLS scores
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-orange-400">▸</span>
-                      <strong className="text-white">Error Rate:</strong> 404s and server errors
+                      <strong className="text-primary">Error Rate:</strong> 404s and server errors
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-orange-400">▸</span>
-                      <strong className="text-white">Mobile Performance:</strong> Separate score
+                      <strong className="text-primary">Mobile Performance:</strong> Separate score
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="text-orange-400">▸</span>
-                      <strong className="text-white">Bandwidth Usage:</strong> Netlify limits
+                      <strong className="text-primary">Bandwidth Usage:</strong> Netlify limits
                     </li>
                   </ul>
                 </div>
@@ -245,7 +245,7 @@ export default async function AnalyticsPage() {
         {/* Custom Reports Setup */}
         <section className="mt-16">
           <Reveal>
-            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-white">Recommended Custom Reports</h2>
+            <h2 className="mb-8 text-center font-serif text-3xl font-bold text-primary">Recommended Custom Reports</h2>
           </Reveal>
 
           <div className="space-y-6">
@@ -253,13 +253,13 @@ export default async function AnalyticsPage() {
               <GlassCard>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-purple-200">📊 Daily Performance Report</h3>
-                  <p className="mt-2 text-sm text-white/75">
+                  <p className="mt-2 text-sm text-primary/75">
                     Track daily trends and identify patterns
                   </p>
                   <div className="mt-4 space-y-2 text-sm">
-                    <p className="text-white/60"><strong>Metrics:</strong> Users, Sessions, Bounce Rate, Avg. Duration</p>
-                    <p className="text-white/60"><strong>Dimensions:</strong> Date, Source/Medium, Device Category</p>
-                    <p className="text-white/60"><strong>Filters:</strong> Last 30 days, exclude internal traffic</p>
+                    <p className="text-primary/60"><strong>Metrics:</strong> Users, Sessions, Bounce Rate, Avg. Duration</p>
+                    <p className="text-primary/60"><strong>Dimensions:</strong> Date, Source/Medium, Device Category</p>
+                    <p className="text-primary/60"><strong>Filters:</strong> Last 30 days, exclude internal traffic</p>
                   </div>
                   <a 
                     href="https://analytics.google.com" 
@@ -277,13 +277,13 @@ export default async function AnalyticsPage() {
               <GlassCard>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-cyan-200">🎨 Content Performance Report</h3>
-                  <p className="mt-2 text-sm text-white/75">
+                  <p className="mt-2 text-sm text-primary/75">
                     See which activities and blog posts drive traffic
                   </p>
                   <div className="mt-4 space-y-2 text-sm">
-                    <p className="text-white/60"><strong>Metrics:</strong> Pageviews, Unique Pageviews, Time on Page, Exit Rate</p>
-                    <p className="text-white/60"><strong>Dimensions:</strong> Page Path, Page Title</p>
-                    <p className="text-white/60"><strong>Segments:</strong> Group by /chicago vs /eugene, /blog vs activities</p>
+                    <p className="text-primary/60"><strong>Metrics:</strong> Pageviews, Unique Pageviews, Time on Page, Exit Rate</p>
+                    <p className="text-primary/60"><strong>Dimensions:</strong> Page Path, Page Title</p>
+                    <p className="text-primary/60"><strong>Segments:</strong> Group by /chicago vs /eugene, /blog vs activities</p>
                   </div>
                   <a 
                     href="https://analytics.google.com" 
@@ -301,13 +301,13 @@ export default async function AnalyticsPage() {
               <GlassCard>
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-green-200">💸 Conversion Funnel Report</h3>
-                  <p className="mt-2 text-sm text-white/75">
+                  <p className="mt-2 text-sm text-primary/75">
                     Track user journey from landing to booking
                   </p>
                   <div className="mt-4 space-y-2 text-sm">
-                    <p className="text-white/60"><strong>Steps:</strong> Landing → Activity Page → Booking Click → External Site</p>
-                    <p className="text-white/60"><strong>Events:</strong> RezClick, Eventbrite Click, Private Event Form Submit</p>
-                    <p className="text-white/60"><strong>Goal:</strong> Measure drop-off at each step</p>
+                    <p className="text-primary/60"><strong>Steps:</strong> Landing → Activity Page → Booking Click → External Site</p>
+                    <p className="text-primary/60"><strong>Events:</strong> RezClick, Eventbrite Click, Private Event Form Submit</p>
+                    <p className="text-primary/60"><strong>Goal:</strong> Measure drop-off at each step</p>
                   </div>
                   <a 
                     href="https://analytics.google.com" 
@@ -328,14 +328,14 @@ export default async function AnalyticsPage() {
           <Reveal>
             <GlassCard>
               <div className="p-8 text-center">
-                <h3 className="font-serif text-2xl font-bold text-white">Need Help?</h3>
-                <p className="mx-auto mt-2 max-w-2xl text-white/75">
+                <h3 className="font-serif text-2xl font-bold text-primary">Need Help?</h3>
+                <p className="mx-auto mt-2 max-w-2xl text-primary/75">
                   Access detailed setup guides and documentation
                 </p>
                 <div className="mt-6 flex flex-wrap justify-center gap-3">
                   <Link 
                     href="/" 
-                    className="rounded-full border border-white/20 bg-white/10 px-6 py-2 text-sm font-semibold text-white transition hover:bg-white/20"
+                    className="rounded-full border border-border bg-surface-secondary px-6 py-2 text-sm font-semibold text-primary transition hover:bg-surface-secondary"
                   >
                     ← Back to Site
                   </Link>

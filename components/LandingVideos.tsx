@@ -46,11 +46,11 @@ export default function LandingVideos() {
   };
 
   return (
-    <div className="mt-8 border-t border-white/10 pt-8">
+    <div className="mt-8 border-t border-border pt-8">
       <Reveal variant="fade-up">
         <div className="text-center mb-6">
           <h3 className="text-xl font-semibold">See Our Studio in Action</h3>
-          <p className="mt-1 text-sm text-white/60">Watch what makes our workshops special</p>
+          <p className="mt-1 text-sm text-primary/60">Watch what makes our workshops special</p>
         </div>
       </Reveal>
 
@@ -77,7 +77,7 @@ export default function LandingVideos() {
           {/* Next Button Overlay */}
           <button
             onClick={goToNext}
-            className="absolute bottom-4 right-4 z-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-2.5 font-semibold text-white shadow-xl opacity-0 transition-all duration-300 hover:scale-110 hover:shadow-2xl group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-slate-900"
+            className="absolute bottom-4 right-4 z-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-2.5 font-semibold text-primary shadow-xl opacity-0 transition-all duration-300 hover:scale-110 hover:shadow-2xl group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-slate-900"
             aria-label="Next video"
           >
             Next →

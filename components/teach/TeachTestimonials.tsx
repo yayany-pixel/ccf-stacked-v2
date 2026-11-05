@@ -35,11 +35,11 @@ export default function TeachTestimonials() {
         {testimonials.map((testimonial, index) => (
           <Reveal key={testimonial.author} delay={index * 0.1}>
             <GlassCard className="p-6">
-              <p className="mb-6 italic text-white/80">"{testimonial.quote}"</p>
-              <div className="border-t border-white/10 pt-4">
+              <p className="mb-6 italic text-primary/80">"{testimonial.quote}"</p>
+              <div className="border-t border-border pt-4">
                 <div className="font-semibold">{testimonial.author}</div>
-                <div className="text-sm text-white/60">{testimonial.role}</div>
-                <div className="mt-1 text-xs text-white/50">{testimonial.months}</div>
+                <div className="text-sm text-primary/60">{testimonial.role}</div>
+                <div className="mt-1 text-xs text-primary/50">{testimonial.months}</div>
               </div>
             </GlassCard>
           </Reveal>

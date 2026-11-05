@@ -15,7 +15,7 @@ export default function TeachHero() {
         </Reveal>
         
         <Reveal delay={0.1}>
-          <p className="mx-auto mb-8 max-w-2xl text-lg text-white/70 md:text-xl">
+          <p className="mx-auto mb-8 max-w-2xl text-lg text-primary/70 md:text-xl">
             Partner with Color Cocktail Factory to teach wheel-throwing date night workshops from your own studio. 
             We bring the customers, you bring the instruction. Some teaching experience required.
           </p>
@@ -35,16 +35,16 @@ export default function TeachHero() {
         <Reveal delay={0.3}>
           <div className="mt-16 grid gap-6 text-center md:grid-cols-3">
             <div>
-              <div className="mb-2 text-3xl font-bold text-pink-400">Your Space</div>
-              <div className="text-sm text-white/60">Teach from Home</div>
+              <div className="mb-2 text-3xl font-bold text-accent">Your Space</div>
+              <div className="text-sm text-primary/60">Teach from Home</div>
             </div>
             <div>
-              <div className="mb-2 text-3xl font-bold text-purple-400">Wheel Throwing</div>
-              <div className="text-sm text-white/60">Date Night Focus</div>
+              <div className="mb-2 text-3xl font-bold text-accent">Wheel Throwing</div>
+              <div className="text-sm text-primary/60">Date Night Focus</div>
             </div>
             <div>
               <div className="mb-2 text-3xl font-bold text-cyan-400">USA & Canada</div>
-              <div className="text-sm text-white/60">Anywhere in North America</div>
+              <div className="text-sm text-primary/60">Anywhere in North America</div>
             </div>
           </div>
         </Reveal>

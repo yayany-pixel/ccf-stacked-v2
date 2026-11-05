@@ -18,7 +18,7 @@ export default function SectionBand({
 
       <div className="relative">{children}</div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-white/10 shimmer-drift" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-surface-secondary shimmer-drift" />
     </section>
   );
 }

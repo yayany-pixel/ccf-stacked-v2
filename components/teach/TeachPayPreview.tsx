@@ -37,8 +37,8 @@ export default function TeachPayPreview() {
               <div className="mb-2 bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-3xl font-bold text-transparent">
                 {item.amount}
               </div>
-              <div className="mb-1 font-semibold text-white/90">{item.role}</div>
-              <div className="text-xs text-white/50">{item.note}</div>
+              <div className="mb-1 font-semibold text-primary/90">{item.role}</div>
+              <div className="text-xs text-primary/50">{item.note}</div>
             </GlassCard>
           </Reveal>
         ))}
@@ -52,31 +52,31 @@ export default function TeachPayPreview() {
               <h4 className="mb-3 font-semibold text-purple-300">CCF Provides:</h4>
               <div className="space-y-2">
                 <div className="flex items-start gap-3">
-                  <span className="text-pink-400">✓</span>
+                  <span className="text-accent">✓</span>
                   <div>
                     <div className="font-semibold">Customer Bookings</div>
-                    <div className="text-sm text-white/60">Marketing + reservations</div>
+                    <div className="text-sm text-primary/60">Marketing + reservations</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-pink-400">✓</span>
+                  <span className="text-accent">✓</span>
                   <div>
                     <div className="font-semibold">Clay & Glaze Shipments</div>
-                    <div className="text-sm text-white/60">Supplies delivered to you</div>
+                    <div className="text-sm text-primary/60">Supplies delivered to you</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-pink-400">✓</span>
+                  <span className="text-accent">✓</span>
                   <div>
                     <div className="font-semibold">Wheel Purchase Option</div>
-                    <div className="text-sm text-white/60">$750/wheel, free shipping</div>
+                    <div className="text-sm text-primary/60">$750/wheel, free shipping</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="text-pink-400">✓</span>
+                  <span className="text-accent">✓</span>
                   <div>
                     <div className="font-semibold">Program Standards</div>
-                    <div className="text-sm text-white/60">Curriculum guidance</div>
+                    <div className="text-sm text-primary/60">Curriculum guidance</div>
                   </div>
                 </div>
               </div>
@@ -88,28 +88,28 @@ export default function TeachPayPreview() {
                   <span className="text-cyan-400">✓</span>
                   <div>
                     <div className="font-semibold">Teaching & Instruction</div>
-                    <div className="text-sm text-white/60">Lead the 2-hour classes</div>
+                    <div className="text-sm text-primary/60">Lead the 2-hour classes</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-cyan-400">✓</span>
                   <div>
                     <div className="font-semibold">Kiln Access & Firing</div>
-                    <div className="text-sm text-white/60">Bisque + glaze firing workflow</div>
+                    <div className="text-sm text-primary/60">Bisque + glaze firing workflow</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-cyan-400">✓</span>
                   <div>
                     <div className="font-semibold">Teaching Space</div>
-                    <div className="text-sm text-white/60">Clean, safe, guest-ready area</div>
+                    <div className="text-sm text-primary/60">Clean, safe, guest-ready area</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-cyan-400">✓</span>
                   <div>
                     <div className="font-semibold">Customer Support</div>
-                    <div className="text-sm text-white/60">Pickup/shipping, questions</div>
+                    <div className="text-sm text-primary/60">Pickup/shipping, questions</div>
                   </div>
                 </div>
               </div>
@@ -118,7 +118,7 @@ export default function TeachPayPreview() {
           <div className="mt-6 text-center">
             <Link
               href="/teach/pay"
-              className="inline-flex items-center gap-2 text-sm font-medium text-purple-400 hover:text-purple-300"
+              className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-purple-300"
             >
               See full compensation details →
             </Link>

@@ -17,7 +17,7 @@ export default function GlassCard({
     <div
       id={id}
       className={cn(
-        "rounded-3xl border border-white/10 bg-white/5 shadow-glass backdrop-blur-xl",
+        "rounded-3xl border border-border bg-surface-secondary shadow-glass backdrop-blur-xl",
         interactive && "glass-card-interactive",
         className
       )}

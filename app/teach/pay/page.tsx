@@ -55,7 +55,7 @@ export default function PayPage() {
         <h1 className="mb-4 bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
           Partnership Model
         </h1>
-        <p className="mb-12 text-lg text-white/70">
+        <p className="mb-12 text-lg text-primary/70">
           How the CCF instructor partnership works and what each party provides.
         </p>
       </div>
@@ -69,11 +69,11 @@ export default function PayPage() {
           {revenueStructure.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.1}>
               <GlassCard className="p-6">
-                <div className="mb-3 rounded-full bg-purple-500/20 px-3 py-1 text-center text-xs font-semibold text-purple-300">
+                <div className="mb-3 rounded-full bg-btn/20 px-3 py-1 text-center text-xs font-semibold text-purple-300">
                   {item.highlight}
                 </div>
                 <h3 className="mb-2 text-lg font-semibold">{item.title}</h3>
-                <p className="text-sm text-white/60">{item.description}</p>
+                <p className="text-sm text-primary/60">{item.description}</p>
               </GlassCard>
             </Reveal>
           ))}
@@ -92,8 +92,8 @@ export default function PayPage() {
               <ul className="space-y-3">
                 {whatCCFProvides.map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <span className="mt-1 text-pink-400">✓</span>
-                    <span className="text-white/80">{item}</span>
+                    <span className="mt-1 text-accent">✓</span>
+                    <span className="text-primary/80">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -106,7 +106,7 @@ export default function PayPage() {
                 {whatYouProvide.map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <span className="mt-1 text-cyan-400">✓</span>
-                    <span className="text-white/80">{item}</span>
+                    <span className="text-primary/80">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -120,20 +120,20 @@ export default function PayPage() {
         <Reveal>
           <GlassCard className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-8">
             <h2 className="mb-4 text-2xl font-bold">Portable Wheel Purchase</h2>
-            <p className="mb-4 text-white/80">
+            <p className="mb-4 text-primary/80">
               Need wheels to get started? Purchase portable standing wheels directly from us.
             </p>
             <div className="grid gap-4 md:grid-cols-2">
               <div>
-                <div className="mb-1 text-2xl font-bold text-pink-400">$750</div>
-                <div className="text-sm text-white/60">Per wheel</div>
+                <div className="mb-1 text-2xl font-bold text-accent">$750</div>
+                <div className="text-sm text-primary/60">Per wheel</div>
               </div>
               <div>
-                <div className="mb-1 text-2xl font-bold text-purple-400">Free</div>
-                <div className="text-sm text-white/60">Shipping included</div>
+                <div className="mb-1 text-2xl font-bold text-accent">Free</div>
+                <div className="text-sm text-primary/60">Shipping included</div>
               </div>
             </div>
-            <p className="mt-6 text-sm text-white/60">
+            <p className="mt-6 text-sm text-primary/60">
               High-quality portable standing wheels shipped directly to your location. One-time purchase, yours to keep.
             </p>
           </GlassCard>
@@ -145,23 +145,23 @@ export default function PayPage() {
         <Reveal>
           <GlassCard className="p-8">
             <h2 className="mb-4 text-2xl font-bold">Finishing Fees (Yours to Keep)</h2>
-            <p className="mb-6 text-white/80">
+            <p className="mb-6 text-primary/80">
               After the wheel-throwing class, students need their pieces fired and glazed. 
               You charge them directly for this service:
             </p>
             <div className="grid gap-4 md:grid-cols-2">
-              <div className="rounded-lg bg-black/30 p-4">
-                <div className="mb-1 text-xl font-bold text-pink-400">$5 per piece</div>
-                <div className="text-sm text-white/70">Bisque Firing</div>
-                <p className="mt-2 text-xs text-white/50">Covers kiln cost and your time for first firing</p>
+              <div className="rounded-lg bg-background/30 p-4">
+                <div className="mb-1 text-xl font-bold text-accent">$5 per piece</div>
+                <div className="text-sm text-primary/70">Bisque Firing</div>
+                <p className="mt-2 text-xs text-primary/50">Covers kiln cost and your time for first firing</p>
               </div>
-              <div className="rounded-lg bg-black/30 p-4">
-                <div className="mb-1 text-xl font-bold text-purple-400">$10 per piece</div>
-                <div className="text-sm text-white/70">Glaze Finish</div>
-                <p className="mt-2 text-xs text-white/50">For basic glaze application + glaze firing</p>
+              <div className="rounded-lg bg-background/30 p-4">
+                <div className="mb-1 text-xl font-bold text-accent">$10 per piece</div>
+                <div className="text-sm text-primary/70">Glaze Finish</div>
+                <p className="mt-2 text-xs text-primary/50">For basic glaze application + glaze firing</p>
               </div>
             </div>
-            <p className="mt-6 text-sm text-white/60">
+            <p className="mt-6 text-sm text-primary/60">
               You set your exact fees within this range. These fees cover your kiln costs, time, and firing expertise — they're part of your revenue stream.
             </p>
           </GlassCard>

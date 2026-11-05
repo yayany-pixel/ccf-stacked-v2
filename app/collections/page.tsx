@@ -29,23 +29,23 @@ export default function CollectionsIndexPage() {
         <div className="sparkle-noise absolute inset-0 opacity-20" />
         <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-32">
           <div className="mx-auto max-w-3xl text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-semibold tracking-wider text-white/80">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface-secondary px-4 py-1 text-xs font-semibold tracking-wider text-primary/80">
               EXPLORE BY THEME
             </div>
             <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-6xl">
               Curated Class Collections
             </h1>
-            <p className="mt-6 text-lg leading-8 text-white/80">
+            <p className="mt-6 text-lg leading-8 text-primary/80">
               Whether you are looking for your very first beginner wheel spin, an intimate date night, 
               or live interactive virtual workshops, explore our handpicked collections below.
             </p>
             
             {/* Quick studio location badges */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-white/70">
-              <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-primary/70">
+              <span className="flex items-center gap-1.5 rounded-full border border-border bg-surface-secondary px-3 py-1">
                 📍 <strong>Chicago Studio:</strong> {STUDIO_LOCATIONS.chicago.streetAddress}, Pilsen
               </span>
-              <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1">
+              <span className="flex items-center gap-1.5 rounded-full border border-border bg-surface-secondary px-3 py-1">
                 📍 <strong>Eugene Studio:</strong> {STUDIO_LOCATIONS.eugene.streetAddress}, OR
               </span>
             </div>
@@ -71,20 +71,20 @@ export default function CollectionsIndexPage() {
                       <TagPill>{collection.badge}</TagPill>
                     </div>
 
-                    <h2 className="mt-5 font-serif text-2xl font-bold text-white group-hover:text-amber-200">
+                    <h2 className="mt-5 font-serif text-2xl font-bold text-primary group-hover:text-amber-200">
                       {collection.title}
                     </h2>
                     
-                    <p className="mt-2 text-sm text-white/70">
+                    <p className="mt-2 text-sm text-primary/70">
                       {collection.subtitle}
                     </p>
 
-                    <p className="mt-4 text-xs leading-relaxed text-white/60 line-clamp-3">
+                    <p className="mt-4 text-xs leading-relaxed text-primary/60 line-clamp-3">
                       {collection.description}
                     </p>
                   </div>
 
-                  <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-sm font-semibold text-amber-300 group-hover:translate-x-1 transition-transform">
+                  <div className="mt-6 flex items-center justify-between border-t border-border pt-4 text-sm font-semibold text-amber-300 group-hover:translate-x-1 transition-transform">
                     <span>Explore Collection & Dates</span>
                     <span>→</span>
                   </div>
@@ -99,7 +99,7 @@ export default function CollectionsIndexPage() {
           <h3 className="font-serif text-2xl font-bold text-amber-200">
             💡 Book Direct & Save On Third-Party Fees
           </h3>
-          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-white/80">
+          <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-primary/80">
             Tickets purchased through third-party platforms often incur external service fees. 
             When you register directly through our official Color Cocktail Factory scheduler at{" "}
             <a 
@@ -121,7 +121,7 @@ export default function CollectionsIndexPage() {
             </Link>
             <Link
               href="/private-events"
-              className="rounded-full border border-white/20 bg-white/5 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-white/10"
+              className="rounded-full border border-border bg-surface-secondary px-6 py-2.5 text-sm font-semibold text-primary transition hover:bg-surface-secondary"
             >
               Plan Private Party
             </Link>

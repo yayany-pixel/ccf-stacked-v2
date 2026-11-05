@@ -28,10 +28,10 @@ export default function GlobalMerchBanner() {
   const checkoutUrl = "https://shop.colorcocktailfactory.com/products/unisex-garment-dyed-heavyweight-t-shirt";
 
   return (
-    <div className="mb-12 overflow-hidden rounded-2xl border border-pink-500/20 bg-slate-900/80 shadow-xl transition-all hover:border-pink-500/40 group">
+    <div className="mb-12 overflow-hidden rounded-2xl border border-pink-500/20 bg-background/80 shadow-xl transition-all hover:border-pink-500/40 group">
       <div className="flex flex-col sm:flex-row items-center">
         {/* Image Section */}
-        <div className="relative h-48 w-full sm:h-32 sm:w-1/3 md:w-1/4 shrink-0 bg-black/40">
+        <div className="relative h-48 w-full sm:h-32 sm:w-1/3 md:w-1/4 shrink-0 bg-background/40">
           <NextImage
             src="/images/merch-studio.png"
             alt="Pepper charcoal Good With My Hands pottery T-shirt with cream hands-and-bowl artwork, hanging in a sunlit pottery studio."
@@ -41,7 +41,7 @@ export default function GlobalMerchBanner() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent sm:bg-gradient-to-r" />
           <div className="absolute top-2 left-3 sm:top-auto sm:bottom-2">
-            <span className="inline-block rounded-full bg-pink-500/90 px-2 py-0.5 text-[10px] font-bold tracking-wide text-white backdrop-blur-sm shadow-sm shadow-pink-500/50">
+            <span className="inline-block rounded-full bg-btn/90 px-2 py-0.5 text-[10px] font-bold tracking-wide text-primary backdrop-blur-sm shadow-sm shadow-pink-500/50">
               Studio Merch
             </span>
           </div>
@@ -50,10 +50,10 @@ export default function GlobalMerchBanner() {
         {/* Content Section */}
         <div className="flex flex-1 flex-col sm:flex-row items-center justify-between p-5 gap-4 w-full">
           <div className="text-center sm:text-left flex-1">
-            <h3 className="font-serif text-lg font-bold text-white leading-tight">
+            <h3 className="font-serif text-lg font-bold text-primary leading-tight">
               Good With My Hands Tee
             </h3>
-            <p className="mt-1 text-sm text-white/70 leading-relaxed max-w-lg">
+            <p className="mt-1 text-sm text-primary/70 leading-relaxed max-w-lg">
               Take the creativity home. Premium garment-dyed cotton, original pottery artwork, and a relaxed unisex fit.
             </p>
           </div>
@@ -68,7 +68,7 @@ export default function GlobalMerchBanner() {
               href={checkoutUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-2.5 text-sm font-bold text-white shadow-lg transition focus:outline-none hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40"
+              className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-2.5 text-sm font-bold text-primary shadow-lg transition focus:outline-none hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40"
             >
               Shop Now →
             </a>

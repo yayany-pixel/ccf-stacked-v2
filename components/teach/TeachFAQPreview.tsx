@@ -31,7 +31,7 @@ export default function TeachFAQPreview() {
           <Reveal key={faq.question} delay={index * 0.1}>
             <GlassCard className="p-6">
               <h3 className="mb-2 font-semibold text-purple-300">{faq.question}</h3>
-              <p className="text-sm text-white/70">{faq.answer}</p>
+              <p className="text-sm text-primary/70">{faq.answer}</p>
             </GlassCard>
           </Reveal>
         ))}
@@ -41,7 +41,7 @@ export default function TeachFAQPreview() {
         <div className="mt-8 text-center">
           <Link
             href="/teach/faq"
-            className="inline-flex items-center gap-2 text-sm font-medium text-purple-400 hover:text-purple-300"
+            className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-purple-300"
           >
             View all FAQs →
           </Link>

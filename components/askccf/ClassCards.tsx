@@ -19,7 +19,7 @@ export default function ClassCards({ cards }: { cards: ClassCard[] }) {
       {cards.map((card) => (
         <li
           key={card.id}
-          className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-glass backdrop-blur-xl"
+          className="overflow-hidden rounded-2xl border border-border bg-surface-secondary shadow-glass backdrop-blur-xl"
         >
           {card.imageUrl?.startsWith("/images/classes/") ? (
             <Image
@@ -43,13 +43,13 @@ export default function ClassCards({ cards }: { cards: ClassCard[] }) {
             />
           ) : null}
           <div className="p-3">
-            <div className="text-sm font-semibold leading-snug text-white">{card.title}</div>
-            <div className="mt-1 flex flex-wrap gap-x-2 gap-y-1 text-xs text-white/60">
+            <div className="text-sm font-semibold leading-snug text-primary">{card.title}</div>
+            <div className="mt-1 flex flex-wrap gap-x-2 gap-y-1 text-xs text-primary/60">
               <span>{card.locationLabel}</span>
               {card.durationMinutes ? <span>• {card.durationMinutes} min{card.isSeries ? " total across the course" : ""}</span> : null}
               {card.nextLocaleTime ? <span>• {card.isSeries ? "Next lesson" : "Next class"}: {card.nextLocaleTime}</span> : null}
             </div>
-            <div className="mt-2 text-xs text-white/80">{card.pricingSummary}</div>
+            <div className="mt-2 text-xs text-primary/80">{card.pricingSummary}</div>
             {card.enrollmentNotes?.map((note, i) => <p key={i} className="mt-2 text-xs text-amber-200">{note}</p>)}
             <a
               href={card.bookingUrl} data-analytics-booking="true"
@@ -74,7 +74,7 @@ export default function ClassCards({ cards }: { cards: ClassCard[] }) {
                   mode: card.location === "online" ? "online" : "in_studio",
                 });
               }}
-              className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 text-sm font-semibold text-white transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              className="mt-3 inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-2 text-sm font-semibold text-primary transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
               Check dates &amp; book
             </a>

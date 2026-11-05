@@ -147,7 +147,7 @@ export default async function DetailPage({ params }: { params: { city: string; s
 
               <h1 className="mt-5 font-serif text-4xl leading-tight md:text-5xl">{section.heroTitle.includes('Class') || section.heroTitle.includes('Workshop') ? section.heroTitle : `${section.heroTitle} Class`} in {city.label}</h1>
 
-              <p className="mt-4 text-base leading-relaxed text-white/80">{section.heroDescription}</p>
+              <p className="mt-4 text-base leading-relaxed text-primary/80">{section.heroDescription}</p>
 
               <div className="mt-6 flex flex-wrap gap-3">
                 <BookingLink
@@ -155,7 +155,7 @@ export default async function DetailPage({ params }: { params: { city: string; s
                   city={city.label}
                   classNameText={section.heroTitle}
                   classId={section.slug}
-                  className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+                  className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-primary shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
                 >
                   Open booking
                 </BookingLink>
@@ -169,16 +169,16 @@ export default async function DetailPage({ params }: { params: { city: string; s
                 </ButtonPill>
               </div>
 
-              <div className="mt-8 border-t border-white/10 pt-6">
-                <h2 className="text-sm font-semibold tracking-wide text-white/85">Fast FAQs</h2>
+              <div className="mt-8 border-t border-border pt-6">
+                <h2 className="text-sm font-semibold tracking-wide text-primary/85">Fast FAQs</h2>
                 <div className="mt-4 grid gap-3">
                   {section.faqs.map((f) => (
-                    <details key={f.q} className="group rounded-xl border border-white/10 bg-white/5 p-4">
-                      <summary className="cursor-pointer list-none text-sm font-semibold text-white/90">
+                    <details key={f.q} className="group rounded-xl border border-border bg-surface-secondary p-4">
+                      <summary className="cursor-pointer list-none text-sm font-semibold text-primary/90">
                         {f.q}
-                        <span className="float-right text-white/50 transition group-open:rotate-45">+</span>
+                        <span className="float-right text-primary/50 transition group-open:rotate-45">+</span>
                       </summary>
-                      <p className="mt-2 text-sm text-white/75">{f.a}</p>
+                      <p className="mt-2 text-sm text-primary/75">{f.a}</p>
                     </details>
                   ))}
                 </div>
@@ -198,7 +198,7 @@ export default async function DetailPage({ params }: { params: { city: string; s
               />
             ) : (
               <GlassCard className="p-6">
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <div className="rounded-2xl border border-border bg-surface-secondary p-4">
                   <div className="text-sm font-semibold">Quick links</div>
                   <div className="mt-3 grid gap-2">
                     <BookingLink
@@ -206,7 +206,7 @@ export default async function DetailPage({ params }: { params: { city: string; s
                       city={city.label}
                       classNameText={section.heroTitle}
                       classId={section.slug}
-                      className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 w-full border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+                      className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 w-full border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-primary shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
                     >
                       Open calendar
                     </BookingLink>
@@ -269,19 +269,19 @@ export default async function DetailPage({ params }: { params: { city: string; s
               <div className="flex flex-wrap gap-2">
                 <Link
                   href={`/${city.param}`}
-                  className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/85 hover:bg-white/10"
+                  className="rounded-full border border-white/15 bg-surface-secondary px-4 py-2 text-sm text-primary/85 hover:bg-surface-secondary"
                 >
                   Home
                 </Link>
                 <Link
                   href={`/${city.param}/beginner-wheel`}
-                  className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/85 hover:bg-white/10"
+                  className="rounded-full border border-white/15 bg-surface-secondary px-4 py-2 text-sm text-primary/85 hover:bg-surface-secondary"
                 >
                   Beginner Wheel
                 </Link>
                 <Link
                   href={`/${city.param}/handbuilding`}
-                  className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/85 hover:bg-white/10"
+                  className="rounded-full border border-white/15 bg-surface-secondary px-4 py-2 text-sm text-primary/85 hover:bg-surface-secondary"
                 >
                   Handbuilding
                 </Link>

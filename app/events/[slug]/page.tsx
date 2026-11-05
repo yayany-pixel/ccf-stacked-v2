@@ -151,7 +151,7 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
         <Reveal variant="fade-up">
           <Link 
             href="/events"
-            className="mb-6 inline-flex items-center gap-2 text-sm text-purple-400 hover:text-purple-300"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-accent hover:text-purple-300"
           >
             ← Back to all events
           </Link>
@@ -177,7 +177,7 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
             <div className="p-8">
               {/* Badges */}
               <div className="mb-4 flex flex-wrap gap-2">
-                <span className="rounded-full bg-purple-500/20 px-4 py-1.5 text-sm font-semibold text-purple-300">
+                <span className="rounded-full bg-btn/20 px-4 py-1.5 text-sm font-semibold text-purple-300">
                   {event.category}
                 </span>
                 <span className="rounded-full bg-cyan-500/20 px-4 py-1.5 text-sm font-semibold text-cyan-300">
@@ -196,20 +196,20 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
               </h1>
 
               {/* Event Details */}
-              <div className="mb-6 space-y-3 border-b border-white/10 pb-6">
+              <div className="mb-6 space-y-3 border-b border-border pb-6">
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">📅</span>
                   <div>
-                    <div className="font-semibold text-white">Date & Time</div>
-                    <div className="text-white/70">{formatEventDateRange(event.startDate, event.endDate, event.city)}</div>
+                    <div className="font-semibold text-primary">Date & Time</div>
+                    <div className="text-primary/70">{formatEventDateRange(event.startDate, event.endDate, event.city)}</div>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">📍</span>
                   <div>
-                    <div className="font-semibold text-white">Location</div>
-                    <div className="text-white/70">
+                    <div className="font-semibold text-primary">Location</div>
+                    <div className="text-primary/70">
                       {event.venueName}<br />
                       {event.streetAddress}<br />
                       {event.addressLocality}, {event.addressRegion} {event.postalCode}
@@ -221,8 +221,8 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
                   <div className="flex items-start gap-3">
                     <span className="text-2xl">💰</span>
                     <div>
-                      <div className="font-semibold text-white">Price</div>
-                      <div className="text-white/70">
+                      <div className="font-semibold text-primary">Price</div>
+                      <div className="text-primary/70">
                         {event.formattedPrice || (event.price === 0 ? 'Free' : `$${event.price.toFixed(2)} ${event.ticketUnit || "per ticket"}`)}
                       </div>
                     </div>
@@ -232,8 +232,8 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
 
               {/* Description */}
               <div className="mb-8">
-                <h2 className="mb-3 text-xl font-bold text-white">About This Event</h2>
-                <p className="whitespace-pre-line text-white/80">
+                <h2 className="mb-3 text-xl font-bold text-primary">About This Event</h2>
+                <p className="whitespace-pre-line text-primary/80">
                   {event.description}
                 </p>
               </div>
@@ -245,7 +245,7 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
                   city={event.city}
                   classNameText={event.title}
                   classId={event.slug}
-                  className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 flex-1 border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+                  className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 flex-1 border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-primary shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
                 >
                   Book This Event →
                 </BookingLink>
@@ -258,7 +258,7 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
               </div>
 
               {/* Source Info */}
-              <div className="mt-6 text-sm text-white/40">
+              <div className="mt-6 text-sm text-primary/40">
                 Booking powered by Acuity Scheduling
               </div>
             </div>
@@ -268,12 +268,12 @@ export default async function EventDetailPage({ params }: { params: { slug: stri
         {/* Additional Info */}
         <Reveal variant="fade-up" delay={200}>
           <div className="mt-8 text-center">
-            <p className="mb-4 text-white/60">
+            <p className="mb-4 text-primary/60">
               Questions about this event?
             </p>
             <Link 
               href="/private-events"
-              className="text-purple-400 hover:text-purple-300 underline"
+              className="text-accent hover:text-purple-300 underline"
             >
               Contact us about private events
             </Link>

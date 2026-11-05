@@ -128,7 +128,7 @@ export default function AuthorProfilePage({ params }: Props) {
               <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center">
                 <div
                   aria-hidden
-                  className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 font-serif text-4xl font-bold text-white/80"
+                  className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full border border-white/15 bg-surface-secondary font-serif text-4xl font-bold text-primary/80"
                 >
                   {author!.name.charAt(0)}
                 </div>
@@ -137,7 +137,7 @@ export default function AuthorProfilePage({ params }: Props) {
                     {author!.name}
                   </h1>
                   {author!.role ? (
-                    <p className="mt-2 text-lg text-white/75">{author!.role}</p>
+                    <p className="mt-2 text-lg text-primary/75">{author!.role}</p>
                   ) : null}
                 </div>
               </div>
@@ -149,11 +149,11 @@ export default function AuthorProfilePage({ params }: Props) {
               <GlassCard className="mt-8">
                 <div className="p-6 sm:p-8">
                   <h2 className="font-serif text-2xl font-bold">About</h2>
-                  <p className="mt-3 leading-relaxed text-white/80">
+                  <p className="mt-3 leading-relaxed text-primary/80">
                     {author!.bio}
                   </p>
                   {author!.credentials && author!.credentials.length > 0 ? (
-                    <ul className="mt-5 space-y-1 text-sm text-white/70">
+                    <ul className="mt-5 space-y-1 text-sm text-primary/70">
                       {author!.credentials.map((c) => (
                         <li key={c}>• {c}</li>
                       ))}
@@ -170,22 +170,22 @@ export default function AuthorProfilePage({ params }: Props) {
                 Articles by {author!.name}
               </h2>
               {posts.length === 0 ? (
-                <p className="mt-4 text-white/70">No articles yet.</p>
+                <p className="mt-4 text-primary/70">No articles yet.</p>
               ) : (
                 <div className="mt-6 grid gap-4 sm:grid-cols-2">
                   {posts.map((post) => (
                     <Link
                       key={post.slug}
                       href={`/blog/${post.slug}`}
-                      className="block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-white/25 hover:bg-white/10"
+                      className="block rounded-2xl border border-border bg-surface-secondary p-5 transition hover:border-white/25 hover:bg-surface-secondary"
                     >
                       <div className="text-xs font-semibold uppercase tracking-wide text-purple-300">
                         {post.category}
                       </div>
-                      <div className="mt-1 font-semibold text-white">
+                      <div className="mt-1 font-semibold text-primary">
                         {post.title}
                       </div>
-                      <p className="mt-2 line-clamp-2 text-sm text-white/70">
+                      <p className="mt-2 line-clamp-2 text-sm text-primary/70">
                         {post.description}
                       </p>
                     </Link>

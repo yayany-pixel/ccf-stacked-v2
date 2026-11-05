@@ -108,13 +108,13 @@ export default function TeamBuildingPage() {
         <div className="mx-auto max-w-7xl px-6">
           <Reveal variant="fade-up">
             <div className="text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold backdrop-blur-xl">
+              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-secondary px-4 py-2 text-sm font-semibold backdrop-blur-xl">
                 🤝 Corporate & Team Events
               </div>
               <h1 className="mt-6 font-serif text-5xl font-bold sm:text-6xl">
                 Team Building Through Creativity
               </h1>
-              <p className="mx-auto mt-6 max-w-3xl text-xl leading-relaxed text-white/85">
+              <p className="mx-auto mt-6 max-w-3xl text-xl leading-relaxed text-primary/85">
                 Build stronger teams through hands-on workshops. Boost morale, spark creativity, and create lasting memories with pottery, glass art, mosaics, and more.
               </p>
 
@@ -124,21 +124,21 @@ export default function TeamBuildingPage() {
                   <span className="text-2xl">✨</span>
                   <div>
                     <div className="font-semibold">No Experience Needed</div>
-                    <div className="text-sm text-white/70">Expert instructors guide every step</div>
+                    <div className="text-sm text-primary/70">Expert instructors guide every step</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">🍷</span>
                   <div>
                     <div className="font-semibold">BYOB Welcome</div>
-                    <div className="text-sm text-white/70">Bring drinks, snacks, or catering</div>
+                    <div className="text-sm text-primary/70">Bring drinks, snacks, or catering</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">📍</span>
                   <div>
                     <div className="font-semibold">Two Locations</div>
-                    <div className="text-sm text-white/70">Chicago & Eugene</div>
+                    <div className="text-sm text-primary/70">Chicago & Eugene</div>
                   </div>
                 </div>
               </div>
@@ -161,7 +161,7 @@ export default function TeamBuildingPage() {
         <div className="mx-auto max-w-7xl">
           <Reveal>
             <h2 className="mb-4 text-center font-serif text-4xl font-bold">Choose Your Team Experience</h2>
-            <p className="mx-auto mb-12 max-w-2xl text-center text-white/75">
+            <p className="mx-auto mb-12 max-w-2xl text-center text-primary/75">
               All workshops are beginner-friendly, fully guided, and designed for teams of 8-50+ people.
             </p>
           </Reveal>
@@ -173,13 +173,13 @@ export default function TeamBuildingPage() {
                   <div className="p-6">
                     <div className="mb-3 text-4xl">{emojiMap[workshop.id] || '🎨'}</div>
                     <h3 className="text-xl font-bold">{workshop.navLabel}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-white/70">
+                    <p className="mt-2 text-sm leading-relaxed text-primary/70">
                       {workshop.heroDescription}
                     </p>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <Link 
                         href={`/chicago/${workshop.slug}`}
-                        className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-semibold text-purple-300 hover:bg-purple-500/30"
+                        className="rounded-full bg-btn/20 px-3 py-1 text-xs font-semibold text-purple-300 hover:bg-btn/30"
                       >
                         Chicago
                       </Link>
@@ -205,7 +205,7 @@ export default function TeamBuildingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="relative border-y border-white/10 bg-gradient-to-br from-indigo-900/20 to-purple-900/20 px-6 py-20">
+      <section className="relative border-y border-border bg-gradient-to-br from-indigo-900/20 to-purple-900/20 px-6 py-20">
         <div className="mx-auto max-w-5xl">
           <Reveal>
             <h2 className="mb-12 text-center font-serif text-4xl font-bold">How It Works</h2>
@@ -224,7 +224,7 @@ export default function TeamBuildingPage() {
                     {item.step}
                   </div>
                   <h3 className="font-bold">{item.title}</h3>
-                  <p className="mt-2 text-sm text-white/70">{item.desc}</p>
+                  <p className="mt-2 text-sm text-primary/70">{item.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -244,12 +244,12 @@ export default function TeamBuildingPage() {
               <GlassCard>
                 <div className="p-8">
                   <h3 className="text-xl font-bold text-purple-200">Small Teams (8-15)</h3>
-                  <p className="mt-2 text-sm text-white/70">
+                  <p className="mt-2 text-sm text-primary/70">
                     Perfect for departments or close-knit groups
                   </p>
                   <div className="mt-4 text-3xl font-bold">$55-$85</div>
-                  <div className="text-sm text-white/60">per person</div>
-                  <ul className="mt-6 space-y-2 text-sm text-white/75">
+                  <div className="text-sm text-primary/60">per person</div>
+                  <ul className="mt-6 space-y-2 text-sm text-primary/75">
                     <li className="flex items-center gap-2">
                       <span className="text-green-400">✓</span>
                       Expert instructor
@@ -275,12 +275,12 @@ export default function TeamBuildingPage() {
               <GlassCard>
                 <div className="p-8">
                   <h3 className="text-xl font-bold text-cyan-200">Large Teams (16-50+)</h3>
-                  <p className="mt-2 text-sm text-white/70">
+                  <p className="mt-2 text-sm text-primary/70">
                     Great for company-wide events or retreats
                   </p>
                   <div className="mt-4 text-3xl font-bold">Custom Pricing</div>
-                  <div className="text-sm text-white/60">volume discounts available</div>
-                  <ul className="mt-6 space-y-2 text-sm text-white/75">
+                  <div className="text-sm text-primary/60">volume discounts available</div>
+                  <ul className="mt-6 space-y-2 text-sm text-primary/75">
                     <li className="flex items-center gap-2">
                       <span className="text-green-400">✓</span>
                       Multiple instructors
@@ -304,7 +304,7 @@ export default function TeamBuildingPage() {
           </div>
 
           <div className="mt-8 text-center">
-            <p className="text-sm italic text-white/60">
+            <p className="text-sm italic text-primary/60">
               *Prices vary by workshop type. Contact us for exact quote based on group size and date.
             </p>
           </div>
@@ -312,7 +312,7 @@ export default function TeamBuildingPage() {
       </section>
 
       {/* What's Included */}
-      <section className="relative border-y border-white/10 bg-gradient-to-br from-purple-900/20 to-pink-900/20 px-6 py-20">
+      <section className="relative border-y border-border bg-gradient-to-br from-purple-900/20 to-pink-900/20 px-6 py-20">
         <div className="mx-auto max-w-4xl">
           <Reveal>
             <h2 className="mb-8 text-center font-serif text-4xl font-bold">What's Included</h2>
@@ -332,7 +332,7 @@ export default function TeamBuildingPage() {
                   <div className="text-4xl">{item.icon}</div>
                   <div>
                     <h3 className="font-bold">{item.title}</h3>
-                    <p className="mt-1 text-sm text-white/70">{item.desc}</p>
+                    <p className="mt-1 text-sm text-primary/70">{item.desc}</p>
                   </div>
                 </div>
               </Reveal>
@@ -342,7 +342,7 @@ export default function TeamBuildingPage() {
           <Reveal delay={300}>
             <div className="mt-12 rounded-2xl border border-orange-400/30 bg-orange-500/10 p-6 text-center">
               <p className="font-semibold text-orange-200">Cancellation Policy</p>
-              <p className="mt-2 text-sm text-white/75">
+              <p className="mt-2 text-sm text-primary/75">
                 Cancel up to 48 hours before your event for a full refund. Reschedule anytime with 24-hour notice.
               </p>
             </div>
@@ -368,7 +368,7 @@ export default function TeamBuildingPage() {
                         <span className="text-2xl transition-transform group-open:rotate-180">▼</span>
                       </div>
                     </summary>
-                    <p className="mt-4 leading-relaxed text-white/75">
+                    <p className="mt-4 leading-relaxed text-primary/75">
                       {faq.acceptedAnswer.text}
                     </p>
                   </details>
@@ -386,7 +386,7 @@ export default function TeamBuildingPage() {
             <GlassCard>
               <div className="p-12">
                 <h2 className="font-serif text-3xl font-bold">Ready to Book Your Team Event?</h2>
-                <p className="mx-auto mt-4 max-w-2xl text-lg text-white/75">
+                <p className="mx-auto mt-4 max-w-2xl text-lg text-primary/75">
                   Fill out our private event form and we'll get back to you within 24 hours with a custom quote.
                 </p>
                 <div className="mt-8 flex flex-wrap justify-center gap-4">
@@ -397,7 +397,7 @@ export default function TeamBuildingPage() {
                     Browse All Workshops
                   </ButtonPill>
                 </div>
-                <p className="mt-6 text-sm text-white/60">
+                <p className="mt-6 text-sm text-primary/60">
                   Questions? Email us at <a href="mailto:support@colorcocktailfactory.com" className="text-purple-300 underline">support@colorcocktailfactory.com</a>
                 </p>
               </div>

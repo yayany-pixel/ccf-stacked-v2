@@ -35,7 +35,7 @@ export default function FAQPage() {
         <h1 className="mb-4 bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
           Frequently Asked Questions
         </h1>
-        <p className="mb-12 text-lg text-white/70">
+        <p className="mb-12 text-lg text-primary/70">
           Everything you need to know about teaching at Color Cocktail Factory.
         </p>
       </div>
