@@ -126,8 +126,8 @@ export default function TeachFAQ() {
             {category.questions.map((faq, qIndex) => (
               <Reveal key={faq.q} delay={catIndex * 0.1 + qIndex * 0.05}>
                 <GlassCard className="p-6">
-                  <h3 className="mb-3 font-semibold text-white/90">{faq.q}</h3>
-                  <p className="text-sm leading-relaxed text-white/70">{faq.a}</p>
+                  <h3 className="mb-3 font-semibold text-primary/90">{faq.q}</h3>
+                  <p className="text-sm leading-relaxed text-primary/70">{faq.a}</p>
                 </GlassCard>
               </Reveal>
             ))}

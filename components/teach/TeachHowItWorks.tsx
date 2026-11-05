@@ -54,9 +54,9 @@ export default function TeachHowItWorks({ detailed = false }: TeachHowItWorksPro
                 </div>
                 <h3 className="text-xl font-semibold">{step.title}</h3>
               </div>
-              <p className="text-white/70">{step.description}</p>
+              <p className="text-primary/70">{step.description}</p>
               {step.details && (
-                <p className="mt-4 text-sm text-white/60 border-t border-white/10 pt-4">
+                <p className="mt-4 text-sm text-primary/60 border-t border-border pt-4">
                   {step.details}
                 </p>
               )}

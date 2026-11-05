@@ -7,7 +7,7 @@ export default function NotFound() {
       <div className="sparkle-noise absolute inset-0 opacity-20" />
       
       <div className="relative z-10 mx-auto max-w-2xl px-6 text-center">
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-12 shadow-glass backdrop-blur-xl">
+        <div className="rounded-3xl border border-border bg-surface-secondary p-12 shadow-glass backdrop-blur-xl">
           {/* 404 Icon */}
           <div className="mx-auto mb-6 text-8xl">
             🎨
@@ -22,7 +22,7 @@ export default function NotFound() {
             Page Not Found
           </h2>
           
-          <p className="text-lg text-white/80 mb-8 max-w-md mx-auto">
+          <p className="text-lg text-primary/80 mb-8 max-w-md mx-auto">
             Looks like this creative masterpiece doesn't exist yet. Let's get you back on track!
           </p>
 
@@ -46,21 +46,21 @@ export default function NotFound() {
           </div>
 
           {/* Popular Links */}
-          <div className="mt-12 pt-8 border-t border-white/10">
-            <p className="text-sm text-white/60 mb-4">Popular Pages:</p>
+          <div className="mt-12 pt-8 border-t border-border">
+            <p className="text-sm text-primary/60 mb-4">Popular Pages:</p>
             <div className="flex flex-wrap gap-3 justify-center text-sm">
               <Link href="/team-building" className="text-purple-300 hover:text-purple-200 underline underline-offset-4">
                 Team Building
               </Link>
-              <span className="text-white/30">•</span>
+              <span className="text-primary/30">•</span>
               <Link href="/gift-cards" className="text-purple-300 hover:text-purple-200 underline underline-offset-4">
                 Gift Cards
               </Link>
-              <span className="text-white/30">•</span>
+              <span className="text-primary/30">•</span>
               <Link href="/private-events" className="text-purple-300 hover:text-purple-200 underline underline-offset-4">
                 Private Events
               </Link>
-              <span className="text-white/30">•</span>
+              <span className="text-primary/30">•</span>
               <Link href="/blog" className="text-purple-300 hover:text-purple-200 underline underline-offset-4">
                 Blog
               </Link>

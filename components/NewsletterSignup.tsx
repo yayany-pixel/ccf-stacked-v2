@@ -48,7 +48,7 @@ export default function NewsletterSignup() {
             <div className="text-center">
               <div className="mb-2 text-2xl">✨</div>
               <h3 className="font-serif text-xl sm:text-2xl font-semibold">Join Our Creative Community</h3>
-              <p className="mt-2 text-sm text-white/70">
+              <p className="mt-2 text-sm text-primary/70">
                 Get exclusive workshop updates, special offers, and creative inspiration delivered to your inbox.
               </p>
             </div>
@@ -69,7 +69,7 @@ export default function NewsletterSignup() {
                   type="email"
                   name="email"
                   placeholder="Enter your email"
-                  className="flex-1 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white backdrop-blur-xl transition-all placeholder:text-white/40 focus:border-purple-400/50 focus:bg-white/15 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
+                  className="flex-1 rounded-xl border border-border bg-surface-secondary px-4 py-3 text-sm text-primary backdrop-blur-xl transition-all placeholder:text-primary/40 focus:border-purple-400/50 focus:bg-white/15 focus:outline-none focus:ring-2 focus:ring-purple-400/20"
                   required
                   disabled={isSubmitting}
                   aria-label="Email address for newsletter"
@@ -95,7 +95,7 @@ export default function NewsletterSignup() {
                 </div>
               )}
 
-              <p className="mt-3 text-center text-xs text-white/70">
+              <p className="mt-3 text-center text-xs text-primary/70">
                 We respect your privacy. Unsubscribe anytime. 10-15% off your first workshop!
               </p>
             </form>

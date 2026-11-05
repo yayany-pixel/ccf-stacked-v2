@@ -15,24 +15,24 @@ export default function HalloweenPotteryArticle({ post }: { post: BlogPost }) {
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen bg-[#261c2d] text-[#fff7ee]">
       <div className="mx-auto max-w-5xl px-5 pb-20 pt-10 sm:px-6 sm:pt-16">
-        <nav aria-label="Breadcrumb" className="text-sm text-white/65">
-          <Link href="/" className="hover:text-white">Home</Link>
+        <nav aria-label="Breadcrumb" className="text-sm text-primary/65">
+          <Link href="/" className="hover:text-primary">Home</Link>
           <span aria-hidden="true" className="mx-2">/</span>
-          <Link href="/blog" className="hover:text-white">Studio Journal</Link>
+          <Link href="/blog" className="hover:text-primary">Studio Journal</Link>
           <span aria-hidden="true" className="mx-2">/</span>
           <span className="text-[#f1bdc7]">Halloween &amp; Pottery</span>
         </nav>
 
         <article className="mt-10">
           <header className="mx-auto max-w-3xl">
-            <div className="mb-5 flex flex-wrap items-center gap-3 text-sm text-white/65">
+            <div className="mb-5 flex flex-wrap items-center gap-3 text-sm text-primary/65">
               <span className="rounded-full border border-[#f1bdc7]/30 bg-[#f1bdc7]/10 px-3 py-1 font-semibold text-[#f1bdc7]">{post.category}</span>
               <time dateTime={post.publishedAt}>October 31, 2026</time>
               <span>{post.readTime}</span>
             </div>
             <h1 className="font-serif text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">{post.title}</h1>
             <p className="mt-5 text-xl leading-8 text-[#f1bdc7]">Four bowls. One blindfold. A questionable party game.</p>
-            {author && <p className="mt-5 text-sm text-white/65">By <Link href={`/author/${author.slug}`} className="text-[#f1bdc7] hover:text-white">{author.name}</Link></p>}
+            {author && <p className="mt-5 text-sm text-primary/65">By <Link href={`/author/${author.slug}`} className="text-[#f1bdc7] hover:text-primary">{author.name}</Link></p>}
           </header>
 
           <figure className="my-10">
@@ -43,21 +43,21 @@ export default function HalloweenPotteryArticle({ post }: { post: BlogPost }) {
               height={939}
               priority
               sizes="(max-width: 1024px) 100vw, 976px"
-              className="h-auto w-full rounded-2xl border border-white/10"
+              className="h-auto w-full rounded-2xl border border-border"
             />
-            <figcaption className="mt-3 text-center text-xs leading-5 text-white/60">
-              A little Halloween pottery inspiration. Photo by <a href={PHOTO_SOURCE} className="underline underline-offset-4 hover:text-white">Barney Goodman / Unsplash</a>.
+            <figcaption className="mt-3 text-center text-xs leading-5 text-primary/60">
+              A little Halloween pottery inspiration. Photo by <a href={PHOTO_SOURCE} className="underline underline-offset-4 hover:text-primary">Barney Goodman / Unsplash</a>.
             </figcaption>
           </figure>
 
-          <div className="mx-auto max-w-3xl space-y-6 text-lg leading-8 text-white/85 sm:leading-9">
+          <div className="mx-auto max-w-3xl space-y-6 text-lg leading-8 text-primary/85 sm:leading-9">
             <p className="font-serif text-2xl leading-relaxed text-[#fff7ee] sm:text-3xl">You are blindfolded. In front of you sit four bowls.</p>
             <p>One holds a ring. One holds water. One holds food. One holds clay.</p>
             <p>Choose the ring, and marriage is supposedly coming. Water means emigration. Food promises prosperity.</p>
             <p>Choose the clay?</p>
             <p className="font-serif text-4xl text-[#f1bdc7]">Death.</p>
             <p className="font-semibold text-[#fff7ee]">Welcome to an Irish Halloween party. Hopefully, you enjoyed the snacks.</p>
-            <p>This fortune-telling game is documented by the <a href={FOLKLORE_SOURCE} className="text-[#f1bdc7] underline underline-offset-4 hover:text-white">National Museum of Ireland</a>. People used ordinary objects to predict extraordinary things: who would marry, who would leave, who would prosper, who would die. And there, among the possible futures, sat a bowl of clay.</p>
+            <p>This fortune-telling game is documented by the <a href={FOLKLORE_SOURCE} className="text-[#f1bdc7] underline underline-offset-4 hover:text-primary">National Museum of Ireland</a>. People used ordinary objects to predict extraordinary things: who would marry, who would leave, who would prosper, who would die. And there, among the possible futures, sat a bowl of clay.</p>
             <p>For a potter, that is a deliciously uncomfortable detail. The stuff we turn into coffee mugs once had a role in delivering the worst party news imaginable.</p>
             <p>It also gives us a much more interesting place to begin connecting pottery and Halloween than putting an orange glaze on everything and calling it October.</p>
             <p className="font-serif text-2xl text-[#f1bdc7]">Because clay can get weird. Beautifully weird.</p>
@@ -66,7 +66,7 @@ export default function HalloweenPotteryArticle({ post }: { post: BlogPost }) {
             <p>Add a mouth. Now it looks hungry.</p>
             <p>Close the mouth. Now it knows something.</p>
             <p>That moment—when an ordinary material seems to acquire a personality—is where Halloween and pottery become very good friends.</p>
-            <p>Think about a jack-o’-lantern. Its entire power comes from a few decisions: the angle of an eye, the width of a grin, the amount of darkness left inside. The <a href={FOLKLORE_SOURCE} className="text-[#f1bdc7] underline underline-offset-4 hover:text-white">National Museum of Ireland describes</a> the Irish tradition of carving frightening lanterns from turnips; pumpkins became the American development of that idea.</p>
+            <p>Think about a jack-o’-lantern. Its entire power comes from a few decisions: the angle of an eye, the width of a grin, the amount of darkness left inside. The <a href={FOLKLORE_SOURCE} className="text-[#f1bdc7] underline underline-offset-4 hover:text-primary">National Museum of Ireland describes</a> the Irish tradition of carving frightening lanterns from turnips; pumpkins became the American development of that idea.</p>
             <p>Clay lets you play with the same unsettling possibilities. A hollow vessel becomes a head. Cut openings into its walls, place a battery-operated light inside the finished piece, and its expression changes when the room goes dark.</p>
             <p className="font-serif text-2xl text-[#f1bdc7]">The face you made in daylight might have other intentions after sunset.</p>
             <p>And unlike a pumpkin, it can return next October. Your little household monster gets a recurring role.</p>
@@ -101,15 +101,15 @@ export default function HalloweenPotteryArticle({ post }: { post: BlogPost }) {
         <div className="mx-auto mt-14 max-w-3xl space-y-10">
           <aside className="rounded-3xl border border-[#f1bdc7]/25 bg-[#f1bdc7]/10 p-7 sm:p-9" aria-labelledby="halloween-workshop-heading">
             <h2 id="halloween-workshop-heading" className="font-serif text-3xl font-bold text-[#fff7ee]">Make something wonderfully strange.</h2>
-            <p className="mt-4 leading-7 text-white/80">Explore <Link href="/activities/cauldron-pottery" className="text-[#f1bdc7] underline underline-offset-4">cauldron pottery</Link>, <Link href="/activities/handbuilding" className="text-[#f1bdc7] underline underline-offset-4">handbuilding</Link>, or <Link href="/activities/date-night-wheel" className="text-[#f1bdc7] underline underline-offset-4">date night on the wheel</Link>. Choose your studio to check available dates, project details, and finishing options.</p>
+            <p className="mt-4 leading-7 text-primary/80">Explore <Link href="/activities/cauldron-pottery" className="text-[#f1bdc7] underline underline-offset-4">cauldron pottery</Link>, <Link href="/activities/handbuilding" className="text-[#f1bdc7] underline underline-offset-4">handbuilding</Link>, or <Link href="/activities/date-night-wheel" className="text-[#f1bdc7] underline underline-offset-4">date night on the wheel</Link>. Choose your studio to check available dates, project details, and finishing options.</p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/chicago" className="inline-flex rounded-full bg-[#f1bdc7] px-6 py-3 font-semibold text-[#34233c] hover:bg-[#f6d2d9]">Explore Chicago classes →</Link>
-              <Link href="/eugene" className="inline-flex rounded-full border border-[#f1bdc7]/50 px-6 py-3 font-semibold text-[#f1bdc7] hover:bg-white/10">Explore Eugene classes →</Link>
+              <Link href="/eugene" className="inline-flex rounded-full border border-[#f1bdc7]/50 px-6 py-3 font-semibold text-[#f1bdc7] hover:bg-surface-secondary">Explore Eugene classes →</Link>
             </div>
           </aside>
           {author && <AuthorBio author={author} />}
           <RelatedArticles slugs={post.relatedPostSlugs} />
-          <Link href="/blog" className="inline-block text-sm font-semibold text-[#f1bdc7] hover:text-white">← Back to the Studio Journal</Link>
+          <Link href="/blog" className="inline-block text-sm font-semibold text-[#f1bdc7] hover:text-primary">← Back to the Studio Journal</Link>
         </div>
       </div>
     </main>

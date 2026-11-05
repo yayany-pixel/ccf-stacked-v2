@@ -129,7 +129,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
         <div className="mb-8 space-y-4">
           {/* View Toggle */}
           <div className="flex items-center justify-between flex-wrap gap-4">
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-primary/60">
               Showing {totalEvents ? (currentPage - 1) * pageSize + 1 : 0}–{(currentPage - 1) * pageSize + events.length} of {totalEvents} matching events
             </p>
             <div className="flex gap-2">
@@ -137,8 +137,8 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                 onClick={() => setViewMode("timeline")}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                   viewMode === "timeline"
-                    ? "bg-purple-500/30 text-purple-200"
-                    : "bg-white/5 text-white/60 hover:bg-white/10"
+                    ? "bg-btn/30 text-purple-200"
+                    : "bg-surface-secondary text-primary/60 hover:bg-surface-secondary"
                 }`}
               >
                 📅 Timeline
@@ -147,8 +147,8 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                 onClick={() => setViewMode("grid")}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                   viewMode === "grid"
-                    ? "bg-purple-500/30 text-purple-200"
-                    : "bg-white/5 text-white/60 hover:bg-white/10"
+                    ? "bg-btn/30 text-purple-200"
+                    : "bg-surface-secondary text-primary/60 hover:bg-surface-secondary"
                 }`}
               >
                 ⊞ Grid
@@ -160,7 +160,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
           <div className="space-y-3">
             {/* City Filter */}
             <div>
-              <label className="mb-2 block text-sm font-semibold text-white/80">Location</label>
+              <label className="mb-2 block text-sm font-semibold text-primary/80">Location</label>
               <div className="flex flex-wrap gap-2">
                 {cities.map(city => (
                   <button
@@ -169,7 +169,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                     className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                       selectedCity === city
                         ? "bg-cyan-500/30 text-cyan-200 ring-1 ring-cyan-400/50"
-                        : "bg-white/5 text-white/60 hover:bg-white/10"
+                        : "bg-surface-secondary text-primary/60 hover:bg-surface-secondary"
                     }`}
                   >
                     {city === "all" ? "All Locations" : city}
@@ -180,7 +180,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
 
             {/* Category Filter */}
             <div>
-              <label className="mb-2 block text-sm font-semibold text-white/80">Category</label>
+              <label className="mb-2 block text-sm font-semibold text-primary/80">Category</label>
               <div className="flex flex-wrap gap-2">
                 {categories.map(category => (
                   <button
@@ -188,8 +188,8 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                     onClick={() => updateFilter("category", category)}
                     className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                       selectedCategory === category
-                        ? "bg-purple-500/30 text-purple-200 ring-1 ring-purple-400/50"
-                        : "bg-white/5 text-white/60 hover:bg-white/10"
+                        ? "bg-btn/30 text-purple-200 ring-1 ring-purple-400/50"
+                        : "bg-surface-secondary text-primary/60 hover:bg-surface-secondary"
                     }`}
                   >
                     {category === "all" ? "All Categories" : category}
@@ -213,7 +213,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                     {groupName}
                   </h2>
                   <div className="h-px flex-1 bg-gradient-to-r from-purple-500/30 to-transparent" />
-                  <span className="text-sm text-white/40">
+                  <span className="text-sm text-primary/40">
                     {groupEvents.length} event{groupEvents.length !== 1 ? 's' : ''}
                   </span>
                 </div>
@@ -244,7 +244,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                               <div className="flex-1">
                                 {/* Category & City Badges */}
                                 <div className="mb-2 flex flex-wrap items-center gap-2">
-                                  <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-semibold text-purple-300">
+                                  <span className="rounded-full bg-btn/20 px-3 py-1 text-xs font-semibold text-purple-300">
                                     {event.category}
                                   </span>
                                   <span className="rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-300">
@@ -258,14 +258,14 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                                 </div>
 
                                 {/* Event Title */}
-                                <h3 className="mb-2 text-xl font-bold text-white">
+                                <h3 className="mb-2 text-xl font-bold text-primary">
                                   {event.title}
                                 </h3>
 
                                 {/* Event Time & Location */}
-                                <div className="mb-3 space-y-1 text-sm text-white/70">
+                                <div className="mb-3 space-y-1 text-sm text-primary/70">
                                   <div className="flex items-center gap-2">
-                                    <span className="text-purple-400">🕒</span>
+                                    <span className="text-accent">🕒</span>
                                     <time dateTime={event.startDate}>{formatEventDate(event.startDate, event.city)}</time>
                                   </div>
                                   <div className="flex items-center gap-2">
@@ -275,7 +275,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                                 </div>
 
                                 {/* Description */}
-                                <p className="line-clamp-2 text-sm text-white/60">
+                                <p className="line-clamp-2 text-sm text-primary/60">
                                   {event.description}
                                 </p>
                               </div>
@@ -287,7 +287,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                                   city={event.city}
                                   classNameText={event.title}
                                   classId={event.slug}
-                                  className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 flex-1 md:w-full border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+                                  className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 flex-1 md:w-full border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-primary shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
                                 >
                                   Book Now
                                 </BookingLink>
@@ -312,7 +312,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                                   ${event.price.toFixed(2)} {event.ticketUnit || "per ticket"}
                                 </span>
                               ) : null}
-                              <span className="ml-auto text-xs text-white/40">
+                              <span className="ml-auto text-xs text-primary/40">
                                 via Acuity
                               </span>
                             </div>
@@ -351,7 +351,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
 
                   {/* Category Badge */}
                   <div className="mb-2 flex items-center gap-2">
-                    <span className="rounded-full bg-purple-500/20 px-3 py-1 text-xs font-semibold text-purple-300">
+                    <span className="rounded-full bg-btn/20 px-3 py-1 text-xs font-semibold text-purple-300">
                       {event.category}
                     </span>
                     <span className="rounded-full bg-cyan-500/20 px-3 py-1 text-xs font-semibold text-cyan-300">
@@ -360,14 +360,14 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                   </div>
 
                   {/* Event Title */}
-                  <h2 className="mb-2 text-xl font-bold text-white">
+                  <h2 className="mb-2 text-xl font-bold text-primary">
                     {event.title}
                   </h2>
 
                   {/* Event Details */}
-                  <div className="mb-4 space-y-2 text-sm text-white/70">
+                  <div className="mb-4 space-y-2 text-sm text-primary/70">
                     <div className="flex items-start gap-2">
-                      <span className="text-purple-400">📅</span>
+                      <span className="text-accent">📅</span>
                       <time dateTime={event.startDate}>{formatEventDay(event.startDate, event.city)} at {formatEventTime(event.startDate, event.city)}</time>
                     </div>
                     <div className="flex items-start gap-2">
@@ -376,7 +376,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                     </div>
                     {event.price !== null && (
                       <div className="flex items-start gap-2">
-                        <span className="text-pink-400">💰</span>
+                        <span className="text-accent">💰</span>
                         <span>
                           {event.formattedPrice || (event.price === 0 ? 'Free' : `$${event.price.toFixed(2)} ${event.ticketUnit || "per ticket"}`)}
                         </span>
@@ -385,7 +385,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                   </div>
 
                   {/* Description */}
-                  <p className="mb-4 line-clamp-3 text-sm text-white/60">
+                  <p className="mb-4 line-clamp-3 text-sm text-primary/60">
                     {event.description}
                   </p>
 
@@ -407,7 +407,7 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
                   </div>
 
                   {/* Source Badge */}
-                  <div className="mt-3 text-xs text-white/40">
+                  <div className="mt-3 text-xs text-primary/40">
                     via Acuity
                   </div>
                 </div>
@@ -420,8 +420,8 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
       {totalEvents > pageSize && (
         <nav aria-label="Event pages" className="mt-8 flex items-center justify-center gap-4">
           <button disabled={currentPage === 1} onClick={() => updateFilter("page", String(currentPage - 1))} className="rounded-full border border-purple-300/40 px-5 py-3 font-semibold disabled:opacity-30">Previous</button>
-          <span className="text-sm text-white/70">Page {currentPage} of {Math.ceil(totalEvents / pageSize)}</span>
-          <button disabled={currentPage * pageSize >= totalEvents} onClick={() => updateFilter("page", String(currentPage + 1))} className="rounded-full border border-purple-300/40 bg-purple-500/20 px-5 py-3 font-semibold disabled:opacity-30">Next Dates</button>
+          <span className="text-sm text-primary/70">Page {currentPage} of {Math.ceil(totalEvents / pageSize)}</span>
+          <button disabled={currentPage * pageSize >= totalEvents} onClick={() => updateFilter("page", String(currentPage + 1))} className="rounded-full border border-purple-300/40 bg-btn/20 px-5 py-3 font-semibold disabled:opacity-30">Next Dates</button>
         </nav>
       )}
 
@@ -429,14 +429,14 @@ export default function EventsGrid({ events, totalEvents, cityOptions, categoryO
       {events.length === 0 && (
         <Reveal variant="fade-up">
           <GlassCard className="p-12 text-center">
-            <p className="text-white/70">
+            <p className="text-primary/70">
               No events match your selected filters. Try adjusting your selection.
             </p>
             <button
               onClick={() => {
                 router.push("/events", { scroll: false });
               }}
-              className="mt-4 text-purple-400 hover:text-purple-300 underline"
+              className="mt-4 text-accent hover:text-purple-300 underline"
             >
               Clear all filters
             </button>

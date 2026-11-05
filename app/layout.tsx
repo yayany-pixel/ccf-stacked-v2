@@ -77,6 +77,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              (function() {
+                try {
+                  var theme = 'earthy';
+                  var match = document.cookie.match(/(^| )theme=([^;]+)/);
+                  if (match) theme = match[2];
+                  var params = new URLSearchParams(window.location.search);
+                  if (params.has('theme')) theme = params.get('theme');
+                  document.documentElement.setAttribute('data-theme', theme);
+                } catch(e) {}
+              })();
+            `
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){window.dataLayer.push(arguments);}
               gtag('consent', 'default', {

@@ -26,14 +26,14 @@ export default function Header({ city }: { city: City }) {
     <CityHeaderSwitch city={city.param}>
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 py-3">
-        <div className="shimmer-drift rounded-2xl border border-white/10 bg-white/5 shadow-glass backdrop-blur-xl">
+        <div className="shimmer-drift rounded-2xl border border-border bg-surface-secondary shadow-glass backdrop-blur-xl">
           <div className="flex items-center justify-between gap-3 px-4 py-3">
             {/* Logo as Home Link */}
             <Link href={`/${city.param}`} className="flex items-center gap-3">
               <BrandLogo />
               <div className="hidden sm:block">
                 <div className="text-sm font-semibold leading-none">Color Cocktail Factory</div>
-                <div className="mt-1 text-xs text-white/60">The future is handmade...</div>
+                <div className="mt-1 text-xs text-primary/60">The future is handmade...</div>
               </div>
             </Link>
 
@@ -51,7 +51,7 @@ export default function Header({ city }: { city: City }) {
             </div>
           </div>
 
-          <div className="border-t border-white/10 px-4 py-2 md:hidden">
+          <div className="border-t border-border px-4 py-2 md:hidden">
             <PillNav items={navItems} />
           </div>
         </div>

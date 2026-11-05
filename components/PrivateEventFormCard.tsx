@@ -102,11 +102,11 @@ export default function PrivateEventFormCard({
   };
 
   return (
-    <div className={variant === "homepage" ? "homepage-party-form" : "rounded-3xl border border-white/10 bg-white/5 p-6 shadow-glass backdrop-blur-xl"}>
+    <div className={variant === "homepage" ? "homepage-party-form" : "rounded-3xl border border-border bg-surface-secondary p-6 shadow-glass backdrop-blur-xl"}>
       {variant !== "homepage" && <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <div className="text-xs font-semibold tracking-wide text-white/70">PRIVATE PARTY INQUIRY FORM</div>
-          <div className="mt-1 text-sm text-white/75">
+          <div className="text-xs font-semibold tracking-wide text-primary/70">PRIVATE PARTY INQUIRY FORM</div>
+          <div className="mt-1 text-sm text-primary/75">
             Send us a few quick details and we&apos;ll follow up with available dates, project ideas, and a custom quote for your group.
           </div>
         </div>
@@ -124,11 +124,11 @@ export default function PrivateEventFormCard({
 
         <div className="mt-5 grid gap-3 md:grid-cols-2">
           <label className="grid gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Name</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-primary/65">Name</span>
             <input
               name="name"
               autoComplete="name"
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20"
+              className="rounded-2xl border border-border bg-surface-secondary px-4 py-2 text-sm text-primary outline-none focus:border-border"
               value={s.name}
               onChange={(e) => setS((p) => ({ ...p, name: e.target.value }))}
               placeholder="How would we reach you?"
@@ -139,12 +139,12 @@ export default function PrivateEventFormCard({
           </label>
 
           <label className="grid gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Email</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-primary/65">Email</span>
             <input
               type="email"
               name="email"
               autoComplete="email"
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20"
+              className="rounded-2xl border border-border bg-surface-secondary px-4 py-2 text-sm text-primary outline-none focus:border-border"
               value={s.email}
               onChange={(e) => setS((p) => ({ ...p, email: e.target.value }))}
               placeholder="your@email.com"
@@ -155,10 +155,10 @@ export default function PrivateEventFormCard({
           </label>
 
           <label className="grid gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">City</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-primary/65">City</span>
             <select
               name="city"
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20 [&>option]:bg-slate-800 [&>option]:text-white"
+              className="rounded-2xl border border-border bg-surface-secondary px-4 py-2 text-sm text-primary outline-none focus:border-border [&>option]:bg-surface [&>option]:text-primary"
               value={variant === "homepage" ? city.label : s.city}
               onChange={(e) => {
                 const nextCity = e.target.value;
@@ -174,11 +174,11 @@ export default function PrivateEventFormCard({
           </label>
 
           <label className="grid gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Date</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-primary/65">Date</span>
             <input
               type="date"
               name="date"
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-70 [&::-webkit-calendar-picker-indicator]:hover:opacity-100"
+              className="rounded-2xl border border-border bg-surface-secondary px-4 py-2 text-sm text-primary outline-none focus:border-border [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-70 [&::-webkit-calendar-picker-indicator]:hover:opacity-100"
               value={s.date}
               min={minDate}
               onChange={(e) => setS((p) => ({ ...p, date: e.target.value }))}
@@ -189,11 +189,11 @@ export default function PrivateEventFormCard({
           </label>
 
           <label className="grid gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Group Size</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-primary/65">Group Size</span>
             <input
               type="text"
               name="groupSize"
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20"
+              className="rounded-2xl border border-border bg-surface-secondary px-4 py-2 text-sm text-primary outline-none focus:border-border"
               value={s.groupSize}
               onChange={(e) => setS((p) => ({ ...p, groupSize: e.target.value }))}
               placeholder="Example: 12, 15-18 etc"
@@ -204,11 +204,11 @@ export default function PrivateEventFormCard({
           </label>
 
           <label className="grid gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Occasion</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-primary/65">Occasion</span>
             <input
               type="text"
               name="occasion"
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20"
+              className="rounded-2xl border border-border bg-surface-secondary px-4 py-2 text-sm text-primary outline-none focus:border-border"
               value={s.occasion}
               onChange={(e) => setS((p) => ({ ...p, occasion: e.target.value }))}
               placeholder="Birthday, bachelorette, team outing, offsite, etc."
@@ -222,10 +222,10 @@ export default function PrivateEventFormCard({
           <summary className={variant === "homepage" ? undefined : "hidden"}>Project, budget & other details (optional)</summary>
           <div className="grid gap-3 md:grid-cols-2">
           <label className="grid gap-1">
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Budget Per Person</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-primary/65">Budget Per Person</span>
             <select
               name="budget"
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20 [&>option]:bg-slate-800 [&>option]:text-white"
+              className="rounded-2xl border border-border bg-surface-secondary px-4 py-2 text-sm text-primary outline-none focus:border-border [&>option]:bg-surface [&>option]:text-primary"
               value={s.budget}
               onChange={(e) => setS((p) => ({ ...p, budget: e.target.value }))}
               disabled={isSubmitting}
@@ -241,10 +241,10 @@ export default function PrivateEventFormCard({
           </label>
 
           <label className="grid gap-1 md:col-span-2">
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Preferred Project</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-primary/65">Preferred Project</span>
             <select
               name="preferredProject"
-              className="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20 [&>option]:bg-slate-800 [&>option]:text-white"
+              className="rounded-2xl border border-border bg-surface-secondary px-4 py-2 text-sm text-primary outline-none focus:border-border [&>option]:bg-surface [&>option]:text-primary"
               value={s.preferredProject}
               onChange={(e) => setS((p) => ({ ...p, preferredProject: e.target.value }))}
               disabled={isSubmitting}
@@ -262,10 +262,10 @@ export default function PrivateEventFormCard({
           </label>
 
           <label className="grid gap-1 md:col-span-2">
-            <span className="text-xs font-semibold uppercase tracking-wide text-white/65">Details</span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-primary/65">Details</span>
             <textarea
               name="details"
-              className="min-h-[96px] rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white outline-none focus:border-white/20"
+              className="min-h-[96px] rounded-2xl border border-border bg-surface-secondary px-4 py-2 text-sm text-primary outline-none focus:border-border"
               value={s.details}
               onChange={(e) => setS((p) => ({ ...p, details: e.target.value }))}
               placeholder="Tell us about your vibe, timing flexibility, budget, accessibility needs, or anything else."
@@ -277,7 +277,7 @@ export default function PrivateEventFormCard({
           </details>
         </div>
 
-        {variant !== "homepage" && <p className="mt-4 text-xs text-white/55">
+        {variant !== "homepage" && <p className="mt-4 text-xs text-primary/55">
           We typically reply within 24 hours with dates/options, project ideas, and a commitment.
         </p>}
 
@@ -290,7 +290,7 @@ export default function PrivateEventFormCard({
         <div className="mt-4">
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center rounded-full border border-white/15 bg-pink-600 px-6 py-3 text-sm font-semibold uppercase tracking-wide text-white hover:bg-pink-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex w-full items-center justify-center rounded-full border border-white/15 bg-btn px-6 py-3 text-sm font-semibold uppercase tracking-wide text-primary hover:bg-pink-700 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Sending..." : variant === "homepage" ? "Request My Private Event Quote" : "Send Private Event Inquiry"}

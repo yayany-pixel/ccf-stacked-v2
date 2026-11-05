@@ -26,7 +26,7 @@ export default function CitySelectorCTA() {
       <GlassCard className="mt-8">
         <div className="p-6 md:p-8">
           <h3 className="text-center font-serif text-2xl font-bold">Choose Your City & Book a Class</h3>
-          <p className="mt-2 text-center text-white/70">
+          <p className="mt-2 text-center text-primary/70">
             Select your location to see available workshops
           </p>
 
@@ -35,8 +35,8 @@ export default function CitySelectorCTA() {
               onClick={() => setSelectedCity("chicago")}
               className={`rounded-full border-2 px-6 py-3 font-semibold transition-all ${
                 selectedCity === "chicago"
-                  ? "border-purple-400 bg-purple-500/20 text-purple-200 shadow-lg shadow-purple-500/30"
-                  : "border-white/20 bg-white/5 text-white/80 hover:border-white/40 hover:bg-white/10"
+                  ? "border-purple-400 bg-btn/20 text-purple-200 shadow-lg shadow-purple-500/30"
+                  : "border-border bg-surface-secondary text-primary/80 hover:border-white/40 hover:bg-surface-secondary"
               }`}
             >
               Chicago, IL
@@ -46,7 +46,7 @@ export default function CitySelectorCTA() {
               className={`rounded-full border-2 px-6 py-3 font-semibold transition-all ${
                 selectedCity === "eugene"
                   ? "border-cyan-400 bg-cyan-500/20 text-cyan-200 shadow-lg shadow-cyan-500/30"
-                  : "border-white/20 bg-white/5 text-white/80 hover:border-white/40 hover:bg-white/10"
+                  : "border-border bg-surface-secondary text-primary/80 hover:border-white/40 hover:bg-surface-secondary"
               }`}
             >
               Eugene, OR
@@ -89,7 +89,7 @@ export default function CitySelectorCTA() {
             </div>
           )}
 
-          <div className="mt-6 flex flex-wrap justify-center gap-4 border-t border-white/10 pt-6 text-sm text-white/60">
+          <div className="mt-6 flex flex-wrap justify-center gap-4 border-t border-border pt-6 text-sm text-primary/60">
             <div className="flex items-center gap-2">
               <svg className="h-4 w-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />

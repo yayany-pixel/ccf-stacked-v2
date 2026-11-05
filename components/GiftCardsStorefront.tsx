@@ -238,11 +238,11 @@ export default function GiftCardsStorefront({
               <TagPill subtle>Never Expires</TagPill>
             </div>
 
-            <h1 className="mt-5 font-serif text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mt-5 font-serif text-4xl font-bold leading-tight text-primary sm:text-5xl lg:text-6xl">
               Give them something to look forward to.
             </h1>
 
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-white/90 sm:text-xl">
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-primary/90 sm:text-xl">
               A first spin on the pottery wheel. A date together. Something
               beautiful made by hand. Choose their experience—let them choose
               the date.
@@ -252,7 +252,7 @@ export default function GiftCardsStorefront({
               <button
                 type="button"
                 onClick={handleExploreClick}
-                className="btn-interactive inline-flex items-center justify-center rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-pink-500/30 transition hover:scale-[1.02] hover:shadow-pink-500/50 focus:outline-none focus:ring-2 focus:ring-pink-300"
+                className="btn-interactive inline-flex items-center justify-center rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 px-8 py-4 text-base font-bold text-primary shadow-xl shadow-pink-500/30 transition hover:scale-[1.02] hover:shadow-pink-500/50 focus:outline-none focus:ring-2 focus:ring-pink-300"
               >
                 Explore Gift Experiences
                 <span className="ml-2 text-lg" aria-hidden="true">
@@ -270,7 +270,7 @@ export default function GiftCardsStorefront({
                     city,
                   })
                 }
-                className="inline-flex items-center justify-center rounded-full border border-white/25 bg-white/10 px-6 py-4 text-sm font-semibold text-white transition hover:bg-white/15"
+                className="inline-flex items-center justify-center rounded-full border border-white/25 bg-surface-secondary px-6 py-4 text-sm font-semibold text-primary transition hover:bg-white/15"
               >
                 Flexible Dollar Gift Cards ($50–$250) →
               </a>
@@ -280,7 +280,7 @@ export default function GiftCardsStorefront({
           {/* Studio Selection & Confirmation Card */}
           <div className="lg:col-span-5">
             <div
-              className="rounded-3xl border border-white/20 bg-black/35 p-6 backdrop-blur-md"
+              className="rounded-3xl border border-border bg-background/35 p-6 backdrop-blur-md"
               role="region"
               aria-labelledby="recipient-studio-heading"
             >
@@ -289,11 +289,11 @@ export default function GiftCardsStorefront({
               </div>
               <h2
                 id="recipient-studio-heading"
-                className="mt-1 font-serif text-xl font-bold text-white"
+                className="mt-1 font-serif text-xl font-bold text-primary"
               >
                 Where will they attend class?
               </h2>
-              <p className="mt-1.5 text-xs leading-relaxed text-white/75">
+              <p className="mt-1.5 text-xs leading-relaxed text-primary/75">
                 Chicago and Eugene have separate studio calendars and class
                 pricing. Select your recipient’s studio before checkout.
               </p>
@@ -314,22 +314,22 @@ export default function GiftCardsStorefront({
                       onClick={() => handleCitySelect(option)}
                       className={`flex flex-col items-start rounded-2xl border p-3.5 text-left transition ${
                         isSelected
-                          ? "border-pink-400 bg-gradient-to-br from-pink-500/30 to-purple-600/30 text-white shadow-lg shadow-pink-500/20"
-                          : "border-white/15 bg-white/5 text-white/75 hover:border-white/30 hover:bg-white/10"
+                          ? "border-pink-400 bg-gradient-to-br from-pink-500/30 to-purple-600/30 text-primary shadow-lg shadow-pink-500/20"
+                          : "border-white/15 bg-surface-secondary text-primary/75 hover:border-white/30 hover:bg-surface-secondary"
                       }`}
                     >
                       <span className="flex w-full items-center justify-between text-sm font-bold">
                         <span>{loc.label}</span>
                         {isSelected && (
                           <span
-                            className="rounded-full bg-pink-500 px-2 py-0.5 text-[10px] font-bold text-white"
+                            className="rounded-full bg-btn px-2 py-0.5 text-[10px] font-bold text-primary"
                             aria-hidden="true"
                           >
                             Selected
                           </span>
                         )}
                       </span>
-                      <span className="mt-1 text-[11px] leading-snug text-white/70">
+                      <span className="mt-1 text-[11px] leading-snug text-primary/70">
                         {loc.streetAddress}, {loc.addressRegion}
                       </span>
                     </button>
@@ -337,12 +337,12 @@ export default function GiftCardsStorefront({
                 })}
               </div>
 
-              <div className="mt-4 rounded-xl border border-white/10 bg-white/5 p-3.5 text-xs text-white/85">
-                <div className="font-semibold text-white">
+              <div className="mt-4 rounded-xl border border-border bg-surface-secondary p-3.5 text-xs text-primary/85">
+                <div className="font-semibold text-primary">
                   📍 Active Studio: {studio.label} ({studio.address})
                 </div>
                 {city === "chicago" ? (
-                  <p className="mt-1 text-white/75">
+                  <p className="mt-1 text-primary/75">
                     <strong className="text-emerald-300">
                       ✓ Live Acuity Gift Certificates Verified:
                     </strong>{" "}
@@ -362,16 +362,16 @@ export default function GiftCardsStorefront({
                 )}
               </div>
 
-              <label className="mt-4 flex cursor-pointer items-start gap-2.5 text-xs text-white/85">
+              <label className="mt-4 flex cursor-pointer items-start gap-2.5 text-xs text-primary/85">
                 <input
                   type="checkbox"
                   checked={studioConfirmed}
                   onChange={(e) => setStudioConfirmed(e.target.checked)}
-                  className="mt-0.5 h-4 w-4 rounded border-white/30 bg-white/10 text-pink-500 focus:ring-pink-400"
+                  className="mt-0.5 h-4 w-4 rounded border-white/30 bg-surface-secondary text-accent focus:ring-pink-400"
                 />
                 <span>
                   I confirm my recipient will attend at the{" "}
-                  <strong className="text-white">
+                  <strong className="text-primary">
                     {studio.label} ({studio.address})
                   </strong>{" "}
                   studio.
@@ -385,18 +385,18 @@ export default function GiftCardsStorefront({
       {/* Contextual banner when arriving from a specific class page */}
       {highlightedWorkshop && (
         <div
-          className="rounded-2xl border border-pink-400/40 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 p-5 text-sm text-white shadow-lg"
+          className="rounded-2xl border border-pink-400/40 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-indigo-500/20 p-5 text-sm text-primary shadow-lg"
           role="status"
         >
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <span className="inline-block rounded-full bg-pink-500/30 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-pink-200">
+              <span className="inline-block rounded-full bg-btn/30 px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-pink-200">
                 Gifting Selected Workshop
               </span>
-              <h2 className="mt-1 font-serif text-xl font-bold text-white">
+              <h2 className="mt-1 font-serif text-xl font-bold text-primary">
                 Gifting: {highlightedWorkshop.title} ({studio.label})
               </h2>
-              <p className="mt-1 text-white/85">
+              <p className="mt-1 text-primary/85">
                 Verified studio price:{" "}
                 <strong>
                   ${highlightedWorkshop.price} {highlightedWorkshop.priceUnit}
@@ -436,26 +436,26 @@ export default function GiftCardsStorefront({
         aria-labelledby="gift-experiences-heading"
         className="scroll-mt-24 space-y-8"
       >
-        <div className="flex flex-col justify-between gap-4 border-b border-white/10 pb-5 md:flex-row md:items-end">
+        <div className="flex flex-col justify-between gap-4 border-b border-border pb-5 md:flex-row md:items-end">
           <div>
             <div className="text-xs font-bold uppercase tracking-widest text-pink-300">
               Signature Studio Experiences · {studio.label}
             </div>
             <h2
               id="gift-experiences-heading"
-              className="mt-2 font-serif text-3xl font-bold text-white sm:text-4xl"
+              className="mt-2 font-serif text-3xl font-bold text-primary sm:text-4xl"
             >
               Gift a Hands-On Pottery Experience
             </h2>
-            <p className="mt-2 max-w-2xl text-base text-white/80">
+            <p className="mt-2 max-w-2xl text-base text-primary/80">
               Thoughtful, story-driven workshops designed for couples and
               first-time makers at our {studio.label} studio. They pick any open
               session date when they’re ready.
             </p>
           </div>
-          <div className="text-xs text-white/65">
+          <div className="text-xs text-primary/65">
             Showing verified pricing &amp; eligibility for{" "}
-            <strong className="text-white">{studio.label}</strong>
+            <strong className="text-primary">{studio.label}</strong>
           </div>
         </div>
 
@@ -480,7 +480,7 @@ export default function GiftCardsStorefront({
               >
                 <div>
                   {/* Authentic Studio Photograph */}
-                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-background/40">
                     <Image
                       src={offering.photo.path}
                       alt={offering.photo.alt}
@@ -491,16 +491,16 @@ export default function GiftCardsStorefront({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
                     <div className="absolute top-4 left-4 right-4 flex flex-wrap items-center justify-between gap-2">
-                      <span className="rounded-full bg-black/70 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">
+                      <span className="rounded-full bg-background/70 px-3 py-1 text-xs font-bold text-primary backdrop-blur-md">
                         📍 {offering.studioLabel}
                       </span>
-                      <span className="rounded-full bg-pink-500/90 px-3 py-1 text-xs font-bold text-white shadow">
+                      <span className="rounded-full bg-btn/90 px-3 py-1 text-xs font-bold text-primary shadow">
                         🎟️ Covers {offering.guestsCoveredLabel}
                       </span>
                     </div>
                     <div className="absolute bottom-4 left-6 right-6 flex items-baseline justify-between gap-4">
                       <div>
-                        <h3 className="font-serif text-2xl font-bold text-white sm:text-3xl">
+                        <h3 className="font-serif text-2xl font-bold text-primary sm:text-3xl">
                           {card.title}
                         </h3>
                       </div>
@@ -508,7 +508,7 @@ export default function GiftCardsStorefront({
                         <div className="font-serif text-3xl font-bold text-amber-300">
                           {offering.formattedPrice}
                         </div>
-                        <div className="text-[11px] font-medium text-white/80">
+                        <div className="text-[11px] font-medium text-primary/80">
                           {offering.priceUnitLabel}
                         </div>
                       </div>
@@ -517,36 +517,36 @@ export default function GiftCardsStorefront({
 
                   {/* Card Body */}
                   <div className="space-y-5 p-6 sm:p-7">
-                    <p className="font-serif text-lg italic leading-relaxed text-white/95">
+                    <p className="font-serif text-lg italic leading-relaxed text-primary/95">
                       “{card.supportingCopy}”
                     </p>
 
                     {/* Key Metadata Grid */}
-                    <div className="grid grid-cols-2 gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-xs">
+                    <div className="grid grid-cols-2 gap-3 rounded-2xl border border-border bg-surface-secondary p-4 text-xs">
                       <div>
-                        <div className="font-semibold uppercase tracking-wider text-white/50">
+                        <div className="font-semibold uppercase tracking-wider text-primary/50">
                           Guests Covered
                         </div>
-                        <div className="mt-1 font-bold text-white">
+                        <div className="mt-1 font-bold text-primary">
                           {offering.guestsCoveredLabel}
                         </div>
                       </div>
                       <div>
-                        <div className="font-semibold uppercase tracking-wider text-white/50">
+                        <div className="font-semibold uppercase tracking-wider text-primary/50">
                           Eligible Studio
                         </div>
-                        <div className="mt-1 font-bold text-white">
+                        <div className="mt-1 font-bold text-primary">
                           {offering.studioLabel}
                         </div>
-                        <div className="text-[11px] text-white/65">
+                        <div className="text-[11px] text-primary/65">
                           {offering.studioAddress}
                         </div>
                       </div>
-                      <div className="col-span-2 border-t border-white/10 pt-2.5">
-                        <div className="font-semibold uppercase tracking-wider text-white/50">
+                      <div className="col-span-2 border-t border-border pt-2.5">
+                        <div className="font-semibold uppercase tracking-wider text-primary/50">
                           Redeemable Acuity Class
                         </div>
-                        <ul className="mt-1 space-y-1 text-white/90">
+                        <ul className="mt-1 space-y-1 text-primary/90">
                           {offering.eligibleAppointmentTypes.map((apt) => (
                             <li key={apt.id}>
                               <strong>{apt.name}</strong> (Acuity ID #{apt.id} ·
@@ -562,7 +562,7 @@ export default function GiftCardsStorefront({
                       <h4 className="text-xs font-bold uppercase tracking-wider text-pink-300">
                         What’s Included
                       </h4>
-                      <ul className="mt-2.5 space-y-2 text-sm text-white/85">
+                      <ul className="mt-2.5 space-y-2 text-sm text-primary/85">
                         {offering.included.map((item) => (
                           <li key={item} className="flex items-start gap-2.5">
                             <span
@@ -588,7 +588,7 @@ export default function GiftCardsStorefront({
                 </div>
 
                 {/* Purchase CTA Footer */}
-                <div className="border-t border-white/10 bg-black/25 p-6 sm:p-7 space-y-4">
+                <div className="border-t border-border bg-background/25 p-6 sm:p-7 space-y-4">
                   {isReadyToBuy && offering.purchaseUrl ? (
                     <BookingLink
                       href={offering.purchaseUrl}
@@ -602,7 +602,7 @@ export default function GiftCardsStorefront({
                       displayedPrice={offering.price}
                       ctaLocation="Gift Cards Experience Card"
                       ctaType="primary"
-                      className="btn-interactive flex w-full items-center justify-between rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 px-6 py-4 text-base font-bold text-white shadow-xl shadow-pink-500/25 transition hover:shadow-pink-500/40"
+                      className="btn-interactive flex w-full items-center justify-between rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 px-6 py-4 text-base font-bold text-primary shadow-xl shadow-pink-500/25 transition hover:shadow-pink-500/40"
                     >
                       <span>{card.buttonLabel}</span>
                       <span>
@@ -615,7 +615,7 @@ export default function GiftCardsStorefront({
                         type="button"
                         disabled
                         aria-disabled="true"
-                        className="flex w-full cursor-not-allowed items-center justify-between rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-base font-bold text-white/55"
+                        className="flex w-full cursor-not-allowed items-center justify-between rounded-2xl border border-white/15 bg-surface-secondary px-6 py-4 text-base font-bold text-primary/55"
                       >
                         <span>{card.buttonLabel}</span>
                         <span className="rounded-full border border-amber-300/40 bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-200">
@@ -626,7 +626,7 @@ export default function GiftCardsStorefront({
                       </button>
 
                       {offering.pendingSetupReason && (
-                        <div className="rounded-xl border border-white/15 bg-white/5 p-3.5 text-xs leading-relaxed text-white/80">
+                        <div className="rounded-xl border border-white/15 bg-surface-secondary p-3.5 text-xs leading-relaxed text-primary/80">
                           <p>{offering.pendingSetupReason}</p>
                           <a
                             href="#manual-acuity-setup"
@@ -643,7 +643,7 @@ export default function GiftCardsStorefront({
                           <div className="font-bold text-emerald-300">
                             ✓ Available to Buy Right Now in Chicago:
                           </div>
-                          <p className="mt-1 leading-relaxed text-white/90">
+                          <p className="mt-1 leading-relaxed text-primary/90">
                             {offering.verifiedDollarAlternative.explanation}
                           </p>
                           <div className="mt-3">
@@ -703,8 +703,8 @@ export default function GiftCardsStorefront({
         >
           <div className="grid lg:grid-cols-12">
             {/* Left Column: Photo & Overview */}
-            <div className="flex flex-col justify-between border-b border-white/10 lg:col-span-5 lg:border-b-0 lg:border-r">
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+            <div className="flex flex-col justify-between border-b border-border lg:col-span-5 lg:border-b-0 lg:border-r">
+              <div className="relative aspect-[16/10] w-full overflow-hidden bg-background/40">
                 <Image
                   src={dollarOffering.photo.path}
                   alt={dollarOffering.photo.alt}
@@ -715,17 +715,17 @@ export default function GiftCardsStorefront({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
                 <div className="absolute top-4 left-4 right-4 flex flex-wrap items-center justify-between gap-2">
-                  <span className="rounded-full bg-black/70 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">
+                  <span className="rounded-full bg-background/70 px-3 py-1 text-xs font-bold text-primary backdrop-blur-md">
                     📍 {dollarOffering.studioLabel}
                   </span>
-                  <span className="rounded-full bg-purple-500/90 px-3 py-1 text-xs font-bold text-white">
+                  <span className="rounded-full bg-btn/90 px-3 py-1 text-xs font-bold text-primary">
                     💳 Monetary Studio Credit
                   </span>
                 </div>
                 <div className="absolute bottom-4 left-6 right-6">
                   <h2
                     id="let-them-choose-heading"
-                    className="font-serif text-3xl font-bold text-white"
+                    className="font-serif text-3xl font-bold text-primary"
                   >
                     {dollarCard.title}
                   </h2>
@@ -737,15 +737,15 @@ export default function GiftCardsStorefront({
               </div>
 
               <div className="space-y-5 p-6 sm:p-8">
-                <p className="font-serif text-lg italic leading-relaxed text-white/95">
+                <p className="font-serif text-lg italic leading-relaxed text-primary/95">
                   “{dollarCard.supportingCopy}”
                 </p>
 
-                <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs space-y-2">
+                <div className="rounded-2xl border border-border bg-surface-secondary p-4 text-xs space-y-2">
                   <div className="font-bold uppercase tracking-wider text-pink-300">
                     Monetary Credit vs. Complete Experience
                   </div>
-                  <p className="leading-relaxed text-white/85">
+                  <p className="leading-relaxed text-primary/85">
                     Unlike a single-class experience voucher, a dollar-value
                     gift certificate applies its exact dollar balance toward
                     eligible {dollarOffering.studioLabel} workshops.{" "}
@@ -763,7 +763,7 @@ export default function GiftCardsStorefront({
                   <h3 className="text-xs font-bold uppercase tracking-wider text-pink-300">
                     What’s Included &amp; Terms
                   </h3>
-                  <ul className="mt-2.5 space-y-2 text-sm text-white/85">
+                  <ul className="mt-2.5 space-y-2 text-sm text-primary/85">
                     {dollarOffering.included.map((item) => (
                       <li key={item} className="flex items-start gap-2.5">
                         <span
@@ -796,10 +796,10 @@ export default function GiftCardsStorefront({
                     <div className="text-xs font-bold uppercase tracking-wider text-pink-300">
                       Choose Your Gift Card Amount · {dollarOffering.studioLabel}
                     </div>
-                    <h3 className="mt-1 font-serif text-2xl font-bold text-white">
+                    <h3 className="mt-1 font-serif text-2xl font-bold text-primary">
                       Select a Verified Acuity Denomination
                     </h3>
-                    <p className="mt-1 text-sm text-white/75">
+                    <p className="mt-1 text-sm text-primary/75">
                       Each button below links directly to its real, redeemable
                       Acuity Gift Certificate product for{" "}
                       <strong>{dollarOffering.studioLabel}</strong> (
@@ -835,14 +835,14 @@ export default function GiftCardsStorefront({
                           }}
                           className={`flex flex-col items-center justify-center rounded-2xl border p-4 text-center transition ${
                             isSelected
-                              ? "border-pink-400 bg-gradient-to-b from-pink-500/35 to-purple-600/35 text-white shadow-lg shadow-pink-500/20"
-                              : "border-white/15 bg-white/5 text-white/80 hover:border-white/30 hover:bg-white/10"
+                              ? "border-pink-400 bg-gradient-to-b from-pink-500/35 to-purple-600/35 text-primary shadow-lg shadow-pink-500/20"
+                              : "border-white/15 bg-surface-secondary text-primary/80 hover:border-white/30 hover:bg-surface-secondary"
                           }`}
                         >
                           <span className="font-serif text-2xl font-bold">
                             {denom.formattedPrice}
                           </span>
-                          <span className="mt-1 text-[11px] text-white/65">
+                          <span className="mt-1 text-[11px] text-primary/65">
                             ID #{denom.productId}
                           </span>
                         </button>
@@ -852,13 +852,13 @@ export default function GiftCardsStorefront({
 
                   {/* Selected Denomination Coverage Detail & Direct Purchase Button */}
                   {activeDenomination && (
-                    <div className="rounded-2xl border border-pink-400/30 bg-black/30 p-5 space-y-4">
+                    <div className="rounded-2xl border border-pink-400/30 bg-background/30 p-5 space-y-4">
                       <div className="flex flex-wrap items-baseline justify-between gap-2">
                         <div>
                           <span className="text-xs font-bold uppercase tracking-wider text-emerald-300">
                             ✓ Verified Acuity Product #{activeDenomination.productId}
                           </span>
-                          <h4 className="font-serif text-2xl font-bold text-white">
+                          <h4 className="font-serif text-2xl font-bold text-primary">
                             {activeDenomination.name} ({dollarOffering.studioLabel})
                           </h4>
                         </div>
@@ -867,8 +867,8 @@ export default function GiftCardsStorefront({
                         </div>
                       </div>
 
-                      <p className="text-sm leading-relaxed text-white/85">
-                        <strong className="text-white">
+                      <p className="text-sm leading-relaxed text-primary/85">
+                        <strong className="text-primary">
                           What {activeDenomination.formattedPrice} covers in{" "}
                           {dollarOffering.studioLabel}:
                         </strong>{" "}
@@ -886,7 +886,7 @@ export default function GiftCardsStorefront({
                             displayedPrice={activeDenomination.amount}
                             ctaLocation="Gift Cards Let Them Choose"
                             ctaType="primary"
-                            className="btn-interactive flex-1 inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 px-6 py-4 text-base font-bold text-white shadow-xl shadow-pink-500/30 transition hover:shadow-pink-500/50"
+                            className="btn-interactive flex-1 inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 px-6 py-4 text-base font-bold text-primary shadow-xl shadow-pink-500/30 transition hover:shadow-pink-500/50"
                           >
                             {dollarCard.buttonLabel} — Buy{" "}
                             {activeDenomination.formattedPrice} Gift Card →
@@ -899,7 +899,7 @@ export default function GiftCardsStorefront({
                             displayedPrice={activeDenomination.amount}
                             ctaLocation="Gift Cards Full Catalog Link"
                             ctaType="secondary"
-                            className="inline-flex items-center justify-center rounded-2xl border border-white/20 bg-white/5 px-5 py-4 text-sm font-semibold text-white/90 transition hover:bg-white/10"
+                            className="inline-flex items-center justify-center rounded-2xl border border-border bg-surface-secondary px-5 py-4 text-sm font-semibold text-primary/90 transition hover:bg-surface-secondary"
                           >
                             View All in Acuity Catalog ↗
                           </BookingLink>
@@ -909,7 +909,7 @@ export default function GiftCardsStorefront({
                           type="button"
                           disabled
                           aria-disabled="true"
-                          className="w-full cursor-not-allowed rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-base font-bold text-white/55"
+                          className="w-full cursor-not-allowed rounded-2xl border border-white/15 bg-surface-secondary px-6 py-4 text-base font-bold text-primary/55"
                         >
                           Confirm Recipient’s Studio Above to Enable Checkout
                         </button>
@@ -918,8 +918,8 @@ export default function GiftCardsStorefront({
                   )}
 
                   {/* Quick Direct Links for All 5 Verified Chicago Denominations */}
-                  <div className="border-t border-white/10 pt-4">
-                    <div className="text-xs font-semibold uppercase tracking-wider text-white/60">
+                  <div className="border-t border-border pt-4">
+                    <div className="text-xs font-semibold uppercase tracking-wider text-primary/60">
                       Direct Acuity Checkout Links by Denomination (
                       {dollarOffering.studioLabel})
                     </div>
@@ -934,7 +934,7 @@ export default function GiftCardsStorefront({
                           displayedPrice={denom.amount}
                           ctaLocation="Gift Cards Denomination Quick Links"
                           ctaType="secondary"
-                          className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-white/90 transition hover:border-pink-400/50 hover:bg-white/10"
+                          className="rounded-full border border-white/15 bg-surface-secondary px-4 py-2 text-xs font-semibold text-primary/90 transition hover:border-pink-400/50 hover:bg-surface-secondary"
                         >
                           Buy {denom.formattedPrice} Gift Card (#{denom.productId}) →
                         </BookingLink>
@@ -947,17 +947,17 @@ export default function GiftCardsStorefront({
                   <div className="inline-block rounded-full bg-amber-500/25 px-3 py-1 text-xs font-bold text-amber-200">
                     Unfinished Acuity Setup · {dollarOffering.studioLabel}
                   </div>
-                  <h3 className="font-serif text-2xl font-bold text-white">
+                  <h3 className="font-serif text-2xl font-bold text-primary">
                     Eugene Dollar-Value Gift Certificates Pending Acuity Configuration
                   </h3>
-                  <p className="text-sm leading-relaxed text-white/85">
+                  <p className="text-sm leading-relaxed text-primary/85">
                     {dollarOffering.pendingSetupReason}
                   </p>
                   <button
                     type="button"
                     disabled
                     aria-disabled="true"
-                    className="w-full cursor-not-allowed rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-base font-bold text-white/55"
+                    className="w-full cursor-not-allowed rounded-2xl border border-white/15 bg-surface-secondary px-6 py-4 text-base font-bold text-primary/55"
                   >
                     {dollarCard.buttonLabel} — Pending Eugene Acuity Setup
                   </button>
@@ -971,7 +971,7 @@ export default function GiftCardsStorefront({
                     <button
                       type="button"
                       onClick={() => handleCitySelect("chicago")}
-                      className="font-semibold text-white underline hover:text-pink-200"
+                      className="font-semibold text-primary underline hover:text-pink-200"
                     >
                       Looking for Chicago? Switch to Chicago — Pilsen →
                     </button>
@@ -980,9 +980,9 @@ export default function GiftCardsStorefront({
               )}
 
               {/* Eligible Workshops Directory for the Selected Studio */}
-              <div className="border-t border-white/10 pt-5">
+              <div className="border-t border-border pt-5">
                 <details className="group">
-                  <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-semibold text-white/90">
+                  <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-semibold text-primary/90">
                     <span>
                       {city === "chicago"
                         ? `View All ${dollarOffering.eligibleAppointmentTypes.length} Verified Eligible Chicago Workshops & Prices ($39–$85)`
@@ -996,9 +996,9 @@ export default function GiftCardsStorefront({
                     {dollarOffering.eligibleAppointmentTypes.map((apt) => (
                       <div
                         key={apt.id}
-                        className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-3.5 py-2.5"
+                        className="flex items-center justify-between rounded-xl border border-border bg-surface-secondary px-3.5 py-2.5"
                       >
-                        <span className="text-white/90 font-medium">
+                        <span className="text-primary/90 font-medium">
                           {apt.name.replace(/\s*-\s*Chicago$/i, "")}
                         </span>
                         <span className="shrink-0 font-bold text-amber-300 ml-2">
@@ -1026,11 +1026,11 @@ export default function GiftCardsStorefront({
           </div>
           <h2
             id="how-gifting-works-heading"
-            className="mt-2 font-serif text-3xl font-bold text-white sm:text-4xl"
+            className="mt-2 font-serif text-3xl font-bold text-primary sm:text-4xl"
           >
             How Purchase &amp; Redemption Work
           </h2>
-          <p className="mt-2 text-base text-white/80">
+          <p className="mt-2 text-base text-primary/80">
             Verified against our live Acuity Scheduling checkout and booking
             flow.
           </p>
@@ -1039,32 +1039,32 @@ export default function GiftCardsStorefront({
         <div className="grid gap-6 md:grid-cols-3">
           <GlassCard className="p-6 flex flex-col justify-between">
             <div>
-              <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-pink-500/25 font-serif text-lg font-bold text-pink-200 border border-pink-400/30">
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-btn/25 font-serif text-lg font-bold text-pink-200 border border-pink-400/30">
                 1
               </div>
-              <h3 className="mt-4 font-serif text-xl font-bold text-white">
+              <h3 className="mt-4 font-serif text-xl font-bold text-primary">
                 1. Choose their experience.
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/80">
+              <p className="mt-2 text-sm leading-relaxed text-primary/80">
                 Confirm your recipient’s studio ({studio.label}) and select a
                 pottery experience or flexible dollar denomination. You never
                 need to pick a class date or time when buying the gift.
               </p>
             </div>
-            <div className="mt-4 border-t border-white/10 pt-3 text-xs text-white/60">
+            <div className="mt-4 border-t border-border pt-3 text-xs text-primary/60">
               Studio location &amp; guest coverage confirmed upfront
             </div>
           </GlassCard>
 
           <GlassCard className="p-6 flex flex-col justify-between">
             <div>
-              <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-purple-500/25 font-serif text-lg font-bold text-purple-200 border border-purple-400/30">
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-btn/25 font-serif text-lg font-bold text-purple-200 border border-purple-400/30">
                 2
               </div>
-              <h3 className="mt-4 font-serif text-xl font-bold text-white">
+              <h3 className="mt-4 font-serif text-xl font-bold text-primary">
                 2. Purchase and share their gift certificate.
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/80">
+              <p className="mt-2 text-sm leading-relaxed text-primary/80">
                 Complete checkout securely through Acuity (Square or PayPal).
                 Acuity immediately displays your 8-character redemption code and
                 a printable certificate view on the confirmation page, and
@@ -1072,7 +1072,7 @@ export default function GiftCardsStorefront({
                 can print or forward it when ready.
               </p>
             </div>
-            <div className="mt-4 border-t border-white/10 pt-3 text-xs text-white/60">
+            <div className="mt-4 border-t border-border pt-3 text-xs text-primary/60">
               Note: Acuity sends confirmation to the purchaser’s email (no
               automated future-date email scheduling)
             </div>
@@ -1083,12 +1083,12 @@ export default function GiftCardsStorefront({
               <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-500/25 font-serif text-lg font-bold text-amber-200 border border-amber-400/30">
                 3
               </div>
-              <h3 className="mt-4 font-serif text-xl font-bold text-white">
+              <h3 className="mt-4 font-serif text-xl font-bold text-primary">
                 3. They choose an available date and redeem their code.
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/80">
+              <p className="mt-2 text-sm leading-relaxed text-primary/80">
                 Your recipient visits{" "}
-                <span className="font-mono text-white/95">
+                <span className="font-mono text-primary/95">
                   colorcocktailfactory.as.me
                 </span>{" "}
                 (or any eligible workshop page), selects an open session date,
@@ -1097,7 +1097,7 @@ export default function GiftCardsStorefront({
                 checkout.
               </p>
             </div>
-            <div className="mt-4 border-t border-white/10 pt-3 text-xs text-white/60">
+            <div className="mt-4 border-t border-border pt-3 text-xs text-primary/60">
               For Date Night for Two, 1 booking slot covers both guests
             </div>
           </GlassCard>
@@ -1107,7 +1107,7 @@ export default function GiftCardsStorefront({
       {/* 5. Pottery Finishing & Glazing Fee Disclosure + Why We Don't Invent Bundles (Section 4) */}
       <section id="pottery-finishing-disclosure" className="space-y-4">
         <PotteryFinishingSection />
-        <GlassCard className="p-6 text-xs leading-relaxed text-white/80 border-white/10">
+        <GlassCard className="p-6 text-xs leading-relaxed text-primary/80 border-border">
           <div className="font-bold uppercase tracking-wider text-pink-300">
             Verified Fee Structure &amp; Why Finishing Is Paid Separately
           </div>
@@ -1155,18 +1155,18 @@ export default function GiftCardsStorefront({
               </div>
               <h2
                 id="printable-certificate-heading"
-                className="font-serif text-2xl font-bold text-white sm:text-3xl"
+                className="font-serif text-2xl font-bold text-primary sm:text-3xl"
               >
                 Create a Printable Keepsake Gift Card
               </h2>
-              <p className="text-sm leading-relaxed text-white/80">
+              <p className="text-sm leading-relaxed text-primary/80">
                 Add your recipient’s name, a personal note, and (once purchased
                 in Acuity) your 8-character certificate code. Print or save as a
                 PDF to slip into a card or email directly to your recipient.
               </p>
 
               <div className="space-y-3 pt-2">
-                <label className="block text-xs font-semibold text-white/85">
+                <label className="block text-xs font-semibold text-primary/85">
                   Recipient’s Name (To)
                   <input
                     type="text"
@@ -1174,11 +1174,11 @@ export default function GiftCardsStorefront({
                     onChange={(e) => setRecipientName(e.target.value)}
                     placeholder="e.g., Maya & Jordan"
                     maxLength={80}
-                    className="mt-1 w-full rounded-xl border border-white/20 bg-white/10 px-3.5 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-pink-400 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-border bg-surface-secondary px-3.5 py-2.5 text-sm text-primary placeholder:text-primary/40 focus:border-pink-400 focus:outline-none"
                   />
                 </label>
 
-                <label className="block text-xs font-semibold text-white/85">
+                <label className="block text-xs font-semibold text-primary/85">
                   From
                   <input
                     type="text"
@@ -1186,16 +1186,16 @@ export default function GiftCardsStorefront({
                     onChange={(e) => setSenderName(e.target.value)}
                     placeholder="e.g., Alex"
                     maxLength={80}
-                    className="mt-1 w-full rounded-xl border border-white/20 bg-white/10 px-3.5 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-pink-400 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-border bg-surface-secondary px-3.5 py-2.5 text-sm text-primary placeholder:text-primary/40 focus:border-pink-400 focus:outline-none"
                   />
                 </label>
 
-                <label className="block text-xs font-semibold text-white/85">
+                <label className="block text-xs font-semibold text-primary/85">
                   Gifted Experience or Amount
                   <select
                     value={certificateGiftLabel}
                     onChange={(e) => setCertificateGiftLabel(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-white/20 bg-slate-900 px-3.5 py-2.5 text-sm text-white focus:border-pink-400 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm text-primary focus:border-pink-400 focus:outline-none"
                   >
                     <option value="Pottery Date Night for Two">
                       Pottery Date Night for Two (2 Guests Sharing 1 Wheel)
@@ -1221,18 +1221,18 @@ export default function GiftCardsStorefront({
                   </select>
                 </label>
 
-                <label className="block text-xs font-semibold text-white/85">
+                <label className="block text-xs font-semibold text-primary/85">
                   Personal Message
                   <textarea
                     rows={3}
                     value={personalMessage}
                     onChange={(e) => setPersonalMessage(e.target.value)}
                     maxLength={280}
-                    className="mt-1 w-full rounded-xl border border-white/20 bg-white/10 px-3.5 py-2.5 text-sm text-white placeholder:text-white/40 focus:border-pink-400 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-border bg-surface-secondary px-3.5 py-2.5 text-sm text-primary placeholder:text-primary/40 focus:border-pink-400 focus:outline-none"
                   />
                 </label>
 
-                <label className="block text-xs font-semibold text-white/85">
+                <label className="block text-xs font-semibold text-primary/85">
                   Acuity Certificate Code (Optional — enter after checkout or
                   write in by hand)
                   <input
@@ -1243,14 +1243,14 @@ export default function GiftCardsStorefront({
                     }
                     placeholder="e.g., 2CAF7B4A"
                     maxLength={24}
-                    className="mt-1 w-full rounded-xl border border-white/20 bg-white/10 px-3.5 py-2.5 font-mono text-sm uppercase text-white placeholder:text-white/40 focus:border-pink-400 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-border bg-surface-secondary px-3.5 py-2.5 font-mono text-sm uppercase text-primary placeholder:text-primary/40 focus:border-pink-400 focus:outline-none"
                   />
                 </label>
 
                 <button
                   type="button"
                   onClick={handlePrintCertificate}
-                  className="mt-2 inline-flex w-full items-center justify-center rounded-xl border border-pink-400/50 bg-pink-500/25 px-5 py-3 text-sm font-bold text-white transition hover:bg-pink-500/35"
+                  className="mt-2 inline-flex w-full items-center justify-center rounded-xl border border-pink-400/50 bg-btn/25 px-5 py-3 text-sm font-bold text-primary transition hover:bg-btn/35"
                 >
                   🖨️ Print / Save Keepsake Gift Certificate (PDF)
                 </button>
@@ -1347,7 +1347,7 @@ export default function GiftCardsStorefront({
           </div>
           <h2
             id="gift-faqs-heading"
-            className="mt-1 font-serif text-3xl font-bold text-white"
+            className="mt-1 font-serif text-3xl font-bold text-primary"
           >
             Gift Certificate FAQs
           </h2>
@@ -1356,10 +1356,10 @@ export default function GiftCardsStorefront({
         <div className="grid gap-4 md:grid-cols-2">
           {GIFT_FAQS.map((faq) => (
             <GlassCard key={faq.q} className="p-6">
-              <h3 className="font-serif text-lg font-bold text-white">
+              <h3 className="font-serif text-lg font-bold text-primary">
                 {faq.q}
               </h3>
-              <p className="mt-2.5 text-sm leading-relaxed text-white/80">
+              <p className="mt-2.5 text-sm leading-relaxed text-primary/80">
                 {faq.a}
               </p>
             </GlassCard>
@@ -1382,12 +1382,12 @@ export default function GiftCardsStorefront({
                 </span>
                 <h2
                   id="manual-acuity-setup-heading"
-                  className="mt-2 font-serif text-2xl font-bold text-white"
+                  className="mt-2 font-serif text-2xl font-bold text-primary"
                 >
                   Manual Acuity Admin Setup Specifications (Unfinished Acuity
                   Products)
                 </h2>
-                <p className="mt-1 text-xs text-white/75">
+                <p className="mt-1 text-xs text-primary/75">
                   Acuity Scheduling’s REST API exposes{" "}
                   <code className="text-amber-200">GET /api/v1/products</code>{" "}
                   as read-only and does not permit API creation of new store
@@ -1395,14 +1395,14 @@ export default function GiftCardsStorefront({
                   creating experience certificates in Acuity Admin.
                 </p>
               </div>
-              <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold text-white group-open:bg-white/20">
+              <span className="rounded-full border border-border bg-surface-secondary px-4 py-2 text-xs font-semibold text-primary group-open:bg-surface-secondary">
                 View Exact Setup Specs ↓
               </span>
             </summary>
 
-            <div className="mt-6 space-y-6 border-t border-white/15 pt-6 text-xs leading-relaxed text-white/85">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-2">
-                <div className="font-bold text-white">
+            <div className="mt-6 space-y-6 border-t border-white/15 pt-6 text-xs leading-relaxed text-primary/85">
+              <div className="rounded-2xl border border-border bg-surface-secondary p-4 space-y-2">
+                <div className="font-bold text-primary">
                   Why Some Products Require Manual Creation in Acuity Admin (
                   <em>Packages, Gifts &amp; Subscriptions</em>):
                 </div>
@@ -1450,33 +1450,33 @@ export default function GiftCardsStorefront({
                 {MANUAL_ACUITY_SETUP_SPECS.map((spec) => (
                   <div
                     key={spec.key}
-                    className="rounded-2xl border border-white/15 bg-black/30 p-5 space-y-2.5"
+                    className="rounded-2xl border border-white/15 bg-background/30 p-5 space-y-2.5"
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className="rounded-full bg-pink-500/20 px-2.5 py-0.5 text-[11px] font-bold uppercase text-pink-200">
+                      <span className="rounded-full bg-btn/20 px-2.5 py-0.5 text-[11px] font-bold uppercase text-pink-200">
                         {spec.city} Studio
                       </span>
                       <span className="font-mono text-amber-300 font-bold">
                         {spec.verifiedPrice}
                       </span>
                     </div>
-                    <h3 className="font-serif text-lg font-bold text-white">
+                    <h3 className="font-serif text-lg font-bold text-primary">
                       {spec.productName}
                     </h3>
                     <div>
-                      <strong className="text-white">Category / Group:</strong>{" "}
+                      <strong className="text-primary">Category / Group:</strong>{" "}
                       {spec.categoryGroup}
                     </div>
                     <div>
-                      <strong className="text-white">Redemption Value:</strong>{" "}
+                      <strong className="text-primary">Redemption Value:</strong>{" "}
                       {spec.redemptionValue} ({spec.redemptionModel})
                     </div>
                     <div>
-                      <strong className="text-white">Expiration:</strong>{" "}
+                      <strong className="text-primary">Expiration:</strong>{" "}
                       {spec.expiration}
                     </div>
                     <div>
-                      <strong className="text-white">
+                      <strong className="text-primary">
                         Eligible Appointment Types:
                       </strong>
                       <ul className="mt-1 list-disc pl-4 space-y-0.5">
@@ -1489,19 +1489,19 @@ export default function GiftCardsStorefront({
                       </ul>
                     </div>
                     <div>
-                      <strong className="text-white">Product Image:</strong>{" "}
-                      <code className="break-all text-white/75">
+                      <strong className="text-primary">Product Image:</strong>{" "}
+                      <code className="break-all text-primary/75">
                         {spec.imageUrl}
                       </code>
                     </div>
                     <div>
-                      <strong className="text-white">Description:</strong>
-                      <p className="mt-1 rounded-lg bg-white/5 p-2.5 text-white/80">
+                      <strong className="text-primary">Description:</strong>
+                      <p className="mt-1 rounded-lg bg-surface-secondary p-2.5 text-primary/80">
                         {spec.description}
                       </p>
                     </div>
                     <div>
-                      <strong className="text-white">
+                      <strong className="text-primary">
                         Required Purchase Link Format:
                       </strong>{" "}
                       <code className="break-all text-emerald-300">
@@ -1519,11 +1519,11 @@ export default function GiftCardsStorefront({
       {/* Bottom Navigation & Support */}
       <GlassCard className="p-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="text-sm text-white/80">
+          <div className="text-sm text-primary/80">
             Questions about a gift certificate or need help combining balances?
             Email{" "}
             <a
-              className="font-semibold text-white underline hover:text-pink-200"
+              className="font-semibold text-primary underline hover:text-pink-200"
               href="mailto:support@colorcocktailfactory.com"
             >
               support@colorcocktailfactory.com
@@ -1533,19 +1533,19 @@ export default function GiftCardsStorefront({
           <div className="flex flex-wrap gap-2">
             <Link
               href={`/?location=${city}`}
-              className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-white/90 hover:bg-white/10"
+              className="rounded-full border border-white/15 bg-surface-secondary px-4 py-2 text-xs font-semibold text-primary/90 hover:bg-surface-secondary"
             >
               Browse {studio.label} Workshops →
             </Link>
             <Link
               href="/activities/date-night-wheel"
-              className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-white/90 hover:bg-white/10"
+              className="rounded-full border border-white/15 bg-surface-secondary px-4 py-2 text-xs font-semibold text-primary/90 hover:bg-surface-secondary"
             >
               Date Night Pottery Details →
             </Link>
             <Link
               href="/activities/beginner-wheel"
-              className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-semibold text-white/90 hover:bg-white/10"
+              className="rounded-full border border-white/15 bg-surface-secondary px-4 py-2 text-xs font-semibold text-primary/90 hover:bg-surface-secondary"
             >
               Beginner Wheel Details →
             </Link>

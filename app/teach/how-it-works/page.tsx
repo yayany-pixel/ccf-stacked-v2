@@ -17,7 +17,7 @@ export default function HowItWorksPage() {
         <h1 className="mb-4 bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
           How It Works
         </h1>
-        <p className="mb-12 text-lg text-white/70">
+        <p className="mb-12 text-lg text-primary/70">
           From application to your first class, here's what to expect when joining our creative team.
         </p>
       </div>

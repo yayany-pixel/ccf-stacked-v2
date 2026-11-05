@@ -38,17 +38,17 @@ export default function HomeTimesDrawer({
   if (!hasAnyLink) return null;
 
   return (
-    <div className="mt-6 border-t border-white/10 pt-6">
+    <div className="mt-6 border-t border-border pt-6">
       {/* Toggle Button */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex w-full items-center justify-between text-left transition-colors hover:text-white"
+        className="flex w-full items-center justify-between text-left transition-colors hover:text-primary"
       >
-        <span className="text-sm font-semibold text-white/80">
+        <span className="text-sm font-semibold text-primary/80">
           {isExpanded ? "Hide" : "View"} upcoming times
         </span>
         <svg
-          className={`h-4 w-4 text-white/60 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
+          className={`h-4 w-4 text-primary/60 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -65,8 +65,8 @@ export default function HomeTimesDrawer({
         `}
       >
         {/* Booking Platform Icons */}
-        <div className="mb-5 rounded-lg border border-white/10 bg-white/5 p-4">
-          <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-white/50">
+        <div className="mb-5 rounded-lg border border-border bg-surface-secondary p-4">
+          <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-primary/50">
             Book via:
           </div>
           <div className="flex flex-wrap gap-3">
@@ -77,25 +77,25 @@ export default function HomeTimesDrawer({
                 city={city}
                 classNameText={classNameText}
                 classId={classId}
-                className="group flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 transition-all hover:border-white/30 hover:bg-white/15 hover:shadow-lg hover:shadow-white/5"
+                className="group flex items-center gap-2 rounded-lg border border-border bg-surface-secondary px-4 py-2.5 transition-all hover:border-white/30 hover:bg-white/15 hover:shadow-lg hover:shadow-white/5"
                 ariaLabel="Book via Groupon (RezClick)"
               >
                 <div className="relative h-7 w-7">
                   <GrouponIcon />
                 </div>
-                <span className="text-xs font-semibold text-white/90 group-hover:text-white">
+                <span className="text-xs font-semibold text-primary/90 group-hover:text-primary">
                   Groupon
                 </span>
               </BookingLink>
             ) : (
               <div
-                className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 opacity-40"
+                className="flex items-center gap-2 rounded-lg border border-border bg-surface-secondary px-4 py-2.5 opacity-40"
                 title="Link not set yet"
               >
                 <div className="relative h-7 w-7">
                   <GrouponIcon />
                 </div>
-                <span className="text-xs font-semibold text-white/60">Groupon</span>
+                <span className="text-xs font-semibold text-primary/60">Groupon</span>
               </div>
             )}
 
@@ -106,25 +106,25 @@ export default function HomeTimesDrawer({
                 city={city}
                 classNameText={classNameText}
                 classId={classId}
-                className="group flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 transition-all hover:border-white/30 hover:bg-white/15 hover:shadow-lg hover:shadow-white/5"
+                className="group flex items-center gap-2 rounded-lg border border-border bg-surface-secondary px-4 py-2.5 transition-all hover:border-white/30 hover:bg-white/15 hover:shadow-lg hover:shadow-white/5"
                 ariaLabel="Book via Eventbrite"
               >
                 <div className="relative h-7 w-7">
                   <EventbriteIcon />
                 </div>
-                <span className="text-xs font-semibold text-white/90 group-hover:text-white">
+                <span className="text-xs font-semibold text-primary/90 group-hover:text-primary">
                   Eventbrite
                 </span>
               </BookingLink>
             ) : (
               <div
-                className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 opacity-40"
+                className="flex items-center gap-2 rounded-lg border border-border bg-surface-secondary px-4 py-2.5 opacity-40"
                 title="Link not set yet"
               >
                 <div className="relative h-7 w-7">
                   <EventbriteIcon />
                 </div>
-                <span className="text-xs font-semibold text-white/60">Eventbrite</span>
+                <span className="text-xs font-semibold text-primary/60">Eventbrite</span>
               </div>
             )}
 
@@ -135,25 +135,25 @@ export default function HomeTimesDrawer({
                 city={city}
                 classNameText={classNameText}
                 classId={classId}
-                className="group flex items-center gap-2 rounded-lg border border-white/20 bg-white/10 px-4 py-2.5 transition-all hover:border-white/30 hover:bg-white/15 hover:shadow-lg hover:shadow-white/5"
+                className="group flex items-center gap-2 rounded-lg border border-border bg-surface-secondary px-4 py-2.5 transition-all hover:border-white/30 hover:bg-white/15 hover:shadow-lg hover:shadow-white/5"
                 ariaLabel="Book remaining seats via Acuity"
               >
                 <div className="relative h-7 w-7">
                   <AcuityIcon />
                 </div>
-                <span className="text-xs font-semibold text-white/90 group-hover:text-white">
+                <span className="text-xs font-semibold text-primary/90 group-hover:text-primary">
                   Acuity
                 </span>
               </BookingLink>
             ) : (
               <div
-                className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 opacity-40"
+                className="flex items-center gap-2 rounded-lg border border-border bg-surface-secondary px-4 py-2.5 opacity-40"
                 title="Link not set yet"
               >
                 <div className="relative h-7 w-7">
                   <AcuityIcon />
                 </div>
-                <span className="text-xs font-semibold text-white/60">Acuity</span>
+                <span className="text-xs font-semibold text-primary/60">Acuity</span>
               </div>
             )}
           </div>
@@ -162,21 +162,21 @@ export default function HomeTimesDrawer({
         {/* Times List */}
         {upcomingTimes.length > 0 ? (
           <div className="space-y-2">
-            <div className="text-xs font-semibold uppercase tracking-wide text-white/50">
+            <div className="text-xs font-semibold uppercase tracking-wide text-primary/50">
               Available Times
             </div>
             {upcomingTimes.map((time, idx) => (
               <div
                 key={idx}
-                className="flex items-center justify-between gap-3 rounded border border-white/5 bg-white/5 px-3 py-2 text-sm"
+                className="flex items-center justify-between gap-3 rounded border border-white/5 bg-surface-secondary px-3 py-2 text-sm"
               >
-                <span className="text-white/70">{time.label}</span>
+                <span className="text-primary/70">{time.label}</span>
                 <BookingLink
                   href={time.url}
                   city={city}
                   classNameText={classNameText}
                   classId={classId}
-                  className="whitespace-nowrap rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white transition-all hover:bg-white/20"
+                  className="whitespace-nowrap rounded-full bg-surface-secondary px-3 py-1 text-xs font-semibold text-primary transition-all hover:bg-surface-secondary"
                 >
                   Book →
                 </BookingLink>
@@ -184,7 +184,7 @@ export default function HomeTimesDrawer({
             ))}
           </div>
         ) : (
-          <div className="rounded border border-white/5 bg-white/5 px-4 py-3 text-center text-sm text-white/60">
+          <div className="rounded border border-white/5 bg-surface-secondary px-4 py-3 text-center text-sm text-primary/60">
             Times coming soon — choose a booking option above
           </div>
         )}

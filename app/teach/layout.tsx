@@ -32,11 +32,11 @@ export default function TeachLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-[#080A10]">
+    <div className="min-h-screen bg-background">
       {/* Dedicated Teach Header */}
       <header className="fixed inset-x-0 top-0 z-50">
         <div className="mx-auto max-w-7xl px-4 py-3">
-          <div className="shimmer-drift rounded-2xl border border-white/10 bg-white/5 shadow-glass backdrop-blur-xl">
+          <div className="shimmer-drift rounded-2xl border border-border bg-surface-secondary shadow-glass backdrop-blur-xl">
             <div className="flex items-center justify-between gap-3 px-4 py-3">
               {/* Logo */}
               <Link href="/teach" className="flex items-center gap-3">
@@ -45,7 +45,7 @@ export default function TeachLayout({
                 </div>
                 <div className="hidden sm:block">
                   <div className="text-sm font-semibold leading-none">Teach with CCF</div>
-                  <div className="mt-1 text-xs text-white/60">Join our creative team</div>
+                  <div className="mt-1 text-xs text-primary/60">Join our creative team</div>
                 </div>
               </Link>
 
@@ -55,7 +55,7 @@ export default function TeachLayout({
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="rounded-full px-4 py-2 text-sm font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
+                    className="rounded-full px-4 py-2 text-sm font-medium text-primary/75 transition hover:bg-surface-secondary hover:text-primary"
                   >
                     {link.label}
                   </Link>
@@ -82,13 +82,13 @@ export default function TeachLayout({
             </div>
 
             {/* Mobile Navigation */}
-            <div className="border-t border-white/10 px-4 py-2 lg:hidden">
+            <div className="border-t border-border px-4 py-2 lg:hidden">
               <div className="flex flex-wrap gap-1">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="rounded-full px-3 py-1.5 text-xs font-medium text-white/75 transition hover:bg-white/10 hover:text-white"
+                    className="rounded-full px-3 py-1.5 text-xs font-medium text-primary/75 transition hover:bg-surface-secondary hover:text-primary"
                   >
                     {link.label}
                   </Link>

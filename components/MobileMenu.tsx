@@ -20,7 +20,7 @@ export default function MobileMenu({ items }: { items: NavItem[] }) {
       {/* Hamburger Button */}
       <button
         onClick={toggleMenu}
-        className="grid h-10 w-10 place-items-center rounded-xl border border-white/20 bg-white/10 backdrop-blur-xl transition-all hover:bg-white/20 lg:hidden"
+        className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-surface-secondary backdrop-blur-xl transition-all hover:bg-surface-secondary lg:hidden"
         aria-label="Toggle menu"
         aria-expanded={isOpen}
       >
@@ -36,7 +36,7 @@ export default function MobileMenu({ items }: { items: NavItem[] }) {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 z-40 bg-black/80 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-background/80 backdrop-blur-sm lg:hidden"
             onClick={closeMenu}
             aria-hidden="true"
           />
@@ -45,14 +45,14 @@ export default function MobileMenu({ items }: { items: NavItem[] }) {
           <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-gradient-to-br from-slate-900 via-purple-900/80 to-slate-900 shadow-2xl lg:hidden">
             <div className="flex h-full flex-col">
               {/* Header */}
-              <div className="flex items-center justify-between border-b border-white/10 p-6">
+              <div className="flex items-center justify-between border-b border-border p-6">
                 <div>
                   <div className="text-lg font-semibold">Menu</div>
-                  <div className="text-sm text-white/60">Color Cocktail Factory</div>
+                  <div className="text-sm text-primary/60">Color Cocktail Factory</div>
                 </div>
                 <button
                   onClick={closeMenu}
-                  className="grid h-10 w-10 place-items-center rounded-xl border border-white/20 bg-white/10 backdrop-blur-xl transition-all hover:bg-white/20"
+                  className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-surface-secondary backdrop-blur-xl transition-all hover:bg-surface-secondary"
                   aria-label="Close menu"
                 >
                   ✕
@@ -80,7 +80,7 @@ export default function MobileMenu({ items }: { items: NavItem[] }) {
                                 target.scrollIntoView({ behavior: 'smooth' });
                               }
                             }}
-                            className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 font-medium transition-all hover:border-white/20 hover:bg-white/10"
+                            className="block rounded-xl border border-border bg-surface-secondary px-4 py-3 font-medium transition-all hover:border-border hover:bg-surface-secondary"
                           >
                             {item.label}
                           </a>
@@ -88,7 +88,7 @@ export default function MobileMenu({ items }: { items: NavItem[] }) {
                           <Link
                             href={href}
                             onClick={closeMenu}
-                            className="block rounded-xl border border-white/10 bg-white/5 px-4 py-3 font-medium transition-all hover:border-white/20 hover:bg-white/10"
+                            className="block rounded-xl border border-border bg-surface-secondary px-4 py-3 font-medium transition-all hover:border-border hover:bg-surface-secondary"
                           >
                             {item.label}
                           </Link>
@@ -100,7 +100,7 @@ export default function MobileMenu({ items }: { items: NavItem[] }) {
               </nav>
 
               {/* Footer CTA */}
-              <div className="border-t border-white/10 p-6">
+              <div className="border-t border-border p-6">
                 <Link
                   href="/gift-cards"
                   onClick={closeMenu}

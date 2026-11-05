@@ -119,6 +119,16 @@ export function currentCity(): string {
 export function isGtagAvailable() {
   return typeof window !== "undefined" && typeof window.gtag === "function" && currentPrivacyPreferences().analytics;
 }
+export function getActiveExperiment() {
+  if (typeof document !== "undefined") {
+    const theme = document.documentElement.getAttribute("data-theme");
+    if (theme === "earthy" || theme === "cyberpunk") {
+      return { test_name: "site_theme_v1", variant: theme };
+    }
+  }
+  return {};
+}
+
 export function trackEvent(
   name: string,
   params: Record<string, any> = {},
@@ -126,6 +136,7 @@ export function trackEvent(
   const clean = sanitize({
     page_path: typeof location === "undefined" ? "" : location.pathname,
     city: currentCity(),
+    ...getActiveExperiment(),
     ...params,
   });
   trackSimpleEvent(name, clean);

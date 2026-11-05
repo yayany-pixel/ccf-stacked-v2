@@ -56,16 +56,16 @@ export default function BlogPage({ searchParams }: Props) {
     <main id="main-content" tabIndex={-1} className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/40 to-slate-900">
       <section className="px-6 pb-12 pt-16 sm:pt-20">
         <div className="mx-auto max-w-6xl">
-          <Link href="/activities" className="text-sm font-semibold text-purple-200 hover:text-white">
+          <Link href="/activities" className="text-sm font-semibold text-purple-200 hover:text-primary">
             ← Explore Creative Workshops
           </Link>
           <p className="mt-8 text-xs font-bold uppercase tracking-[0.2em] text-purple-200">
             Ideas, Techniques &amp; Inspiration
           </p>
-          <h1 className="mt-3 max-w-4xl font-serif text-4xl font-bold leading-tight text-white sm:text-6xl">
+          <h1 className="mt-3 max-w-4xl font-serif text-4xl font-bold leading-tight text-primary sm:text-6xl">
             The Color Cocktail Factory Blog
           </h1>
-          <p className="mt-5 max-w-3xl text-lg leading-8 text-white/75">
+          <p className="mt-5 max-w-3xl text-lg leading-8 text-primary/75">
             Get inspired, learn a practical technique, and find the workshop where you can make something yourself.
             Explore local neighborhoods, date nights, family outings, private events, and hands-on ceramics, glass, botanical arts, and painting in Chicago and Eugene.
           </p>
@@ -74,10 +74,10 @@ export default function BlogPage({ searchParams }: Props) {
 
       <section className="px-6 pb-20" aria-labelledby="article-list-heading">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-5 rounded-2xl border border-white/10 bg-white/5 p-5 sm:p-6">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-5 rounded-2xl border border-border bg-surface-secondary p-5 sm:p-6">
             <div>
-              <h2 id="article-list-heading" className="font-serif text-2xl font-bold text-white">Browse Articles</h2>
-              <p className="mt-1 text-sm text-white/60">
+              <h2 id="article-list-heading" className="font-serif text-2xl font-bold text-primary">Browse Articles</h2>
+              <p className="mt-1 text-sm text-primary/60">
                 {posts.length} {posts.length === 1 ? "guide" : "guides"}
                 {selected ? " for this workshop" : " across our creative studio collection"}
                 {" · "}Page {page} of {totalPages}
@@ -85,14 +85,14 @@ export default function BlogPage({ searchParams }: Props) {
             </div>
             <form method="get" action="/blog" className="flex flex-wrap items-end gap-2">
               <div>
-                <label htmlFor="blog-activity" className="mb-2 block text-xs font-semibold uppercase tracking-wide text-white/70">
+                <label htmlFor="blog-activity" className="mb-2 block text-xs font-semibold uppercase tracking-wide text-primary/70">
                   Filter by workshop
                 </label>
                 <select
                   id="blog-activity"
                   name="activity"
                   defaultValue={selected}
-                  className="max-w-[260px] rounded-xl border border-white/20 bg-slate-900 px-4 py-3 text-sm text-white"
+                  className="max-w-[260px] rounded-xl border border-border bg-background px-4 py-3 text-sm text-primary"
                 >
                   <option value="">All workshops</option>
                   {activities.map((activity) => (
@@ -102,11 +102,11 @@ export default function BlogPage({ searchParams }: Props) {
                   ))}
                 </select>
               </div>
-              <button type="submit" className="rounded-xl bg-purple-600 px-5 py-3 text-sm font-semibold text-white hover:bg-purple-500">
+              <button type="submit" className="rounded-xl bg-btn px-5 py-3 text-sm font-semibold text-primary hover:bg-btn">
                 Show Guides
               </button>
               {selected ? (
-                <Link href="/blog" className="rounded-xl border border-white/20 px-4 py-3 text-sm font-semibold text-white/80 hover:bg-white/10">
+                <Link href="/blog" className="rounded-xl border border-border px-4 py-3 text-sm font-semibold text-primary/80 hover:bg-surface-secondary">
                   Clear
                 </Link>
               ) : null}
@@ -130,8 +130,8 @@ export default function BlogPage({ searchParams }: Props) {
                           className="mb-5 aspect-video w-full rounded-xl object-cover"
                         />
                       )}
-                      <div className="flex flex-wrap items-center gap-2 text-xs text-white/60">
-                        <span className="rounded-full bg-purple-500/20 px-3 py-1 font-semibold text-purple-200">
+                      <div className="flex flex-wrap items-center gap-2 text-xs text-primary/60">
+                        <span className="rounded-full bg-btn/20 px-3 py-1 font-semibold text-purple-200">
                           {post.category}
                         </span>
                         {activity?.adultThemed ? (
@@ -140,18 +140,18 @@ export default function BlogPage({ searchParams }: Props) {
                           </span>
                         ) : null}
                       </div>
-                      <h3 className="mt-5 font-serif text-xl font-bold leading-snug text-white group-hover:text-purple-200">
+                      <h3 className="mt-5 font-serif text-xl font-bold leading-snug text-primary group-hover:text-purple-200">
                         {post.title}
                       </h3>
-                      <p className="mt-3 flex-1 text-sm leading-7 text-white/70">{post.description}</p>
+                      <p className="mt-3 flex-1 text-sm leading-7 text-primary/70">{post.description}</p>
                       {activity ? (
-                        <p className="mt-4 text-xs font-semibold text-white/55">
+                        <p className="mt-4 text-xs font-semibold text-primary/55">
                           Workshop: {activity.title}
                         </p>
                       ) : null}
-                      <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-sm">
-                        <span className="text-white/60">{post.readTime}</span>
-                        <span className="font-semibold text-purple-200 group-hover:text-white">Read Guide →</span>
+                      <div className="mt-5 flex items-center justify-between border-t border-border pt-4 text-sm">
+                        <span className="text-primary/60">{post.readTime}</span>
+                        <span className="font-semibold text-purple-200 group-hover:text-primary">Read Guide →</span>
                       </div>
                     </div>
                   </GlassCard>
@@ -162,27 +162,27 @@ export default function BlogPage({ searchParams }: Props) {
 
           {totalPages > 1 ? (
             <nav aria-label="Blog pagination" className="mt-12 flex flex-wrap items-center justify-center gap-2">
-              {page > 1 && <Link href={pageHref(page - 1)} className="rounded-xl border border-white/20 px-4 py-3 text-sm text-white hover:bg-white/10">← Previous</Link>}
+              {page > 1 && <Link href={pageHref(page - 1)} className="rounded-xl border border-border px-4 py-3 text-sm text-primary hover:bg-surface-secondary">← Previous</Link>}
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
                 <Link
                   key={n}
                   href={pageHref(n)}
                   aria-current={n === page ? "page" : undefined}
                   className={`rounded-xl border px-4 py-3 text-sm font-semibold ${n === page
-                    ? "border-purple-400 bg-purple-600 text-white"
-                    : "border-white/20 text-white/80 hover:bg-white/10"}`}
+                    ? "border-purple-400 bg-btn text-primary"
+                    : "border-border text-primary/80 hover:bg-surface-secondary"}`}
                 >
                   {n}
                 </Link>
               ))}
-              {page < totalPages && <Link href={pageHref(page + 1)} className="rounded-xl border border-white/20 px-4 py-3 text-sm text-white hover:bg-white/10">Next →</Link>}
+              {page < totalPages && <Link href={pageHref(page + 1)} className="rounded-xl border border-border px-4 py-3 text-sm text-primary hover:bg-surface-secondary">Next →</Link>}
             </nav>
           ) : null}
 
-          <div className="mt-14 rounded-3xl border border-white/15 bg-white/5 p-8 text-center">
-            <h2 className="font-serif text-2xl font-bold text-white">Ready to Make Something?</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-white/75">Browse actual sessions, compare your studio location, and reserve the workshop that fits your interests.</p>
-            <Link href="/activities" className="mt-6 inline-flex rounded-full bg-purple-600 px-6 py-3 font-semibold text-white hover:bg-purple-500">
+          <div className="mt-14 rounded-3xl border border-white/15 bg-surface-secondary p-8 text-center">
+            <h2 className="font-serif text-2xl font-bold text-primary">Ready to Make Something?</h2>
+            <p className="mx-auto mt-3 max-w-2xl text-primary/75">Browse actual sessions, compare your studio location, and reserve the workshop that fits your interests.</p>
+            <Link href="/activities" className="mt-6 inline-flex rounded-full bg-btn px-6 py-3 font-semibold text-primary hover:bg-btn">
               Explore All Workshops →
             </Link>
           </div>

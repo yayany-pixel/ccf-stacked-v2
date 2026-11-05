@@ -91,7 +91,7 @@ const packages = [
   {
     emoji: "🏺",
     badge: "Most Popular",
-    badgeColor: "border-pink-400/40 bg-pink-500/15 text-pink-300",
+    badgeColor: "border-pink-400/40 bg-btn/15 text-pink-300",
     title: "Wheel Night Party",
     subtitle: "Pottery Wheel Experience",
     description:
@@ -363,7 +363,7 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
       <div className="sticky-cta" aria-label="Mobile sticky CTA">
         <a
           href="#birthday-form"
-          className="block w-full rounded-full bg-gradient-to-r from-pink-500 to-purple-600 py-3 text-center text-sm font-bold text-white shadow-lg"
+          className="block w-full rounded-full bg-gradient-to-r from-pink-500 to-purple-600 py-3 text-center text-sm font-bold text-primary shadow-lg"
         >
           Get Birthday Quote
         </a>
@@ -375,7 +375,7 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
       <section className="relative overflow-hidden bg-gradient-to-br from-indigo-950 via-purple-950 to-pink-950 pb-28 pt-32">
         {/* Rotating ring accent */}
         <div aria-hidden="true" className="shimmer-ring pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3">
-          <svg width="640" height="640" viewBox="0 0 640 640" fill="none" className="text-purple-500/15">
+          <svg width="640" height="640" viewBox="0 0 640 640" fill="none" className="text-accent/15">
             <circle cx="320" cy="320" r="290" stroke="currentColor" strokeWidth="2" strokeDasharray="18 10" />
             <circle cx="320" cy="320" r="230" stroke="currentColor" strokeWidth="1" strokeDasharray="6 14" opacity="0.6" />
             <circle cx="320" cy="320" r="170" stroke="currentColor" strokeWidth="1.5" strokeDasharray="12 8" opacity="0.4" />
@@ -385,7 +385,7 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
 
         <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
           <Reveal variant="scale">
-            <div className="badge-glow mb-6 inline-flex items-center gap-2 rounded-full border border-purple-400/30 bg-purple-500/10 px-4 py-2 text-sm font-semibold text-purple-300 backdrop-blur-xl">
+            <div className="badge-glow mb-6 inline-flex items-center gap-2 rounded-full border border-purple-400/30 bg-btn/10 px-4 py-2 text-sm font-semibold text-purple-300 backdrop-blur-xl">
               ✦ {isChicago ? "Birthday Art Parties · Pilsen, Chicago" : "Adult Birthday Party Venue · Chicago & Eugene"}
             </div>
           </Reveal>
@@ -397,10 +397,10 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
           </Reveal>
 
           <Reveal delay={160} variant="fade-up">
-            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-white/75">
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-primary/75">
               {isChicago ? "Gather your favorite people, try something new and create a one-of-a-kind masterpiece to remember your birthday. Private, beginner-friendly art parties in Chicago’s Pilsen neighborhood." : "Date-night energy for your whole crew. Private, guided creative experiences for birthdays — pottery, paint, mosaics, candles, and more."}
             </p>
-            <p className="mx-auto mt-2 max-w-xl text-sm text-white/50">
+            <p className="mx-auto mt-2 max-w-xl text-sm text-primary/50">
               {isChicago ? "From $55 per person · BYOB welcome · Materials, tools and instruction included" : "21+ friendly. Milestone-worthy. BYOB welcome. $55–$95/person. Chicago (Pilsen) & Eugene, OR."}
             </p>
           </Reveal>
@@ -409,13 +409,13 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="#birthday-form"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-lg shadow-purple-600/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-500/40"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-4 text-base font-bold text-primary shadow-lg shadow-purple-600/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-500/40"
               >
                 Check Availability
               </a>
               <a
                 href="#birthday-form"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-8 py-4 text-base font-semibold text-white backdrop-blur-sm transition hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-secondary px-8 py-4 text-base font-semibold text-primary backdrop-blur-sm transition hover:bg-surface-secondary"
               >
                 Get My Birthday Quote
               </a>
@@ -439,8 +439,8 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
                 { stat: "21+", label: "friendly vibe" },
               ].map(({ stat, label }) => (
                 <div key={stat} className="text-center">
-                  <div className="text-2xl font-bold text-white">{stat}</div>
-                  <div className="mt-0.5 text-xs uppercase tracking-wider text-white/50">{label}</div>
+                  <div className="text-2xl font-bold text-primary">{stat}</div>
+                  <div className="mt-0.5 text-xs uppercase tracking-wider text-primary/50">{label}</div>
                 </div>
               ))}
             </div>
@@ -460,7 +460,7 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
                 Date-night energy,{" "}
                 <span className="italic text-purple-300">for your whole crew</span>
               </h2>
-              <p className="mx-auto mt-4 max-w-2xl text-white/65">
+              <p className="mx-auto mt-4 max-w-2xl text-primary/65">
                 No awkward mixing with strangers. No restaurant noise. Just your people, a private studio,
                 good drinks, and an instructor who makes everyone look like they actually know what they're doing.
               </p>
@@ -479,7 +479,7 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
               <Reveal key={i} delay={i * 60} variant="fade-up">
                 <div className="flex items-start gap-4 rounded-2xl border border-white/8 bg-white/4 p-5 backdrop-blur-sm">
                   <span className="mt-0.5 shrink-0 text-2xl">{item.icon}</span>
-                  <p className="text-sm leading-relaxed text-white/75">{localCopy(item.text)}</p>
+                  <p className="text-sm leading-relaxed text-primary/75">{localCopy(item.text)}</p>
                 </div>
               </Reveal>
             ))}
@@ -498,7 +498,7 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
                 Choose Your{" "}
                 <span className="italic text-pink-300">Adult Party Mode</span>
               </h2>
-              <p className="mt-4 text-white/65">
+              <p className="mt-4 text-primary/65">
                 {isChicago ? "Choose the way your crew loves to create. Birthday art parties from $55 per person." : "Three approaches to a birthday they'll actually remember. All run 2 hours, starting at $55/person."}
               </p>
             </div>
@@ -515,23 +515,23 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
                     </span>
                   </div>
                   <h3 className="mt-2 text-xl font-bold leading-snug">{pkg.title}</h3>
-                  <p className="mt-0.5 text-xs font-medium uppercase tracking-wider text-white/45">{pkg.subtitle}</p>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-white/70">{pkg.description}</p>
-                  <ul className="mt-5 space-y-1.5 border-t border-white/10 pt-5">
+                  <p className="mt-0.5 text-xs font-medium uppercase tracking-wider text-primary/45">{pkg.subtitle}</p>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-primary/70">{pkg.description}</p>
+                  <ul className="mt-5 space-y-1.5 border-t border-border pt-5">
                     {pkg.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-2 text-xs text-white/60">
-                        <span className="mt-0.5 shrink-0 text-purple-400">✓</span>
+                      <li key={b} className="flex items-start gap-2 text-xs text-primary/60">
+                        <span className="mt-0.5 shrink-0 text-accent">✓</span>
                         {b}
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-5 space-y-1 text-xs text-white/40">
+                  <div className="mt-5 space-y-1 text-xs text-primary/40">
                     {!isChicago && <div>⏱ {pkg.duration}</div>}
                     <div>👥 Best for: {pkg.bestFor}</div>
                   </div>
                   <a
                     href="#birthday-form"
-                    className="mt-6 block rounded-full border border-white/15 bg-white/5 py-2.5 text-center text-sm font-semibold text-white/80 transition hover:bg-white/10"
+                    className="mt-6 block rounded-full border border-white/15 bg-surface-secondary py-2.5 text-center text-sm font-semibold text-primary/80 transition hover:bg-surface-secondary"
                   >
                     Book This Experience →
                   </a>
@@ -541,7 +541,7 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
           </div>
 
           <Reveal delay={200} variant="fade-up">
-            <p className="mt-8 text-center text-sm text-white/40">
+            <p className="mt-8 text-center text-sm text-primary/40">
               Not sure which to pick? Tell us about your group in the inquiry form and we'll suggest the best fit.
             </p>
           </Reveal>
@@ -560,7 +560,7 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
                 Elevate the Night —{" "}
                 <span className="italic text-purple-300">Premium Upgrades</span>
               </h2>
-              <p className="mt-3 text-sm text-white/55">
+              <p className="mt-3 text-sm text-primary/55">
                 Paid add-ons available on request. Ask about pricing in your birthday inquiry.
               </p>
             </div>
@@ -569,12 +569,12 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
           <div className="flex flex-wrap justify-center gap-4">
             {UPGRADES.map((u, i) => (
               <Reveal key={u.label} delay={i * 60} variant="fade-up">
-                <div className="upgrade-chip flex max-w-xs flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+                <div className="upgrade-chip flex max-w-xs flex-col gap-2 rounded-2xl border border-border bg-surface-secondary p-5 backdrop-blur-sm">
                   <div className="text-2xl">{u.icon}</div>
-                  <div className="text-sm font-bold text-white/90">{u.label}</div>
-                  <p className="text-xs leading-relaxed text-white/55">{u.detail}</p>
+                  <div className="text-sm font-bold text-primary/90">{u.label}</div>
+                  <p className="text-xs leading-relaxed text-primary/55">{u.detail}</p>
                   {/* PLACEHOLDER pricing — update labels before launch */}
-                  <span className="mt-1 self-start rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-xs text-white/35">
+                  <span className="mt-1 self-start rounded-full border border-border bg-surface-secondary px-2 py-0.5 text-xs text-primary/35">
                     Ask in inquiry
                   </span>
                 </div>
@@ -598,14 +598,14 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
               {BYOB_ENABLED ? (
                 <ul className="mt-5 space-y-2.5">
                   {BYOB_RULES.map((rule) => (
-                    <li key={rule} className="flex items-start gap-3 text-sm text-white/70">
-                      <span className="mt-0.5 shrink-0 text-purple-400">✓</span>
+                    <li key={rule} className="flex items-start gap-3 text-sm text-primary/70">
+                      <span className="mt-0.5 shrink-0 text-accent">✓</span>
                       {rule}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="mt-4 text-sm leading-relaxed text-white/70">{BYOB_OFF_COPY}</p>
+                <p className="mt-4 text-sm leading-relaxed text-primary/70">{BYOB_OFF_COPY}</p>
               )}
             </GlassCard>
           </Reveal>
@@ -620,7 +620,7 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
           <Reveal variant="fade-up">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">How It Works</h2>
-              <p className="mt-3 text-white/60">Planning an adult birthday party here is genuinely easy.</p>
+              <p className="mt-3 text-primary/60">Planning an adult birthday party here is genuinely easy.</p>
             </div>
           </Reveal>
 
@@ -631,9 +631,9 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
                   <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-purple-400/30 bg-gradient-to-br from-purple-600/25 to-pink-600/25 text-xl">
                     {item.icon}
                   </div>
-                  <div className="mb-1 text-xs font-bold uppercase tracking-widest text-white/25">{item.step}</div>
+                  <div className="mb-1 text-xs font-bold uppercase tracking-widest text-primary/25">{item.step}</div>
                   <h3 className="text-sm font-bold leading-snug">{item.title}</h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-white/55">{item.desc}</p>
+                  <p className="mt-1.5 text-xs leading-relaxed text-primary/55">{item.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -650,13 +650,13 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
         <div className="mx-auto max-w-2xl px-6">
           <Reveal variant="fade-up">
             <div className="mb-10 text-center">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-pink-400/25 bg-pink-500/10 px-4 py-1.5 text-xs font-semibold text-pink-300">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-pink-400/25 bg-btn/10 px-4 py-1.5 text-xs font-semibold text-pink-300">
                 ✦ Birthday Inquiry
               </div>
               <h2 className="font-serif text-3xl font-light tracking-wide sm:text-4xl">
                 Get My <span className="italic text-pink-300">Birthday Quote</span>
               </h2>
-              <p className="mx-auto mt-3 max-w-md text-sm text-white/55">
+              <p className="mx-auto mt-3 max-w-md text-sm text-primary/55">
                 {isChicago ? "Tell us about the birthday you’re imagining. We’ll help you choose a creative celebration for your crew." : "We reply within 24 hours. No deposit to inquire."}
               </p>
             </div>
@@ -686,18 +686,18 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
               <Reveal key={t.name} delay={i * 80} variant="fade-up">
                 <GlassCard className="card-lift flex h-full flex-col p-7">
                   <div className="mb-4 text-sm text-yellow-400" aria-label="5 stars">★★★★★</div>
-                  <blockquote className="flex-1 text-sm leading-relaxed text-white/80">
+                  <blockquote className="flex-1 text-sm leading-relaxed text-primary/80">
                     &ldquo;{t.quote}&rdquo;
                   </blockquote>
-                  <div className="mt-5 flex items-center gap-3 border-t border-white/10 pt-4">
-                    <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${t.avatar} text-xs font-bold text-white`}>
+                  <div className="mt-5 flex items-center gap-3 border-t border-border pt-4">
+                    <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${t.avatar} text-xs font-bold text-primary`}>
                       {t.initials}
                     </div>
                     <div className="min-w-0">
-                      <div className="text-sm font-semibold text-white/90">{t.name}</div>
-                      <div className="text-xs text-white/45">{t.location}</div>
+                      <div className="text-sm font-semibold text-primary/90">{t.name}</div>
+                      <div className="text-xs text-primary/45">{t.location}</div>
                     </div>
-                    <div className="ml-auto flex shrink-0 items-center gap-1 text-white/30">
+                    <div className="ml-auto flex shrink-0 items-center gap-1 text-primary/30">
                       <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" aria-label="Google review">
                         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                         <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -724,33 +724,33 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
               <h2 className="font-serif text-4xl font-light tracking-wide sm:text-5xl">
                 {isChicago ? "Good to know" : <>Questions? <span className="italic text-pink-300">Answered.</span></>}
               </h2>
-              <p className="mt-3 text-white/55">Everything you need to know before you book.</p>
+              <p className="mt-3 text-primary/55">Everything you need to know before you book.</p>
             </div>
           </Reveal>
 
           <div className="space-y-2.5">
             {isChicago && <>
-              <details className="rounded-2xl border border-white/10 bg-white/5">
+              <details className="rounded-2xl border border-border bg-surface-secondary">
                 <summary className="cursor-pointer px-6 py-4 font-semibold">Optional celebration extras</summary>
-                <div className="space-y-4 px-6 pb-5 text-sm text-white/65"><p>Paid add-ons available on request. Ask about pricing in your birthday inquiry.</p>{UPGRADES.map(u => <div key={u.label}><h3 className="font-semibold text-white/90">{u.icon} {u.label}</h3><p>{u.detail}</p><a href="#birthday-form" className="underline">Ask in inquiry</a></div>)}</div>
+                <div className="space-y-4 px-6 pb-5 text-sm text-primary/65"><p>Paid add-ons available on request. Ask about pricing in your birthday inquiry.</p>{UPGRADES.map(u => <div key={u.label}><h3 className="font-semibold text-primary/90">{u.icon} {u.label}</h3><p>{u.detail}</p><a href="#birthday-form" className="underline">Ask in inquiry</a></div>)}</div>
               </details>
-              <details className="rounded-2xl border border-white/10 bg-white/5">
+              <details className="rounded-2xl border border-border bg-surface-secondary">
                 <summary className="cursor-pointer px-6 py-4 font-semibold">What should we bring?</summary>
-                <ul className="space-y-2 px-6 pb-5 text-sm text-white/65">{BYOB_RULES.map(rule => <li key={rule}>✓ {rule}</li>)}</ul>
+                <ul className="space-y-2 px-6 pb-5 text-sm text-primary/65">{BYOB_RULES.map(rule => <li key={rule}>✓ {rule}</li>)}</ul>
               </details>
-              <details className="rounded-2xl border border-white/10 bg-white/5">
+              <details className="rounded-2xl border border-border bg-surface-secondary">
                 <summary className="cursor-pointer px-6 py-4 font-semibold">How do we arrange our party?</summary>
-                <ol className="space-y-4 px-6 pb-5 text-sm text-white/65">{PARTY_STEPS.map(item => <li key={item.step}><h3 className="font-semibold text-white/90">{item.step} · {item.title}</h3><p>{item.desc}</p></li>)}</ol>
+                <ol className="space-y-4 px-6 pb-5 text-sm text-primary/65">{PARTY_STEPS.map(item => <li key={item.step}><h3 className="font-semibold text-primary/90">{item.step} · {item.title}</h3><p>{item.desc}</p></li>)}</ol>
               </details>
             </>}
             {visibleFaqs.map((faq, i) => (
               <Reveal key={i} delay={i * 25} variant="fade-up">
-                <details className="group rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                <details className="group rounded-2xl border border-border bg-surface-secondary backdrop-blur-sm">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-4">
-                    <span className="text-sm font-semibold text-white/90 sm:text-base">{faq.q}</span>
-                    <span className="faq-chevron shrink-0 text-white/40">▾</span>
+                    <span className="text-sm font-semibold text-primary/90 sm:text-base">{faq.q}</span>
+                    <span className="faq-chevron shrink-0 text-primary/40">▾</span>
                   </summary>
-                  <p className="px-6 pb-5 pt-1 text-sm leading-relaxed text-white/65">{faq.a}</p>
+                  <p className="px-6 pb-5 pt-1 text-sm leading-relaxed text-primary/65">{faq.a}</p>
                 </details>
               </Reveal>
             ))}
@@ -758,13 +758,13 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
 
           <Reveal delay={100} variant="fade-up">
             <div className="mt-10 text-center">
-              <p className="text-sm text-white/40">
+              <p className="text-sm text-primary/40">
                 More questions?{" "}
-                <a href="tel:3128819929" className="text-purple-400 transition hover:text-purple-300">
+                <a href="tel:3128819929" className="text-accent transition hover:text-purple-300">
                   Call (312) 881-9929
                 </a>{" "}
                 or{" "}
-                <a href="mailto:hello@colorcocktailfactory.com" className="text-purple-400 transition hover:text-purple-300">
+                <a href="mailto:hello@colorcocktailfactory.com" className="text-accent transition hover:text-purple-300">
                   email us
                 </a>.
               </p>
@@ -784,7 +784,7 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
                 Find a Studio{" "}
                 <span className="italic text-purple-300">Near You</span>
               </h2>
-              <p className="mt-3 text-white/55">Two private studios. Both ready for your birthday.</p>
+              <p className="mt-3 text-primary/55">Two private studios. Both ready for your birthday.</p>
             </div>
           </Reveal>
 
@@ -820,17 +820,17 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
                   </div>
                   <h3 className="text-xl font-bold">{loc.city}</h3>
                   <p className="mt-0.5 text-xs uppercase tracking-wider text-purple-300">{loc.neighborhood}</p>
-                  <div className="mt-4 space-y-2 text-sm text-white/60">
+                  <div className="mt-4 space-y-2 text-sm text-primary/60">
                     <div className="flex items-start gap-2"><span>📍</span>{loc.address}</div>
                     <div className="flex items-center gap-2"><span>📞</span>
-                      <a href="tel:3128819929" className="transition hover:text-white">(312) 881-9929</a>
+                      <a href="tel:3128819929" className="transition hover:text-primary">(312) 881-9929</a>
                     </div>
                     <div className="flex items-center gap-2"><span>🚗</span>{loc.parking}</div>
                     <div className="flex items-center gap-2"><span>♿</span>{loc.access}</div>
                   </div>
                   <Link
                     href={loc.href}
-                    className="mt-5 block rounded-full border border-white/15 bg-white/5 py-2.5 text-center text-sm font-semibold text-white/75 transition hover:bg-white/10"
+                    className="mt-5 block rounded-full border border-white/15 bg-surface-secondary py-2.5 text-center text-sm font-semibold text-primary/75 transition hover:bg-surface-secondary"
                   >
                     {loc.cta} →
                   </Link>
@@ -857,7 +857,7 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
             </h2>
           </Reveal>
           <Reveal delay={160} variant="fade-up">
-            <p className="mx-auto mt-4 max-w-md text-white/65">
+            <p className="mx-auto mt-4 max-w-md text-primary/65">
               {isChicago ? "Make this birthday a story your crew will keep telling. Share your preferred date and let’s plan something one of a kind." : "Send a quick inquiry — we reply within 24 hours with availability, pricing, and everything you need. No deposit required to get started."}
             </p>
           </Reveal>
@@ -865,20 +865,20 @@ export default function BirthdayPartiesPage({ searchParams }: BirthdayPageProps)
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <a
                 href="#birthday-form"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-9 py-4 text-base font-bold text-white shadow-lg shadow-pink-500/30 transition-all hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-9 py-4 text-base font-bold text-primary shadow-lg shadow-pink-500/30 transition-all hover:-translate-y-0.5"
               >
                 Get My Birthday Quote
               </a>
               <a
                 href="tel:3128819929"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-8 py-4 text-sm font-semibold text-white/75 backdrop-blur-sm transition hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-secondary px-8 py-4 text-sm font-semibold text-primary/75 backdrop-blur-sm transition hover:bg-surface-secondary"
               >
                 📞 Call (312) 881-9929
               </a>
             </div>
           </Reveal>
           <Reveal delay={320} variant="fade-up">
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-5 text-xs text-white/35">
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-5 text-xs text-primary/35">
               <Link href="/chicago" className="transition hover:text-purple-300">Chicago Studio</Link>
               <span>·</span>
               <Link href="/eugene" className="transition hover:text-purple-300">Eugene Studio</Link>

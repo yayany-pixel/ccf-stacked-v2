@@ -119,7 +119,7 @@ export default async function EventsPage({ searchParams }: { searchParams: { cit
             <h1 className="mb-4 bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text font-serif text-4xl font-bold text-transparent sm:text-5xl">
               Upcoming Events
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-white/70">
+            <p className="mx-auto max-w-2xl text-lg text-primary/70">
               Discover our upcoming pottery, glass, painting, and creative workshops in Chicago, Eugene, and online.
               All skill levels welcome!
             </p>
@@ -131,13 +131,13 @@ export default async function EventsPage({ searchParams }: { searchParams: { cit
           <Reveal variant="scale">
             <GlassCard className="mx-auto max-w-2xl p-8 text-center">
               <div className="text-xl font-semibold text-red-400">Unable to Load Events</div>
-              <p className="mt-3 text-white/70">{error}</p>
-              <p className="mt-4 text-sm text-white/60">
+              <p className="mt-3 text-primary/70">{error}</p>
+              <p className="mt-4 text-sm text-primary/60">
                 Availability and booking remain available on our scheduling page.
               </p>
               <Link
                 href="https://colorcocktailfactory.as.me/"
-                className="mt-6 inline-block rounded-full border border-white/15 bg-white/5 px-6 py-2 text-sm font-semibold transition hover:bg-white/10"
+                className="mt-6 inline-block rounded-full border border-white/15 bg-surface-secondary px-6 py-2 text-sm font-semibold transition hover:bg-surface-secondary"
               >
                 View Dates in Acuity
               </Link>
@@ -149,9 +149,9 @@ export default async function EventsPage({ searchParams }: { searchParams: { cit
         {!error && events && events.length === 0 && (
           <Reveal variant="fade-up" delay={100}>
             <GlassCard className="p-12 text-center">
-              <p className="text-white/70">
+              <p className="text-primary/70">
                 No upcoming events scheduled at this time. Check back soon or{" "}
-                <Link href="/chicago" className="text-purple-400 underline hover:text-purple-300">
+                <Link href="/chicago" className="text-accent underline hover:text-purple-300">
                   browse our regular classes
                 </Link>
                 .
@@ -168,7 +168,7 @@ export default async function EventsPage({ searchParams }: { searchParams: { cit
         {/* Call to Action */}
         <Reveal variant="fade-up" delay={200}>
           <div className="mt-12 text-center">
-            <p className="mb-4 text-white/60">
+            <p className="mb-4 text-primary/60">
               Looking for ongoing classes?
             </p>
             <div className="flex justify-center gap-4">
