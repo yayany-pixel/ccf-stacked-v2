@@ -1,3 +1,5 @@
+import { collectEventbriteEvents } from "./eventbrite-pagination";
+
 type EventbriteDeps = {
   acuityGet: (path: string, params?: Record<string, unknown>) => Promise<any>;
 };
@@ -167,19 +169,16 @@ function remainingSeats(row: any, type: any, fallback: number): number {
 
 async function allOrganizationEvents() {
   const org = organizationId();
-  const events: any[] = [];
-  let page = 1;
-  for (;;) {
-    const data = await eventbriteRequest("GET", `organizations/${encodeURIComponent(org)}/events/`, undefined, {
-      page,
-      order_by: "start_asc",
-    });
-    if (Array.isArray(data?.events)) events.push(...data.events);
-    const pageCount = Number(data?.pagination?.page_count || 1);
-    if (page >= pageCount || page >= 20) break;
-    page += 1;
+  const data = await collectEventbriteEvents(
+    (query) => eventbriteRequest("GET", `organizations/${encodeURIComponent(org)}/events/`, undefined, query),
+    { order_by: "start_asc", status: "all", show_series_parent: false },
+    { allPages: true, maxPages: 1000 }
+  );
+  // Never create new events on the basis of an incomplete duplicate check.
+  if (!data.retrieval.completeListing) {
+    throw new Error("Eventbrite duplicate inventory is incomplete. No events were created; resume inventory first.");
   }
-  return events;
+  return data.events;
 }
 
 async function createClassEvent(args: Record<string, any>) {
@@ -261,13 +260,19 @@ export const eventbriteTools = [
   },
   {
     name: "eventbrite_list_events",
-    description: "List Eventbrite events for the Color Cocktail Factory organization. Useful for duplicate checks before publishing.",
+    description: "List Eventbrite events with explicit pagination/completeness metadata. Defaults to one page of occurrences. Follow retrieval.nextRequest or set allPages=true; a complete listing is not a date-bounded annual report.",
     inputSchema: {
       type: "object",
       properties: {
         status: { type: "string" },
         timeFilter: { type: "string" },
         orderBy: { type: "string", default: "start_asc" },
+        page: { type: "integer", minimum: 1 },
+        pageSize: { type: "integer", minimum: 1 },
+        continuation: { type: "string", minLength: 1 },
+        allPages: { type: "boolean", default: false },
+        maxPages: { type: "integer", minimum: 1, maximum: 1000, default: 100 },
+        showSeriesParent: { type: "boolean", default: false },
       },
       additionalProperties: false,
     },
@@ -359,17 +364,32 @@ export async function runEventbriteTool(
       return { data: { connected: true, organizationID: organizationId(), eventCount: events?.pagination?.object_count ?? null } };
     }
     case "eventbrite_list_events": {
-      const data = await eventbriteRequest(
-        "GET",
-        `organizations/${encodeURIComponent(organizationId())}/events/`,
-        undefined,
+      const page = args.page === undefined ? undefined : intArg(args.page, "page");
+      const pageSize = args.pageSize === undefined ? undefined : intArg(args.pageSize, "pageSize");
+      const continuation = textArg(args.continuation, "continuation", false);
+      const allPages = boolArg(args.allPages, "allPages", false);
+      const maxPages = intArg(args.maxPages, "maxPages", 100);
+      const showSeriesParent = boolArg(args.showSeriesParent, "showSeriesParent", false);
+      if (page === 0 || pageSize === 0 || maxPages < 1 || maxPages > 1000) {
+        throw new Error("page/pageSize must be positive; maxPages must be between 1 and 1000.");
+      }
+      if (page !== undefined && continuation) {
+        throw new Error("Use either page or continuation, not both.");
+      }
+      const data = await collectEventbriteEvents(
+        (query) => eventbriteRequest(
+          "GET", `organizations/${encodeURIComponent(organizationId())}/events/`, undefined, query
+        ),
         {
           status: textArg(args.status, "status", false),
           time_filter: textArg(args.timeFilter, "timeFilter", false),
           order_by: textArg(args.orderBy, "orderBy", false) || "start_asc",
-        }
+          show_series_parent: showSeriesParent,
+          page, page_size: pageSize, continuation,
+        },
+        { allPages, maxPages }
       );
-      return { data };
+      return { data: { ...data, listingMode: showSeriesParent ? "series_parents" : "occurrences" } };
     }
     case "eventbrite_list_venues": {
       const data = await eventbriteRequest("GET", `organizations/${encodeURIComponent(organizationId())}/venues/`);
