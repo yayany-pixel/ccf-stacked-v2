@@ -99,6 +99,11 @@ export async function bookingRedirectUrl(
     const url = new URL(destination);
     if (url.protocol !== "https:" || url.hostname !== "colorcocktailfactory.as.me") return destination;
     url.searchParams.set(`field:${fieldId}`, token!);
+    const sourceUrl = new URL(request.url);
+    const gl = sourceUrl.searchParams.get("_gl");
+    if (gl) url.searchParams.set("_gl", gl);
+    const gclid = sourceUrl.searchParams.get("gclid");
+    if (gclid) url.searchParams.set("gclid", gclid);
     return url.toString();
   } catch { return destination; }
 }

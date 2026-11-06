@@ -40,12 +40,12 @@ function GoogleAnalyticsInner() {
           send_page_view: false,
           page_location: safeUrl(window.location.href, true),
           page_referrer: safeUrl(document.referrer),
-          allow_google_signals: false,
+          allow_google_signals: false, linker: { domains: ["colorcocktailfactory.as.me"] },
         });
       }
       if (ads && preferences.marketing && !adsConfigured) {
         adsConfigured = true;
-        window.gtag!("config", ads, { send_page_view: false });
+        window.gtag!("config", ads, { send_page_view: false, linker: { domains: ["colorcocktailfactory.as.me"] } });
       }
       if (ga && preferences.analytics) {
         trackPageView(window.location.href);

@@ -1,6 +1,6 @@
 import { currentPrivacyPreferences, PRIVACY_EVENT } from "./privacy";
 
-type Reference = { reference: string; fieldId: string; refreshAt: number; marketing: boolean };
+type Reference = { reference: string; fieldId: string; refreshAt: number; marketing: boolean; gl?: string | null; gclid?: string | null };
 let reference: Reference | null = null;
 let knownFieldId: string | undefined;
 let revision = 0;
@@ -23,6 +23,11 @@ export function decorateBookingUrl(raw: string, value: Reference | null, origin:
     url.searchParams.delete("ccf_booking_ref");
     if (fieldId) url.searchParams.delete(`field:${fieldId}`);
     if (value) url.searchParams.set(internal ? "ccf_booking_ref" : `field:${value.fieldId}`, value.reference);
+    if (value?.gl) {
+      const glMatch = value.gl.match(/_gl=([^&]+)/);
+      if (glMatch) url.searchParams.set("_gl", glMatch[1]);
+    }
+    if (value?.gclid) url.searchParams.set("gclid", value.gclid);
     return raw.startsWith("/") && !raw.startsWith("//")
       ? url.pathname + url.search + url.hash : url.toString();
   } catch { return raw; }
@@ -36,9 +41,10 @@ export function bookingReferenceHref(raw: string): string {
   return decorateBookingUrl(raw, active, window.location.origin, knownFieldId);
 }
 
-function googleValue(field: "client_id" | "session_id"): Promise<string | null> {
+function googleValue(field: "client_id" | "session_id" | "linker_param"): Promise<string | null> {
   return new Promise(resolve => {
     const ga = process.env.NEXT_PUBLIC_GA_ID_1;
+    // @ts-ignore
     if (!ga || !window.gtag || !currentPrivacyPreferences().analytics) return resolve(null);
     let finished = false;
     const finish = (value: unknown) => {
@@ -47,11 +53,19 @@ function googleValue(field: "client_id" | "session_id"): Promise<string | null> 
     };
     const timeout = window.setTimeout(() => finish(null), 1200);
     try {
+      // @ts-ignore
       const get = window.gtag as unknown as
         (command: "get", id: string, field: string, callback: (value: unknown) => void) => void;
       get("get", ga, field, finish);
     } catch { finish(null); }
   });
+}
+
+function getGclid(): string | null {
+  if (typeof window === "undefined") return null;
+  const match = document.cookie.match(/(?:^|;)\s*_gcl_aw=([^;]+)/);
+  if (match) return match[1].split('.').pop() || null;
+  return new URLSearchParams(window.location.search).get("gclid");
 }
 
 export async function refreshBookingReference(): Promise<void> {
@@ -61,7 +75,7 @@ export async function refreshBookingReference(): Promise<void> {
   if (pending) return pending;
   const version = generation;
   pending = (async () => {
-    const [clientId, sessionId] = await Promise.all([googleValue("client_id"), googleValue("session_id")]);
+    const [clientId, sessionId, linkerParam] = await Promise.all([googleValue("client_id"), googleValue("session_id"), googleValue("linker_param")]);
     if (!clientId || !sessionId || version !== generation || !currentPrivacyPreferences().analytics) return;
     const response = await fetch("/.netlify/functions/booking-reference", {
       method: "POST", credentials: "same-origin", cache: "no-store",
@@ -78,7 +92,8 @@ export async function refreshBookingReference(): Promise<void> {
       !Number.isFinite(data.refreshAt) || data.refreshAt <= Date.now()) return;
     knownFieldId = data.fieldId;
     reference = { reference: data.reference, fieldId: data.fieldId,
-      refreshAt: Math.min(data.refreshAt, Date.now() + 20 * 60 * 1000), marketing: preferences.marketing };
+      refreshAt: Math.min(data.refreshAt, Date.now() + 20 * 60 * 1000), marketing: preferences.marketing,
+      gl: linkerParam, gclid: getGclid() };
     changed();
   })().catch(() => {}).finally(() => { pending = null; });
   return pending;
