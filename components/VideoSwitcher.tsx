@@ -69,7 +69,7 @@ export default function VideoSwitcher() {
         {/* Next Button Overlay - appears on hover */}
         <button
           onClick={goToNext}
-          className="absolute bottom-4 right-4 z-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-2.5 font-semibold text-white shadow-xl opacity-0 transition-all duration-300 hover:scale-110 hover:shadow-2xl group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-slate-900"
+          className="absolute bottom-4 right-4 z-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 px-5 py-2.5 font-semibold text-primary shadow-xl opacity-0 transition-all duration-300 hover:scale-110 hover:shadow-2xl group-hover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-slate-900"
           aria-label="Next video"
         >
           Next →
@@ -77,7 +77,7 @@ export default function VideoSwitcher() {
       </div>
 
       {/* Optional caption */}
-      <p className="mt-4 text-center text-sm text-white/60">
+      <p className="mt-4 text-center text-sm text-primary/60">
         Watch to see what makes our creative workshops special
       </p>
     </div>

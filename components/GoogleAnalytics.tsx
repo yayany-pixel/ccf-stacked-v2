@@ -47,7 +47,18 @@ function GoogleAnalyticsInner() {
         adsConfigured = true;
         window.gtag!("config", ads, { send_page_view: false, linker: { domains: ["colorcocktailfactory.as.me"] } });
       }
-      if (ga && preferences.analytics) trackPageView(window.location.href);
+      if (ga && preferences.analytics) {
+        trackPageView(window.location.href);
+        const exp = document.documentElement.getAttribute("data-theme");
+        if (exp && !sessionStorage.getItem("exp_exposed")) {
+          sessionStorage.setItem("exp_exposed", "true");
+          window.gtag!("event", "experiment_impression", {
+            test_name: "site_theme_v1",
+            variant: exp,
+            non_interaction: true
+          });
+        }
+      }
       if (ga && preferences.analytics && !vitals) {
         vitals = true;
         import("web-vitals")

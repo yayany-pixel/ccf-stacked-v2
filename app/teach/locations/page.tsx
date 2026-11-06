@@ -61,7 +61,7 @@ export default function LocationsPage() {
         <h1 className="mb-4 bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
           Teach Anywhere
         </h1>
-        <p className="mb-12 text-lg text-white/70">
+        <p className="mb-12 text-lg text-primary/70">
           Our instructor partnership program is available throughout the USA and Canada. 
           Teach wheel-throwing date night classes from your own space.
         </p>
@@ -71,7 +71,7 @@ export default function LocationsPage() {
       <section className="mx-auto max-w-5xl px-4 py-12">
         <Reveal>
           <h2 className="mb-8 text-center text-3xl font-bold">Active Regions</h2>
-          <p className="mb-8 text-center text-white/60">
+          <p className="mb-8 text-center text-primary/60">
             We're accepting instructor partners nationwide. Wherever you are, we can send you bookings.
           </p>
         </Reveal>
@@ -80,7 +80,7 @@ export default function LocationsPage() {
             <Reveal key={area.region} delay={index * 0.1}>
               <GlassCard className="p-4">
                 <h3 className="mb-2 font-semibold text-purple-300">{area.region}</h3>
-                <p className="text-xs text-white/50">{area.note}</p>
+                <p className="text-xs text-primary/50">{area.note}</p>
               </GlassCard>
             </Reveal>
           ))}
@@ -97,11 +97,11 @@ export default function LocationsPage() {
             <Reveal key={req.title} delay={index * 0.1}>
               <GlassCard className="p-6">
                 <h3 className="mb-3 text-lg font-semibold text-cyan-300">{req.title}</h3>
-                <p className="mb-4 text-sm text-white/70">{req.description}</p>
+                <p className="mb-4 text-sm text-primary/70">{req.description}</p>
                 <ul className="space-y-2">
                   {req.examples.map((example, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-white/60">
-                      <span className="mt-1 text-xs text-pink-400">•</span>
+                    <li key={i} className="flex items-start gap-2 text-sm text-primary/60">
+                      <span className="mt-1 text-xs text-accent">•</span>
                       <span>{example}</span>
                     </li>
                   ))}

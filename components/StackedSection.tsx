@@ -57,7 +57,7 @@ export default function StackedSection({
                       <h2 className="mt-4 font-serif text-4xl leading-tight md:text-5xl">
                         {section.heroTitle}
                       </h2>
-                      <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80">
+                      <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-primary/80">
                         {section.heroDescription}
                       </p>
                       <div className="mt-6 flex flex-wrap justify-center gap-3">
@@ -90,7 +90,7 @@ export default function StackedSection({
                       {section.heroTitle}
                     </h2>
 
-                    <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/80">
+                    <p className="mt-4 max-w-2xl text-base leading-relaxed text-primary/80">
                       {section.heroDescription}
                     </p>
 
@@ -101,7 +101,7 @@ export default function StackedSection({
                           city={city.label}
                           classNameText={section.heroTitle}
                           classId={section.slug}
-                          className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-white shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
+                          className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 border-0 bg-gradient-to-r from-pink-500/80 via-purple-500/80 to-indigo-500/80 text-primary shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50"
                         >
                           {section.primaryCta.label}
                         </BookingLink>
@@ -123,7 +123,7 @@ export default function StackedSection({
                           city={city.label}
                           classNameText={section.heroTitle}
                           classId={section.slug}
-                          className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 border border-white/15 bg-white/5 text-white/85 hover:bg-white/10"
+                          className="btn-interactive inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-white/20 border border-white/15 bg-surface-secondary text-primary/85 hover:bg-surface-secondary"
                         >
                           {section.secondaryCta.label}
                         </BookingLink>
@@ -144,7 +144,7 @@ export default function StackedSection({
                     {/* Sub-classes chips (for grouped sections) */}
                     {section.subClasses && section.subClasses.length > 0 && (
                       <div className="mt-6">
-                        <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-white/60">
+                        <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-primary/60">
                           Available Classes:
                         </div>
                         <div className="flex flex-wrap gap-2">
@@ -152,7 +152,7 @@ export default function StackedSection({
                             <Link
                               key={subClass.slug}
                               href={`/activities/${subClass.slug}`}
-                              className="rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-xs transition-all hover:border-purple-400/40 hover:bg-white/10 hover:scale-105"
+                              className="rounded-full border border-border bg-surface-secondary px-3 py-1.5 text-xs transition-all hover:border-purple-400/40 hover:bg-surface-secondary hover:scale-105"
                             >
                               {subClass.label}
                             </Link>
@@ -178,18 +178,18 @@ export default function StackedSection({
                       ))}
                     </div>
 
-                    <div className="mt-7 border-t border-white/10 pt-5 text-sm text-white/60">
-                      <span className="text-white/70">Want details?</span>{" "}
+                    <div className="mt-7 border-t border-border pt-5 text-sm text-primary/60">
+                      <span className="text-primary/70">Want details?</span>{" "}
                       <Link
                         href={`/activities/${section.slug}`}
-                        className="inline-block py-2 font-semibold underline decoration-white/30 underline-offset-4 hover:text-white"
+                        className="inline-block py-2 font-semibold underline decoration-white/30 underline-offset-4 hover:text-primary"
                       >
                         Learn more about {section.heroTitle}
                       </Link>{" "}
                       or{" "}
                       <Link
                         href={`/${city.param}/${section.slug}`}
-                        className="inline-block py-2 underline decoration-white/25 underline-offset-4 hover:text-white"
+                        className="inline-block py-2 underline decoration-white/25 underline-offset-4 hover:text-primary"
                       >
                         view {city.label}-specific schedule
                       </Link>

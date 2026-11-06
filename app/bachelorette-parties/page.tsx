@@ -93,33 +93,33 @@ export default function BachelorettePartiesPage() {
       />
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600 text-white py-20 md:py-32">
+      <section className="relative bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600 text-primary py-20 md:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Reveal>
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="text-4xl md:text-6xl font-bold mb-6">
                 Bachelorette Parties with a Creative Twist 💕
               </h1>
-              <p className="text-xl md:text-2xl mb-8 text-white/90">
+              <p className="text-xl md:text-2xl mb-8 text-primary/90">
                 Skip the typical bar crawl! Make pottery, mosaics, or glass art together. BYOB, Instagram-worthy, and unforgettable.
               </p>
               
               {/* Benefits */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-center">
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <div className="bg-surface-secondary backdrop-blur-sm rounded-lg p-6">
                   <div className="text-4xl mb-3">🍾</div>
                   <h3 className="font-bold text-lg mb-2">BYOB Vibes</h3>
-                  <p className="text-sm text-white/80">Bring champagne, wine, or cocktails to sip while you create</p>
+                  <p className="text-sm text-primary/80">Bring champagne, wine, or cocktails to sip while you create</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <div className="bg-surface-secondary backdrop-blur-sm rounded-lg p-6">
                   <div className="text-4xl mb-3">📸</div>
                   <h3 className="font-bold text-lg mb-2">Insta-Worthy</h3>
-                  <p className="text-sm text-white/80">Beautiful studio spaces perfect for photos & memories</p>
+                  <p className="text-sm text-primary/80">Beautiful studio spaces perfect for photos & memories</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6">
+                <div className="bg-surface-secondary backdrop-blur-sm rounded-lg p-6">
                   <div className="text-4xl mb-3">✨</div>
                   <h3 className="font-bold text-lg mb-2">Totally Unique</h3>
-                  <p className="text-sm text-white/80">Create custom keepsakes from the celebration</p>
+                  <p className="text-sm text-primary/80">Create custom keepsakes from the celebration</p>
                 </div>
               </div>
 
@@ -132,7 +132,7 @@ export default function BachelorettePartiesPage() {
                 </Link>
                 <Link 
                   href="#workshops"
-                  className="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/30 transition-all"
+                  className="bg-surface-secondary backdrop-blur-sm text-primary px-8 py-4 rounded-full font-bold text-lg hover:bg-white/30 transition-all"
                 >
                   See Workshop Ideas
                 </Link>
@@ -230,7 +230,7 @@ export default function BachelorettePartiesPage() {
                       {/* Chicago Link */}
                       <Link
                         href={`/chicago/${workshop.slug}`}
-                        className="block w-full bg-pink-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-pink-600 transition-colors"
+                        className="block w-full bg-btn text-primary text-center py-3 rounded-lg font-semibold hover:bg-btn transition-colors"
                       >
                         Book in Chicago (Pilsen)
                       </Link>
@@ -238,7 +238,7 @@ export default function BachelorettePartiesPage() {
                       {/* Eugene Link */}
                       <Link
                         href={`/eugene/${workshop.slug}`}
-                        className="block w-full bg-purple-500 text-white text-center py-3 rounded-lg font-semibold hover:bg-purple-600 transition-colors"
+                        className="block w-full bg-btn text-primary text-center py-3 rounded-lg font-semibold hover:bg-btn transition-colors"
                       >
                         Book in Eugene, OR
                       </Link>
@@ -253,7 +253,7 @@ export default function BachelorettePartiesPage() {
             <div className="text-center mt-12">
               <Link
                 href="/private-events"
-                className="inline-block bg-gradient-to-r from-pink-500 to-purple-600 text-white px-10 py-5 rounded-full font-bold text-lg hover:shadow-xl transition-all transform hover:scale-105"
+                className="inline-block bg-gradient-to-r from-pink-500 to-purple-600 text-primary px-10 py-5 rounded-full font-bold text-lg hover:shadow-xl transition-all transform hover:scale-105"
               >
                 Book Your Bachelorette Workshop
               </Link>
@@ -299,7 +299,7 @@ export default function BachelorettePartiesPage() {
             ].map((item, index) => (
               <Reveal key={item.step} delay={index * 0.1}>
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-purple-600 text-primary rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
                     {item.step}
                   </div>
                   <h3 className="text-xl font-bold mb-3">{item.title}</h3>
@@ -336,41 +336,41 @@ export default function BachelorettePartiesPage() {
                 </div>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-start">
-                    <span className="text-pink-500 mr-3 mt-1">✓</span>
+                    <span className="text-accent mr-3 mt-1">✓</span>
                     <span>4-9 guests (minimum 4 people)</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-pink-500 mr-3 mt-1">✓</span>
+                    <span className="text-accent mr-3 mt-1">✓</span>
                     <span>All materials & expert instruction</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-pink-500 mr-3 mt-1">✓</span>
+                    <span className="text-accent mr-3 mt-1">✓</span>
                     <span>2-3 hour creative experience</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-pink-500 mr-3 mt-1">✓</span>
+                    <span className="text-accent mr-3 mt-1">✓</span>
                     <span>BYOB (bring your own champagne!)</span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-pink-500 mr-3 mt-1">✓</span>
+                    <span className="text-accent mr-3 mt-1">✓</span>
                     <span>Take-home artwork for everyone</span>
                   </li>
                 </ul>
-                <p className="text-sm text-gray-500 italic">
+                <p className="text-sm text-primary0 italic">
                   * Exact pricing varies by workshop. Popular choices: pottery wheel ($75-85), mosaics ($65), glass fusion ($70).
                 </p>
               </div>
             </Reveal>
 
             <Reveal delay={0.2}>
-              <div className="bg-gradient-to-br from-pink-500 to-purple-600 text-white rounded-2xl p-8 shadow-xl">
+              <div className="bg-gradient-to-br from-pink-500 to-purple-600 text-primary rounded-2xl p-8 shadow-xl">
                 <div className="text-center mb-6">
                   <h3 className="text-2xl font-bold mb-2">Big Bride Tribes</h3>
-                  <p className="text-white/90">Large bachelorette parties</p>
+                  <p className="text-primary/90">Large bachelorette parties</p>
                 </div>
                 <div className="text-center mb-6">
                   <div className="text-5xl font-bold mb-2">Custom</div>
-                  <div className="text-white/90">pricing & packages</div>
+                  <div className="text-primary/90">pricing & packages</div>
                 </div>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-start">
@@ -505,7 +505,7 @@ export default function BachelorettePartiesPage() {
                 <details className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-lg p-6 group">
                   <summary className="text-xl font-bold cursor-pointer list-none flex items-center justify-between">
                     <span>{faq.question}</span>
-                    <span className="text-pink-500 group-open:rotate-180 transition-transform">▼</span>
+                    <span className="text-accent group-open:rotate-180 transition-transform">▼</span>
                   </summary>
                   <p className="mt-4 text-gray-600 leading-relaxed">{faq.answer}</p>
                 </details>
@@ -516,13 +516,13 @@ export default function BachelorettePartiesPage() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600 text-white">
+      <section className="py-20 bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600 text-primary">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Reveal>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
               Ready to Plan the Most Creative Bachelorette Ever? 💍
             </h2>
-            <p className="text-xl mb-8 text-white/90">
+            <p className="text-xl mb-8 text-primary/90">
               Let's make it memorable, meaningful, and way more fun than another generic night out.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -534,12 +534,12 @@ export default function BachelorettePartiesPage() {
               </Link>
               <a
                 href="mailto:hello@colorcocktailfactory.com"
-                className="bg-white/20 backdrop-blur-sm text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-white/30 transition-all"
+                className="bg-surface-secondary backdrop-blur-sm text-primary px-10 py-5 rounded-full font-bold text-lg hover:bg-white/30 transition-all"
               >
                 Email Us Your Ideas
               </a>
             </div>
-            <p className="mt-8 text-white/80 text-sm">
+            <p className="mt-8 text-primary/80 text-sm">
               Serving bachelorette parties in Chicago & Eugene
             </p>
           </Reveal>

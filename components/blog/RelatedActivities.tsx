@@ -36,10 +36,10 @@ export default function RelatedActivities({
             <Link
               key={s.slug}
               href={hrefFor(s.slug)}
-              className="block rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10"
+              className="block rounded-xl border border-border bg-surface-secondary p-4 transition hover:border-white/25 hover:bg-surface-secondary"
             >
-              <div className="font-semibold text-white">{s.heroTitle}</div>
-              <p className="mt-1 line-clamp-2 text-sm text-white/70">
+              <div className="font-semibold text-primary">{s.heroTitle}</div>
+              <p className="mt-1 line-clamp-2 text-sm text-primary/70">
                 {s.heroDescription}
               </p>
             </Link>

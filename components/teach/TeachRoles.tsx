@@ -50,8 +50,8 @@ export default function TeachRoles({ preview = false }: TeachRolesProps) {
               <div className="mb-4 flex items-start justify-between">
                 <h3 className="text-lg font-semibold leading-tight">{role.title}</h3>
                 <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                  role.demand === "High" ? "bg-pink-500/20 text-pink-300" :
-                  role.demand === "Always Hiring" ? "bg-purple-500/20 text-purple-300" :
+                  role.demand === "High" ? "bg-btn/20 text-pink-300" :
+                  role.demand === "Always Hiring" ? "bg-btn/20 text-purple-300" :
                   "bg-cyan-500/20 text-cyan-300"
                 }`}>
                   {role.demand}
@@ -59,12 +59,12 @@ export default function TeachRoles({ preview = false }: TeachRolesProps) {
               </div>
 
               <div className="mb-4">
-                <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-white/50">
+                <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-primary/50">
                   Mediums
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {role.mediums.map((medium) => (
-                    <span key={medium} className="rounded-full bg-white/5 px-3 py-1 text-xs text-white/70">
+                    <span key={medium} className="rounded-full bg-surface-secondary px-3 py-1 text-xs text-primary/70">
                       {medium}
                     </span>
                   ))}
@@ -72,13 +72,13 @@ export default function TeachRoles({ preview = false }: TeachRolesProps) {
               </div>
 
               <div>
-                <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-white/50">
+                <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-primary/50">
                   Requirements
                 </div>
                 <ul className="space-y-1">
                   {role.requirements.map((req, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-white/70">
-                      <span className="mt-1 text-xs text-purple-400">•</span>
+                    <li key={i} className="flex items-start gap-2 text-sm text-primary/70">
+                      <span className="mt-1 text-xs text-accent">•</span>
                       <span>{req}</span>
                     </li>
                   ))}
@@ -94,7 +94,7 @@ export default function TeachRoles({ preview = false }: TeachRolesProps) {
           <div className="mt-8 text-center">
             <Link
               href="/teach/roles"
-              className="inline-flex items-center gap-2 text-sm font-medium text-purple-400 hover:text-purple-300"
+              className="inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-purple-300"
             >
               View all positions →
             </Link>

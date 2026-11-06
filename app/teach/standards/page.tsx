@@ -78,7 +78,7 @@ export default function StandardsPage() {
         <h1 className="mb-4 bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
           Teaching Standards
         </h1>
-        <p className="mb-12 text-lg text-white/70">
+        <p className="mb-12 text-lg text-primary/70">
           What it means to teach at CCF — our commitment to exceptional creative education.
         </p>
       </div>
@@ -93,7 +93,7 @@ export default function StandardsPage() {
             <Reveal key={value.title} delay={index * 0.1}>
               <GlassCard className="p-6">
                 <h3 className="mb-3 text-lg font-semibold text-pink-300">{value.title}</h3>
-                <p className="text-sm text-white/70">{value.description}</p>
+                <p className="text-sm text-primary/70">{value.description}</p>
               </GlassCard>
             </Reveal>
           ))}
@@ -112,7 +112,7 @@ export default function StandardsPage() {
                 <h3 className="mb-4 text-lg font-semibold text-purple-300">{section.category}</h3>
                 <ul className="space-y-2">
                   {section.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-white/70">
+                    <li key={i} className="flex items-start gap-2 text-sm text-primary/70">
                       <span className="mt-1 text-xs text-cyan-400">•</span>
                       <span>{item}</span>
                     </li>
@@ -131,14 +131,14 @@ export default function StandardsPage() {
         </Reveal>
         <Reveal delay={0.1}>
           <GlassCard className="p-8">
-            <p className="mb-6 text-white/80">
+            <p className="mb-6 text-primary/80">
               Every class should be transformative. Here's what that looks like:
             </p>
             <ul className="space-y-4">
               {studentExperience.map((point, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <span className="mt-1 text-pink-400">✓</span>
-                  <span className="text-white/80">{point}</span>
+                  <span className="mt-1 text-accent">✓</span>
+                  <span className="text-primary/80">{point}</span>
                 </li>
               ))}
             </ul>
@@ -151,11 +151,11 @@ export default function StandardsPage() {
         <Reveal>
           <GlassCard className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-8">
             <h2 className="mb-4 text-2xl font-bold">Continuous Improvement</h2>
-            <p className="mb-4 text-white/80">
+            <p className="mb-4 text-primary/80">
               We collect feedback after every class and hold monthly instructor roundtables. 
               Your input shapes our curriculum, and we invest in your growth as an educator.
             </p>
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-primary/60">
               Teaching at CCF means joining a learning community — we support each other, share what works, and evolve together.
             </p>
           </GlassCard>

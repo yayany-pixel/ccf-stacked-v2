@@ -9,7 +9,7 @@ export default function TeachCTA() {
           <h2 className="mb-4 bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
             Ready to Join Our Team?
           </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-lg text-white/70">
+          <p className="mx-auto mb-8 max-w-2xl text-lg text-primary/70">
             We're actively hiring instructors in USA and Canada. Apply today and start your creative teaching journey.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
@@ -20,8 +20,8 @@ export default function TeachCTA() {
               Read FAQ
             </ButtonPill>
           </div>
-          <p className="mt-6 text-sm text-white/50">
-            Questions? Email us at <a href="mailto:teach@colorcocktailfactory.com" className="text-purple-400 hover:text-purple-300">teach@colorcocktailfactory.com</a>
+          <p className="mt-6 text-sm text-primary/50">
+            Questions? Email us at <a href="mailto:teach@colorcocktailfactory.com" className="text-accent hover:text-purple-300">teach@colorcocktailfactory.com</a>
           </p>
         </div>
       </Reveal>

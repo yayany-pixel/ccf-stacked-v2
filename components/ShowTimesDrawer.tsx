@@ -33,7 +33,7 @@ export default function ShowTimesDrawer({ times, maxVisible = 4, city, className
           e.preventDefault();
           setIsExpanded(!isExpanded);
         }}
-        className="flex w-full items-center justify-between rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white/80 transition-all hover:bg-white/10 hover:text-white"
+        className="flex w-full items-center justify-between rounded-lg border border-border bg-surface-secondary px-4 py-2.5 text-sm font-semibold text-primary/80 transition-all hover:bg-surface-secondary hover:text-primary"
       >
         <span>{isExpanded ? "Hide" : "View"} upcoming times</span>
         <svg
@@ -53,8 +53,8 @@ export default function ShowTimesDrawer({ times, maxVisible = 4, city, className
           ${isExpanded ? "mt-3 max-h-[500px] opacity-100" : "max-h-0 opacity-0"}
         `}
       >
-        <div className="space-y-2 rounded-lg border border-white/10 bg-white/5 p-4">
-          <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-white/50">
+        <div className="space-y-2 rounded-lg border border-border bg-surface-secondary p-4">
+          <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-primary/50">
             Upcoming Times
           </div>
 
@@ -75,10 +75,10 @@ export default function ShowTimesDrawer({ times, maxVisible = 4, city, className
               return (
                 <div
                   key={idx}
-                  className="flex items-center justify-between gap-3 rounded border border-white/5 bg-white/5 px-3 py-2 text-sm"
+                  className="flex items-center justify-between gap-3 rounded border border-white/5 bg-surface-secondary px-3 py-2 text-sm"
                 >
-                  <div className="flex items-center gap-2 text-white/70">
-                    <span className="text-white/40">•</span>
+                  <div className="flex items-center gap-2 text-primary/70">
+                    <span className="text-primary/40">•</span>
                     <span>
                       {formattedDate} – {formattedTime}
                     </span>
@@ -89,7 +89,7 @@ export default function ShowTimesDrawer({ times, maxVisible = 4, city, className
                     classNameText={classNameText}
                     classId={classId}
                     onClick={(e) => e.stopPropagation()}
-                    className="whitespace-nowrap rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white transition-all hover:bg-white/20"
+                    className="whitespace-nowrap rounded-full bg-surface-secondary px-3 py-1 text-xs font-semibold text-primary transition-all hover:bg-surface-secondary"
                   >
                     Book →
                   </BookingLink>
@@ -105,7 +105,7 @@ export default function ShowTimesDrawer({ times, maxVisible = 4, city, className
                 e.preventDefault();
                 setShowAll(true);
               }}
-              className="mt-3 w-full rounded border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/60 transition hover:bg-white/10 hover:text-white/80"
+              className="mt-3 w-full rounded border border-border bg-surface-secondary px-3 py-2 text-xs font-semibold text-primary/60 transition hover:bg-surface-secondary hover:text-primary/80"
             >
               View all {times.length} times
             </button>

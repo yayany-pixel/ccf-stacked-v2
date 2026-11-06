@@ -118,18 +118,18 @@ export default function ActivityDetailView({
   return (
     <>
       {/* Top Breadcrumb Navigation */}
-      <nav className="border-b border-white/10 bg-black/20 px-6 py-3" aria-label="Breadcrumb">
+      <nav className="border-b border-border bg-background/20 px-6 py-3" aria-label="Breadcrumb">
         <div className="mx-auto max-w-7xl">
-          <ol className="flex items-center gap-2 text-sm text-white/60">
+          <ol className="flex items-center gap-2 text-sm text-primary/60">
             <li>
-              <Link href="/" className="hover:text-white transition-colors">Home</Link>
+              <Link href="/" className="hover:text-primary transition-colors">Home</Link>
             </li>
             <li aria-hidden="true">→</li>
             <li>
-              <Link href="/activities" className="hover:text-white transition-colors">Activities</Link>
+              <Link href="/activities" className="hover:text-primary transition-colors">Activities</Link>
             </li>
             <li aria-hidden="true">→</li>
-            <li className="text-white/90 font-medium truncate" aria-current="page">{activity.title}</li>
+            <li className="text-primary/90 font-medium truncate" aria-current="page">{activity.title}</li>
           </ol>
         </div>
       </nav>
@@ -162,18 +162,18 @@ export default function ActivityDetailView({
                 {isDateNight ? <TagPill>BYOB</TagPill> : activity.coversTwo && <TagPill>💕 Ticket for Two</TagPill>}
               </div>
 
-              <h1 className="mt-4 font-serif text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
+              <h1 className="mt-4 font-serif text-4xl font-bold tracking-tight text-primary sm:text-5xl lg:text-6xl leading-[1.1]">
                 {activity.heroTitle}
               </h1>
 
-              <p className="mt-6 text-lg sm:text-xl leading-relaxed text-white/90 max-w-2xl">
+              <p className="mt-6 text-lg sm:text-xl leading-relaxed text-primary/90 max-w-2xl">
                 {activity.heroDescription}
               </p>
 
               {/* Price & Coverage Highlight */}
               <div className="mt-6 flex flex-wrap items-baseline gap-3">
                 {!isDateNight && displayPricing.wasPrice && displayPricing.displayPrice !== "See price at checkout" && (
-                  <del className="font-serif text-xl sm:text-2xl text-white/50" aria-label="Original price">
+                  <del className="font-serif text-xl sm:text-2xl text-primary/50" aria-label="Original price">
                     ${displayPricing.wasPrice}{" "}
                   </del>
                 )}
@@ -181,7 +181,7 @@ export default function ActivityDetailView({
                   {displayPricing.displayPrice}
                 </span>
                 {!isDateNight && activity.coversNote && (
-                  <span className="rounded-full border border-pink-400/40 bg-pink-500/20 px-3 py-1 text-xs font-semibold text-pink-200">
+                  <span className="rounded-full border border-pink-400/40 bg-btn/20 px-3 py-1 text-xs font-semibold text-pink-200">
                     {activity.coversNote}
                   </span>
                 )}
@@ -193,15 +193,15 @@ export default function ActivityDetailView({
                   {pricing.variants.map((v) => (
                     <div
                       key={v.id}
-                      className="rounded-2xl border border-white/20 bg-white/10 p-4 flex flex-col justify-between backdrop-blur-sm"
+                      className="rounded-2xl border border-border bg-surface-secondary p-4 flex flex-col justify-between backdrop-blur-sm"
                     >
                       <div>
-                        <div className="font-semibold text-white text-sm">{v.title}</div>
+                        <div className="font-semibold text-primary text-sm">{v.title}</div>
                         <div className="mt-1 text-xs font-bold text-amber-300">{v.formattedPrice}</div>
                       </div>
                       <a
                         href={v.bookingUrl}
-                        className="mt-3 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-3 py-2 text-xs font-bold text-white shadow-md hover:from-pink-600 hover:to-purple-700 transition"
+                        className="mt-3 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-3 py-2 text-xs font-bold text-primary shadow-md hover:from-pink-600 hover:to-purple-700 transition"
                       >
                         Book {v.title} →
                       </a>
@@ -215,7 +215,7 @@ export default function ActivityDetailView({
                 <button
                   type="button"
                   onClick={openBooking}
-                  className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-pink-500/25 transition-all duration-200 hover:scale-[1.02] hover:shadow-pink-500/40 focus:outline-none focus:ring-2 focus:ring-pink-400"
+                  className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 px-8 py-4 text-base font-bold text-primary shadow-xl shadow-pink-500/25 transition-all duration-200 hover:scale-[1.02] hover:shadow-pink-500/40 focus:outline-none focus:ring-2 focus:ring-pink-400"
                   aria-haspopup="dialog"
                 >
                   See Dates &amp; Book
@@ -235,7 +235,7 @@ export default function ActivityDetailView({
                         class_id: activity.slug,
                       })
                     }
-                    className="inline-flex items-center justify-center rounded-2xl border border-white/20 bg-white/5 px-6 py-4 text-sm font-semibold text-white/90 backdrop-blur-sm transition hover:bg-white/10 hover:text-white"
+                    className="inline-flex items-center justify-center rounded-2xl border border-border bg-surface-secondary px-6 py-4 text-sm font-semibold text-primary/90 backdrop-blur-sm transition hover:bg-surface-secondary hover:text-primary"
                   >
                     🎁 {giftContext.label}
                   </Link>
@@ -245,7 +245,7 @@ export default function ActivityDetailView({
 
             {/* Right Column: Strong Activity Image */}
             <div className="lg:col-span-5">
-              <div className="relative aspect-[4/3] sm:aspect-square overflow-hidden rounded-3xl border border-white/20 bg-white/5 shadow-2xl backdrop-blur-md">
+              <div className="relative aspect-[4/3] sm:aspect-square overflow-hidden rounded-3xl border border-border bg-surface-secondary shadow-2xl backdrop-blur-md">
                 <Image
                   src={activity.image.path}
                   alt={activity.image.alt}
@@ -274,13 +274,13 @@ export default function ActivityDetailView({
                   <Reveal key={idx} delay={idx * 80}>
                     <GlassCard className="p-5 h-full flex flex-col justify-between">
                       <div>
-                        <div className="text-xs font-bold uppercase tracking-wider text-pink-400">
+                        <div className="text-xs font-bold uppercase tracking-wider text-accent">
                           {card.label}
                         </div>
-                        <h3 className="mt-2 font-serif text-lg font-bold text-white">
+                        <h3 className="mt-2 font-serif text-lg font-bold text-primary">
                           {card.title}
                         </h3>
-                        <p className="mt-2 text-sm text-white/70 leading-relaxed">
+                        <p className="mt-2 text-sm text-primary/70 leading-relaxed">
                           {card.body}
                         </p>
                       </div>
@@ -292,22 +292,22 @@ export default function ActivityDetailView({
 
             {/* What You Make / The Experience */}
             <section aria-labelledby="experience-heading" className="space-y-6">
-              <div className="border-b border-white/10 pb-4">
-                <h2 id="experience-heading" className="font-serif text-2xl sm:text-3xl font-bold text-white">
+              <div className="border-b border-border pb-4">
+                <h2 id="experience-heading" className="font-serif text-2xl sm:text-3xl font-bold text-primary">
                   The Experience
                 </h2>
-                <p className="mt-2 text-base text-white/75">
+                <p className="mt-2 text-base text-primary/75">
                   What to expect when you step into the studio for {activity.title.toLowerCase()}.
                 </p>
               </div>
 
               <div className="grid gap-6 sm:grid-cols-2">
                 {activity.theExperience.map((item, idx) => (
-                  <div key={idx} className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                    <h3 className="font-serif text-lg font-bold text-white">
+                  <div key={idx} className="rounded-2xl border border-border bg-surface-secondary p-6">
+                    <h3 className="font-serif text-lg font-bold text-primary">
                       {item.title}
                     </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white/80">
+                    <p className="mt-3 text-sm leading-relaxed text-primary/80">
                       {item.body}
                     </p>
                   </div>
@@ -322,31 +322,31 @@ export default function ActivityDetailView({
 
             {/* Key Practical Info Grid */}
             {!isDateNight && <section aria-labelledby="practical-heading" className="space-y-6">
-              <div className="border-b border-white/10 pb-4">
-                <h2 id="practical-heading" className="font-serif text-2xl sm:text-3xl font-bold text-white">
+              <div className="border-b border-border pb-4">
+                <h2 id="practical-heading" className="font-serif text-2xl sm:text-3xl font-bold text-primary">
                   Good to Know
                 </h2>
-                <p className="mt-2 text-base text-white/75">
+                <p className="mt-2 text-base text-primary/75">
                   Essential details about admission, timing, drinks, and studio location.
                 </p>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 {/* Duration */}
-                <div className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <div className="rounded-xl bg-pink-500/20 p-3 text-pink-300 text-xl shrink-0">⏱️</div>
+                <div className="flex items-start gap-4 rounded-2xl border border-border bg-surface-secondary p-5">
+                  <div className="rounded-xl bg-btn/20 p-3 text-pink-300 text-xl shrink-0">⏱️</div>
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-wider text-white/50">Duration</div>
-                    <div className="mt-1 font-semibold text-white text-sm sm:text-base">{activity.duration}</div>
+                    <div className="text-xs font-semibold uppercase tracking-wider text-primary/50">Duration</div>
+                    <div className="mt-1 font-semibold text-primary text-sm sm:text-base">{activity.duration}</div>
                   </div>
                 </div>
 
                 {/* Admission */}
-                <div className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <div className="rounded-xl bg-purple-500/20 p-3 text-purple-300 text-xl shrink-0">🎟️</div>
+                <div className="flex items-start gap-4 rounded-2xl border border-border bg-surface-secondary p-5">
+                  <div className="rounded-xl bg-btn/20 p-3 text-purple-300 text-xl shrink-0">🎟️</div>
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-wider text-white/50">Admission</div>
-                    <div className="mt-1 font-semibold text-white text-sm sm:text-base">
+                    <div className="text-xs font-semibold uppercase tracking-wider text-primary/50">Admission</div>
+                    <div className="mt-1 font-semibold text-primary text-sm sm:text-base">
                       {activity.coversTwo ? "Admits 2 Guests" : "1 Participant"}
                     </div>
                   </div>
@@ -354,13 +354,13 @@ export default function ActivityDetailView({
 
                 {/* Practical Info Items */}
                 {activity.practicalInfo.map((info, idx) => (
-                  <div key={idx} className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+                  <div key={idx} className="flex items-start gap-4 rounded-2xl border border-border bg-surface-secondary p-5">
                     <div className="rounded-xl bg-amber-500/20 p-3 text-amber-300 text-xl shrink-0">
                       {info.label.toLowerCase().includes("byob") ? "🍷" : "📍"}
                     </div>
                     <div>
-                      <div className="text-xs font-semibold uppercase tracking-wider text-white/50">{info.label}</div>
-                      <div className="mt-1 text-sm text-white/80 leading-relaxed">{info.text}</div>
+                      <div className="text-xs font-semibold uppercase tracking-wider text-primary/50">{info.label}</div>
+                      <div className="mt-1 text-sm text-primary/80 leading-relaxed">{info.text}</div>
                     </div>
                   </div>
                 ))}
@@ -369,14 +369,14 @@ export default function ActivityDetailView({
 
             {/* Included in Workshop */}
             <section aria-labelledby="included-heading" className="space-y-4">
-              <h2 id="included-heading" className="font-serif text-xl sm:text-2xl font-bold text-white">
+              <h2 id="included-heading" className="font-serif text-xl sm:text-2xl font-bold text-primary">
                 What&apos;s Included
               </h2>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <div className="rounded-2xl border border-border bg-surface-secondary p-6">
                 <ul className="grid gap-3 sm:grid-cols-2">
                   {activity.included.map((item, idx) => (
-                    <li key={idx} className="flex items-center gap-3 text-sm text-white/80">
-                      <span className="text-pink-400 font-bold">✓</span>
+                    <li key={idx} className="flex items-center gap-3 text-sm text-primary/80">
+                      <span className="text-accent font-bold">✓</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -387,19 +387,19 @@ export default function ActivityDetailView({
             {/* FAQs */}
             {activity.faqs.length > 0 && (
               <section aria-labelledby="faqs-heading" className="space-y-6">
-                <div className="border-b border-white/10 pb-4">
-                  <h2 id="faqs-heading" className="font-serif text-2xl sm:text-3xl font-bold text-white">
+                <div className="border-b border-border pb-4">
+                  <h2 id="faqs-heading" className="font-serif text-2xl sm:text-3xl font-bold text-primary">
                     {isDateNight ? "Good to know" : "Frequently Asked Questions"}
                   </h2>
                 </div>
                 {isDateNight && <div className="space-y-4">
-                  <details className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <details className="rounded-2xl border border-border bg-surface-secondary p-6">
                     <summary className="cursor-pointer font-semibold">What are the finishing options?</summary>
                     <div className="mt-5"><PotteryFinishingSection /></div>
                   </details>
-                  <details className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                  <details className="rounded-2xl border border-border bg-surface-secondary p-6">
                     <summary className="cursor-pointer font-semibold">Timing, admission and studio details</summary>
-                    <div className="mt-4 space-y-3 text-sm text-white/75">
+                    <div className="mt-4 space-y-3 text-sm text-primary/75">
                       <p><strong>Duration:</strong> {activity.duration}</p>
                       <p><strong>Admission:</strong> Admits 2 Guests</p>
                       {activity.practicalInfo.map(info => <p key={info.label}><strong>{info.label}:</strong> {info.label === "Location" ? (preferredCity === "chicago" ? "Pilsen, Chicago — 1142 W. 18th St." : "Eugene, Oregon — 3295 Cross St.") : info.text}</p>)}
@@ -408,16 +408,16 @@ export default function ActivityDetailView({
                 </div>}
                 <div className="space-y-4">
                   {activity.faqs.map((faq, idx) => isDateNight ? (
-                    <details key={idx} className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                    <details key={idx} className="rounded-2xl border border-border bg-surface-secondary p-6">
                       <summary className="cursor-pointer font-semibold">{faq.q}</summary>
-                      <p className="mt-3 text-sm leading-relaxed text-white/75">{faq.a}</p>
+                      <p className="mt-3 text-sm leading-relaxed text-primary/75">{faq.a}</p>
                     </details>
                   ) : (
-                    <div key={idx} className="rounded-2xl border border-white/10 bg-white/5 p-6">
-                      <h3 className="font-serif text-base sm:text-lg font-bold text-white">
+                    <div key={idx} className="rounded-2xl border border-border bg-surface-secondary p-6">
+                      <h3 className="font-serif text-base sm:text-lg font-bold text-primary">
                         {faq.q}
                       </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-white/75">
+                      <p className="mt-2 text-sm leading-relaxed text-primary/75">
                         {faq.a}
                       </p>
                     </div>
@@ -429,11 +429,11 @@ export default function ActivityDetailView({
             {/* Article cluster: five guides that link back to this exact activity. */}
             {relatedGuides.length > 0 && (
               <section aria-labelledby="activity-guide-heading" className="space-y-6">
-                <div className="border-b border-white/10 pb-4">
-                  <h2 id="activity-guide-heading" className="font-serif text-2xl sm:text-3xl font-bold text-white">
+                <div className="border-b border-border pb-4">
+                  <h2 id="activity-guide-heading" className="font-serif text-2xl sm:text-3xl font-bold text-primary">
                     Ideas, Techniques &amp; Inspiration
                   </h2>
-                  <p className="mt-2 text-base leading-relaxed text-white/70">
+                  <p className="mt-2 text-base leading-relaxed text-primary/70">
                     Get inspired before your workshop with practical tips, design ideas, and creative guides.
                   </p>
                 </div>
@@ -442,10 +442,10 @@ export default function ActivityDetailView({
                     <Link
                       key={guide.slug}
                       href={`/blog/${guide.slug}`}
-                      className="group block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-purple-400/40 hover:bg-white/10"
+                      className="group block rounded-2xl border border-border bg-surface-secondary p-5 transition hover:border-purple-400/40 hover:bg-surface-secondary"
                     >
-                      <h3 className="font-serif text-lg font-bold leading-snug text-white group-hover:text-purple-200">{guide.title}</h3>
-                      <p className="mt-2 line-clamp-3 text-sm leading-6 text-white/70">{guide.description}</p>
+                      <h3 className="font-serif text-lg font-bold leading-snug text-primary group-hover:text-purple-200">{guide.title}</h3>
+                      <p className="mt-2 line-clamp-3 text-sm leading-6 text-primary/70">{guide.description}</p>
                       <span className="mt-4 inline-block text-sm font-semibold text-purple-300 group-hover:text-purple-200">Read guide →</span>
                     </Link>
                   ))}
@@ -456,11 +456,11 @@ export default function ActivityDetailView({
             {/* Curated, place-specific content beyond the five class technique articles */}
             {visibleLocalGuides.length > 0 && (
               <section aria-labelledby="activity-local-guides" className="space-y-5">
-                <div className="border-b border-white/10 pb-4">
-                  <h2 id="activity-local-guides" className="font-serif text-2xl sm:text-3xl font-bold text-white">
+                <div className="border-b border-border pb-4">
+                  <h2 id="activity-local-guides" className="font-serif text-2xl sm:text-3xl font-bold text-primary">
                     Plan a Creative Outing
                   </h2>
-                  <p className="mt-2 text-base leading-relaxed text-white/70">
+                  <p className="mt-2 text-base leading-relaxed text-primary/70">
                     Explore local itineraries, celebrations, and practical ways to make the most of your workshop.
                   </p>
                 </div>
@@ -469,10 +469,10 @@ export default function ActivityDetailView({
                     <Link
                       key={guide.slug}
                       href={`/blog/${guide.slug}`}
-                      className="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-purple-400/40 hover:bg-white/10"
+                      className="group rounded-2xl border border-border bg-surface-secondary p-5 transition hover:border-purple-400/40 hover:bg-surface-secondary"
                     >
-                      <h3 className="font-serif text-lg font-bold text-white group-hover:text-purple-200">{guide.title}</h3>
-                      <p className="mt-2 line-clamp-3 text-sm leading-6 text-white/70">{guide.description}</p>
+                      <h3 className="font-serif text-lg font-bold text-primary group-hover:text-purple-200">{guide.title}</h3>
+                      <p className="mt-2 line-clamp-3 text-sm leading-6 text-primary/70">{guide.description}</p>
                       <span className="mt-3 inline-block text-sm font-semibold text-purple-200">Read local guide →</span>
                     </Link>
                   ))}
@@ -482,17 +482,17 @@ export default function ActivityDetailView({
 
             {/* Final CTA Banner */}
             <section className="rounded-3xl border border-pink-500/30 bg-gradient-to-r from-pink-900/40 via-purple-900/30 to-slate-900/40 p-8 text-center sm:p-12">
-              <h2 className="font-serif text-2xl sm:text-4xl font-bold text-white">
+              <h2 className="font-serif text-2xl sm:text-4xl font-bold text-primary">
                 Ready to Create?
               </h2>
-              <p className="mx-auto mt-3 max-w-xl text-base text-white/80">
+              <p className="mx-auto mt-3 max-w-xl text-base text-primary/80">
                 {isDateNight ? `Make time for a little clay and a lot of laughter. Pick your date in ${preferredCity === "chicago" ? "Pilsen, Chicago" : "Eugene, Oregon"}.` : "Pick your studio location and reserve your spot in minutes. Direct studio booking with zero convenience fees."}
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-4">
                 <button
                   type="button"
                   onClick={openBooking}
-                  className="rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-4 font-semibold text-white shadow-lg shadow-pink-500/30 transition hover:from-pink-600 hover:to-purple-700"
+                  className="rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-8 py-4 font-semibold text-primary shadow-lg shadow-pink-500/30 transition hover:from-pink-600 hover:to-purple-700"
                   aria-haspopup="dialog"
                 >
                   See Dates &amp; Book →
@@ -511,7 +511,7 @@ export default function ActivityDetailView({
                         class_id: activity.slug,
                       })
                     }
-                    className="rounded-full border border-white/25 bg-white/10 px-6 py-4 font-semibold text-white transition hover:bg-white/15"
+                    className="rounded-full border border-white/25 bg-surface-secondary px-6 py-4 font-semibold text-primary transition hover:bg-white/15"
                   >
                     🎁 {giftContext.label} →
                   </Link>
@@ -525,15 +525,15 @@ export default function ActivityDetailView({
             <div className="sticky top-28 space-y-8">
               {/* Quick Booking Box */}
               <GlassCard className="p-6 text-center border-pink-500/30 shadow-lg">
-                <div className="text-xs font-semibold uppercase tracking-wider text-pink-400">
+                <div className="text-xs font-semibold uppercase tracking-wider text-accent">
                   Join A Session
                 </div>
-                <h3 className="mt-2 font-serif text-xl font-bold text-white">
+                <h3 className="mt-2 font-serif text-xl font-bold text-primary">
                   {activity.title}
                 </h3>
-                <div className="mt-2 text-sm text-white/75 flex items-center justify-center gap-2">
+                <div className="mt-2 text-sm text-primary/75 flex items-center justify-center gap-2">
                   {!isDateNight && displayPricing.wasPrice && displayPricing.displayPrice !== "See price at checkout" && (
-                    <del className="text-white/50 text-xs" aria-label="Original price">${displayPricing.wasPrice}</del>
+                    <del className="text-primary/50 text-xs" aria-label="Original price">${displayPricing.wasPrice}</del>
                   )}
                   <span className="font-semibold text-amber-300">{displayPricing.displayPrice}</span>
                 </div>
@@ -547,14 +547,14 @@ export default function ActivityDetailView({
                 {pricing.variants && pricing.variants.length > 1 ? (
                   <div className="mt-4 space-y-2 text-left">
                     {pricing.variants.map((v) => (
-                      <div key={v.id} className="rounded-xl border border-white/10 bg-white/5 p-3 flex items-center justify-between gap-2">
+                      <div key={v.id} className="rounded-xl border border-border bg-surface-secondary p-3 flex items-center justify-between gap-2">
                         <div>
-                          <div className="text-xs font-semibold text-white">{v.title}</div>
+                          <div className="text-xs font-semibold text-primary">{v.title}</div>
                           <div className="text-[11px] font-bold text-amber-300">{v.formattedPrice}</div>
                         </div>
                         <a
                           href={v.bookingUrl}
-                          className="rounded-lg bg-pink-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-pink-600 transition shrink-0"
+                          className="rounded-lg bg-btn px-3 py-1.5 text-xs font-bold text-primary hover:bg-btn transition shrink-0"
                         >
                           Book →
                         </a>
@@ -565,7 +565,7 @@ export default function ActivityDetailView({
                   <button
                     type="button"
                     onClick={openBooking}
-                    className="mt-5 w-full inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-bold text-white shadow-md hover:from-pink-600 hover:to-purple-700 transition"
+                    className="mt-5 w-full inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 px-5 py-3 text-sm font-bold text-primary shadow-md hover:from-pink-600 hover:to-purple-700 transition"
                     aria-haspopup="dialog"
                   >
                     See Dates &amp; Book →
@@ -585,7 +585,7 @@ export default function ActivityDetailView({
                         class_id: activity.slug,
                       })
                     }
-                    className="mt-3 w-full inline-flex items-center justify-center rounded-xl border border-white/20 bg-white/5 px-4 py-2.5 text-xs font-semibold text-white/90 transition hover:bg-white/10"
+                    className="mt-3 w-full inline-flex items-center justify-center rounded-xl border border-border bg-surface-secondary px-4 py-2.5 text-xs font-semibold text-primary/90 transition hover:bg-surface-secondary"
                   >
                     🎁 {giftContext.label}
                   </Link>
@@ -598,8 +598,8 @@ export default function ActivityDetailView({
               {/* Related Activities */}
               {relatedActivities.length > 0 && (
                 <div>
-                  <h3 className="font-serif text-xl font-bold text-white">More Workshops</h3>
-                  <p className="mt-1 text-sm text-white/60">You might also enjoy</p>
+                  <h3 className="font-serif text-xl font-bold text-primary">More Workshops</h3>
+                  <p className="mt-1 text-sm text-primary/60">You might also enjoy</p>
                   <div className="mt-4 space-y-3">
                     {relatedActivities.slice(0, 4).map((related) => (
                       <Link
@@ -607,11 +607,11 @@ export default function ActivityDetailView({
                         href={`/activities/${related.slug}`}
                         className="group block"
                       >
-                        <GlassCard className="p-4 transition hover:border-white/30 hover:bg-white/10">
+                        <GlassCard className="p-4 transition hover:border-white/30 hover:bg-surface-secondary">
                           <div className="flex items-center justify-between gap-2">
                             <div>
                               <div className="flex items-center gap-1.5">
-                                <span className="text-xs font-semibold text-pink-400 uppercase tracking-wide">
+                                <span className="text-xs font-semibold text-accent uppercase tracking-wide">
                                   {related.categoryLabel}
                                 </span>
                                 {related.adultThemed && (
@@ -620,15 +620,15 @@ export default function ActivityDetailView({
                                   </span>
                                 )}
                               </div>
-                              <h4 className="mt-1 text-sm font-semibold text-white group-hover:text-pink-200 transition">
+                              <h4 className="mt-1 text-sm font-semibold text-primary group-hover:text-pink-200 transition">
                                 {related.title}
                               </h4>
-                              <p className="mt-0.5 text-xs text-white/60">
-                                {related.wasPrice && <del className="text-white/40 mr-1">${related.wasPrice}</del>}
+                              <p className="mt-0.5 text-xs text-primary/60">
+                                {related.wasPrice && <del className="text-primary/40 mr-1">${related.wasPrice}</del>}
                                 {related.displayPrice}
                               </p>
                             </div>
-                            <span className="text-white/40 group-hover:text-white transition">→</span>
+                            <span className="text-primary/40 group-hover:text-primary transition">→</span>
                           </div>
                         </GlassCard>
                       </Link>
@@ -638,7 +638,7 @@ export default function ActivityDetailView({
                   <div className="mt-4">
                     <Link
                       href="/activities"
-                      className="block text-center text-xs text-white/60 hover:text-white underline"
+                      className="block text-center text-xs text-primary/60 hover:text-primary underline"
                     >
                       View all workshops →
                     </Link>
@@ -655,7 +655,7 @@ export default function ActivityDetailView({
         <button
           type="button"
           onClick={openBooking}
-          className="w-full flex items-center justify-between rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-3.5 text-sm font-bold text-white shadow-2xl shadow-pink-500/50 backdrop-blur-md active:scale-95 transition"
+          className="w-full flex items-center justify-between rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-3.5 text-sm font-bold text-primary shadow-2xl shadow-pink-500/50 backdrop-blur-md active:scale-95 transition"
           aria-haspopup="dialog"
         >
           <span>{activity.title}</span>

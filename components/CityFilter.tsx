@@ -37,8 +37,8 @@ export default function CityFilter({ onCityChange, defaultCity = "chicago" }: Ci
           rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-200
           ${
             selectedCity === "chicago"
-              ? "bg-white/15 text-white shadow-lg shadow-white/10"
-              : "text-white/50 hover:text-white/80"
+              ? "bg-white/15 text-primary shadow-lg shadow-white/10"
+              : "text-primary/50 hover:text-primary/80"
           }
         `}
       >
@@ -50,8 +50,8 @@ export default function CityFilter({ onCityChange, defaultCity = "chicago" }: Ci
           rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-200
           ${
             selectedCity === "eugene"
-              ? "bg-white/15 text-white shadow-lg shadow-white/10"
-              : "text-white/50 hover:text-white/80"
+              ? "bg-white/15 text-primary shadow-lg shadow-white/10"
+              : "text-primary/50 hover:text-primary/80"
           }
         `}
       >

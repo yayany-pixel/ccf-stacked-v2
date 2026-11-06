@@ -46,7 +46,7 @@ export default function BackgroundSlideshow({
       ))}
       
       {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/40" style={{ zIndex: 2 }} />
+      <div className="absolute inset-0 bg-background/40" style={{ zIndex: 2 }} />
       
       {/* Color gradient overlay */}
       <div className={`absolute inset-0 ${overlayClass}`} style={{ zIndex: 3 }} />

@@ -129,7 +129,7 @@ export default function LocationModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md animate-fadeIn"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-background/80 backdrop-blur-md animate-fadeIn"
       role="dialog"
       aria-modal="true"
       aria-labelledby="location-modal-title"
@@ -139,14 +139,14 @@ export default function LocationModal({
     >
       <div
         ref={modalRef}
-        className="relative w-full max-w-lg rounded-3xl border border-white/20 bg-slate-900/95 p-6 sm:p-8 text-white shadow-2xl backdrop-blur-xl"
+        className="relative w-full max-w-lg rounded-3xl border border-border bg-background/95 p-6 sm:p-8 text-primary shadow-2xl backdrop-blur-xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-5 top-5 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white/70 transition hover:bg-white/20 hover:text-white"
+          className="absolute right-5 top-5 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface-secondary text-primary/70 transition hover:bg-surface-secondary hover:text-primary"
           aria-label="Close dialog"
         >
           <span className="text-xl leading-none" aria-hidden="true">✕</span>
@@ -154,7 +154,7 @@ export default function LocationModal({
 
         {/* Modal Header */}
         <div className="pr-8">
-          <p className="text-xs font-semibold uppercase tracking-wider text-pink-400">
+          <p className="text-xs font-semibold uppercase tracking-wider text-accent">
             {hasVariants ? "Choose Workshop Option" : "Select Studio Location"}
           </p>
           <h2 id="location-modal-title" className="mt-2 font-serif text-2xl font-bold leading-tight sm:text-3xl">
@@ -162,7 +162,7 @@ export default function LocationModal({
               ? `Choose your ${activityTitle} style`
               : `Where would you like to take ${activityTitle}?`}
           </h2>
-          <p className="mt-2 text-sm text-white/75">
+          <p className="mt-2 text-sm text-primary/75">
             {hasVariants
               ? "Select an option below to view live studio dates and reserve your table."
               : "Choose your studio to see available dates."}
@@ -178,7 +178,7 @@ export default function LocationModal({
                 <p className="text-xs font-bold uppercase tracking-wider text-red-300">
                   21+ Adults Only Age Requirement
                 </p>
-                <p className="mt-1 text-xs leading-relaxed text-white/80">
+                <p className="mt-1 text-xs leading-relaxed text-primary/80">
                   This adult workshop is strictly reserved for guests aged 21 and over. A valid government-issued photo ID is required for all participants at studio check-in.
                 </p>
                 <label className="mt-3 flex items-center gap-2.5 cursor-pointer select-none">
@@ -186,9 +186,9 @@ export default function LocationModal({
                     type="checkbox"
                     checked={isAgeConfirmed}
                     onChange={(e) => setIsAgeConfirmed(e.target.checked)}
-                    className="h-4 w-4 rounded border-white/40 bg-white/10 text-pink-500 focus:ring-pink-400"
+                    className="h-4 w-4 rounded border-white/40 bg-surface-secondary text-accent focus:ring-pink-400"
                   />
-                  <span className="text-xs font-semibold text-white">
+                  <span className="text-xs font-semibold text-primary">
                     I confirm that all attending guests are 21 years of age or older
                   </span>
                 </label>
@@ -203,21 +203,21 @@ export default function LocationModal({
             {variants.map((v) => (
               <div
                 key={v.id}
-                className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:border-pink-500/50 hover:bg-white/10"
+                className="rounded-2xl border border-white/15 bg-surface-secondary p-5 transition hover:border-pink-500/50 hover:bg-surface-secondary"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-wider text-pink-400">
+                  <span className="text-xs font-bold uppercase tracking-wider text-accent">
                     {v.title}
                   </span>
-                  <span className="text-xs text-white/60">Chicago Pilsen Studio</span>
+                  <span className="text-xs text-primary/60">Chicago Pilsen Studio</span>
                 </div>
-                <p className="mt-1.5 text-xs text-white/80">
+                <p className="mt-1.5 text-xs text-primary/80">
                   {STUDIO_LOCATIONS.chicago.address}
                 </p>
                 <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="text-sm font-semibold text-amber-300">
                     {v.wasPrice && v.currentPrice && v.wasPrice > v.currentPrice && (
-                      <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${v.wasPrice}</del>
+                      <del className="text-xs text-primary/50 mr-1.5" aria-label="Original price">${v.wasPrice}</del>
                     )}
                     {v.formattedPrice || (v.currentPrice ? `$${v.currentPrice} ${v.priceUnit || ""}` : "See price at checkout")}
                   </div>
@@ -240,10 +240,10 @@ export default function LocationModal({
                         alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
                       }
                     }}
-                    className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+                    className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-primary shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-pink-400 ${
                       canBook
                         ? "bg-gradient-to-r from-pink-500 to-purple-600 shadow-pink-500/25 hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40"
-                        : "bg-slate-700 text-white/50 cursor-not-allowed"
+                        : "bg-slate-700 text-primary/50 cursor-not-allowed"
                     }`}
                   >
                     See {v.title} Dates →
@@ -259,27 +259,27 @@ export default function LocationModal({
           <div className="mt-6 space-y-4">
             {/* Chicago Option */}
             {locations.chicago && (
-              <div className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:border-pink-500/50 hover:bg-white/10">
+              <div className="rounded-2xl border border-white/15 bg-surface-secondary p-5 transition hover:border-pink-500/50 hover:bg-surface-secondary">
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-xs font-bold uppercase tracking-wider text-pink-400">
+                    <span className="text-xs font-bold uppercase tracking-wider text-accent">
                       Chicago, Illinois
                     </span>
                     {preferredCity === "chicago" && (
-                      <span className="ml-2 rounded-full border border-pink-400/40 bg-pink-500/20 px-2 py-0.5 text-[10px] font-semibold text-pink-300">
+                      <span className="ml-2 rounded-full border border-pink-400/40 bg-btn/20 px-2 py-0.5 text-[10px] font-semibold text-pink-300">
                         Suggested
                       </span>
                     )}
                   </div>
-                  <span className="text-xs text-white/60">In-person workshop</span>
+                  <span className="text-xs text-primary/60">In-person workshop</span>
                 </div>
-                <p className="mt-1.5 text-xs text-white/80">
+                <p className="mt-1.5 text-xs text-primary/80">
                   {STUDIO_LOCATIONS.chicago.address}
                 </p>
                 <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="text-sm font-semibold text-amber-300">
                     {locations.chicago.wasPrice && locations.chicago.price && locations.chicago.wasPrice > locations.chicago.price && (
-                      <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${locations.chicago.wasPrice}</del>
+                      <del className="text-xs text-primary/50 mr-1.5" aria-label="Original price">${locations.chicago.wasPrice}</del>
                     )}
                     {locations.chicago.formattedPrice || (locations.chicago.price ? `$${locations.chicago.price} ${locations.chicago.priceUnit || ""}` : "See price at checkout")}
                   </div>
@@ -290,10 +290,10 @@ export default function LocationModal({
                         alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
                       }
                     }}
-                    className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+                    className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-primary shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-pink-400 ${
                       canBook
                         ? "bg-gradient-to-r from-pink-500 to-purple-600 shadow-pink-500/25 hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40"
-                        : "bg-slate-700 text-white/50 cursor-not-allowed"
+                        : "bg-slate-700 text-primary/50 cursor-not-allowed"
                     }`}
                   >
                     See Chicago Dates →
@@ -304,7 +304,7 @@ export default function LocationModal({
 
             {/* Eugene Option */}
             {locations.eugene && (
-              <div className="rounded-2xl border border-white/15 bg-white/5 p-5 transition hover:border-emerald-500/50 hover:bg-white/10">
+              <div className="rounded-2xl border border-white/15 bg-surface-secondary p-5 transition hover:border-emerald-500/50 hover:bg-surface-secondary">
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
@@ -316,15 +316,15 @@ export default function LocationModal({
                       </span>
                     )}
                   </div>
-                  <span className="text-xs text-white/60">In-person workshop</span>
+                  <span className="text-xs text-primary/60">In-person workshop</span>
                 </div>
-                <p className="mt-1.5 text-xs text-white/80">
+                <p className="mt-1.5 text-xs text-primary/80">
                   {STUDIO_LOCATIONS.eugene.address}
                 </p>
                 <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="text-sm font-semibold text-amber-300">
                     {locations.eugene.wasPrice && locations.eugene.price && locations.eugene.wasPrice > locations.eugene.price && (
-                      <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${locations.eugene.wasPrice}</del>
+                      <del className="text-xs text-primary/50 mr-1.5" aria-label="Original price">${locations.eugene.wasPrice}</del>
                     )}
                     {locations.eugene.formattedPrice || (locations.eugene.price ? `$${locations.eugene.price} ${locations.eugene.priceUnit || ""}` : "See price at checkout")}
                   </div>
@@ -335,10 +335,10 @@ export default function LocationModal({
                         alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
                       }
                     }}
-                    className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
+                    className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-primary shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
                       canBook
                         ? "bg-gradient-to-r from-emerald-500 to-teal-600 shadow-emerald-500/25 hover:from-emerald-600 hover:to-teal-700 hover:shadow-emerald-500/40"
-                        : "bg-slate-700 text-white/50 cursor-not-allowed"
+                        : "bg-slate-700 text-primary/50 cursor-not-allowed"
                     }`}
                   >
                     See Eugene Dates →
@@ -351,21 +351,21 @@ export default function LocationModal({
 
         {/* Single City - Chicago Only */}
         {!isBoth && !hasVariants && hasChicago && locations.chicago && (
-          <div className="mt-6 rounded-2xl border border-white/15 bg-white/5 p-6">
-            <span className="text-xs font-bold uppercase tracking-wider text-pink-400">
+          <div className="mt-6 rounded-2xl border border-white/15 bg-surface-secondary p-6">
+            <span className="text-xs font-bold uppercase tracking-wider text-accent">
               In-person workshop
             </span>
-            <p className="mt-2 text-base font-semibold text-white">
+            <p className="mt-2 text-base font-semibold text-primary">
               This workshop takes place in Chicago, Illinois.
             </p>
-            <p className="mt-1 text-sm text-white/75">
+            <p className="mt-1 text-sm text-primary/75">
               {STUDIO_LOCATIONS.chicago.address}
             </p>
             <div className="mt-6 space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="text-sm font-semibold text-amber-300">
                   {locations.chicago.wasPrice && locations.chicago.price && locations.chicago.wasPrice > locations.chicago.price && (
-                    <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${locations.chicago.wasPrice}</del>
+                    <del className="text-xs text-primary/50 mr-1.5" aria-label="Original price">${locations.chicago.wasPrice}</del>
                   )}
                   {locations.chicago.formattedPrice || (locations.chicago.price ? `$${locations.chicago.price} ${locations.chicago.priceUnit || ""}` : "See price at checkout")}
                 </div>
@@ -376,10 +376,10 @@ export default function LocationModal({
                       alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
                     }
                   }}
-                  className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+                  className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-primary shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-pink-400 ${
                     canBook
                       ? "bg-gradient-to-r from-pink-500 to-purple-600 shadow-pink-500/25 hover:from-pink-600 hover:to-purple-700"
-                      : "bg-slate-700 text-white/50 cursor-not-allowed"
+                      : "bg-slate-700 text-primary/50 cursor-not-allowed"
                   }`}
                 >
                   See Chicago Dates →
@@ -388,7 +388,7 @@ export default function LocationModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full text-center text-xs text-white/60 underline hover:text-white pt-2"
+                className="w-full text-center text-xs text-primary/60 underline hover:text-primary pt-2"
               >
                 ← Return to workshop details
               </button>
@@ -398,21 +398,21 @@ export default function LocationModal({
 
         {/* Single City - Eugene Only */}
         {!isBoth && !hasVariants && hasEugene && locations.eugene && (
-          <div className="mt-6 rounded-2xl border border-white/15 bg-white/5 p-6">
+          <div className="mt-6 rounded-2xl border border-white/15 bg-surface-secondary p-6">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
               In-person workshop
             </span>
-            <p className="mt-2 text-base font-semibold text-white">
+            <p className="mt-2 text-base font-semibold text-primary">
               This workshop takes place in Eugene, Oregon.
             </p>
-            <p className="mt-1 text-sm text-white/75">
+            <p className="mt-1 text-sm text-primary/75">
               {STUDIO_LOCATIONS.eugene.address}
             </p>
             <div className="mt-6 space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="text-sm font-semibold text-amber-300">
                   {locations.eugene.wasPrice && locations.eugene.price && locations.eugene.wasPrice > locations.eugene.price && (
-                    <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${locations.eugene.wasPrice}</del>
+                    <del className="text-xs text-primary/50 mr-1.5" aria-label="Original price">${locations.eugene.wasPrice}</del>
                   )}
                   {locations.eugene.formattedPrice || (locations.eugene.price ? `$${locations.eugene.price} ${locations.eugene.priceUnit || ""}` : "See price at checkout")}
                 </div>
@@ -423,10 +423,10 @@ export default function LocationModal({
                       alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
                     }
                   }}
-                  className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
+                  className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-primary shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-emerald-400 ${
                     canBook
                       ? "bg-gradient-to-r from-emerald-500 to-teal-600 shadow-emerald-500/25 hover:from-emerald-600 hover:to-teal-700"
-                      : "bg-slate-700 text-white/50 cursor-not-allowed"
+                      : "bg-slate-700 text-primary/50 cursor-not-allowed"
                   }`}
                 >
                   See Eugene Dates →
@@ -435,7 +435,7 @@ export default function LocationModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full text-center text-xs text-white/60 underline hover:text-white pt-2"
+                className="w-full text-center text-xs text-primary/60 underline hover:text-primary pt-2"
               >
                 ← Return to workshop details
               </button>
@@ -445,21 +445,21 @@ export default function LocationModal({
 
         {/* Online Workshop Only */}
         {!hasVariants && isOnline && locations.online && (
-          <div className="mt-6 rounded-2xl border border-white/15 bg-white/5 p-6">
-            <span className="text-xs font-bold uppercase tracking-wider text-purple-400">
+          <div className="mt-6 rounded-2xl border border-white/15 bg-surface-secondary p-6">
+            <span className="text-xs font-bold uppercase tracking-wider text-accent">
               Virtual Studio
             </span>
-            <p className="mt-2 text-base font-semibold text-white">
+            <p className="mt-2 text-base font-semibold text-primary">
               Live online—join from home
             </p>
-            <p className="mt-1 text-sm text-white/75">
+            <p className="mt-1 text-sm text-primary/75">
               Kit delivered to your door. Join expert-guided interactive session from anywhere.
             </p>
             <div className="mt-6 space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="text-sm font-semibold text-amber-300">
                   {locations.online.wasPrice && locations.online.price && locations.online.wasPrice > locations.online.price && (
-                    <del className="text-xs text-white/50 mr-1.5" aria-label="Original price">${locations.online.wasPrice}</del>
+                    <del className="text-xs text-primary/50 mr-1.5" aria-label="Original price">${locations.online.wasPrice}</del>
                   )}
                   {locations.online.formattedPrice || (locations.online.price ? `$${locations.online.price} ${locations.online.priceUnit || ""}` : "See price at checkout")}
                 </div>
@@ -470,10 +470,10 @@ export default function LocationModal({
                       alert("Please confirm you are 21 years of age or older using the checkbox above before booking.");
                     }
                   }}
-                  className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-purple-400 ${
+                  className={`inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-primary shadow-lg shrink-0 transition focus:outline-none focus:ring-2 focus:ring-purple-400 ${
                     canBook
                       ? "bg-gradient-to-r from-purple-500 to-indigo-600 shadow-purple-500/25 hover:from-purple-600 hover:to-indigo-700"
-                      : "bg-slate-700 text-white/50 cursor-not-allowed"
+                      : "bg-slate-700 text-primary/50 cursor-not-allowed"
                   }`}
                 >
                   See Online Dates →
@@ -482,7 +482,7 @@ export default function LocationModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full text-center text-xs text-white/60 underline hover:text-white pt-2"
+                className="w-full text-center text-xs text-primary/60 underline hover:text-primary pt-2"
               >
                 ← Return to workshop details
               </button>
@@ -502,7 +502,7 @@ export default function LocationModal({
             <button
               type="button"
               onClick={onClose}
-              className="mt-4 rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold text-white hover:bg-white/20"
+              className="mt-4 rounded-xl border border-border bg-surface-secondary px-4 py-2 text-xs font-semibold text-primary hover:bg-surface-secondary"
             >
               Return to browsing
             </button>
@@ -510,7 +510,7 @@ export default function LocationModal({
         )}
 
         {/* Helper footer */}
-        <p className="mt-6 text-center text-xs text-white/50">
+        <p className="mt-6 text-center text-xs text-primary/50">
           Direct studio booking with zero ticketing fees. Select your studio above to view live dates.
         </p>
       </div>

@@ -36,11 +36,11 @@ export default function ScrollHint() {
   return (
     <div className="pointer-events-none fixed bottom-8 left-1/2 z-40 -translate-x-1/2">
       <div className="scroll-hint-bob flex flex-col items-center gap-2 opacity-60">
-        <span className="text-xs font-medium uppercase tracking-wider text-white/70">
+        <span className="text-xs font-medium uppercase tracking-wider text-primary/70">
           Explore
         </span>
         <svg
-          className="h-6 w-6 text-white/70"
+          className="h-6 w-6 text-primary/70"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

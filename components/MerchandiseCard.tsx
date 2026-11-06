@@ -41,7 +41,7 @@ export default function MerchandiseCard() {
 
   if (loading) {
     return (
-      <div className="animate-pulse rounded-2xl border border-white/10 bg-white/5 p-6 h-96 w-full mt-8" />
+      <div className="animate-pulse rounded-2xl border border-border bg-surface-secondary p-6 h-96 w-full mt-8" />
     );
   }
 
@@ -62,9 +62,9 @@ export default function MerchandiseCard() {
     : "https://shop.colorcocktailfactory.com/products/unisex-garment-dyed-heavyweight-t-shirt";
 
   return (
-    <div className="mt-8 overflow-hidden rounded-2xl border border-pink-500/30 bg-slate-900/90 shadow-xl transition-all hover:border-pink-500/50 flex flex-col">
+    <div className="mt-8 overflow-hidden rounded-2xl border border-pink-500/30 bg-background/90 shadow-xl transition-all hover:border-pink-500/50 flex flex-col">
       {/* Image Section */}
-      <div className="relative h-64 w-full shrink-0 bg-black/40">
+      <div className="relative h-64 w-full shrink-0 bg-background/40">
         <NextImage
           src="/images/merch-studio.png"
           alt="Pepper charcoal Good With My Hands pottery T-shirt with cream hands-and-bowl artwork, hanging in a sunlit pottery studio."
@@ -74,7 +74,7 @@ export default function MerchandiseCard() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
         <div className="absolute bottom-3 left-4">
-          <span className="inline-block rounded-full bg-pink-500/90 px-2.5 py-1 text-xs font-bold tracking-wide text-white backdrop-blur-sm shadow-sm shadow-pink-500/50">
+          <span className="inline-block rounded-full bg-btn/90 px-2.5 py-1 text-xs font-bold tracking-wide text-primary backdrop-blur-sm shadow-sm shadow-pink-500/50">
             Take the creativity home
           </span>
         </div>
@@ -83,10 +83,10 @@ export default function MerchandiseCard() {
       {/* Content Section */}
       <div className="flex flex-col justify-between p-5 w-full">
         <div>
-          <h3 className="font-serif text-xl font-bold text-white leading-tight">
+          <h3 className="font-serif text-xl font-bold text-primary leading-tight">
             Good With My Hands
           </h3>
-          <p className="mt-2 text-sm text-white/75 leading-relaxed">
+          <p className="mt-2 text-sm text-primary/75 leading-relaxed">
             Your new favorite studio tee. Premium garment-dyed cotton, original pottery artwork, and a relaxed unisex fit.
           </p>
 
@@ -99,7 +99,7 @@ export default function MerchandiseCard() {
           {/* Selectors */}
           <div className="mt-5 space-y-4">
             <div>
-              <label className="text-xs font-bold uppercase tracking-wider text-white/50">
+              <label className="text-xs font-bold uppercase tracking-wider text-primary/50">
                 Color
               </label>
               <div className="mt-2 flex flex-wrap gap-2">
@@ -109,8 +109,8 @@ export default function MerchandiseCard() {
                     onClick={() => setSelectedColor(color)}
                     className={`rounded-full px-3 py-1.5 text-[11px] font-semibold transition ${
                       selectedColor === color
-                        ? "bg-pink-500 text-white"
-                        : "bg-white/10 text-white/70 hover:bg-white/20"
+                        ? "bg-btn text-primary"
+                        : "bg-surface-secondary text-primary/70 hover:bg-surface-secondary"
                     }`}
                   >
                     {color}
@@ -120,8 +120,8 @@ export default function MerchandiseCard() {
             </div>
 
             <div>
-              <label className="text-xs font-bold uppercase tracking-wider text-white/50">
-                Size <span className="text-pink-400">*</span>
+              <label className="text-xs font-bold uppercase tracking-wider text-primary/50">
+                Size <span className="text-accent">*</span>
               </label>
               <div className="mt-2 flex flex-wrap gap-2">
                 {sizes.map((size) => (
@@ -131,7 +131,7 @@ export default function MerchandiseCard() {
                     className={`rounded-md px-3 py-1.5 text-[11px] font-semibold transition ${
                       selectedSize === size
                         ? "bg-white text-black"
-                        : "bg-white/10 text-white/70 hover:bg-white/20"
+                        : "bg-surface-secondary text-primary/70 hover:bg-surface-secondary"
                     }`}
                   >
                     {size}
@@ -142,17 +142,17 @@ export default function MerchandiseCard() {
           </div>
         </div>
 
-        <div className="mt-6 pt-5 border-t border-white/10 flex flex-col gap-3">
-          <p className="text-xs text-white/50 text-center">
+        <div className="mt-6 pt-5 border-t border-border flex flex-col gap-3">
+          <p className="text-xs text-primary/50 text-center">
             Merchandise checkout is separate from your class booking.
           </p>
           <a
             href={checkoutUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-bold text-white shadow-lg transition focus:outline-none focus:ring-2 focus:ring-pink-400 ${
+            className={`inline-flex w-full items-center justify-center rounded-xl px-5 py-3 text-sm font-bold text-primary shadow-lg transition focus:outline-none focus:ring-2 focus:ring-pink-400 ${
               !selectedSize
-                ? "bg-slate-700 text-white/50 cursor-not-allowed opacity-70"
+                ? "bg-slate-700 text-primary/50 cursor-not-allowed opacity-70"
                 : "bg-gradient-to-r from-pink-500 to-purple-600 shadow-pink-500/25 hover:from-pink-600 hover:to-purple-700 hover:shadow-pink-500/40"
             }`}
             onClick={(e) => {

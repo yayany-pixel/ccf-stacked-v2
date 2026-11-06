@@ -33,13 +33,13 @@ export default function RelatedArticles({
             <Link
               key={p.slug}
               href={`/blog/${p.slug}`}
-              className="block rounded-xl border border-white/10 bg-white/5 p-4 transition hover:border-white/25 hover:bg-white/10"
+              className="block rounded-xl border border-border bg-surface-secondary p-4 transition hover:border-white/25 hover:bg-surface-secondary"
             >
               <div className="text-xs font-semibold uppercase tracking-wide text-purple-300">
                 {p.category}
               </div>
-              <div className="mt-1 font-semibold text-white">{p.title}</div>
-              <p className="mt-1 line-clamp-2 text-sm text-white/70">
+              <div className="mt-1 font-semibold text-primary">{p.title}</div>
+              <p className="mt-1 line-clamp-2 text-sm text-primary/70">
                 {p.description}
               </p>
             </Link>

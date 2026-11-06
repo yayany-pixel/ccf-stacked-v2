@@ -38,33 +38,33 @@ export default function ActivitiesIndexPage() {
             <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-6xl">
               All Classes & Workshops
             </h1>
-            <p className="mt-6 text-lg leading-8 text-white/80">
+            <p className="mt-6 text-lg leading-8 text-primary/80">
               From pottery and glass fusion to bonsai and painting, explore our full collection of creative experiences. 
               Each class is beginner-friendly, guided by experts, and designed for maximum fun.
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-white/60">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-primary/60">
               <span>Popular categories:</span>
               <Link 
                 href="#mud-room" 
-                className="rounded-full border bg-white/5 px-3 py-1 transition category-mud"
+                className="rounded-full border bg-surface-secondary px-3 py-1 transition category-mud"
               >
                 Pottery
               </Link>
               <Link 
                 href="#glass-room" 
-                className="rounded-full border bg-white/5 px-3 py-1 transition category-glass"
+                className="rounded-full border bg-surface-secondary px-3 py-1 transition category-glass"
               >
                 Glass & Mosaics
               </Link>
               <Link 
                 href="#roots-room" 
-                className="rounded-full border bg-white/5 px-3 py-1 transition category-roots"
+                className="rounded-full border bg-surface-secondary px-3 py-1 transition category-roots"
               >
                 Nature Crafts
               </Link>
               <Link 
                 href="/gift-cards" 
-                className="rounded-full border bg-white/5 px-3 py-1 transition category-romance"
+                className="rounded-full border bg-surface-secondary px-3 py-1 transition category-romance"
               >
                 Gift Cards
               </Link>
@@ -88,7 +88,7 @@ export default function ActivitiesIndexPage() {
                     <span className="text-4xl" role="img" aria-label={category.label}>{category.icon}</span>
                     <div>
                       <h2 className="font-serif text-3xl font-bold">{category.label}</h2>
-                      <p className="mt-1 text-white/65">{category.description}</p>
+                      <p className="mt-1 text-primary/65">{category.description}</p>
                     </div>
                   </div>
                 </div>
@@ -111,7 +111,7 @@ export default function ActivitiesIndexPage() {
                             <div className="text-xs font-semibold uppercase tracking-wide category-accent">
                               {activity.badge.split(" · ")[0]}
                             </div>
-                            <h3 className="card-title-underline mt-2 font-serif text-xl font-semibold group-hover:text-white/90">
+                            <h3 className="card-title-underline mt-2 font-serif text-xl font-semibold group-hover:text-primary/90">
                               {activity.heroTitle}
                             </h3>
                           </div>
@@ -120,7 +120,7 @@ export default function ActivitiesIndexPage() {
                           )}
                         </div>
 
-                        <p className="mt-3 text-sm leading-relaxed text-white/70">
+                        <p className="mt-3 text-sm leading-relaxed text-primary/70">
                           {activity.heroDescription}
                         </p>
 
@@ -128,7 +128,7 @@ export default function ActivitiesIndexPage() {
                         {activity.tags.slice(0, 3).map((tag: string) => (
                           <span
                             key={tag}
-                            className="rounded-full bg-white/5 px-2 py-1 text-xs text-white/60"
+                            className="rounded-full bg-surface-secondary px-2 py-1 text-xs text-primary/60"
                           >
                             {tag}
                           </span>
@@ -150,50 +150,50 @@ export default function ActivitiesIndexPage() {
       </div>
 
       {/* From the Blog */}
-      <div className="border-t border-white/10 py-16">
+      <div className="border-t border-border py-16">
         <div className="mx-auto max-w-4xl px-6">
           <div className="mb-6 text-center">
             <h2 className="font-serif text-2xl font-bold">From the Blog</h2>
-            <p className="mt-2 text-sm text-white/60">Extra reading before you pick a class.</p>
+            <p className="mt-2 text-sm text-primary/60">Extra reading before you pick a class.</p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <Link
               href="/blog/art-classes-near-me"
-              className="block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-white/25 hover:bg-white/10"
+              className="block rounded-2xl border border-border bg-surface-secondary p-5 transition hover:border-white/25 hover:bg-surface-secondary"
             >
               <div className="text-xs font-semibold uppercase tracking-wide text-purple-300">Local Guides</div>
-              <div className="mt-1 font-semibold text-white">Art Classes Near Me</div>
-              <p className="mt-1 text-sm text-white/70">Choose your city, compare formats, and book in minutes.</p>
+              <div className="mt-1 font-semibold text-primary">Art Classes Near Me</div>
+              <p className="mt-1 text-sm text-primary/70">Choose your city, compare formats, and book in minutes.</p>
             </Link>
             <Link
               href="/blog/pottery-101-beginners-guide"
-              className="block rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-white/25 hover:bg-white/10"
+              className="block rounded-2xl border border-border bg-surface-secondary p-5 transition hover:border-white/25 hover:bg-surface-secondary"
             >
               <div className="text-xs font-semibold uppercase tracking-wide text-purple-300">Pottery Basics</div>
-              <div className="mt-1 font-semibold text-white">Pottery 101: A Beginner’s Guide</div>
-              <p className="mt-1 text-sm text-white/70">Wheel throwing, handbuilding, clay types, and what to expect.</p>
+              <div className="mt-1 font-semibold text-primary">Pottery 101: A Beginner’s Guide</div>
+              <p className="mt-1 text-sm text-primary/70">Wheel throwing, handbuilding, clay types, and what to expect.</p>
             </Link>
           </div>
         </div>
       </div>
 
       {/* Bottom CTA Section */}
-      <div className="border-t border-white/10 bg-gradient-to-br from-indigo-900/30 via-purple-900/20 to-pink-900/30 py-16">
+      <div className="border-t border-border bg-gradient-to-br from-indigo-900/30 via-purple-900/20 to-pink-900/30 py-16">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <h2 className="font-serif text-3xl font-bold">Can&apos;t decide? We&apos;ve got you.</h2>
-          <p className="mt-4 text-lg text-white/75">
+          <p className="mt-4 text-lg text-primary/75">
             Grab a gift card and let them choose their own creative adventure, or book a private event for your whole crew.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/gift-cards"
-              className="inline-flex items-center justify-center rounded-full border border-white/15 bg-pink-600 px-6 py-3 font-semibold text-white hover:bg-pink-700"
+              className="inline-flex items-center justify-center rounded-full border border-white/15 bg-btn px-6 py-3 font-semibold text-primary hover:bg-pink-700"
             >
               Shop Gift Cards
             </Link>
             <Link
               href="/activities/private-parties"
-              className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/10 px-6 py-3 font-semibold text-white hover:bg-white/15"
+              className="inline-flex items-center justify-center rounded-full border border-white/15 bg-surface-secondary px-6 py-3 font-semibold text-primary hover:bg-white/15"
             >
               Plan a Private Event
             </Link>

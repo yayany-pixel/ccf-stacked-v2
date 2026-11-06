@@ -16,7 +16,7 @@ export default function ApplyPage() {
         <h1 className="mb-4 bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-4xl font-bold text-transparent md:text-5xl">
           Partner Application
         </h1>
-        <p className="mb-12 text-lg text-white/70">
+        <p className="mb-12 text-lg text-primary/70">
           Ready to teach wheel throwing from your space? Tell us about your pottery experience, teaching background, and workspace.
         </p>
       </div>

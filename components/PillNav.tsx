@@ -26,7 +26,7 @@ export default function PillNav({ items }: { items: NavItem[] }) {
               onMouseLeave={() => setOpenDropdown(null)}
             >
               <button
-                className="whitespace-nowrap rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-white/75 hover:bg-white/10 hover:text-white flex items-center gap-1"
+                className="whitespace-nowrap rounded-full border border-white/15 bg-surface-secondary px-3 py-2 text-xs font-semibold text-primary/75 hover:bg-surface-secondary hover:text-primary flex items-center gap-1"
               >
                 {it.label}
                 <span className="text-[10px]">▼</span>
@@ -54,7 +54,7 @@ export default function PillNav({ items }: { items: NavItem[] }) {
           <Link
             key={it.id}
             href={it.href || `#${it.id}`}
-            className="whitespace-nowrap rounded-full border border-white/15 bg-white/5 px-3 py-2 text-xs font-semibold text-white/75 hover:bg-white/10 hover:text-white"
+            className="whitespace-nowrap rounded-full border border-white/15 bg-surface-secondary px-3 py-2 text-xs font-semibold text-primary/75 hover:bg-surface-secondary hover:text-primary"
           >
             {it.label}
           </Link>

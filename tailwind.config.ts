@@ -8,6 +8,19 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        background: "var(--theme-bg)",
+        surface: "var(--theme-surface)",
+        "surface-secondary": "var(--theme-surface-secondary)",
+        primary: "var(--theme-text)",
+        secondary: "var(--theme-text-secondary)",
+        btn: "var(--theme-btn)",
+        "btn-text": "var(--theme-btn-text)",
+        accent: "var(--theme-accent)",
+        border: "var(--theme-border)",
+        "badge-bg": "var(--theme-badge-bg)",
+        "badge-text": "var(--theme-badge-text)"
+      },
       fontFamily: {
         serif: [
           "ui-serif",
@@ -32,7 +45,7 @@ export default {
       boxShadow: {
         glass:
           "0 10px 30px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.08)",
-        soft: "0 8px 24px rgba(0,0,0,0.22)"
+        soft: "var(--theme-shadow)"
       }
     }
   },

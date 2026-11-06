@@ -47,7 +47,7 @@ export default async function PotteryMembershipPage() {
           <div className="text-center">
             <p className="text-sm font-semibold uppercase tracking-widest text-purple-200">Live online · Beginner-friendly</p>
             <h1 className="mt-4 font-serif text-4xl font-bold sm:text-6xl">Learn Pottery at Home<br />Six Sessions for $150</h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-white/75">Build your wheel-throwing skills with live instruction and a beginner tabletop pottery wheel kit delivered to you and yours to keep.</p>
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-primary/75">Build your wheel-throwing skills with live instruction and a beginner tabletop pottery wheel kit delivered to you and yours to keep.</p>
           </div>
         </Reveal>
         <div className="mt-10"><PricingDisplay bookingUrl={bookingUrl} /></div>
@@ -56,20 +56,20 @@ export default async function PotteryMembershipPage() {
             ["Your starter kit", "A tabletop wheel, tools, and clay for session one. One kit and one student per registration."],
             ["Six live sessions", "Learn with step-by-step demonstrations, guided practice, and instructor feedback."],
             ["Create from home", "Use air-dry clay; no kiln needed. Your finished projects are decorative, not food safe or waterproof."],
-          ].map(([title, text]) => <GlassCard key={title} className="p-6"><h2 className="text-xl font-semibold">{title}</h2><p className="mt-3 text-sm text-white/70">{text}</p></GlassCard>)}
+          ].map(([title, text]) => <GlassCard key={title} className="p-6"><h2 className="text-xl font-semibold">{title}</h2><p className="mt-3 text-sm text-primary/70">{text}</p></GlassCard>)}
         </div>
         <GlassCard className="mt-10 p-8">
           <h2 className="font-serif text-2xl">Before your first session</h2>
-          <p className="mt-4 text-white/75">Check the cohort dates and kit delivery deadline in Acuity before enrolling. Prepare a sturdy table, water, a towel, and cleanup space. Plan to purchase additional air-dry clay before session two.</p>
+          <p className="mt-4 text-primary/75">Check the cohort dates and kit delivery deadline in Acuity before enrolling. Prepare a sturdy table, water, a towel, and cleanup space. Plan to purchase additional air-dry clay before session two.</p>
         </GlassCard>
         <section className="mt-12 space-y-6">
           <h2 className="font-serif text-3xl">Frequently Asked Questions</h2>
-          {faqs.map(({ q, a }) => <div key={q}><h3 className="font-semibold">{q}</h3><p className="mt-2 text-white/70">{a}</p></div>)}
+          {faqs.map(({ q, a }) => <div key={q}><h3 className="font-semibold">{q}</h3><p className="mt-2 text-primary/70">{a}</p></div>)}
         </section>
         <GlassCard className="mt-12 p-8 text-center">
           <h2 className="font-serif text-2xl">Looking for a single online workshop?</h2>
-          <p className="mt-3 text-white/70">Make a decorative clay cauldron in a 90-minute live class. $29 class only, with optional clay delivery for $20.</p>
-          <Link href={ONLINE_CAULDRON_URL} className="mt-5 inline-block rounded-full bg-purple-500 px-6 py-3 font-semibold">Book Online Cauldrons</Link>
+          <p className="mt-3 text-primary/70">Make a decorative clay cauldron in a 90-minute live class. $29 class only, with optional clay delivery for $20.</p>
+          <Link href={ONLINE_CAULDRON_URL} className="mt-5 inline-block rounded-full bg-btn px-6 py-3 font-semibold">Book Online Cauldrons</Link>
         </GlassCard>
       </div>
     </main>
