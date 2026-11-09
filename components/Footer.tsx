@@ -111,6 +111,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/author/yahya-moosavi" className="hover:text-purple-300 transition">
+                  Meet Yahya, our founder
+                </Link>
+              </li>
+              <li>
                 <Link href="/private-events" className="hover:text-purple-300 transition">
                   Private Events
                 </Link>
