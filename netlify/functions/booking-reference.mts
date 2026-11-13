@@ -1,3 +1,4 @@
+import { openAIAttribution } from "../../lib/openaiEvents";
 import type { Config } from "@netlify/functions";
 import { privacyStore } from "../../lib/privacy.server";
 import { payloadError, readPayload } from "../../lib/askccf/security";
@@ -19,13 +20,16 @@ export default async function handler(request: Request): Promise<Response> {
   try {
     const data = await readPayload(request);
     const now = Math.floor(Date.now() / 1000);
-    if (!validGoogleIds(data.clientId, data.sessionId, now)) return json({ error: "invalid_identifiers" }, 400);
     // Check the saved first-party choice, not a client-supplied consent assertion.
     const preferences = await privacyStore.read(preferenceId);
-    if (!preferences?.analytics) return json({ reference: null });
+    if (!preferences) return json({ reference: null });
+    const marketing = preferences.marketing && data.marketing === true;
+    const openai = marketing ? openAIAttribution(data.openai) : undefined;
+    const google = preferences.analytics && validGoogleIds(data.clientId, data.sessionId, now);
+    if (!google && !openai) return json({ reference: null });
     const reference = sealBookingReference({
-      clientId: data.clientId as string, sessionId: data.sessionId as string,
-      preferenceId, marketing: preferences.marketing && data.marketing === true, issuedAt: now,
+      clientId: google ? data.clientId as string : "", sessionId: google ? data.sessionId as string : "",
+      preferenceId, marketing, issuedAt: now, ...(openai ? { openai } : {}),
     }, secret);
     return json({ reference, fieldId, refreshAt: (now + 20 * 60) * 1000 });
   } catch (error) {

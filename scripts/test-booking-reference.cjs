@@ -21,9 +21,10 @@ function load(file, names, injected = {}) {
     '\nglobalThis.exports = {' + names.join(',') + '};', context);
   return context.exports;
 }
+const openAIHelpers = load('lib/openaiEvents.ts', ['openAIAttribution']);
 const helpers = load('lib/bookingReference.server.ts', ['validGoogleIds', 'sealBookingReference',
   'openBookingReference', 'resolveBookingReference', 'appointmentReference', 'purchaseReferenceParams',
-  'referencePreferenceId', 'bookingRedirectUrl']);
+  'referencePreferenceId', 'bookingRedirectUrl'], openAIHelpers);
 let count = 0;
 async function check(label, fn) { await fn(); count++; console.log('PASS:', label); }
 const same = (a, b) => assert.deepEqual(JSON.parse(JSON.stringify(a)), JSON.parse(JSON.stringify(b)));
@@ -73,7 +74,7 @@ const same = (a, b) => assert.deepEqual(JSON.parse(JSON.stringify(a)), JSON.pars
   let preferences = {analytics:true, marketing:true};
   const api = load('netlify/functions/booking-reference.mts', ['handler'], {
     Netlify: {env:{get: key => ({ACUITY_API_KEY:secret,ACUITY_GA4_REFERENCE_FIELD_ID:fieldId})[key]}},
-    ...helpers, privacyStore:{read:async()=>preferences},
+    ...helpers, ...openAIHelpers, privacyStore:{read:async()=>preferences},
     readPayload: async req => req.json(), payloadError:()=>({reason:'invalid_json',status:400}),
   });
   const request = (body, headers = {}, cookie = true) => new Request('https://fixture.invalid/.netlify/functions/booking-reference', {
@@ -85,7 +86,7 @@ const same = (a, b) => assert.deepEqual(JSON.parse(JSON.stringify(a)), JSON.pars
     assert.equal((await api.handler(request(ids,{origin:'https://evil.invalid'}))).status,403);
     assert.equal((await api.handler(request(ids,{'sec-fetch-site':'cross-site'}))).status,403);
     assert.equal((await (await api.handler(request(ids,{},false))).json()).reference,null);
-    assert.equal((await api.handler(request({...ids,clientId:'not-a-client-id'}))).status,400);
+    assert.equal((await (await api.handler(request({...ids,clientId:'not-a-client-id'}))).json()).reference,null);
     preferences = {analytics:false,marketing:false};
     assert.equal((await (await api.handler(request(ids))).json()).reference,null);
     preferences = {analytics:true,marketing:false};
@@ -97,6 +98,7 @@ const same = (a, b) => assert.deepEqual(JSON.parse(JSON.stringify(a)), JSON.pars
   let browserPrefs = {analytics:false,marketing:false}, fetches = 0, googleReads = 0;
   const client = load('lib/bookingReference.ts', ['decorateBookingUrl','bookingReferenceHref','refreshBookingReference'], {
     currentPrivacyPreferences:()=>browserPrefs, PRIVACY_EVENT:'fixture-consent',
+    browserOpenAIAttribution:()=>undefined, OPENAI_READY:'fixture-ready', document:{cookie:''},
     process:{env:{NEXT_PUBLIC_GA_ID_1:'G-TEST'}}, clearTimeout, setTimeout,
     window:{location:{origin:'https://fixture.invalid'},setTimeout,gtag:(_cmd,_id,field,cb)=>{
       googleReads++; cb(field==='client_id'?original.clientId:original.sessionId);
@@ -109,7 +111,7 @@ const same = (a, b) => assert.deepEqual(JSON.parse(JSON.stringify(a)), JSON.pars
   });
   await check('consented browser links carry only the encrypted reference and preserve appointment/date choices', async () => {
     browserPrefs = {analytics:true,marketing:true}; await client.refreshBookingReference();
-    assert.equal(googleReads,2); assert.equal(fetches,1);
+    assert.equal(googleReads,3); assert.equal(fetches,1);
     const href = client.bookingReferenceHref('https://colorcocktailfactory.as.me/?appointmentType=79006071&datetime=2026-11-01T18%3A00');
     const url = new URL(href); assert.equal(url.searchParams.get('field:'+fieldId),token);
     assert.equal(url.searchParams.get('appointmentType'),'79006071'); assert.equal(url.searchParams.get('datetime'),'2026-11-01T18:00');
@@ -122,7 +124,7 @@ const same = (a, b) => assert.deepEqual(JSON.parse(JSON.stringify(a)), JSON.pars
     const sent=[],ledger=new Set();
     const meta = fs.readFileSync(path.join(root,'lib/metaCapi.server.ts'),'utf8');
     const verifier = meta.match(/export function verifiedPaymentTime\([\s\S]*?\n\}/)[0].replace('export ','');
-    const context = { ...helpers, privacyStore:{read:async()=>({analytics,marketing})},
+    const context = { ...helpers, ...openAIHelpers, privacyStore:{read:async()=>({analytics,marketing})},
       Netlify:{env:{get:key=>({GA4_PURCHASES_ENABLED:'true',NEXT_PUBLIC_GA_ID_1:'G-TEST',GA4_API_SECRET:'fixture',
         ACUITY_CURRENCY:'USD',ACUITY_USER_ID:'fixture',ACUITY_API_KEY:secret,ACUITY_GA4_REFERENCE_FIELD_ID:fieldId})[key]}},
       ACTIVITY_MANIFEST:[{appointmentTypeId:79006071,calendarIds:[12216179],city:'chicago',title:'Date Night'}],

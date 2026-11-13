@@ -5,6 +5,7 @@ import BookingAnalytics from "@/components/BookingAnalytics";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import SimpleAnalytics from "@/components/SimpleAnalytics";
 import MicrosoftClarity from "@/components/MicrosoftClarity";
+import OpenAIPixel from "@/components/OpenAIPixel";
 import MetaPixel from "@/components/MetaPixel";
 import Footer from "@/components/Footer";
 import PrivatePartyCTA from "@/components/PrivatePartyCTA";
@@ -116,6 +117,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <MicrosoftClarity />
         <BookingAnalytics />
         <MetaPixel />
+        <OpenAIPixel />
         {/* Skip to main content link for keyboard navigation */}
         <a 
           href="#main-content" 

@@ -132,7 +132,7 @@ export default function PrivacyPreferences() {
         </fieldset>
         <details className={styles.details}>
           <summary>Cookie details</summary>
-          <p>Optional cookies and similar tools stay off until you allow them. Analytics includes Microsoft Clarity heatmaps and session replays of clicks and scrolling; form entries and studio chat are masked. Advertising lets Google Ads and Meta measure ad results.</p>
+          <p>Optional cookies and similar tools stay off until you allow them. Analytics includes Microsoft Clarity heatmaps and session replays of clicks and scrolling; form entries and studio chat are masked. Advertising lets Google Ads, Meta, and ChatGPT Ads measure ad results. With advertising allowed, we connect confirmed class bookings to ad clicks using an encrypted booking reference.</p>
           <p>We remember your choice for 180 days. Change it anytime using Cookie settings in the footer. <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer">Microsoft Privacy Statement</a>.</p>
         </details>
         {error && <p role="alert" className={styles.error}>{error}</p>}
