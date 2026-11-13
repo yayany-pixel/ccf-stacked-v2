@@ -11,7 +11,7 @@
  * Sends formatted digest to support@colorcocktailfactory.com
  */
 
-import { schedule } from "@netlify/functions";
+import type { Config } from "@netlify/functions";
 import { getAcuityDigestItems } from "../../lib/acuityAdminDigest";
 import { getEventbriteDigestItems } from "../../lib/eventbriteDigest";
 import { formatDigestSubject, formatDigestBody } from "../../lib/formatDigest";
@@ -148,4 +148,12 @@ async function dailyDigestHandler() {
  * Netlify scheduled function
  * Runs every 15 minutes (cron pattern)
  */
-export const handler = schedule("*/15 * * * *", dailyDigestHandler);
+export default async function handler(): Promise<Response> {
+  const result = await dailyDigestHandler();
+  return new Response(result.body, {
+    status: result.statusCode,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+export const config: Config = { schedule: "*/15 * * * *" };
