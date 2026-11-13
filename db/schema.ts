@@ -123,6 +123,13 @@ export const metaEventDeliveries = pgTable('meta_event_deliveries', {
   updatedAt: timestamp('updated_at', {withTimezone:true}).notNull().defaultNow(),
 });
 
+/** Only opaque delivery IDs and status; independent of Google and Meta retries. */
+export const openaiEventDeliveries = pgTable('openai_event_deliveries', {
+  eventKey: text('event_key').primaryKey(),
+  status: text('status').notNull(),
+  updatedAt: timestamp('updated_at', {withTimezone:true}).notNull().defaultNow(),
+});
+
 export const privacyPreferences = pgTable("privacy_preferences", {
   id: text().primaryKey(),
   analytics: boolean().notNull().default(false),
