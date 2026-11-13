@@ -1,4 +1,5 @@
 /** SERVER ONLY: authenticated encryption keeps GA identifiers out of booking URLs. */
+import { openAIAttribution, type OpenAIAttribution } from "./openaiEvents";
 import { createCipheriv, createDecipheriv, createHmac, randomBytes } from "node:crypto";
 
 export const REFERENCE_MAX_AGE = 7 * 86400;
@@ -9,6 +10,7 @@ export type BookingReference = {
   preferenceId: string;
   marketing: boolean;
   issuedAt: number;
+  openai?: OpenAIAttribution;
 };
 export type ReferencePreferences = { analytics: boolean; marketing: boolean };
 
@@ -27,13 +29,13 @@ export function sealBookingReference(reference: BookingReference, secret: string
   const cipher = createCipheriv("aes-256-gcm", key(secret), iv);
   cipher.setAAD(AAD);
   const plain = JSON.stringify([reference.clientId, reference.sessionId, reference.preferenceId,
-    reference.marketing, reference.issuedAt]);
+    reference.marketing, reference.issuedAt, ...(reference.openai ? [reference.openai] : [])]);
   const encrypted = Buffer.concat([cipher.update(plain, "utf8"), cipher.final()]);
   return "ccf1." + Buffer.concat([iv, cipher.getAuthTag(), encrypted]).toString("base64url");
 }
 
 export function openBookingReference(token: unknown, secret: string, now: number): BookingReference | null {
-  if (typeof token !== "string" || !/^ccf1\.[A-Za-z0-9_-]{80,700}$/.test(token)) return null;
+  if (typeof token !== "string" || !/^ccf1\.[A-Za-z0-9_-]{80,4096}$/.test(token)) return null;
   try {
     const bytes = Buffer.from(token.slice(5), "base64url");
     const cipher = createDecipheriv("aes-256-gcm", key(secret), bytes.subarray(0, 12));
@@ -42,12 +44,13 @@ export function openBookingReference(token: unknown, secret: string, now: number
     const data: unknown = JSON.parse(Buffer.concat([
       cipher.update(bytes.subarray(28)), cipher.final(),
     ]).toString("utf8"));
-    if (!Array.isArray(data) || data.length !== 5) return null;
-    const [clientId, sessionId, preferenceId, marketing, issuedAt] = data;
-    if (!validGoogleIds(clientId, sessionId, now) || typeof preferenceId !== "string" ||
+    if (!Array.isArray(data) || (data.length !== 5 && data.length !== 6)) return null;
+    const [clientId, sessionId, preferenceId, marketing, issuedAt, rawOpenAI] = data;
+    const openai = marketing === true ? openAIAttribution(rawOpenAI) : undefined;
+    if ((!validGoogleIds(clientId, sessionId, now) && !(clientId === "" && sessionId === "" && openai)) || typeof preferenceId !== "string" ||
       !/^[a-f0-9]{64}$/.test(preferenceId) || typeof marketing !== "boolean" ||
       !Number.isInteger(issuedAt) || issuedAt > now + 60 || now - issuedAt > REFERENCE_MAX_AGE) return null;
-    return { clientId, sessionId, preferenceId, marketing, issuedAt };
+    return { clientId, sessionId, preferenceId, marketing, issuedAt, ...(openai ? { openai } : {}) };
   } catch { return null; }
 }
 
@@ -65,8 +68,13 @@ export async function resolveBookingReference(
   if (!reference) return null;
   try {
     const preferences = await readPreferences(reference.preferenceId);
-    if (!preferences?.analytics) return null;
-    return { ...reference, marketing: reference.marketing && preferences.marketing };
+    if (!preferences || (!preferences.analytics && !(preferences.marketing && reference.marketing && reference.openai))) return null;
+    const marketing = reference.marketing && preferences.marketing;
+    return { ...reference,
+      clientId: preferences.analytics ? reference.clientId : "",
+      sessionId: preferences.analytics ? reference.sessionId : "",
+      marketing, openai: marketing ? reference.openai : undefined,
+    };
   } catch { return null; } // A missing/revoked preference never creates an attribution match.
 }
 
@@ -82,7 +90,7 @@ export function appointmentReference(appointment: unknown, fieldId: string | und
 export function purchaseReferenceParams(reference: BookingReference | null, paidAt: number, now: number) {
   // Preserve the original session only for prompt checkout payments. Older payments
   // still use the real client ID for Ads attribution, without inventing a session.
-  return reference && paidAt >= reference.issuedAt - 60 && paidAt - reference.issuedAt <= 30 * 60 &&
+  return reference && reference.clientId && reference.sessionId && paidAt >= reference.issuedAt - 60 && paidAt - reference.issuedAt <= 30 * 60 &&
     paidAt >= Number(reference.sessionId) && now - Number(reference.sessionId) <= 24 * 3600
     ? { session_id: Number(reference.sessionId) } : {};
 }
