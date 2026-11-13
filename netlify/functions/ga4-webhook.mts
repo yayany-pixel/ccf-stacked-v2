@@ -260,7 +260,7 @@ export default async function handler(req: Request): Promise<Response> {
     );
     // An authenticated provider record supplies this reference, never a public
     // purchase request. Consent is checked again before matching to the visitor.
-    const matchedReference = bookingReference && paidAt >= bookingReference.issuedAt - 60
+    const matchedReference = bookingReference?.clientId && paidAt >= bookingReference.issuedAt - 60
       ? bookingReference : null;
     const db = getDb();
     // Atomic insert prevents concurrent deliveries. Ambiguous sends are held for
