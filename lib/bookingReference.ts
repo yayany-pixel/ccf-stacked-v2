@@ -1,6 +1,7 @@
 import { currentPrivacyPreferences, PRIVACY_EVENT } from "./privacy";
+import { browserOpenAIAttribution, OPENAI_READY } from "./openaiPixel";
 
-type Reference = { reference: string; fieldId: string; refreshAt: number; marketing: boolean; gl?: string | null; gclid?: string | null };
+type Reference = { reference: string; fieldId: string; refreshAt: number; marketing: boolean; openAIKey?: string; gl?: string | null; gclid?: string | null };
 let reference: Reference | null = null;
 let knownFieldId: string | undefined;
 let revision = 0;
@@ -36,7 +37,7 @@ export function decorateBookingUrl(raw: string, value: Reference | null, origin:
 export function bookingReferenceHref(raw: string): string {
   if (typeof window === "undefined") return raw;
   const preferences = currentPrivacyPreferences();
-  const active = preferences.analytics && reference && reference.marketing === preferences.marketing &&
+  const active = (preferences.analytics || preferences.marketing) && reference && reference.marketing === preferences.marketing &&
     reference.refreshAt > Date.now() ? reference : null;
   return decorateBookingUrl(raw, active, window.location.origin, knownFieldId);
 }
@@ -69,31 +70,35 @@ function getGclid(): string | null {
 }
 
 export async function refreshBookingReference(): Promise<void> {
-  if (typeof window === "undefined" || !currentPrivacyPreferences().analytics) return;
+  if (typeof window === "undefined") return;
   const preferences = currentPrivacyPreferences();
-  if (reference && reference.refreshAt > Date.now() && reference.marketing === preferences.marketing) return;
+  if (!preferences.analytics && !preferences.marketing) return;
+  const openai = browserOpenAIAttribution();
+  const openAIKey = JSON.stringify(openai);
+  if (reference && reference.refreshAt > Date.now() && reference.marketing === preferences.marketing && reference.openAIKey === openAIKey) return;
   if (pending) return pending;
   const version = generation;
   pending = (async () => {
     const [clientId, sessionId, linkerParam] = await Promise.all([googleValue("client_id"), googleValue("session_id"), googleValue("linker_param")]);
-    if (!clientId || !sessionId || version !== generation || !currentPrivacyPreferences().analytics) return;
+    if ((!clientId || !sessionId) && !openai) return;
+    if (version !== generation) return;
     const response = await fetch("/.netlify/functions/booking-reference", {
       method: "POST", credentials: "same-origin", cache: "no-store",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ clientId, sessionId, marketing: preferences.marketing }),
+      body: JSON.stringify({ clientId, sessionId, marketing: preferences.marketing, openai }),
       signal: AbortSignal.timeout(4000),
     });
     if (!response.ok) return;
     const data = await response.json();
     const current = currentPrivacyPreferences();
-    if (version !== generation || !current.analytics || current.marketing !== preferences.marketing ||
-      typeof data.reference !== "string" || !/^ccf1\.[A-Za-z0-9_-]{80,700}$/.test(data.reference) ||
+    if (version !== generation || (!current.analytics && !current.marketing) || current.marketing !== preferences.marketing ||
+      typeof data.reference !== "string" || !/^ccf1\.[A-Za-z0-9_-]{80,4096}$/.test(data.reference) ||
       typeof data.fieldId !== "string" || !/^\d+$/.test(data.fieldId) ||
       !Number.isFinite(data.refreshAt) || data.refreshAt <= Date.now()) return;
     knownFieldId = data.fieldId;
     reference = { reference: data.reference, fieldId: data.fieldId,
       refreshAt: Math.min(data.refreshAt, Date.now() + 20 * 60 * 1000), marketing: preferences.marketing,
-      gl: linkerParam, gclid: getGclid() };
+      openAIKey, gl: linkerParam, gclid: preferences.marketing ? getGclid() : null };
     changed();
   })().catch(() => {}).finally(() => { pending = null; });
   return pending;
@@ -120,6 +125,7 @@ export function startBookingReferences(): () => void {
   const observer = new MutationObserver(decorate);
   observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["href"] });
   window.addEventListener(PRIVACY_EVENT, consent);
+  window.addEventListener(OPENAI_READY, prepare);
   document.addEventListener("pointerover", prepare, { passive: true });
   document.addEventListener("focusin", prepare);
   // The Google tag loads lazily; retry while it starts, then refresh on interaction.
@@ -130,6 +136,7 @@ export function startBookingReferences(): () => void {
     active = false; generation++; reference = null; changed();
     clearInterval(retry); observer.disconnect(); unsubscribe();
     window.removeEventListener(PRIVACY_EVENT, consent);
+    window.removeEventListener(OPENAI_READY, prepare);
     document.removeEventListener("pointerover", prepare);
     document.removeEventListener("focusin", prepare);
   };
