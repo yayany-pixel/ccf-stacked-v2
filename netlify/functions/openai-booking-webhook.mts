@@ -1,11 +1,12 @@
 import { sql } from "drizzle-orm";
+import type { Context } from "@netlify/functions";
 import { getDb } from "../../db/index";
 import { privacyStore } from "../../lib/privacy.server";
 import { receiveOpenAIBooking } from "../../lib/openaiConversions.server";
 
-export default async function handler(request: Request): Promise<Response> {
+export default async function handler(request: Request, context: Context): Promise<Response> {
   return receiveOpenAIBooking(request, {
-    env: key => Netlify.env.get(key), fetch, now: Date.now,
+    env: key => key === "CONTEXT" ? context.deploy.context : Netlify.env.get(key), fetch, now: Date.now,
     preferences: id => privacyStore.read(id),
     claim: async key => {
       const result: any = await getDb().execute(sql`
