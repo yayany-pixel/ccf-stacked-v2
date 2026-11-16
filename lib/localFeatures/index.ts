@@ -41,7 +41,7 @@ export const localFeaturePosts: BlogPost[] = localFeatures.map(feature => {
       : feature.title,
     description: feature.description,
     authorSlug: DEFAULT_AUTHOR_SLUG,
-    author: "Yahya Moosavi",
+    author: "Robert Potterhead",
     date: LOCAL_FEATURE_PUBLISHED_AT,
     publishedAt: LOCAL_FEATURE_PUBLISHED_AT,
     updatedAt: LOCAL_FEATURE_PUBLISHED_AT,

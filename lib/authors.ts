@@ -93,9 +93,21 @@ export const authors: Author[] = [
     ],
     // image, imageAlt, email, and sameAs intentionally omitted until verified.
   },
+  {
+    slug: "robert-potterhead",
+    name: "Robert Potterhead",
+    role: "Color Cocktail Factory editorial pen name",
+    description:
+      "Robert Potterhead is the studio's editorial pen name for practical workshop guides, city roundups, and creative activity ideas.",
+    bio:
+      "Robert Potterhead is an editorial pen name used by Color Cocktail Factory for practical how-to guides, local activity roundups, workshop inspiration, and other studio articles. It is not an individual artist biography.",
+  },
 ];
 
-export const DEFAULT_AUTHOR_SLUG = "yahya-moosavi";
+/** Original researched essays should explicitly name the founder. */
+export const FOUNDER_AUTHOR_SLUG = "yahya-moosavi";
+/** General studio and commercial posts default to the editorial pen name. */
+export const DEFAULT_AUTHOR_SLUG = "robert-potterhead";
 
 export function getAuthorBySlug(slug: string): Author | undefined {
   return authors.find((a) => a.slug === slug);

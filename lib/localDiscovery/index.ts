@@ -77,7 +77,7 @@ export const localDiscoveryBlogPosts: BlogPost[] = localDiscoveryGuides.map((gui
     seoTitle: guide.seoTitle,
     description: guide.description,
     authorSlug: DEFAULT_AUTHOR_SLUG,
-    author: "Yahya Moosavi",
+    author: "Robert Potterhead",
     publishedAt: date,
     updatedAt: date,
     date,

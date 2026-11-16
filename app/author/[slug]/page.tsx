@@ -5,6 +5,7 @@ import {
   getAllAuthors,
   getAuthorBySlug,
   getAuthorUrl,
+  FOUNDER_AUTHOR_SLUG,
 } from "@/lib/authors";
 import { getBlogPostsByAuthor } from "@/lib/blogPosts";
 
@@ -53,6 +54,7 @@ export default function AuthorProfilePage({ params }: Props) {
   if (!author) notFound();
 
   const posts = getBlogPostsByAuthor(author.slug);
+  const isFounder = author.slug === FOUNDER_AUTHOR_SLUG;
 
   const personJsonLd = {
     "@context": "https://schema.org",
@@ -71,11 +73,11 @@ export default function AuthorProfilePage({ params }: Props) {
     ...(author.sameAs && author.sameAs.length > 0
       ? { sameAs: author.sameAs }
       : {}),
-    worksFor: {
+    ...(isFounder ? { worksFor: {
       "@type": "Organization",
       name: "Color Cocktail Factory",
       url: BASE,
-    },
+    } } : {}),
   };
 
   const breadcrumbsJsonLd = {
@@ -116,27 +118,27 @@ export default function AuthorProfilePage({ params }: Props) {
             </div>
           </nav>
 
-          <header className="grid gap-10 py-14 sm:py-20 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+          <header className={`grid gap-10 py-14 sm:py-20 ${author.credentials?.length ? "lg:grid-cols-[1.2fr_1fr] lg:gap-16" : ""}`}>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/65">Meet the founder</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary/65">{isFounder ? "Meet the founder" : "Studio editorial byline"}</p>
               <h1 className="mt-5 font-serif text-5xl font-medium leading-[1.05] sm:text-7xl">{author.name}</h1>
               {author.role && <p className="mt-5 max-w-md text-lg leading-relaxed text-primary/75">{author.role}</p>}
-              <p className="mt-8 max-w-md font-serif text-2xl leading-relaxed">A life in art. A place for you to make something.</p>
+              <p className="mt-8 max-w-md font-serif text-2xl leading-relaxed">{isFounder ? "A life in art. A place for you to make something." : "Practical guides, local ideas, and inspiration to make something new."}</p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/chicago" className="rounded-full bg-btn px-6 py-3 text-sm font-semibold text-btn-text transition hover:opacity-90">Explore Chicago classes</Link>
                 <Link href="/eugene" className="rounded-full border border-border bg-surface px-6 py-3 text-sm font-semibold transition hover:bg-surface-secondary">Explore Eugene classes</Link>
               </div>
             </div>
-            <aside aria-label="Education and experience" className="self-start rounded-3xl border border-border bg-surface p-7 sm:p-9">
+            {author.credentials && author.credentials.length > 0 ? <aside aria-label="Education and experience" className="self-start rounded-3xl border border-border bg-surface p-7 sm:p-9">
               <h2 className="font-serif text-2xl">Education &amp; experience</h2>
               {author.credentials && <ul className="mt-6 divide-y divide-border">
                 {author.credentials.map((credential) => <li key={credential} className="py-4 text-sm leading-relaxed first:pt-0 last:pb-0">{credential}</li>)}
               </ul>}
-            </aside>
+            </aside> : null}
           </header>
 
-          <section aria-labelledby="about-yahya" className="grid gap-6 border-t border-border py-12 md:grid-cols-[1fr_2fr] md:gap-12">
-            <h2 id="about-yahya" className="font-serif text-3xl">About Yahya</h2>
+          <section aria-labelledby="about-author" className="grid gap-6 border-t border-border py-12 md:grid-cols-[1fr_2fr] md:gap-12">
+            <h2 id="about-author" className="font-serif text-3xl">About {author.name}</h2>
             <p className="max-w-2xl text-lg leading-relaxed text-primary/80">{author.bio}</p>
           </section>
 

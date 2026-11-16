@@ -1,4 +1,4 @@
-import { DEFAULT_AUTHOR_SLUG, getAuthorBySlug } from "./authors";
+import { DEFAULT_AUTHOR_SLUG, FOUNDER_AUTHOR_SLUG, getAuthorBySlug } from "./authors";
 import { workshopGuidePosts } from "./workshopGuides";
 import { localFeaturePosts } from "./localFeatures";
 import { localDiscoveryBlogPosts } from "./localDiscovery";
@@ -88,7 +88,7 @@ export const blogPosts: BlogPost[] = [
     seoTitle: "Halloween & Pottery: Clay’s Surprisingly Dark Backstory",
     description:
       "Four bowls. One blindfold. A questionable party game. Discover the real folklore connecting Halloween and clay—and make something wonderfully strange.",
-    authorSlug: DEFAULT_AUTHOR_SLUG,
+    authorSlug: FOUNDER_AUTHOR_SLUG,
     author: "Yahya Moosavi",
     publishedAt: "2026-10-31",
     updatedAt: "2026-10-31",
@@ -107,7 +107,7 @@ export const blogPosts: BlogPost[] = [
     title: "Japanese Warrior Cedar Bonsai: Small Tree, Big Presence",
     description:
       "A tiny tree with the presence of a forest guardian. Explore the shape, patience, and everyday care behind a warrior-inspired Japanese cedar bonsai.",
-    authorSlug: DEFAULT_AUTHOR_SLUG,
+    authorSlug: FOUNDER_AUTHOR_SLUG,
     author: "Yahya Moosavi",
     publishedAt: "2026-10-31",
     updatedAt: "2026-10-31",
@@ -127,7 +127,7 @@ export const blogPosts: BlogPost[] = [
     seoTitle: "Colonoware and the American Pottery Story We Inherit",
     description:
       "A broken pot. An unknown maker. A name scratched into clay. Discover how colonoware changes the way we see—and make—American pottery today.",
-    authorSlug: DEFAULT_AUTHOR_SLUG,
+    authorSlug: FOUNDER_AUTHOR_SLUG,
     author: "Yahya Moosavi",
     publishedAt: "2026-10-31",
     updatedAt: "2026-10-31",
@@ -150,7 +150,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "Everything you need to know to start your pottery journey - from choosing clay to mastering the wheel. Perfect for complete beginners!",
     authorSlug: DEFAULT_AUTHOR_SLUG,
-    author: "Yahya Moosavi",
+    author: "Robert Potterhead",
     publishedAt: "2025-01-15",
     updatedAt: "2025-01-15",
     date: "2025-01-15",
@@ -177,7 +177,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "Discover the best creative date night experiences in Chicago, from pottery classes to glass fusion workshops. Make memories that last!",
     authorSlug: DEFAULT_AUTHOR_SLUG,
-    author: "Yahya Moosavi",
+    author: "Robert Potterhead",
     publishedAt: "2025-01-10",
     updatedAt: "2025-01-10",
     date: "2025-01-10",
@@ -214,7 +214,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "Discover ten authentic Eugene, Oregon date ideas with correct Cross Street studio details, local museums, and current Eugene-only workshop routes.",
     authorSlug: DEFAULT_AUTHOR_SLUG,
-    author: "Yahya Moosavi",
+    author: "Robert Potterhead",
     publishedAt: "2025-01-08",
     updatedAt: "2026-10-23",
     date: "2025-01-08",
@@ -249,7 +249,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "Discover the best coffee shops, murals, restaurants, and nightlife in Pilsen. Your complete guide to exploring Chicago's most vibrant artistic neighborhood.",
     authorSlug: DEFAULT_AUTHOR_SLUG,
-    author: "Yahya Moosavi",
+    author: "Robert Potterhead",
     publishedAt: "2025-01-02",
     updatedAt: "2025-01-02",
     date: "2025-01-02",
@@ -288,7 +288,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "Find art classes near you—pottery, mosaics, bonsai, and more. Choose your city, pick a time, and book in minutes. Beginner-friendly.",
     authorSlug: DEFAULT_AUTHOR_SLUG,
-    author: "Yahya Moosavi",
+    author: "Robert Potterhead",
     publishedAt: "2026-01-20",
     updatedAt: "2026-01-20",
     date: "2026-01-20",
@@ -324,7 +324,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "A calm, practical guide to starting pottery in Chicago. What wheel throwing actually feels like, how to choose a class, what to wear, and what to expect at your first session in Pilsen.",
     authorSlug: DEFAULT_AUTHOR_SLUG,
-    author: "Yahya Moosavi",
+    author: "Robert Potterhead",
     publishedAt: "2026-09-03",
     updatedAt: "2026-09-03",
     date: "2026-09-03",
@@ -365,7 +365,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "Compare wheel throwing, handbuilding, and date night pottery classes in Chicago. Learn what to expect, what to wear, and how to choose.",
     authorSlug: DEFAULT_AUTHOR_SLUG,
-    author: "Yahya Moosavi",
+    author: "Robert Potterhead",
     publishedAt: "2026-09-03",
     updatedAt: "2026-09-03",
     date: "2026-09-03",

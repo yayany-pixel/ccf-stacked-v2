@@ -56,7 +56,7 @@ export const workshopGuidePosts: BlogPost[] = workshopGuides.map((guide) => {
     seoTitle: guide.title.length > 65 ? guide.title.slice(0, 62).replace(/\s+\S*$/, "") : guide.title,
     description: guide.description,
     authorSlug: DEFAULT_AUTHOR_SLUG,
-    author: "Yahya Moosavi",
+    author: "Robert Potterhead",
     publishedAt: date,
     updatedAt: date,
     date,
