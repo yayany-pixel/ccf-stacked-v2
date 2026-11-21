@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
 import { createHmac } from "node:crypto";
-import { receiveOpenAIBooking } from "../lib/openaiConversions.server";
+import { receiveOpenAIBooking, OPENAI_PURCHASE_MEASUREMENT_START } from "../lib/openaiConversions.server";
 import { openBookingReference, sealBookingReference, resolveBookingReference } from "../lib/bookingReference.server";
 import { openAIAttribution } from "../lib/openaiEvents";
 
-const now = Date.now(), secret = "fixture-only", field = "19375784";
+const now = (OPENAI_PURCHASE_MEASUREMENT_START + 600) * 1000, secret = "fixture-only", field = "19375784";
 const reference = { clientId: "", sessionId: "", preferenceId: "a".repeat(64),
   marketing: true, issuedAt: Math.floor(now / 1000) - 120,
   openai: { oppref: "original-click-reference", obref: "original-browser-reference" } };
@@ -31,12 +31,15 @@ function fixture(options: Record<string, any> = {}) {
     fetch: (async (url: string, init?: RequestInit) => {
       if (url.startsWith("https://bzr.openai.com/")) {
         sent.push(JSON.parse(init!.body as string));
-        return new Response(null, { status: options.failOnce && sent.length === 1 ? 503 : 200 });
+        const type = sent.at(-1).events[0].type;
+        const fail = (options.failOnce && sent.length === 1) ||
+          (options.failPurchaseOnce && type === "order_created" && sent.filter(x=>x.events[0].type===type).length===1);
+        return new Response(null, { status: fail ? 503 : 200 });
       }
       reads++;
       if (url.endsWith("/payments")) return Response.json([{ transactionID: "payment-1", amount: options.paymentAmount ?? 55,
         created: new Date(now - (options.age ?? 30) * 1000).toISOString() }]);
-      return Response.json({ paid: options.paid ?? "yes", canceled: options.canceled ?? false, amountPaid: 55,
+      return Response.json({ paid: options.paid ?? "yes", canceled: options.canceled ?? false, amountPaid: options.amountPaid ?? 55,
         forms: [{ values: [{ fieldID: Number(field), value: options.token ?? token }] }] });
     }) as typeof fetch,
   };
@@ -59,7 +62,12 @@ async function main() {
   assert.equal(event.data.type,"customer_action"); assert.equal(event.opt_out,true);
   assert.equal(event.id,"acuity:appointment:123");
   assert(!JSON.stringify(event).includes("email"));
-  assert.equal((await receiveOpenAIBooking(signed(),valid.deps)).status,200); assert.equal(valid.sent.length,1);
+  const purchase = valid.sent[1].events[0];
+  assert.equal(purchase.type,"order_created"); assert.equal(purchase.data.type,"contents");
+  assert.equal(purchase.data.amount,5500); assert.equal(purchase.data.currency,"USD");
+  assert.equal(purchase.id,event.id); assert.equal(purchase.timestamp_ms,event.timestamp_ms);
+  assert.equal(purchase.oppref,event.oppref); assert.equal(purchase.user.obref,event.user.obref);
+  assert.equal((await receiveOpenAIBooking(signed(),valid.deps)).status,200); assert.equal(valid.sent.length,2);
   const interrupted = fixture();
   interrupted.states.set("fixture-pixel:appointment_scheduled:acuity:appointment:123", "sending");
   assert.equal((await receiveOpenAIBooking(signed(),interrupted.deps)).status,500);
@@ -68,8 +76,23 @@ async function main() {
   assert.equal((await receiveOpenAIBooking(signed(),retry.deps)).status,500);
   assert.equal((await receiveOpenAIBooking(signed(),retry.deps)).status,200);
   assert.equal(retry.sent[0].events[0].id,retry.sent[1].events[0].id);
+  const partial = fixture({failPurchaseOnce:true});
+  assert.equal((await receiveOpenAIBooking(signed(),partial.deps)).status,500);
+  assert.equal((await receiveOpenAIBooking(signed(),partial.deps)).status,200);
+  assert.deepEqual(partial.sent.map(x=>x.events[0].type),["appointment_scheduled","order_created","order_created"]);
+  assert.equal(partial.sent[1].events[0].id,partial.sent[2].events[0].id);
+  const old = fixture({age:660,token:sealBookingReference({...reference,issuedAt:OPENAI_PURCHASE_MEASUREMENT_START-120},secret)});
+  old.states.set("fixture-pixel:appointment_scheduled:acuity:appointment:123","sent");
+  assert.equal((await receiveOpenAIBooking(signed(),old.deps)).status,200);
+  assert.equal(old.sent.length,0,"old paid bookings must not become new purchases after an appointment edit");
+  const pendingPurchase = fixture();
+  pendingPurchase.states.set("fixture-pixel:appointment_scheduled:acuity:appointment:123","sent");
+  pendingPurchase.states.set("fixture-pixel:order_created:acuity:appointment:123","sending");
+  assert.equal((await receiveOpenAIBooking(signed(),pendingPurchase.deps)).status,500);
+  assert.equal(pendingPurchase.sent.length,0);
   for (const options of [{paid:"no"},{canceled:true},{paymentAmount:25},{age:8*86400},
     {age:3600},{token:"tampered"},{preferences:{analytics:true,marketing:false}},
+    {amountPaid:0.004,paymentAmount:0.004},
     {env:{CONTEXT:"deploy-preview"}},{env:{OPENAI_CONVERSIONS_ENABLED:"false"}}]) {
     const f=fixture(options); await receiveOpenAIBooking(signed(),f.deps); assert.equal(f.sent.length,0,JSON.stringify(options));
   }
