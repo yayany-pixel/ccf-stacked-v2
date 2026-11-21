@@ -1,13 +1,14 @@
 # ChatGPT booking conversion measurement
 
-The existing Ads Manager conversion **Class Booking Completed** uses `appointment_scheduled`. The clicks campaign can report this event without changing its objective or budget.
+The existing Ads Manager conversion **Class Booking Completed** uses `appointment_scheduled`. It remains the campaign's single booking goal. For the same verified paid booking, `order_created` supplies the separate purchase/revenue columns. Do not add the two event counts together as orders. The clicks campaign can report these events without changing its objective or budget.
 
 ## Live path
 
 1. `OpenAIPixel` loads only on the production domain after Advertising consent. It sends page views, never booking or purchase events. Development tests use mocked provider endpoints; deploy previews never send pixel events.
 2. The original `oppref` and Pixel `__obref` are carried inside the existing encrypted Acuity reference field (`19375784`), not exposed as raw identifiers in booking links. Google matching remains independent; an OpenAI reference can be issued when Google identifiers are unavailable.
 3. Acuity sends `appointment.changed` to `https://colorcocktailfactory.com/.netlify/functions/openai-booking-webhook`. The receiver checks HMAC-SHA256, fetches the appointment and its payments, requires paid=yes, non-cancelled and corroborated positive payment amount/time, and rechecks the saved advertising preference.
-4. The receiver sends `appointment_scheduled` through CAPI, with the same stable ID on retries. The independent `openai_event_deliveries` ledger suppresses accepted duplicates. Temporary delivery failures return 500 for Acuity retries. No customer names, email, telephone, IP address, or payment-card data are sent. Optional future personalization is opted out.
+4. The receiver sends `appointment_scheduled` (`customer_action`) and `order_created` (`contents`) through CAPI with the same provider-confirmed payment amount in USD cents and payment timestamp. Each event type has its own delivery-ledger entry and uses the same stable appointment ID on retries. An already accepted booking event is not resent when only its purchase event needs retrying. Purchases start with payments from November 21, 2026 at 01:32:41 UTC; older payments are not backfilled on later appointment edits. Temporary delivery failures return 500 for Acuity retries. No customer names, email, telephone, IP address, or payment-card data are sent. Optional future personalization is opted out.
+5. Navigation does not reset the Pixel's consent or delete its attribution cookies. After advertising consent, the encrypted reference also preserves the SDK's original `__oppref` cookie on returning visits. Revocation still clears optional measurement and stops delivery.
 
 ## Configuration
 
